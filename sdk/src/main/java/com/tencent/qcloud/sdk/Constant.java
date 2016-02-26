@@ -1,9 +1,9 @@
-package com.tencent.qcloud.presentation.util;
+package com.tencent.qcloud.sdk;
 
 /**
  * 常量
  */
-public class C {
+public class Constant {
 
     public static final int ACCOUNT_TYPE = 792;
     public static final int SDK_APPID = 1400001533;

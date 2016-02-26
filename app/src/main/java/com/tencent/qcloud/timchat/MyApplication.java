@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tencent.qcloud.presentation.business.InitBusiness;
+import com.tencent.qcloud.tlslibrary.service.InitService;
 
 
 /**
@@ -18,6 +19,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         InitBusiness.start(context);
+        InitService.init(context);
     }
 
     public static Context getContext() {
