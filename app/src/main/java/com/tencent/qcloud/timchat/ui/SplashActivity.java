@@ -29,8 +29,8 @@ public class SplashActivity extends Activity implements SplashView {
      */
     @Override
     public void navToHome() {
-//        Intent intent = new Intent(this, HomeActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -40,9 +40,9 @@ public class SplashActivity extends Activity implements SplashView {
     public void navToLogin() {
         Intent intent = new Intent(SplashActivity.this, HostLoginActivity.class);
         // 传入应用的包名
-        intent.putExtra(Constants.EXTRA_THIRDAPP_PACKAGE_NAME_SUCC, "com.tencent.qcloud.imdemo.ui");
+        intent.putExtra(Constants.EXTRA_THIRDAPP_PACKAGE_NAME_SUCC, "com.tencent.qcloud.timchat");
         // 传入跳转的Activity的完整类名
-        intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_SUCC, "com.tencent.qcloud.imdemo.ui.LoginActivity");
+        intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_SUCC, "com.tencent.qcloud.timchat.ui.HomeActivity");
         startActivityForResult(intent, 0);
     }
 }

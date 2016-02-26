@@ -15,8 +15,8 @@ public class TLSConfiguration {
     public static String APP_VERSION = "1.0";     // 指的是TLSDemo的版本号，而不是TLSSDK的版本号
 
     // QQ SDK
-    public static String QQ_APP_ID;
-    public static String QQ_APP_KEY;
+    public static String QQ_APP_ID = "";
+    public static String QQ_APP_KEY = "";
 
     // WeChat SDK
     public static String WX_APP_ID;
