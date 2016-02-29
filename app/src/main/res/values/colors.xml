@@ -7,5 +7,8 @@
 
     <color name="background">#F9F7F8</color>
     <color name="text_gray1">#777777</color>
-    <color name="text_blue1">#1173cb</color>
+    <color name="text_blue1">#1173CB</color>
+    <color name="text_blue2">#1173CA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

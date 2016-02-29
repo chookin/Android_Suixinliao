@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TemplateTitle">
+        <attr name="titleText" format="string"/>
+        <attr name="canBack" format="boolean"/>
+        <attr name="backText" format="string"/>
+        <attr name="moreImg" format="reference"/>
+        <attr name="moreText" format="string"/>
+    </declare-styleable>
+</resources>

@@ -16,7 +16,7 @@ public class HomeActivity extends FragmentActivity {
     private LayoutInflater layoutInflater;
     private FragmentTabHost mTabHost;
     private final Class fragmentArray[] = {ConversationFragment.class,ContactFragment.class,SettingFragment.class};
-    private int mTitleArray[] = {R.string.home_contact_tab, R.string.home_conversation_tab, R.string.home_setting_tab};
+    private int mTitleArray[] = {R.string.home_conversation_tab, R.string.home_contact_tab, R.string.home_setting_tab};
     private int mImageViewArray[] = {R.drawable.tab_conversation, R.drawable.tab_contact, R.drawable.tab_setting};
     private String mTextviewArray[] = {"contact", "conversation", "setting"};
 
