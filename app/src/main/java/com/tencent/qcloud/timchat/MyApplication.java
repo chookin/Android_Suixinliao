@@ -4,7 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tencent.qcloud.presentation.business.InitBusiness;
+import com.tencent.qcloud.presentation.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.service.InitService;
+import com.tencent.qcloud.tlslibrary.service.TLSService;
 
 
 /**
@@ -19,7 +21,10 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         InitBusiness.start(context);
-        InitService.init(context);
+        TLSService tlsService = InitService.init(context);
+        if (tlsService != null){
+            UserInfo.getInstance().setId(tlsService.getLastUserIdentifier());
+        }
     }
 
     public static Context getContext() {

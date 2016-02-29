@@ -11,7 +11,7 @@ public class InitService {
 
     private InitService(){}
 
-    public static void init(Context context){
+    public static TLSService init(Context context){
         TLSConfiguration.setSdkAppid(Constant.SDK_APPID);
         TLSConfiguration.setAccountType(Constant.ACCOUNT_TYPE);
         TLSConfiguration.setTimeout(8000);
@@ -19,5 +19,6 @@ public class InitService {
         TLSConfiguration.setWxAppIdAndAppSecret("wx65f71c2ea2b122da", "1d30d40f8db6d3ad0ee6492e62ad5d57");
         TLSService tlsService = TLSService.getInstance();
         tlsService.initTlsSdk(context);
+        return tlsService;
     }
 }

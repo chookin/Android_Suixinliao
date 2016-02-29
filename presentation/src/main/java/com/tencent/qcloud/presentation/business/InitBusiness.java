@@ -7,7 +7,7 @@ import com.tencent.TIMManager;
 
 /**
  * 初始化
- * 包括imsdk,tls等
+ * 包括imsdk等
  */
 public class InitBusiness {
 
