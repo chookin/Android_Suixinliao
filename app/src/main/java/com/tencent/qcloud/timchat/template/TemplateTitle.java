@@ -22,9 +22,6 @@ public class TemplateTitle extends RelativeLayout {
     private String moreText;
     private int moreImg;
 
-    private TextView tvTitle;
-    private TextView tvBack;
-
 
     public TemplateTitle(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,23 +29,30 @@ public class TemplateTitle extends RelativeLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TemplateTitle, 0, 0);
         try {
             titleText = ta.getString(R.styleable.TemplateTitle_titleText);
-            tvTitle = (TextView) findViewById(R.id.title);
-            tvTitle.setText(titleText);
-            canBack = ta.getBoolean(R.styleable.TemplateTitle_canBack,false);
-            LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
-            backBtn.setVisibility(canBack?VISIBLE:INVISIBLE);
-            if (canBack){
-                backText = ta.getString(R.styleable.TemplateTitle_backText);
-                tvBack = (TextView) findViewById(R.id.txt_back);
-                tvBack.setText(backText);
-            }
+            canBack = ta.getBoolean(R.styleable.TemplateTitle_canBack, false);
+            backText = ta.getString(R.styleable.TemplateTitle_backText);
             moreImg = ta.getResourceId(R.styleable.TemplateTitle_moreImg, 0);
-            if (moreImg != 0){
-                ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
-                moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg));
-            }
+            moreText = ta.getString(R.styleable.TemplateTitle_moreText);
+            setUpView();
         } finally {
             ta.recycle();
         }
+    }
+
+    private void setUpView(){
+        TextView tvTitle = (TextView) findViewById(R.id.title);
+        tvTitle.setText(titleText);
+        LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
+        backBtn.setVisibility(canBack ? VISIBLE : INVISIBLE);
+        if (canBack){
+            TextView tvBack = (TextView) findViewById(R.id.txt_back);
+            tvBack.setText(backText);
+        }
+        if (moreImg != 0){
+            ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
+            moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg));
+        }
+        TextView tvMore = (TextView) findViewById(R.id.txt_more);
+        tvMore.setText(moreText);
     }
 }
