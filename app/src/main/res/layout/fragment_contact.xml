@@ -7,12 +7,12 @@
     android:background="@color/colorGray3"
     tools:context="com.tencent.qcloud.timchat.ui.ContactFragment">
 
-    <com.tencent.qcloud.timchat.customview.TemplateTitle
+    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleText="@string/home_contact_tab"
         app:moreImg="@drawable/ic_add">
-    </com.tencent.qcloud.timchat.customview.TemplateTitle>
+    </com.tencent.qcloud.timchat.ui.customview.TemplateTitle>
 
 
     <LinearLayout
@@ -28,10 +28,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             >
-            <com.tencent.qcloud.timchat.customview.CircularImageButton
+            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/test_head"
+                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
                 />
             <TextView
@@ -49,10 +49,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             >
-            <com.tencent.qcloud.timchat.customview.CircularImageButton
+            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/test_head"
+                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
                 />
             <TextView
@@ -71,10 +71,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             >
-            <com.tencent.qcloud.timchat.customview.CircularImageButton
+            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/test_head"
+                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
                 />
             <TextView
@@ -92,10 +92,10 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             >
-            <com.tencent.qcloud.timchat.customview.CircularImageButton
+            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/test_head"
+                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
                 />
             <TextView

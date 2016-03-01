@@ -2,18 +2,17 @@ package com.tencent.qcloud.presentation.presenter;
 
 import android.os.Handler;
 
-import com.tencent.qcloud.presentation.model.UserInfo;
 import com.tencent.qcloud.presentation.view.SplashView;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
+
+import model.UserInfo;
 
 
 /**
  * 闪屏界面逻辑
  */
 public class SplashPresenter extends Presenter {
-
     SplashView view;
-
     public SplashPresenter(SplashView view){
         this.view = view;
     }

@@ -1,14 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.tencent.qcloud.timchat.ui.ConversationFragment">
 
-    <com.tencent.qcloud.timchat.customview.TemplateTitle
+    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleText="@string/home_conversation_tab">
-    </com.tencent.qcloud.timchat.customview.TemplateTitle>
+        app:titleText="@string/home_conversation_tab"></com.tencent.qcloud.timchat.ui.customview.TemplateTitle>
 
-</FrameLayout>
+    <com.tencent.qcloud.timchat.ui.customview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_big_del" />
+</LinearLayout>

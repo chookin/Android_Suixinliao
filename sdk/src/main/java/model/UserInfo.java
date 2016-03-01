@@ -1,4 +1,4 @@
-package com.tencent.qcloud.presentation.model;
+package model;
 
 
 /**
