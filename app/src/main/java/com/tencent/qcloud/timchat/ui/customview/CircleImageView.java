@@ -24,7 +24,6 @@ public class CircleImageView extends ImageView {
     private Bitmap mBitmap;
     private BitmapShader mBitmapShader;
     private Paint paint;
-    private int canvasSize;
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
     private static final int COLORDRAWABLE_DIMENSION = 2;
 
@@ -40,11 +39,9 @@ public class CircleImageView extends ImageView {
         }
         if(mBitmap.getHeight() == 0 || mBitmap.getWidth() == 0)
             return;
-        canvasSize = Math.min(getWidth(), getHeight());
         updateBitmapShader();
         paint.setShader(mBitmapShader);
         canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, Math.min(getWidth() / 2.0f, getHeight() / 2.0f), paint);
-
     }
 
     private void init(){
@@ -103,9 +100,11 @@ public class CircleImageView extends ImageView {
         }
     }
 
-    public void updateBitmapShader() {
+    private void updateBitmapShader() {
         if (mBitmap == null)
             return;
+        int canvasSize = Math.min(getWidth(), getHeight());
+        if (canvasSize == 0) return;
         if( canvasSize!= mBitmap.getWidth() || canvasSize != mBitmap.getHeight()) {
             Matrix matrix = new Matrix();
             float scale = (float) canvasSize / (float) mBitmap.getWidth();
