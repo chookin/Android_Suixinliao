@@ -1,5 +1,4 @@
-package model;
-
+package com.tencent.qcloud.timchat.model;
 
 /**
  * 用户信息

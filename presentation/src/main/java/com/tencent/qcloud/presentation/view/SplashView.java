@@ -16,4 +16,9 @@ public interface SplashView {
      */
     void navToLogin();
 
+    /**
+     * 是否已有用户登录
+     */
+    boolean isUserLogin();
+
 }

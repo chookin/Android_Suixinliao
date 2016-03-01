@@ -8,8 +8,10 @@ import android.view.WindowManager;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.view.SplashView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.Constants;
+import com.tencent.qcloud.tlslibrary.service.TLSService;
 
 public class SplashActivity extends Activity implements SplashView {
 
@@ -45,5 +47,13 @@ public class SplashActivity extends Activity implements SplashView {
         // 传入跳转的Activity的完整类名
         intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_SUCC, "com.tencent.qcloud.timchat.ui.HomeActivity");
         startActivityForResult(intent, 0);
+    }
+
+    /**
+     * 是否已有用户登录
+     */
+    @Override
+    public boolean isUserLogin() {
+        return UserInfo.getInstance().getId()!= null && (!TLSService.getInstance().needLogin(UserInfo.getInstance().getId()));
     }
 }

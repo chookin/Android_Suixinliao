@@ -4,10 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 import com.tencent.qcloud.presentation.business.InitBusiness;
+import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.service.InitService;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 
-import model.UserInfo;
+
 
 
 /**

@@ -3,9 +3,6 @@ package com.tencent.qcloud.presentation.presenter;
 import android.os.Handler;
 
 import com.tencent.qcloud.presentation.view.SplashView;
-import com.tencent.qcloud.tlslibrary.service.TLSService;
-
-import model.UserInfo;
 
 
 /**
@@ -26,7 +23,7 @@ public class SplashPresenter extends Presenter {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(UserInfo.getInstance().getId()!= null && (!TLSService.getInstance().needLogin(UserInfo.getInstance().getId())) ){
+                if(view.isUserLogin()){
                     view.navToHome();
                 }else{
                     view.navToLogin();
