@@ -31,6 +31,7 @@ public class SplashActivity extends Activity implements SplashView {
     public void navToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     /**

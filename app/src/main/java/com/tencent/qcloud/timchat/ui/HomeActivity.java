@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
 
+/**
+ * Tab页主界面
+ */
 public class HomeActivity extends FragmentActivity {
 
     private LayoutInflater layoutInflater;

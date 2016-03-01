@@ -1,4 +1,4 @@
-package com.tencent.qcloud.timchat.template;
+package com.tencent.qcloud.timchat.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
