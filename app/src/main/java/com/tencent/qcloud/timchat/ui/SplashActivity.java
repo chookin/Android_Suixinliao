@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
-import com.tencent.qcloud.presentation.view.SplashView;
+import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
