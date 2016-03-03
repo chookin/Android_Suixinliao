@@ -100,11 +100,5 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     }
 
 
-    /**
-     * 初始化界面显示或重新刷新界面
-     */
-    @Override
-    public void initView() {
 
-    }
 }

@@ -5,8 +5,4 @@ package com.tencent.qcloud.presentation.viewfeatures;
  */
 public interface MvpView {
 
-    /**
-     * 初始化界面显示或重新刷新界面
-     */
-    public void initView();
 }

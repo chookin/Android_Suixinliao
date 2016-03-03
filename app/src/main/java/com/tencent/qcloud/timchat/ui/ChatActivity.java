@@ -54,11 +54,4 @@ public class ChatActivity extends Activity implements ChatView {
         }
     }
 
-    /**
-     * 初始化界面显示或重新刷新界面
-     */
-    @Override
-    public void initView() {
-
-    }
 }
