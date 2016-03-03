@@ -1,7 +1,7 @@
 package com.tencent.qcloud.timchat.model;
 
 /**
- * 用户信息
+ * 用户数据
  */
 public class UserInfo {
 
