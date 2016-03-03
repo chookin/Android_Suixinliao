@@ -25,7 +25,9 @@ public class MyApplication extends Application {
         InitBusiness.start(context);
         TLSService tlsService = InitService.init(context);
         if (tlsService != null){
-            UserInfo.getInstance().setId(tlsService.getLastUserIdentifier());
+            String id = tlsService.getLastUserIdentifier();
+            UserInfo.getInstance().setId(id);
+            UserInfo.getInstance().setUserSig(tlsService.getUserSig(id));
         }
     }
 

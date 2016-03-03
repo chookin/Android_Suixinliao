@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.tencent.TIMCallBack;
+import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.R;
@@ -13,9 +15,11 @@ import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.Constants;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 
-public class SplashActivity extends Activity implements SplashView {
+public class SplashActivity extends Activity implements SplashView,TIMCallBack{
 
     SplashPresenter presenter;
+    private int LOGIN_RESULT_CODE = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,7 @@ public class SplashActivity extends Activity implements SplashView {
      */
     @Override
     public void navToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+        LoginBusiness.LoginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), this);
     }
 
     /**
@@ -55,5 +57,29 @@ public class SplashActivity extends Activity implements SplashView {
     @Override
     public boolean isUserLogin() {
         return UserInfo.getInstance().getId()!= null && (!TLSService.getInstance().needLogin(UserInfo.getInstance().getId()));
+    }
+
+    /**
+     * imsdk登录失败后回调
+     */
+    @Override
+    public void onError(int i, String s) {
+
+    }
+
+    /**
+     * imsdk登录成功后回调
+     */
+    @Override
+    public void onSuccess() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (LOGIN_RESULT_CODE == resultCode) {
+            navToHome();
+        }
     }
 }

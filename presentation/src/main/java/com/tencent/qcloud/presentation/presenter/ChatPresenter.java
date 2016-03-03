@@ -3,7 +3,7 @@ package com.tencent.qcloud.presentation.presenter;
 import com.tencent.TIMConversation;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.event.MessageEvent;
-import com.tencent.qcloud.presentation.view.ChatView;
+import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -28,6 +28,14 @@ public class ChatPresenter extends Presenter implements Observer {
      */
     @Override
     public void start() {
+
+    }
+
+    /**
+     * 中止页面逻辑
+     */
+    @Override
+    public void stop() {
 
     }
 
