@@ -6,6 +6,7 @@ package com.tencent.qcloud.timchat.model;
 public class UserInfo {
 
     private String id;
+    private String userSig;
 
     private static UserInfo ourInstance = new UserInfo();
 
@@ -22,5 +23,13 @@ public class UserInfo {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserSig() {
+        return userSig;
+    }
+
+    public void setUserSig(String userSig) {
+        this.userSig = userSig;
     }
 }
