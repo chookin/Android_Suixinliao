@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.ui;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -82,6 +83,8 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddNewFriendActivity.class);
+                getActivity().startActivity(intent);
 
             }
         });

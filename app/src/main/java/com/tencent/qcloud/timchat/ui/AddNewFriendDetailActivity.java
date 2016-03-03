@@ -8,13 +8,13 @@ import com.tencent.qcloud.timchat.R;
 /**
  * 查找添加新朋友
  */
-public class AddNewFriendActivity extends Activity{
+public class AddNewFriendDetailActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addnew);
-
+        setContentView(R.layout.activity_addnew_detail);
+        
     }
 
 }

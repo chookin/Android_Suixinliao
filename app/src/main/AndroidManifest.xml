@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.ChatActivity" >
         </activity>
+        <activity android:name=".ui.AddNewFriendActivity" >
+        </activity>
     </application>
 
 </manifest>

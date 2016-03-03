@@ -3,6 +3,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_bar_back">返回</string>
 
     <!-- home activity -->
     <string name="home_conversation_tab">会话</string>
@@ -22,5 +23,16 @@
     <!-- Add newfriend activity -->
     <string name="search_default">搜索</string>
     <string name="search_back">取消</string>
+
+    <!-- Add newfriend detail activity -->
+    <string name="title_addfri">添加好友</string>
+    <string name="add_detail_ID">帐号ID</string>
+    <string name="add_detail_name">备注名</string>
+    <string name="add_detail_group">分组</string>
+    <string name="add_detail_other">附加消息</string>
+    <string name="add_invitation_send">发送添加好友邀请</string>
+
+
+
 
 </resources>
