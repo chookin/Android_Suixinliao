@@ -31,6 +31,11 @@ public class ChatPresenter extends Presenter implements Observer {
 
     }
 
+    @Override
+    public void stop() {
+
+    }
+
     /**
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}
