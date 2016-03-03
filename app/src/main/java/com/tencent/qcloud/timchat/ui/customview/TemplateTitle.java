@@ -55,4 +55,8 @@ public class TemplateTitle extends RelativeLayout {
         TextView tvMore = (TextView) findViewById(R.id.txt_more);
         tvMore.setText(moreText);
     }
+
+
+
+
 }
