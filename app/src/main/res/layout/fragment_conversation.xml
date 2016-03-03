@@ -9,10 +9,13 @@
     <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleText="@string/home_conversation_tab"></com.tencent.qcloud.timchat.ui.customview.TemplateTitle>
+        app:titleText="@string/home_conversation_tab"/>
+    <ListView
+        android:id="@id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.tencent.qcloud.timchat.ui.customview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_big_del" />
+    </ListView>
+
+
 </LinearLayout>

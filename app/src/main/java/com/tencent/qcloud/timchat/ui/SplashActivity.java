@@ -82,4 +82,6 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
             navToHome();
         }
     }
+
+
 }

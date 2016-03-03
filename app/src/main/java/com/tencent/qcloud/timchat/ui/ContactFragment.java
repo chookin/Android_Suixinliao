@@ -100,4 +100,5 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     }
 
 
+
 }
