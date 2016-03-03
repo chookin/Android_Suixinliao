@@ -1,9 +1,9 @@
-package com.tencent.qcloud.presentation.view;
+package com.tencent.qcloud.presentation.viewfeatures;
 
 /**
  * 闪屏界面控制接口
  */
-public interface SplashView {
+public interface SplashView extends MvpView {
 
     /**
      * 跳转到主界面

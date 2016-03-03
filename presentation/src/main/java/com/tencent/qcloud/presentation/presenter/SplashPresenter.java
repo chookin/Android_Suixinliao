@@ -2,7 +2,7 @@ package com.tencent.qcloud.presentation.presenter;
 
 import android.os.Handler;
 
-import com.tencent.qcloud.presentation.view.SplashView;
+import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 
 
 /**
@@ -30,6 +30,11 @@ public class SplashPresenter extends Presenter {
                 }
             }
         }, 3000);
+    }
+
+    @Override
+    public void stop() {
+
     }
 
 }

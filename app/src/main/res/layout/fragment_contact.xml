@@ -1,45 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorGray3"
+    android:orientation="vertical"
     tools:context="com.tencent.qcloud.timchat.ui.ContactFragment">
 
     <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleText="@string/home_contact_tab"
-        app:moreImg="@drawable/ic_add">
-    </com.tencent.qcloud.timchat.ui.customview.TemplateTitle>
+        app:moreImg="@drawable/ic_add"
+        app:titleText="@string/home_contact_tab"></com.tencent.qcloud.timchat.ui.customview.TemplateTitle>
 
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        >
+        android:orientation="horizontal">
+
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
-                />
+                android:src="@drawable/test_head" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:text="@string/new_friend"
-                />
+                android:text="@string/new_friend" />
         </FrameLayout>
 
 
@@ -47,42 +45,19 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
-                />
+                android:src="@drawable/test_head" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:text="@string/public_group"
-                />
-        </FrameLayout>
-
-
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            >
-            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/test_head"
-                android:layout_gravity="top|center"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:text="@string/discuss_group"
-                />
+                android:text="@string/public_group" />
         </FrameLayout>
 
 
@@ -90,22 +65,49 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            >
+            android:layout_weight="1">
+
             <com.tencent.qcloud.timchat.ui.customview.CircleImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/test_head"
                 android:layout_gravity="top|center"
-                />
+                android:src="@drawable/test_head" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:text="@string/chatroom"
-                />
+                android:text="@string/discuss_group" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="top|center"
+                android:src="@drawable/test_head" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:text="@string/chatroom" />
         </FrameLayout>
     </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/grouplist"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000"/>
 
 
 </LinearLayout>
