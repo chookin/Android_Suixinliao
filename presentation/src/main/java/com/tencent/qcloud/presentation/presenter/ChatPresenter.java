@@ -31,6 +31,7 @@ public class ChatPresenter extends Presenter implements Observer {
 
     }
 
+
     /**
      * 中止页面逻辑
      */
