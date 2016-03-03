@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.tencent.TIMMessage;
+import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
@@ -20,14 +21,17 @@ public class ChatActivity extends Activity implements ChatView {
     private List<Message> messageList = new ArrayList<>();
     private ChatAdapter adapter;
     private ListView listView;
+    private ChatPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        presenter = new ChatPresenter(this);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
+        presenter.start();
     }
 
     /**
@@ -44,8 +48,17 @@ public class ChatActivity extends Activity implements ChatView {
                 mMessage = new TextMessage(message);
                 break;
         }
-        messageList.add(mMessage);
-        adapter.notifyDataSetChanged();
+        if (mMessage != null){
+            messageList.add(mMessage);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 初始化界面显示或重新刷新界面
+     */
+    @Override
+    public void initView() {
 
     }
 }

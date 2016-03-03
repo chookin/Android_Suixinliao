@@ -82,4 +82,12 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
             navToHome();
         }
     }
+
+    /**
+     * 初始化界面显示或重新刷新界面
+     */
+    @Override
+    public void initView() {
+
+    }
 }

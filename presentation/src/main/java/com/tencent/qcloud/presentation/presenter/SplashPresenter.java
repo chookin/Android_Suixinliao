@@ -29,7 +29,7 @@ public class SplashPresenter extends Presenter {
                     view.navToLogin();
                 }
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override

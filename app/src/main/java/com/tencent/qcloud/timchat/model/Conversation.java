@@ -1,14 +1,30 @@
 package com.tencent.qcloud.timchat.model;
 
-/**
- * 回话数据
- */
-public class Conversation {
+import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
 
-    //回话对象id
+import java.io.Serializable;
+
+/**
+ * 会话数据
+ */
+public class Conversation implements Serializable {
+
+    //会话对象id
     private String id;
-    //回话类型
-    private Type type;
+
+    //会话类型
+    private TIMConversationType type;
+
+    //最后一条消息
+    private Message lastMessage;
+
+    private TIMConversation conversation;
+
+    public Conversation(TIMConversation conversation){
+        this.conversation = conversation;
+    }
+
 
     public String getId() {
         return id;
@@ -18,12 +34,28 @@ public class Conversation {
         this.id = id;
     }
 
-    public Type getType() {
+    public TIMConversationType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(TIMConversationType type) {
         this.type = type;
+    }
+
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(Message lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public TIMConversation getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(TIMConversation conversation) {
+        this.conversation = conversation;
     }
 
     @Override
@@ -43,27 +75,7 @@ public class Conversation {
         return result;
     }
 
-    public enum Type{
-        /**
-         * 非法值
-         */
-        Invalid,
 
-        /**
-         * 单聊会话
-         */
-        C2C,
-
-        /**
-         * 群组会话
-         */
-        Group,
-
-        /**
-         * 系统会话
-         */
-        System
-    }
 
 
 }
