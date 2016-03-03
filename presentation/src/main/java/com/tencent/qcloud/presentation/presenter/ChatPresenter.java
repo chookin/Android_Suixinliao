@@ -31,10 +31,6 @@ public class ChatPresenter extends Presenter implements Observer {
 
     }
 
-    @Override
-    public void stop() {
-
-    }
 
     /**
      * 中止页面逻辑
