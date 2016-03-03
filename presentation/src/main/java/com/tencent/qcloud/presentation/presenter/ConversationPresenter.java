@@ -6,6 +6,8 @@ import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -43,14 +45,16 @@ public class ConversationPresenter extends Presenter implements Observer {
      */
     @Override
     public void start() {
+        List<TIMConversation> list = new ArrayList<>();
         //获取会话个数
         long cnt = TIMManager.getInstance().getConversationCount();
         //遍历会话列表
         for(long i = 0; i < cnt; ++i) {
             //根据索引获取会话
             TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
-
+            list.add(conversation);
         }
+        view.initView(list);
     }
 
     /**

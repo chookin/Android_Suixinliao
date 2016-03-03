@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Conversation implements Serializable {
 
     //会话对象id
-    private String id;
+    private String identify;
 
     //会话类型
     private TIMConversationType type;
@@ -19,19 +19,19 @@ public class Conversation implements Serializable {
     //最后一条消息
     private Message lastMessage;
 
-    private TIMConversation conversation;
 
     public Conversation(TIMConversation conversation){
-        this.conversation = conversation;
+        this.type = conversation.getType();
+        this.identify = conversation.getPeer();
     }
 
 
-    public String getId() {
-        return id;
+    public String getIdentify() {
+        return identify;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdentify(String identify) {
+        this.identify = identify;
     }
 
     public TIMConversationType getType() {
@@ -50,27 +50,21 @@ public class Conversation implements Serializable {
         this.lastMessage = lastMessage;
     }
 
-    public TIMConversation getConversation() {
-        return conversation;
-    }
 
-    public void setConversation(TIMConversation conversation) {
-        this.conversation = conversation;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Conversation that = (Conversation) o;
-        if (!id.equals(that.id)) return false;
+        if (!identify.equals(that.identify)) return false;
         return type == that.type;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = identify.hashCode();
         result = 31 * result + type.hashCode();
         return result;
     }

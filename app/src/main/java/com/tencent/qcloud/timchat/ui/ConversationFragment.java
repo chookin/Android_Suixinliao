@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tencent.TIMConversation;
 import com.tencent.qcloud.presentation.presenter.ConversationPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 import com.tencent.qcloud.timchat.R;
@@ -47,7 +48,8 @@ public class ConversationFragment extends Fragment implements ConversationView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(),ChatActivity.class);
-                intent.putExtra("conversation",conversationList.get(position));
+                intent.putExtra("identify",conversationList.get(position).getIdentify());
+                intent.putExtra("type",conversationList.get(position).getType());
                 startActivity(intent);
             }
         });
@@ -58,4 +60,17 @@ public class ConversationFragment extends Fragment implements ConversationView {
     }
 
 
+    /**
+     * 初始化界面或刷新界面
+     *
+     * @param conversationList
+     */
+    @Override
+    public void initView(List<TIMConversation> conversationList) {
+        this.conversationList.clear();
+        for (TIMConversation item:conversationList){
+            this.conversationList.add(new Conversation(item));
+        }
+        adapter.notifyDataSetChanged();
+    }
 }

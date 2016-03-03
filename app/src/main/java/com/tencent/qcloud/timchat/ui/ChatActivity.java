@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
@@ -17,7 +18,6 @@ import java.util.List;
 
 public class ChatActivity extends Activity implements ChatView {
 
-
     private List<Message> messageList = new ArrayList<>();
     private ChatAdapter adapter;
     private ListView listView;
@@ -27,7 +27,9 @@ public class ChatActivity extends Activity implements ChatView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        presenter = new ChatPresenter(this);
+        final String identify = getIntent().getStringExtra("identify");
+        final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
+        presenter = new ChatPresenter(this,identify,type);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);

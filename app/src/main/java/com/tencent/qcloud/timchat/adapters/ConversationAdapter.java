@@ -46,7 +46,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             view.setTag(viewHolder);
         }
         final Conversation data = getItem(position);
-        viewHolder.TvName.setText(data.getConversation().getPeer());
+        viewHolder.TvName.setText(data.getIdentify());
         return view;
     }
 

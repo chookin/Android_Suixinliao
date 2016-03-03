@@ -1,6 +1,7 @@
 package com.tencent.qcloud.presentation.presenter;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
@@ -14,12 +15,15 @@ import java.util.Observer;
 public class ChatPresenter extends Presenter implements Observer {
 
     private ChatView view;
-    private TIMConversation conversation;
+    private String identify;
+    private TIMConversationType type;
 
-    public ChatPresenter(ChatView view){
+    public ChatPresenter(ChatView view,String identify,TIMConversationType type){
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
         this.view = view;
+        this.identify = identify;
+        this.type = type;
     }
 
 
@@ -52,7 +56,7 @@ public class ChatPresenter extends Presenter implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent){
             TIMMessage msg = (TIMMessage) data;
-            if (msg.getConversation().getPeer().equals(conversation.getPeer())&&msg.getConversation().getType()==conversation.getType()){
+            if (msg.getConversation().getPeer().equals(identify)&&msg.getConversation().getType()==type){
                 if (msg.getElementCount()!=0){
                     view.showMessage(msg);
                 }
