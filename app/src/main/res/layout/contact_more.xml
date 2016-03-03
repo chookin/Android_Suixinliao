@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_marginTop="55dp"
+    android:layout_marginRight="5dp"
+    android:layout_gravity="right"
+    >
+        <TextView
+                android:id="@+id/add_friend"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/addfriend"
+                android:gravity="center"
+                />
+        <TextView
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="@color/colorGray3"
+                />
+        <TextView
+                android:id="@+id/manager_group"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/manangergroup"
+                android:gravity="center"
+                />
+</LinearLayout>
