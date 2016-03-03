@@ -19,7 +19,8 @@
     <string name="manangergroup">管理分组</string>
 
 
-
-
+    <!-- Add newfriend activity -->
+    <string name="search_default">搜索</string>
+    <string name="search_back">取消</string>
 
 </resources>

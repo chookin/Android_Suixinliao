@@ -30,7 +30,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right|center_vertical"
-            android:background="@drawable/ic_add"
+            android:background="@drawable/management"
             android:layout_marginRight="10dp"
             />
 
@@ -54,7 +54,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="top|center"
-                android:src="@drawable/test_head" />
+                android:src="@drawable/friend" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="top|center"
-                android:src="@drawable/test_head" />
+                android:src="@drawable/group" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="top|center"
-                android:src="@drawable/test_head" />
+                android:src="@drawable/discussion" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="top|center"
-                android:src="@drawable/test_head" />
+                android:src="@drawable/chatroom" />
 
             <TextView
                 android:layout_width="wrap_content"
