@@ -37,7 +37,7 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
+            View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
         mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
         mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
         mMoreBtn.setOnClickListener(this);

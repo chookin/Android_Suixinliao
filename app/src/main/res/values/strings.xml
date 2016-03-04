@@ -32,7 +32,7 @@
     <string name="add_detail_other">附加消息</string>
     <string name="add_invitation_send">发送添加好友邀请</string>
 
-
-
+    <string name="title_manager_group">分组管理</string>
+    <string name="add_new_group">添加分组</string>
 
 </resources>
