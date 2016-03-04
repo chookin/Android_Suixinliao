@@ -33,7 +33,14 @@ public class ChatActivity extends Activity implements ChatView {
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
+
         presenter.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.stop();
     }
 
     /**

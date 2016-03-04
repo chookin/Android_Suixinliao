@@ -53,6 +53,6 @@
     </LinearLayout>
     <View android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#1A000000"
+        android:background="@color/line"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

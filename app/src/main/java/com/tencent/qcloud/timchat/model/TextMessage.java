@@ -24,6 +24,7 @@ public class TextMessage extends Message {
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder) {
         TextView tv = new TextView(MyApplication.getContext());
+        tv.setTextSize(30);
         tv.setText(((TIMTextElem) message.getElement(0)).getText());
         viewHolder.leftMessage.addView(tv);
     }

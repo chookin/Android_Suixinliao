@@ -19,8 +19,6 @@ public class ChatPresenter extends Presenter implements Observer {
     private TIMConversationType type;
 
     public ChatPresenter(ChatView view,String identify,TIMConversationType type){
-        //注册消息监听
-        MessageEvent.getInstance().addObserver(this);
         this.view = view;
         this.identify = identify;
         this.type = type;
@@ -32,7 +30,8 @@ public class ChatPresenter extends Presenter implements Observer {
      */
     @Override
     public void start() {
-
+        //注册消息监听
+        MessageEvent.getInstance().addObserver(this);
     }
 
 
@@ -41,7 +40,8 @@ public class ChatPresenter extends Presenter implements Observer {
      */
     @Override
     public void stop() {
-
+        //注销消息监听
+        MessageEvent.getInstance().deleteObserver(this);
     }
 
     /**
