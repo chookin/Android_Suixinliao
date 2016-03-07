@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tencent.qcloud.timchat.ui.ChatActivity">
+    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+        android:id="@+id/chat_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
     <com.tencent.qcloud.timchat.ui.customview.ChatInput
         android:id="@+id/input_panel"
         android:layout_width="match_parent"
@@ -13,7 +18,9 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/input_panel">
+        android:divider="@null"
+        android:layout_above="@id/input_panel"
+        android:layout_below="@id/chat_title">
 
     </ListView>
 

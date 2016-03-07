@@ -57,6 +57,18 @@ public class TemplateTitle extends RelativeLayout {
     }
 
 
+    /**
+     * 标题控件
+     *
+     * @param titleText 设置标题文案
+     */
+    public void setTitleText(String titleText){
+        this.titleText = titleText;
+        TextView tvTitle = (TextView) findViewById(R.id.title);
+        tvTitle.setText(titleText);
+    }
+
+
 
 
 }
