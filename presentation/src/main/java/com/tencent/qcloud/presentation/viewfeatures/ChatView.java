@@ -11,4 +11,19 @@ public interface ChatView extends MvpView {
      * 显示消息
      */
     void showMessage(TIMMessage message);
+
+    /**
+     * 发送消息成功
+     *
+     * @param message 返回的消息
+     */
+    void onSendMessageSuccess(TIMMessage message);
+
+    /**
+     * 发送消息失败
+     *
+     * @param code 返回码
+     * @param desc 返回描述
+     */
+    void onSendMessageFail(int code, String desc);
 }

@@ -43,6 +43,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
             viewHolder = new ViewHolder();
             viewHolder.leftMessage = (RelativeLayout) view.findViewById(R.id.leftMessage);
+            viewHolder.rightMessage = (RelativeLayout) view.findViewById(R.id.rightMessage);
             view.setTag(viewHolder);
         }
         final Message data = getItem(position);
@@ -52,6 +53,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
 
     public class ViewHolder{
         public RelativeLayout leftMessage;
+        public RelativeLayout rightMessage;
 
     }
 }
