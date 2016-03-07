@@ -22,6 +22,10 @@
         </activity>
         <activity android:name=".ui.AddNewFriendActivity" >
         </activity>
+        <activity android:name=".ui.AddNewFriendDetailActivity" >
+        </activity>
+        <activity android:name=".ui.NewFriendActivity" >
+        </activity>
     </application>
 
 </manifest>

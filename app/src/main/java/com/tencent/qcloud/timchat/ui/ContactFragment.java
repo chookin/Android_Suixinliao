@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.tencent.qcloud.presentation.presenter.GetMyGroupsPresenter;
@@ -33,15 +34,19 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     private GroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private TextView mMoreBtn;
+    private FrameLayout mNewFriBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
             View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
         mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
+        mNewFriBtn =(FrameLayout)contactLayout.findViewById(R.id.newfriend_btn);
+        mNewFriBtn.setOnClickListener(this);
         mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
         mMoreBtn.setOnClickListener(this);
         mGroupListAdapter = new GroupListAdapter(getActivity());
+
         mGroupListView.setAdapter(mGroupListAdapter);
         return contactLayout;
     }
@@ -71,6 +76,11 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
         if (view.getId() == R.id.contact_add) {
             showMoveDialog();
         }
+        if(view.getId() == R.id.newfriend_btn){
+            Intent intent = new Intent(getActivity(),NewFriendActivity.class);
+            getActivity().startActivity(intent);
+
+        }
     }
 
     private Dialog inviteDialog;
@@ -85,14 +95,14 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddNewFriendActivity.class);
                 getActivity().startActivity(intent);
-
+                inviteDialog.dismiss();
             }
         });
 
         managerGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                inviteDialog.dismiss();
             }
         });
         Window window = inviteDialog.getWindow();

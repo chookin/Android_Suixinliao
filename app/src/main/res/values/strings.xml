@@ -35,4 +35,10 @@
     <string name="title_manager_group">分组管理</string>
     <string name="add_new_group">添加分组</string>
 
+    <!-- Add newfri activity -->
+    <string name="title_new_fri">新朋友</string>
+    <string name="newfri_agree">同意</string>
+    <string name="newfri_disagree">已拒绝</string>
+    <string name="newfri_accept">已接受</string>
+
 </resources>
