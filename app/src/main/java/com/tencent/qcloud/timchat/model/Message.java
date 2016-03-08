@@ -17,6 +17,7 @@ public abstract class Message {
         return message;
     }
 
+
     /**
      * 显示消息
      *
@@ -31,12 +32,12 @@ public abstract class Message {
      */
     public RelativeLayout getBubbleView(ChatAdapter.ViewHolder viewHolder){
         if (message.isSelf()){
-            viewHolder.leftMessage.setVisibility(View.GONE);
-            viewHolder.rightMessage.setVisibility(View.VISIBLE);
+            viewHolder.leftPanel.setVisibility(View.GONE);
+            viewHolder.rightPanel.setVisibility(View.VISIBLE);
             return viewHolder.rightMessage;
         }else{
-            viewHolder.leftMessage.setVisibility(View.VISIBLE);
-            viewHolder.rightMessage.setVisibility(View.GONE);
+            viewHolder.leftPanel.setVisibility(View.VISIBLE);
+            viewHolder.rightPanel.setVisibility(View.GONE);
             return viewHolder.leftMessage;
         }
 

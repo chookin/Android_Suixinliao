@@ -35,6 +35,12 @@
     <string name="title_manager_group">分组管理</string>
     <string name="add_new_group">添加分组</string>
 
+
+    <!-- chat activity -->
+    <string name="chat_image">图片</string>
+    <string name="chat_photo">拍摄</string>
+    <string name="chat_video">小视频</string>
+
     <!-- Add newfri activity -->
     <string name="title_new_fri">新朋友</string>
     <string name="newfri_agree">同意</string>

@@ -11,8 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.ConversationPresenter;
+import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
+import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ConversationAdapter;
 import com.tencent.qcloud.timchat.model.Conversation;
@@ -23,12 +26,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ConversationFragment extends Fragment implements ConversationView {
+public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView {
 
     private List<Conversation> conversationList = new ArrayList<>();
     private ConversationAdapter adapter;
     private ListView listView;
     private ConversationPresenter presenter;
+    private GroupInfoPresenter groupInfoPresenter;
+    private List<String> groupList;
 
 
     public ConversationFragment() {
@@ -47,9 +52,10 @@ public class ConversationFragment extends Fragment implements ConversationView {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(),ChatActivity.class);
-                intent.putExtra("identify",conversationList.get(position).getIdentify());
-                intent.putExtra("type",conversationList.get(position).getType());
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("identify", conversationList.get(position).getIdentify());
+                intent.putExtra("name", conversationList.get(position).getName());
+                intent.putExtra("type", conversationList.get(position).getType());
                 startActivity(intent);
             }
         });
@@ -68,8 +74,28 @@ public class ConversationFragment extends Fragment implements ConversationView {
     @Override
     public void initView(List<TIMConversation> conversationList) {
         this.conversationList.clear();
+        groupList = new ArrayList<>();
         for (TIMConversation item:conversationList){
             this.conversationList.add(new Conversation(item));
+            groupList.add(item.getPeer());
+        }
+        groupInfoPresenter = new GroupInfoPresenter(this,groupList,true);
+        groupInfoPresenter.start();
+    }
+
+    /**
+     * 显示群资料
+     *
+     * @param groupInfos 群资料信息列表
+     */
+    @Override
+    public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
+        for(Conversation item:conversationList){
+            for (TIMGroupDetailInfo info:groupInfos){
+                if (info.getGroupId().equals(item.getIdentify())){
+                    item.setName(info.getGroupName());
+                }
+            }
         }
         adapter.notifyDataSetChanged();
     }

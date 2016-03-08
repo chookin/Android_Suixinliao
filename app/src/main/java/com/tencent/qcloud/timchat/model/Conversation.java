@@ -16,6 +16,9 @@ public class Conversation implements Serializable {
     //会话类型
     private TIMConversationType type;
 
+    //会话对象名称
+    private String name;
+
     //最后一条消息
     private Message lastMessage;
 
@@ -23,6 +26,7 @@ public class Conversation implements Serializable {
     public Conversation(TIMConversation conversation){
         this.type = conversation.getType();
         this.identify = conversation.getPeer();
+        this.name = conversation.getPeer();
     }
 
 
@@ -50,7 +54,13 @@ public class Conversation implements Serializable {
         this.lastMessage = lastMessage;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
