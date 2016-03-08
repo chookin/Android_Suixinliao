@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.TIMFriendAllowType;
 import com.tencent.TIMUserProfile;
@@ -52,7 +51,14 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     @Override
     public void showSearchReuslt(TIMUserProfile userProfile) {
         LogUtils.i(""+userProfile);
-        Toast.makeText(AddNewFriendActivity.this, ""+userProfile.getIdentifier(), Toast.LENGTH_SHORT).show();
+        PersonInfo info = new PersonInfo();
+        info.setID(userProfile.getIdentifier());
+        info.setName(userProfile.getNickName());
+        info.setNeedVerify(userProfile.getAllowType() == TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM);
+        searchResult.add(info);
+        mSearchResultAdapter.notifyDataSetChanged();
+//        Toast.makeText(AddNewFriendActivity.this, ""+userProfile.getIdentifier(), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
