@@ -56,12 +56,13 @@ public class ChatActivity extends Activity implements ChatView {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final String identify = getIntent().getStringExtra("identify");
         final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
+        final String name = getIntent().getStringExtra("name");
         presenter = new ChatPresenter(this,identify,type);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
-        title.setTitleText(identify);
+        title.setTitleText(name);
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
         presenter.start();

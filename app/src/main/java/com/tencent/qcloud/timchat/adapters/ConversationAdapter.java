@@ -46,7 +46,15 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             view.setTag(viewHolder);
         }
         final Conversation data = getItem(position);
-        viewHolder.TvName.setText(data.getIdentify());
+        switch (data.getType()){
+            case C2C:
+                viewHolder.TvName.setText(data.getIdentify());
+                break;
+            case Group:
+                viewHolder.TvName.setText(data.getName());
+                break;
+        }
+
         return view;
     }
 
