@@ -34,7 +34,7 @@ public class TextMessage extends Message {
     public void showMessage(ChatAdapter.ViewHolder viewHolder) {
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP , 18);
-        tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ?R.color.white: R.color.black));
+        tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ?R.color.white:R.color.black));
         tv.setText(((TIMTextElem) message.getElement(0)).getText());
         getBubbleView(viewHolder).removeAllViews();
         getBubbleView(viewHolder).addView(tv);

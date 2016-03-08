@@ -1,9 +1,23 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
@@ -11,12 +25,17 @@ import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
+import java.io.File;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends Activity implements ChatView {
@@ -25,6 +44,10 @@ public class ChatActivity extends Activity implements ChatView {
     private ChatAdapter adapter;
     private ListView listView;
     private ChatPresenter presenter;
+    private ChatInput input;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int IMAGE_STORE = 200;
+    private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +62,8 @@ public class ChatActivity extends Activity implements ChatView {
         listView.setAdapter(adapter);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(identify);
-        ChatInput input = (ChatInput) findViewById(R.id.input_panel);
-        input.setChatPresenter(presenter);
+        input = (ChatInput) findViewById(R.id.input_panel);
+        input.setChatView(this);
         presenter.start();
     }
 
@@ -62,6 +85,9 @@ public class ChatActivity extends Activity implements ChatView {
             case Text:
             case Face:
                 mMessage = new TextMessage(message);
+                break;
+            case Image:
+                mMessage = new ImageMessage(message);
                 break;
         }
         if (mMessage != null){
@@ -90,6 +116,111 @@ public class ChatActivity extends Activity implements ChatView {
     @Override
     public void onSendMessageFail(int code, String desc) {
 
+    }
+
+    /**
+     * 发送图片消息
+     */
+    @Override
+    public void sendImage() {
+        fileUri = getOutputMediaFileUri();
+        Intent intent_album=new Intent("android.intent.action.GET_CONTENT");
+        intent_album.setType("image/*");
+        intent_album.putExtra(MediaStore.EXTRA_OUTPUT,fileUri);
+        startActivityForResult(intent_album,IMAGE_STORE);
+    }
+
+    /**
+     * 发送照片消息
+     */
+    @Override
+    public void sendPhoto() {
+        Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFileUri(); // create a file to save the image
+        intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+        startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    /**
+     * 发送照片消息
+     */
+    @Override
+    public void sendText() {
+        presenter.sendMessage((new TextMessage(input.getText())).getMessage());
+        input.setText("");
+    }
+
+    private Uri getOutputMediaFileUri(){
+        File file=getOutputMediaFile();
+        if (file==null) return null;
+        return Uri.fromFile(file);
+    }
+
+    private File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "TIMChat");
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg");
+
+        return mediaFile;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                File file = new File(fileUri.getPath());
+                if (file.exists()) {
+                    Message message = new ImageMessage(file.getAbsolutePath());
+                    presenter.sendMessage(message.getMessage());
+
+
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+            }
+
+        }else if (requestCode== IMAGE_STORE){
+            if (resultCode == RESULT_OK){
+                Message message = new ImageMessage(getRealFilePath(data.getData()));
+                presenter.sendMessage(message.getMessage());
+            }
+
+        }
+
+    }
+
+    /**
+     * 从uri转化为地址
+     *
+     * @param uri uri
+     *
+     */
+    private String getRealFilePath(final Uri uri) {
+        String result;
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) {
+            result = uri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 
 }

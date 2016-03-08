@@ -26,4 +26,25 @@ public interface ChatView extends MvpView {
      * @param desc 返回描述
      */
     void onSendMessageFail(int code, String desc);
+
+
+    /**
+     * 发送图片消息
+     *
+     */
+    void sendImage();
+
+
+    /**
+     * 发送照片消息
+     *
+     */
+    void sendPhoto();
+
+
+    /**
+     * 发送文字消息
+     *
+     */
+    void sendText();
 }

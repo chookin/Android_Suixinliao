@@ -44,6 +44,8 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             viewHolder = new ViewHolder();
             viewHolder.leftMessage = (RelativeLayout) view.findViewById(R.id.leftMessage);
             viewHolder.rightMessage = (RelativeLayout) view.findViewById(R.id.rightMessage);
+            viewHolder.leftPanel = (RelativeLayout) view.findViewById(R.id.leftPanel);
+            viewHolder.rightPanel = (RelativeLayout) view.findViewById(R.id.rightPanel);
             view.setTag(viewHolder);
         }
         final Message data = getItem(position);
@@ -54,6 +56,8 @@ public class ChatAdapter extends ArrayAdapter<Message> {
     public class ViewHolder{
         public RelativeLayout leftMessage;
         public RelativeLayout rightMessage;
+        public RelativeLayout leftPanel;
+        public RelativeLayout rightPanel;
 
     }
 }

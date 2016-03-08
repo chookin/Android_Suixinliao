@@ -7,13 +7,14 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.tencent.qcloud.presentation.presenter.ChatPresenter;
+import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.model.TextMessage;
 
 /**
  * 聊天界面输入控件
@@ -23,7 +24,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     private ImageButton BtnAdd,BtnSend;
     private EditText editText;
     private boolean isSendVisible;
-    private ChatPresenter chatPresenter;
+    private ChatView chatView;
+    private LinearLayout morePanel;
+
 
     public ChatInput(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,15 +38,19 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         BtnAdd.setOnClickListener(this);
         BtnSend = (ImageButton) findViewById(R.id.btn_send);
         BtnSend.setOnClickListener(this);
+        morePanel = (LinearLayout) findViewById(R.id.more_panel);
+        LinearLayout BtnImage = (LinearLayout) findViewById(R.id.btn_photo);
+        BtnImage.setOnClickListener(this);
+        LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
+        BtnPhoto.setOnClickListener(this);
         setSendBtn();
-
     }
 
     /**
      * 关联聊天界面逻辑
      */
-    public void setChatPresenter(ChatPresenter presenter){
-        chatPresenter = presenter;
+    public void setChatView(ChatView chatView){
+        this.chatView = chatView;
     }
 
     /**
@@ -121,13 +128,40 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
-                TextMessage message = new TextMessage(editText.getText().toString());
-                chatPresenter.sendMessage(message.getMessage());
-                editText.setText("");
+                chatView.sendText();
                 break;
             case R.id.btn_add:
+                if (morePanel.getVisibility() == VISIBLE){
+                    morePanel.setVisibility(GONE);
+                    InputMethodManager inputMethodManager=(InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInputFromWindow(morePanel.getApplicationWindowToken(), InputMethodManager.RESULT_SHOWN, 0);
+                }else{
+                    InputMethodManager inputMethodManager=(InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInputFromWindow(morePanel.getApplicationWindowToken(), InputMethodManager.RESULT_HIDDEN, 0);
+                    morePanel.setVisibility(VISIBLE);
+                }
                 break;
-
+            case R.id.btn_photo:
+                chatView.sendPhoto();
+                break;
+            case R.id.btn_image:
+                chatView.sendImage();
+                break;
         }
+    }
+
+
+    /**
+     * 获取输入框文字
+     */
+    public String getText(){
+        return editText.getText().toString();
+    }
+
+    /**
+     * 设置输入框文字
+     */
+    public void setText(String text){
+        editText.setText(text);
     }
 }
