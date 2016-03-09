@@ -14,12 +14,27 @@ import com.tencent.qcloud.timchat.R;
  */
 public class VoiceSendingView extends RelativeLayout {
 
+
+    private AnimationDrawable frameAnimation;
+
     public VoiceSendingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.voice_sending, this);
         ImageView img = (ImageView)findViewById(R.id.microphone);
         img.setBackgroundResource(R.drawable.animation_voice);
-        AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+        frameAnimation = (AnimationDrawable) img.getBackground();
+
+    }
+
+    public void showRecording(){
         frameAnimation.start();
+    }
+
+    public void showCancel(){
+        frameAnimation.stop();
+    }
+
+    public void release(){
+        frameAnimation.stop();
     }
 }

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tencent.qcloud.timchat" >
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -18,13 +21,16 @@
         </activity>
         <activity android:name=".ui.HomeActivity" >
         </activity>
-        <activity android:name=".ui.ChatActivity">
+        <activity android:name=".ui.ChatActivity" >
         </activity>
         <activity android:name=".ui.AddNewFriendActivity" >
         </activity>
         <activity android:name=".ui.AddNewFriendDetailActivity" >
         </activity>
         <activity android:name=".ui.NewFriendActivity" >
+        </activity>
+
+        <activity android:name=".ui.ProfileActivity" >
         </activity>
         <activity android:name=".ui.ManagerGroupActivity" >
         </activity>

@@ -82,9 +82,11 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         if (isHoldVoiceBtn){
             voicePanel.setText(getResources().getString(R.string.chat_release_send));
             voicePanel.setBackground(getResources().getDrawable(R.drawable.btn_voice_pressed));
+            chatView.startSendVoice();
         }else{
             voicePanel.setText(getResources().getString(R.string.chat_press_talk));
             voicePanel.setBackground(getResources().getDrawable(R.drawable.btn_voice_normal));
+            chatView.endSendVoice();
         }
     }
 

@@ -31,6 +31,8 @@ import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
 import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
+import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
+import com.tencent.qcloud.timchat.utils.RecorderUtil;
 
 import java.io.File;
 
@@ -49,6 +51,7 @@ public class ChatActivity extends Activity implements ChatView {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private Uri fileUri;
+    private VoiceSendingView voiceSendingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +67,17 @@ public class ChatActivity extends Activity implements ChatView {
         listView.setAdapter(adapter);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(name);
+        title.setMoreImgAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatActivity.this,ProfileActivity.class);
+                intent.putExtra("identify",identify);
+                startActivity(intent);
+            }
+        });
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
+        voiceSendingView = (VoiceSendingView) findViewById(R.id.voice_sending);
         presenter.start();
     }
 
@@ -155,12 +167,17 @@ public class ChatActivity extends Activity implements ChatView {
         input.setText("");
     }
 
+    RecorderUtil recorder = new RecorderUtil();
+
     /**
      * 开始发送语音消息
      */
     @Override
     public void startSendVoice() {
+        voiceSendingView.setVisibility(View.VISIBLE);
+        voiceSendingView.showRecording();
 
+        recorder.startRecording();
     }
 
     /**
@@ -168,7 +185,9 @@ public class ChatActivity extends Activity implements ChatView {
      */
     @Override
     public void endSendVoice() {
-
+        voiceSendingView.release();
+        voiceSendingView.setVisibility(View.GONE);
+        recorder.stopRecording();
     }
 
     /**
