@@ -7,7 +7,7 @@ import com.tencent.TIMFriendAllowType;
 import com.tencent.TIMFriendshipManager;
 
 /**
- * 设置界面Presenter
+ * 设置界面Presenter dadfa
  */
 public class SettingsPresenter extends Presenter {
     private static final String TAG = SettingsPresenter.class.getSimpleName();
