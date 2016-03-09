@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".ui.NewFriendActivity" >
         </activity>
+        <activity android:name=".ui.ManagerGroupActivity" >
+        </activity>
     </application>
 
 </manifest>

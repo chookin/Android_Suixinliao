@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.tencent.qcloud.presentation.presenter.GetMyGroupsPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.JoinGroupsInfo;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.GroupListAdapter;
+import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
 
 /**
  * 联系人界面
@@ -31,7 +31,7 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     }
 
 
-    private GroupListAdapter mGroupListAdapter;
+    private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private TextView mMoreBtn;
     private FrameLayout mNewFriBtn;
@@ -45,7 +45,7 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
         mNewFriBtn.setOnClickListener(this);
         mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
         mMoreBtn.setOnClickListener(this);
-        mGroupListAdapter = new GroupListAdapter(getActivity());
+        mGroupListAdapter = new ExpandGroupListAdapter(getActivity());
 
         mGroupListView.setAdapter(mGroupListAdapter);
         return contactLayout;
@@ -102,6 +102,8 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
         managerGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),ManagerGroupActivity.class);
+                getActivity().startActivity(intent);
                 inviteDialog.dismiss();
             }
         });
