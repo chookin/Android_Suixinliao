@@ -1,9 +1,12 @@
 package com.tencent.qcloud.timchat.ui.customview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,6 +50,12 @@ public class TemplateTitle extends RelativeLayout {
         if (canBack){
             TextView tvBack = (TextView) findViewById(R.id.txt_back);
             tvBack.setText(backText);
+            backBtn.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((Activity) getContext()).finish();
+                }
+            });
         }
         if (moreImg != 0){
             ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
@@ -66,6 +75,17 @@ public class TemplateTitle extends RelativeLayout {
         this.titleText = titleText;
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(titleText);
+    }
+
+
+    /**
+     * 设置更多按钮事件
+     *
+     * @param listener 事件监听
+     */
+    public void setMoreImgAction(View.OnClickListener listener){
+        ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
+        moreImgView.setOnClickListener(listener);
     }
 
 

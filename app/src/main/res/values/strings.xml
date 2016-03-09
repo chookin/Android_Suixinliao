@@ -44,6 +44,11 @@
     <string name="chat_release_send">松开 结束</string>
     <string name="chat_up_finger">手指上滑，取消发送</string>
 
+    <!-- profile activity -->
+    <string name="profile_detail">详细资料</string>
+    <string name="profile_back">返回</string>
+
+
     <!-- Add newfri activity -->
     <string name="title_new_fri">新朋友</string>
     <string name="newfri_agree">同意</string>
