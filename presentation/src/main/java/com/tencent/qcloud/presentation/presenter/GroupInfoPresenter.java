@@ -23,26 +23,14 @@ public class GroupInfoPresenter extends Presenter implements TIMValueCallBack<Li
         this.groupIds = groupIds;
     }
 
-    /**
-     * 加载页面逻辑
-     */
-    @Override
-    public void start() {
+
+    public void getGroupDetailInfo(){
         if (isInGroup) {
             TIMGroupManager.getInstance().getGroupDetailInfo(groupIds, this);
         }else{
             TIMGroupManager.getInstance().getGroupPublicInfo(groupIds, this);
         }
     }
-
-    /**
-     * 中止页面逻辑
-     */
-    @Override
-    public void stop() {
-
-    }
-
 
 
 

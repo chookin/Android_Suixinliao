@@ -60,7 +60,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             }
         });
         presenter = new ConversationPresenter(this);
-        presenter.start();
+        presenter.getConversation();
         return view;
 
     }
@@ -80,7 +80,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             groupList.add(item.getPeer());
         }
         groupInfoPresenter = new GroupInfoPresenter(this,groupList,true);
-        groupInfoPresenter.start();
+        groupInfoPresenter.getGroupDetailInfo();
     }
 
     /**

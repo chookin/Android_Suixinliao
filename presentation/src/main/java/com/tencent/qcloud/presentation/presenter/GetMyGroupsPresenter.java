@@ -13,14 +13,4 @@ public class GetMyGroupsPresenter extends Presenter {
         this.view = view;
     }
 
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
 }

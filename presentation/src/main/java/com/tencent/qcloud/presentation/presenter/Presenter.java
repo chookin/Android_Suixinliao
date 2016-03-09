@@ -5,14 +5,4 @@ package com.tencent.qcloud.presentation.presenter;
  */
 public abstract class Presenter {
 
-
-    /**
-     * 加载页面逻辑
-     */
-    public abstract void start();
-
-    /**
-     * 中止页面逻辑
-     */
-    public abstract void stop();
 }

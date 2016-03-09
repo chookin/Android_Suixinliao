@@ -4,6 +4,9 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_bar_back">返回</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+
 
     <!-- home activity -->
     <string name="home_conversation_tab">会话</string>
@@ -32,8 +35,14 @@
     <string name="add_detail_other">附加消息</string>
     <string name="add_invitation_send">发送添加好友邀请</string>
 
+    <!-- Manager group activity -->
     <string name="title_manager_group">分组管理</string>
     <string name="add_new_group">添加分组</string>
+    <string name="add_dialog_title">添加分组</string>
+    <string name="add_dialog_subtitle">请输入新分组的名称</string>
+    <string name="title_confirm_delete_group">确认删除改分组吗？</string>
+    <string name="delete_dialog_subtitle">删除分组名称</string>
+
 
 
     <!-- chat activity -->
@@ -54,5 +63,6 @@
     <string name="newfri_agree">同意</string>
     <string name="newfri_disagree">已拒绝</string>
     <string name="newfri_accept">已接受</string>
+
 
 </resources>

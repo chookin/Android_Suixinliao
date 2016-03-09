@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tencent.qcloud.presentation.presenter.SettingsPresenter;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
 
@@ -17,7 +18,7 @@ import com.tencent.qcloud.timchat.model.UserInfo;
  */
 public class SettingFragment extends Fragment {
     private static final String TAG = SettingFragment.class.getSimpleName();
-
+    private SettingsPresenter mSettingsPresenter;
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -32,6 +33,8 @@ public class SettingFragment extends Fragment {
         String id = UserInfo.getInstance().getId();
         Log.i(TAG, "onCreateView myid  "+id);
         idView.setText(UserInfo.getInstance().getId());
+        mSettingsPresenter = new SettingsPresenter();
+        mSettingsPresenter.setDefaultAllowType();
         return settingsLayout ;
     }
 
