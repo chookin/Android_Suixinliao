@@ -18,7 +18,6 @@ public class SplashPresenter extends Presenter {
     /**
      * 加载页面逻辑
      */
-    @Override
     public void start() {
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -30,11 +29,6 @@ public class SplashPresenter extends Presenter {
                 }
             }
         }, 1000);
-    }
-
-    @Override
-    public void stop() {
-
     }
 
 }

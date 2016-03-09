@@ -54,12 +54,10 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     @Override
     public void onStart() {
         super.onStart();
-        mGetMyGroupsPresenter.start();
     }
 
     @Override
     public void onStop() {
-        mGetMyGroupsPresenter.stop();
         super.onStop();
     }
 

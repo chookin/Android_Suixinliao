@@ -32,16 +32,6 @@ public class GetFutureFriListPresenter extends Presenter {
         mContext = context;
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
 
     public void getFutureFriList(){
         if(beginMeta == null){

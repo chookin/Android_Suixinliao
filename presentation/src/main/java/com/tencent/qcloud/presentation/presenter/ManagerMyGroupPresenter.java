@@ -24,20 +24,6 @@ public class ManagerMyGroupPresenter extends Presenter {
         mContext = context;
     }
 
-    /**
-     * 加载页面逻辑
-     */
-    @Override
-    public void start() {
-    }
-
-    /**
-     * 中止页面逻辑
-     */
-    @Override
-    public void stop() {
-
-    }
 
     /**
      * 获取自己所在群组

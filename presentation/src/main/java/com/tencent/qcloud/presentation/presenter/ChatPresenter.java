@@ -34,7 +34,6 @@ public class ChatPresenter extends Presenter implements Observer {
     /**
      * 加载页面逻辑
      */
-    @Override
     public void start() {
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
@@ -45,7 +44,6 @@ public class ChatPresenter extends Presenter implements Observer {
     /**
      * 中止页面逻辑
      */
-    @Override
     public void stop() {
         //注销消息监听
         MessageEvent.getInstance().deleteObserver(this);

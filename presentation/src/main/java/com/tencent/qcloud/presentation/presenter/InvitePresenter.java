@@ -25,13 +25,6 @@ public class InvitePresenter extends Presenter {
     }
 
 
-    @Override
-    public void start() {
-    }
-
-    @Override
-    public void stop() {
-    }
 
 
     public void onInviteFriend(String id,String mark,String other,String source){
