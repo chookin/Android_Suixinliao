@@ -28,6 +28,7 @@ import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.TextMessage;
+import com.tencent.qcloud.timchat.model.VoiceMessage;
 import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
@@ -90,6 +91,9 @@ public class ChatActivity extends Activity implements ChatView {
             case Image:
                 mMessage = new ImageMessage(message);
                 break;
+            case Sound:
+                mMessage = new VoiceMessage(message);
+                break;
         }
         if (mMessage != null){
             messageList.add(mMessage);
@@ -149,6 +153,30 @@ public class ChatActivity extends Activity implements ChatView {
     public void sendText() {
         presenter.sendMessage((new TextMessage(input.getText())).getMessage());
         input.setText("");
+    }
+
+    /**
+     * 开始发送语音消息
+     */
+    @Override
+    public void startSendVoice() {
+
+    }
+
+    /**
+     * 结束发送语音消息
+     */
+    @Override
+    public void endSendVoice() {
+
+    }
+
+    /**
+     * 结束发送语音消息
+     */
+    @Override
+    public void cancelSendVoice() {
+
     }
 
     private Uri getOutputMediaFileUri(){

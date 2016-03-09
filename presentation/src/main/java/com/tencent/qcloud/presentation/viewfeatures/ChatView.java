@@ -47,4 +47,27 @@ public interface ChatView extends MvpView {
      *
      */
     void sendText();
+
+
+    /**
+     * 开始发送语音消息
+     *
+     */
+    void startSendVoice();
+
+
+    /**
+     * 结束发送语音消息
+     *
+     */
+    void endSendVoice();
+
+
+    /**
+     * 结束发送语音消息
+     *
+     */
+    void cancelSendVoice();
+
+
 }
