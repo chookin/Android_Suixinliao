@@ -88,7 +88,7 @@
 
     </LinearLayout>
 
-    <fragment android:name="com.tencent.tls.fragment.QQWXFragment"
+    <fragment android:name="com.tencent.qcloud.tlslibrary.fragment.QQWXFragment"
         android:id="@+id/qqwxfragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

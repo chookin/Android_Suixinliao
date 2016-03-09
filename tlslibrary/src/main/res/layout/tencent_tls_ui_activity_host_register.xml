@@ -48,7 +48,7 @@
         android:paddingRight="@dimen/tencent_tls_ui_activity_horizontal_margin"
         android:layout_weight="9">
 
-        <com.tencent.tls.customview.EditTextWithListPopupWindow
+        <com.tencent.qcloud.tlslibrary.customview.EditTextWithListPopupWindow
             android:id="@+id/selectCountryCode_hostRegister"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tencent_tls_ui_edittext_height"
@@ -64,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-            <com.tencent.tls.customview.EditTextWithClearButton
+            <com.tencent.qcloud.tlslibrary.customview.EditTextWithClearButton
                 android:id="@+id/phoneNumber_hostRegister"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/tencent_tls_ui_edittext_height"
