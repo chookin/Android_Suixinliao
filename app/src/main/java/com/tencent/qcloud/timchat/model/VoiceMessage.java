@@ -60,12 +60,12 @@ public class VoiceMessage extends Message {
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VoiceMessage.this.playMp3();
+                VoiceMessage.this.playAudio();
             }
         });
     }
 
-    public void playMp3() {
+    private void playAudio() {
         TIMSoundElem elem = (TIMSoundElem) message.getElement(0);
 
         elem.getSound(new TIMValueCallBack<byte[]>() {

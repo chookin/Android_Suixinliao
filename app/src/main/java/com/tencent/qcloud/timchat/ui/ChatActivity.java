@@ -1,23 +1,15 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
@@ -176,7 +168,6 @@ public class ChatActivity extends Activity implements ChatView {
     public void startSendVoice() {
         voiceSendingView.setVisibility(View.VISIBLE);
         voiceSendingView.showRecording();
-
         recorder.startRecording();
     }
 
@@ -188,6 +179,8 @@ public class ChatActivity extends Activity implements ChatView {
         voiceSendingView.release();
         voiceSendingView.setVisibility(View.GONE);
         recorder.stopRecording();
+        Message message = new VoiceMessage(recorder.getTimeInterval(),recorder.getDate());
+        presenter.sendMessage(message.getMessage());
     }
 
     /**

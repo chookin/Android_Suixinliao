@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        app:canBack="true"
         app:moreImg="@drawable/ic_person"/>
     <com.tencent.qcloud.timchat.ui.customview.ChatInput
         android:id="@+id/input_panel"
