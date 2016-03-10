@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
@@ -44,6 +45,7 @@ public class ChatActivity extends Activity implements ChatView {
     private static final int IMAGE_STORE = 200;
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
+    private RecorderUtil recorder = new RecorderUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +162,7 @@ public class ChatActivity extends Activity implements ChatView {
         input.setText("");
     }
 
-    RecorderUtil recorder = new RecorderUtil();
+
 
     /**
      * 开始发送语音消息
@@ -180,9 +182,12 @@ public class ChatActivity extends Activity implements ChatView {
         voiceSendingView.release();
         voiceSendingView.setVisibility(View.GONE);
         recorder.stopRecording();
-        Message message = new VoiceMessage(recorder.getTimeInterval(),recorder.getDate());
-        presenter.sendMessage(message.getMessage());
-
+        if (recorder.getTimeInterval() < 1){
+            Toast.makeText(this,getResources().getString(R.string.chat_audio_too_short),Toast.LENGTH_SHORT).show();
+        }else{
+            Message message = new VoiceMessage(recorder.getTimeInterval(),recorder.getDate());
+            presenter.sendMessage(message.getMessage());
+        }
     }
 
     /**

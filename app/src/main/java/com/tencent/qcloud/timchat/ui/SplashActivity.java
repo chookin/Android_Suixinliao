@@ -9,6 +9,7 @@ import com.tencent.TIMCallBack;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
@@ -30,6 +31,7 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
         presenter.start();
     }
 
+
     /**
      * 跳转到主界面
      */
@@ -46,9 +48,7 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
         Intent intent = new Intent(SplashActivity.this, HostLoginActivity.class);
         // 传入应用的包名
         intent.putExtra(Constants.EXTRA_THIRDAPP_PACKAGE_NAME_SUCC, "com.tencent.qcloud.timchat");
-        // 传入跳转的Activity的完整类名
-        intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_SUCC, "com.tencent.qcloud.timchat.ui.HomeActivity");
-        startActivityForResult(intent, 0);
+        startActivityForResult(intent, LOGIN_RESULT_CODE);
     }
 
     /**
@@ -78,7 +78,10 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (LOGIN_RESULT_CODE == resultCode) {
+        if (LOGIN_RESULT_CODE == requestCode) {
+            String id = TLSService.getInstance().getLastUserIdentifier();
+            UserInfo.getInstance().setId(id);
+            UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
             navToHome();
         }
     }

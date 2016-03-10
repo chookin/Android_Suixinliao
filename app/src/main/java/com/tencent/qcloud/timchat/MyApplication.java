@@ -29,18 +29,17 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         InitBusiness.start(context);
-        TLSService tlsService = InitService.init(context);
-        if (tlsService != null){
-            String id = tlsService.getLastUserIdentifier();
-            UserInfo.getInstance().setId(id);
-            UserInfo.getInstance().setUserSig(tlsService.getUserSig(id));
-        }
+        InitService.init(context);
+        String id =  TLSService.getInstance().getLastUserIdentifier();
+        UserInfo.getInstance().setId(id);
+        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
         ImageLoaderInit();
     }
 
     public static Context getContext() {
         return context;
     }
+
 
 
     private void ImageLoaderInit() {

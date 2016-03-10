@@ -96,7 +96,8 @@ public class Constants {
 
     // 定义登陆成功或失败时跳转的界面（PackageName + ActivityClassName）
     public final static String EXTRA_THIRDAPP_PACKAGE_NAME_SUCC = "com.tencent.tls.THIRDAPP_PACKAGE_NAME_SUCC";
-    public final static String EXTRA_THIRDAPP_CLASS_NAME_SUCC = "com.tencent.tls.THIRDAPP_CLASS_NAME_SUCC";
+//    public final static String EXTRA_THIRDAPP_CLASS_NAME_SUCC = "com.tencent.tls.THIRDAPP_CLASS_NAME_SUCC";
+    public final static String EXTRA_THIRDAPP_CLASS_NAME_SUCC = null;
     public final static String EXTRA_THIRDAPP_PACKAGE_NAME_FAIL = "com.tencent.tls.THIRDAPP_PACKAGE_NAME_FAIL";
     public final static String EXTRA_THIRDAPP_CLASS_NAME_FAIL = "com.tencent.tls.THIRDAPP_CLASS_NAME_FAIL";
 
