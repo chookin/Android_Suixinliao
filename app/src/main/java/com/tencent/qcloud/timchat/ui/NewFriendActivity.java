@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +9,7 @@ import android.widget.ListView;
 
 import com.tencent.TIMFriendFutureItem;
 import com.tencent.qcloud.presentation.presenter.GetFutureFriListPresenter;
+import com.tencent.qcloud.presentation.presenter.ResponseFriInvitePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GetFutureFriListData;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.NewFriAdapter;
@@ -24,6 +26,7 @@ public class NewFriendActivity extends Activity implements AdapterView.OnItemCli
     private NewFriAdapter mNewFriAdapter;
     private List<TIMFriendFutureItem> mNewFriListReuslt;
     private GetFutureFriListPresenter mGetFutureFriListPresenter;
+    private ResponseFriInvitePresenter mResponseFriInvitePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class NewFriendActivity extends Activity implements AdapterView.OnItemCli
         mNewFriAdapter = new NewFriAdapter(this,mNewFriListReuslt,this);
         mNewFriList.setAdapter(mNewFriAdapter);
         mGetFutureFriListPresenter = new GetFutureFriListPresenter(getBaseContext(),this);
+        mResponseFriInvitePresenter = new ResponseFriInvitePresenter(getBaseContext());
         mGetFutureFriListPresenter.getFutureFriList();
         mNewFriList.setOnItemClickListener(this);
     }
@@ -42,7 +46,12 @@ public class NewFriendActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        
+        TIMFriendFutureItem person = mNewFriListReuslt.get(i);
+        Intent intent = new Intent(NewFriendActivity.this, NewFriendDetailActivity.class);
+        intent.putExtra("id", person.getIdentifier());
+        intent.putExtra("name", person.getIdentifier());
+        intent.putExtra("detail", person.getAddWording());
+        startActivity(intent);
     }
 
     @Override
@@ -50,11 +59,10 @@ public class NewFriendActivity extends Activity implements AdapterView.OnItemCli
         for(TIMFriendFutureItem newFri : mFutureFriList){
             mNewFriListReuslt.add(newFri);
         }
-//        mNewFriListReuslt = mFutureFriList;
         mNewFriAdapter.notifyDataSetChanged();
     }
 
     public void confirmItemStatus(String id){
-        mGetFutureFriListPresenter.confrimNewFriStatus(id);
+        mResponseFriInvitePresenter.answerFriInvite(id,true);
     }
 }
