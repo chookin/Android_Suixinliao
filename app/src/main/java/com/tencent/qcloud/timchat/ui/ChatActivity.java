@@ -182,6 +182,7 @@ public class ChatActivity extends Activity implements ChatView {
         recorder.stopRecording();
         Message message = new VoiceMessage(recorder.getTimeInterval(),recorder.getDate());
         presenter.sendMessage(message.getMessage());
+
     }
 
     /**
