@@ -57,6 +57,7 @@ public class ChatActivity extends Activity implements ChatView {
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
+        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(name);
         title.setMoreImgAction(new View.OnClickListener() {
@@ -181,6 +182,7 @@ public class ChatActivity extends Activity implements ChatView {
         recorder.stopRecording();
         Message message = new VoiceMessage(recorder.getTimeInterval(),recorder.getDate());
         presenter.sendMessage(message.getMessage());
+
     }
 
     /**

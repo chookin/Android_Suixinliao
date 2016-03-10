@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.ui.customview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.Spannable;
@@ -8,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,18 +31,18 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
 
     private ImageButton btnAdd, btnSend, btnVoice, btnKeyboard;
     private EditText editText;
-    private boolean isSendVisible,isVoiceMode,isHoldVoiceBtn;
+    private boolean isSendVisible,isHoldVoiceBtn;
+    private InputMode inputMode = InputMode.NONE;
     private ChatView chatView;
     private LinearLayout morePanel,textPanel;
     private TextView voicePanel;
+    private View root;
 
 
     public ChatInput(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.chat_input, this);
-        editText = (EditText) findViewById(R.id.input);
-        editText.addTextChangedListener(this);
-        isSendVisible = editText.getText().length() != 0;
+
         btnAdd = (ImageButton) findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(this);
         btnSend = (ImageButton) findViewById(R.id.btn_send);
@@ -64,7 +67,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         voicePanel.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         isHoldVoiceBtn = true;
                         updateVoiceView();
@@ -78,8 +81,66 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 return true;
             }
         });
+        editText = (EditText) findViewById(R.id.input);
+        editText.addTextChangedListener(this);
+        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    updateView(InputMode.TEXT);
+                }
+            }
+        });
+        isSendVisible = editText.getText().length() != 0;
 
     }
+
+    private void updateView(InputMode mode){
+        if (mode == inputMode) return;
+        leavingCurrentState();
+        switch (inputMode = mode){
+            case MORE:
+                morePanel.setVisibility(VISIBLE);
+                break;
+            case TEXT:
+                if (editText.requestFocus()){
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                }
+                break;
+            case VOICE:
+                voicePanel.setVisibility(VISIBLE);
+                textPanel.setVisibility(GONE);
+                btnVoice.setVisibility(GONE);
+                btnKeyboard.setVisibility(VISIBLE);
+                break;
+
+        }
+    }
+
+    private void leavingCurrentState(){
+        switch (inputMode){
+            case TEXT:
+//                editText.clearFocus();
+//                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.showSoftInput(editText, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                View view = ((Activity) getContext()).getCurrentFocus();
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                editText.clearFocus();
+                break;
+            case MORE:
+                morePanel.setVisibility(GONE);
+                break;
+            case VOICE:
+                voicePanel.setVisibility(GONE);
+                textPanel.setVisibility(VISIBLE);
+                btnVoice.setVisibility(VISIBLE);
+                btnKeyboard.setVisibility(GONE);
+                break;
+        }
+    }
+
 
 
     private void updateVoiceView(){
@@ -95,19 +156,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         }
     }
 
-    private void updateVoiceInput(){
-        if (isVoiceMode = !isVoiceMode){
-            voicePanel.setVisibility(VISIBLE);
-            textPanel.setVisibility(GONE);
-            btnVoice.setVisibility(GONE);
-            btnKeyboard.setVisibility(VISIBLE);
-        }else{
-            voicePanel.setVisibility(GONE);
-            textPanel.setVisibility(VISIBLE);
-            btnVoice.setVisibility(VISIBLE);
-            btnKeyboard.setVisibility(GONE);
-        }
-    }
 
 
     /**
@@ -195,15 +243,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 chatView.sendText();
                 break;
             case R.id.btn_add:
-                if (morePanel.getVisibility() == VISIBLE){
-                    morePanel.setVisibility(GONE);
-                    InputMethodManager inputMethodManager=(InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.toggleSoftInputFromWindow(morePanel.getApplicationWindowToken(), InputMethodManager.RESULT_SHOWN, 0);
-                }else{
-                    InputMethodManager inputMethodManager=(InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.toggleSoftInputFromWindow(morePanel.getApplicationWindowToken(), InputMethodManager.RESULT_HIDDEN, 0);
-                    morePanel.setVisibility(VISIBLE);
-                }
+                updateView(inputMode == InputMode.MORE?InputMode.TEXT:InputMode.MORE);
                 break;
             case R.id.btn_photo:
                 chatView.sendPhoto();
@@ -212,8 +252,10 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 chatView.sendImage();
                 break;
             case R.id.btn_voice:
+                updateView(InputMode.VOICE);
+                break;
             case R.id.btn_keyboard:
-                updateVoiceInput();
+                updateView(InputMode.TEXT);
                 break;
         }
     }
@@ -231,5 +273,14 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
      */
     public void setText(String text){
         editText.setText(text);
+    }
+
+
+    public enum InputMode{
+        TEXT,
+        VOICE,
+        EMOTICON,
+        MORE,
+        NONE,
     }
 }
