@@ -36,12 +36,13 @@ public class NewFriendActivity extends Activity implements AdapterView.OnItemCli
         mNewFriList.setAdapter(mNewFriAdapter);
         mGetFutureFriListPresenter = new GetFutureFriListPresenter(getBaseContext(),this);
         mGetFutureFriListPresenter.getFutureFriList();
+        mNewFriList.setOnItemClickListener(this);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        
     }
 
     @Override

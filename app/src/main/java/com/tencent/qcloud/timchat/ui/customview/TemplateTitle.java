@@ -2,7 +2,6 @@ package com.tencent.qcloud.timchat.ui.customview;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
