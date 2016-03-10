@@ -25,7 +25,6 @@ public class ProfilePresenter extends Presenter {
     /**
      * 加载页面逻辑
      */
-    @Override
     public void start() {
         if (identify == null) return;
         TIMFriendshipManager.getInstance().getFriendsProfile(Collections.singletonList(identify), new TIMValueCallBack<List<TIMUserProfile>>(){
@@ -42,11 +41,5 @@ public class ProfilePresenter extends Presenter {
 
     }
 
-    /**
-     * 中止页面逻辑
-     */
-    @Override
-    public void stop() {
 
-    }
 }

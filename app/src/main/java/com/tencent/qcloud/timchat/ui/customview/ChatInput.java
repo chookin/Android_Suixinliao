@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 
 /**
  * 聊天界面输入控件
@@ -51,7 +52,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
         BtnPhoto.setOnClickListener(this);
         setSendBtn();
-        voicePanel = (TextView) findViewById(R.id.voice_panel);
+
         textPanel = (LinearLayout) findViewById(R.id.text_panel);
         initView();
     }
@@ -59,18 +60,21 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     private void initView(){
         btnKeyboard = (ImageButton) findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
+        voicePanel = (TextView) findViewById(R.id.voice_panel);
         voicePanel.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         isHoldVoiceBtn = true;
+                        updateVoiceView();
                         break;
                     case MotionEvent.ACTION_UP:
                         isHoldVoiceBtn = false;
+                        updateVoiceView();
                         break;
                 }
-                updateVoiceView();
+
                 return true;
             }
         });
@@ -79,6 +83,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
 
 
     private void updateVoiceView(){
+        LogUtils.d(TAG,"voice button pressed,status "+isHoldVoiceBtn);
         if (isHoldVoiceBtn){
             voicePanel.setText(getResources().getString(R.string.chat_release_send));
             voicePanel.setBackground(getResources().getDrawable(R.drawable.btn_voice_pressed));
