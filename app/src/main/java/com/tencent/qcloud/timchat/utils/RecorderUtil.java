@@ -20,8 +20,6 @@ public class RecorderUtil {
 
     public RecorderUtil(){
         mFileName = MyApplication.getContext().getExternalCacheDir().getAbsolutePath()+"/tempAudio.3gp";
-
-
     }
 
     /**
