@@ -21,8 +21,9 @@
         </activity>
         <activity android:name=".ui.HomeActivity" >
         </activity>
-        <activity android:name=".ui.ChatActivity"
-            android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".ui.ChatActivity"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity android:name=".ui.AddNewFriendActivity" >
         </activity>
@@ -30,12 +31,13 @@
         </activity>
         <activity android:name=".ui.NewFriendActivity" >
         </activity>
-
         <activity android:name=".ui.ProfileActivity" >
         </activity>
         <activity android:name=".ui.ManagerGroupActivity" >
         </activity>
         <activity android:name=".ui.NewFriendDetailActivity" >
+        </activity>
+        <activity android:name=".ui.VideoActivity" >
         </activity>
     </application>
 

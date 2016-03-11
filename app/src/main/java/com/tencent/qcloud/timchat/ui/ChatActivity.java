@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -21,6 +22,7 @@ import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.TextMessage;
+import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
 import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
@@ -35,6 +37,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends Activity implements ChatView {
+
+    private static final String TAG = "ChatActivity";
 
     private List<Message> messageList = new ArrayList<>();
     private ChatAdapter adapter;
@@ -56,22 +60,33 @@ public class ChatActivity extends Activity implements ChatView {
         final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
         final String name = getIntent().getStringExtra("name");
         presenter = new ChatPresenter(this,identify,type);
+        input = (ChatInput) findViewById(R.id.input_panel);
+        input.setChatView(this);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        input.setInputMode(ChatInput.InputMode.NONE);
+                        break;
+                }
+                return false;
+            }
+        });
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(name);
         title.setMoreImgAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChatActivity.this,ProfileActivity.class);
-                intent.putExtra("identify",identify);
+                Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
+                intent.putExtra("identify", identify);
                 startActivity(intent);
             }
         });
-        input = (ChatInput) findViewById(R.id.input_panel);
-        input.setChatView(this);
         voiceSendingView = (VoiceSendingView) findViewById(R.id.voice_sending);
         presenter.start();
     }
@@ -101,12 +116,14 @@ public class ChatActivity extends Activity implements ChatView {
             case Sound:
                 mMessage = new VoiceMessage(message);
                 break;
+            case Video:
+                mMessage = new VideoMessage(this, message);
         }
         if (mMessage != null){
             messageList.add(mMessage);
             adapter.notifyDataSetChanged();
+            listView.setSelection(adapter.getCount() - 1);
         }
-        listView.setSelection(adapter.getCount() - 1);
     }
 
     /**

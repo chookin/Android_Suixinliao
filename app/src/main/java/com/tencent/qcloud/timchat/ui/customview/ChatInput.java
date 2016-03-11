@@ -112,15 +112,13 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 btnKeyboard.setVisibility(VISIBLE);
                 break;
 
+
         }
     }
 
     private void leavingCurrentState(){
         switch (inputMode){
             case TEXT:
-//                editText.clearFocus();
-//                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.showSoftInput(editText, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 View view = ((Activity) getContext()).getCurrentFocus();
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -272,11 +270,20 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     }
 
 
+    /**
+     * 设置输入模式
+     */
+    public void setInputMode(InputMode mode){
+        updateView(mode);
+    }
+
+
     public enum InputMode{
         TEXT,
         VOICE,
         EMOTICON,
         MORE,
+        VIDEO,
         NONE,
     }
 }
