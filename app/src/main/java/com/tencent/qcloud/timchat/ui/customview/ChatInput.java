@@ -36,13 +36,16 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     private ChatView chatView;
     private LinearLayout morePanel,textPanel;
     private TextView voicePanel;
-    private View root;
 
 
     public ChatInput(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.chat_input, this);
+        initView();
+    }
 
+    private void initView(){
+        textPanel = (LinearLayout) findViewById(R.id.text_panel);
         btnAdd = (ImageButton) findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(this);
         btnSend = (ImageButton) findViewById(R.id.btn_send);
@@ -55,12 +58,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
         BtnPhoto.setOnClickListener(this);
         setSendBtn();
-
-        textPanel = (LinearLayout) findViewById(R.id.text_panel);
-        initView();
-    }
-
-    private void initView(){
         btnKeyboard = (ImageButton) findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
         voicePanel = (TextView) findViewById(R.id.voice_panel);
@@ -115,15 +112,13 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 btnKeyboard.setVisibility(VISIBLE);
                 break;
 
+
         }
     }
 
     private void leavingCurrentState(){
         switch (inputMode){
             case TEXT:
-//                editText.clearFocus();
-//                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.showSoftInput(editText, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 View view = ((Activity) getContext()).getCurrentFocus();
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -144,7 +139,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
 
 
     private void updateVoiceView(){
-        LogUtils.d(TAG,"voice button pressed,status "+isHoldVoiceBtn);
         if (isHoldVoiceBtn){
             voicePanel.setText(getResources().getString(R.string.chat_release_send));
             voicePanel.setBackground(getResources().getDrawable(R.drawable.btn_voice_pressed));
@@ -276,11 +270,20 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     }
 
 
+    /**
+     * 设置输入模式
+     */
+    public void setInputMode(InputMode mode){
+        updateView(mode);
+    }
+
+
     public enum InputMode{
         TEXT,
         VOICE,
         EMOTICON,
         MORE,
+        VIDEO,
         NONE,
     }
 }

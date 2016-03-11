@@ -12,6 +12,7 @@ import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 
 /**
  * 图片消息数据
@@ -47,7 +48,7 @@ public class ImageMessage extends Message {
                     public void onError(int code, String desc) {//获取图片失败
                         //错误码code和错误描述desc，可用于定位请求失败原因
                         //错误码code含义请参见错误码表
-                        Log.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                        LogUtils.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
                     }
 
                     @Override
@@ -55,6 +56,7 @@ public class ImageMessage extends Message {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                         ImageView imageView = new ImageView(MyApplication.getContext());
                         imageView.setImageBitmap(bitmap);
+                        getBubbleView(viewHolder).removeAllViews();
                         getBubbleView(viewHolder).addView(imageView);
                     }
                 });

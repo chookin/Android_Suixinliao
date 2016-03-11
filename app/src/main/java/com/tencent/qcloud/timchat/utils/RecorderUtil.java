@@ -32,24 +32,27 @@ public class RecorderUtil {
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        startTime = System.currentTimeMillis();
         try {
             mRecorder.prepare();
         } catch (IOException e) {
             LogUtils.e(TAG, "prepare() failed");
         }
         mRecorder.start();
-        startTime = System.currentTimeMillis();
     }
+
 
     /**
      * 停止录音
      */
     public void stopRecording() {
         if (mFileName == null) return;
-        mRecorder.stop();
+        timeInterval = System.currentTimeMillis() - startTime;
+        if (timeInterval>1000){
+            mRecorder.stop();
+        }
         mRecorder.release();
         mRecorder = null;
-        timeInterval = System.currentTimeMillis() - startTime;
     }
 
 
@@ -75,6 +78,11 @@ public class RecorderUtil {
     }
 
 
+    /**
+     * 将文件转化为byte[]
+     *
+     * @param file 输入文件
+     */
     private static byte[] readFile(File file) throws IOException {
         // Open file
         RandomAccessFile f = new RandomAccessFile(file, "r");

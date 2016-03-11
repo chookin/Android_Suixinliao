@@ -2,7 +2,10 @@ package com.tencent.qcloud.timchat.model;
 
 import android.os.Environment;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tencent.TIMMessage;
@@ -11,6 +14,7 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 
 import java.io.File;
@@ -51,12 +55,30 @@ public class VoiceMessage extends Message {
      */
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder) {
+        LinearLayout linearLayout = new LinearLayout(MyApplication.getContext());
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setGravity(Gravity.CENTER);
+        ImageView voiceIcon = new ImageView(MyApplication.getContext());
+        voiceIcon.setImageDrawable(message.isSelf() ?
+                MyApplication.getContext().getResources().getDrawable(R.drawable.ic_voice_right) : MyApplication.getContext().getResources().getDrawable(R.drawable.ic_voice_left));
+
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
         tv.setText(String.valueOf(((TIMSoundElem) message.getElement(0)).getDuration()) + "’");
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(10, 0, 0, 0);
+        if (message.isSelf()){
+            linearLayout.addView(tv);
+            voiceIcon.setLayoutParams(lp);
+            linearLayout.addView(voiceIcon);
+        }else{
+            linearLayout.addView(voiceIcon);
+            tv.setLayoutParams(lp);
+            linearLayout.addView(tv);
+        }
         getBubbleView(viewHolder).removeAllViews();
-        getBubbleView(viewHolder).addView(tv);
+        getBubbleView(viewHolder).addView(linearLayout);
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,12 +99,16 @@ public class VoiceMessage extends Message {
             @Override
             public void onSuccess(byte[] bytes) {
                 try{
-                    File tempMp3 = File.createTempFile("kurchina", "mp3", Environment.getExternalStorageDirectory());
-                    tempMp3.deleteOnExit();
-                    FileOutputStream fos = new FileOutputStream(tempMp3);
+
+                    File tempAudio = File.createTempFile("tempRecvAudio", "mp3", MyApplication.getContext().getCacheDir());
+                    LogUtils.d(TAG, "internal " + MyApplication.getContext().getCacheDir().getAbsolutePath());
+                    LogUtils.d(TAG, "external " + MyApplication.getContext().getExternalCacheDir().getAbsolutePath());
+
+                    tempAudio.deleteOnExit();
+                    FileOutputStream fos = new FileOutputStream(tempAudio);
                     fos.write(bytes);
                     fos.close();
-                    FileInputStream fis = new FileInputStream(tempMp3);
+                    FileInputStream fis = new FileInputStream(tempAudio);
                     MediaUtil.getInstance().play(fis);
                 }catch (IOException e){
 
