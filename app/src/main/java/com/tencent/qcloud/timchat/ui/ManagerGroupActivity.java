@@ -9,9 +9,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.TIMGroupBaseInfo;
+import com.tencent.TIMFriendGroup;
+import com.tencent.TIMUserProfile;
+import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
 import com.tencent.qcloud.presentation.presenter.ManagerMyGroupPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ManagerGroupView;
+import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.GroupListAdapter;
 
@@ -21,10 +24,11 @@ import java.util.List;
 /**
  * 查找添加新朋友
  */
-public class ManagerGroupActivity extends Activity implements ManagerGroupView, View.OnClickListener {
-    ManagerMyGroupPresenter managerMyGroupPresenter;
+public class ManagerGroupActivity extends Activity implements ManagerGroupView, MyFriendGroupInfo,View.OnClickListener {
+    ManagerMyGroupPresenter mManagerMyGroupPresenter;
+    GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ListView mMyGroupList;
-    private List<TIMGroupBaseInfo> mMyListTitle;
+    private List<TIMFriendGroup> mMyListTitle;
     private GroupListAdapter mGroupListAdapter;
     private TextView mAddGroup;
 
@@ -32,30 +36,24 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manager_group);
-        managerMyGroupPresenter = new ManagerMyGroupPresenter(this, getBaseContext());
+        mManagerMyGroupPresenter = new ManagerMyGroupPresenter(this, getBaseContext());
         mMyGroupList = (ListView) findViewById(R.id.group_list);
         mAddGroup = (TextView) findViewById(R.id.add_group);
         mAddGroup.setOnClickListener(this);
-        managerMyGroupPresenter.getMyGroupList();
-        mMyListTitle = new ArrayList<TIMGroupBaseInfo>();
+        mMyListTitle = new ArrayList<TIMFriendGroup>();
         mGroupListAdapter = new GroupListAdapter(this, mMyListTitle, this);
         mMyGroupList.setAdapter(mGroupListAdapter);
+        mGetFriendGroupsPresenter =new GetFriendGroupsPresenter(this, getBaseContext());
+        mGetFriendGroupsPresenter.getFriendGroupList();
     }
 
-    @Override
-    public void showMyGroupList(List<TIMGroupBaseInfo> timGroupBaseInfos) {
-        mMyListTitle.clear();
-        for (TIMGroupBaseInfo title : timGroupBaseInfos) {
-            mMyListTitle.add(title);
-        }
-        mGroupListAdapter.notifyDataSetChanged();
-
-    }
 
     @Override
     public void notifyGroupListChange() {
-        managerMyGroupPresenter.getMyGroupList();
+        mGetFriendGroupsPresenter.getFriendGroupList();
     }
+
+
 
 
     @Override
@@ -87,7 +85,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
                 if (groupname == null || groupname.equals("")) {
                     Toast.makeText(ManagerGroupActivity.this, "empty input", Toast.LENGTH_SHORT).show();
                 } else {
-                    managerMyGroupPresenter.createEmptyGroup(groupname);
+                    mManagerMyGroupPresenter.createEmptyGroup(groupname);
                 }
                 addGroupDialog.dismiss();
             }
@@ -102,7 +100,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
 
     private Dialog deleteGroupDialog;
     private void deleteDialog(final int position) {
-        final TIMGroupBaseInfo groupinfo = mMyListTitle.get(position);
+        final TIMFriendGroup groupinfo = mMyListTitle.get(position);
         deleteGroupDialog = new Dialog(this, R.style.dialog);
         deleteGroupDialog.setContentView(R.layout.dialog_delete_group);
         TextView btnYes = (TextView) deleteGroupDialog.findViewById(R.id.confirm_btn);
@@ -119,7 +117,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                managerMyGroupPresenter.deleteGroup(groupinfo.getGroupId());
+                mManagerMyGroupPresenter.deleteGroup(groupinfo.getGroupName());
                 deleteGroupDialog.dismiss();
             }
         });
@@ -127,5 +125,17 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
     }
 
 
+    @Override
+    public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
+        mMyListTitle.clear();
+        for(TIMFriendGroup group : timFriendGroups){
+            mMyListTitle.add(group);
+        }
+        mGroupListAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void showGroupMember(List<TIMUserProfile> timUserProfiles) {
+
+    }
 }

@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tencent.TIMFriendGroup;
+import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.timchat.R;
 
 import java.util.List;
@@ -16,60 +18,48 @@ import java.util.List;
  * 分组信息Adapters
  */
 public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
-    private List<String> mGroupList;
-    //测试数据
-    private String[] generalsTypes = new String[]{"魏", "蜀", "吴"};
-    //测试数据
-    private String[][] generals = new String[][]{
-            {"夏侯惇", "甄姬", "许褚", "郭嘉", "司马懿", "杨修"},
-            {"马超", "张飞", "刘备", "诸葛亮", "黄月英", "赵云"},
-            {"吕蒙", "陆逊", "孙权", "周瑜", "孙尚香"}};
-
-    private ChildItem[][] mChildItems;
-
+    private List<TIMFriendGroup> mGroups;
+    private List<List<TIMUserProfile>> mAllGroupMembers;
     private Context mContext;
 
 
-    public ExpandGroupListAdapter(Context context, List<String> groupList, ChildItem[][] childItems) {
+    public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers) {
         mContext = context;
-//        mGroupList = groupList;
-//        mChildItems = childItems;
-    }
-
-
-    public ExpandGroupListAdapter(Context context) {
-        mContext = context;
+        mGroups = groups;
+        mAllGroupMembers = allgroupMembers;
 
     }
 
     @Override
     public int getGroupCount() {
-        return generalsTypes.length;
+        return mGroups.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return  generals[i].length;
+        if (mAllGroupMembers.size() == 0) return 0;
+        return mAllGroupMembers.get(i).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return  generalsTypes[groupPosition];
+        return mGroups.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return generals[groupPosition][childPosition];
+        if (mAllGroupMembers.size() == 0) return null;
+        return mAllGroupMembers.get(groupPosition).get(childPosition);
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return groupPosition;
+        return 0;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        return 0;
     }
 
     @Override
@@ -99,10 +89,20 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-        groupHolder.groupname.setText(generalsTypes[groupPosition]);
+        groupHolder.groupname.setText(mGroups.get(groupPosition).getGroupName());
         return convertView;
     }
 
+    /**
+     * 群组成员
+     *
+     * @param groupPosition
+     * @param childPosition
+     * @param isLastChild
+     * @param convertView
+     * @param viewGroup
+     * @return
+     */
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
         ItemHolder itemHolder = null;
@@ -116,7 +116,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         } else {
             itemHolder = (ItemHolder) convertView.getTag();
         }
-        itemHolder.itemname.setText(generals[groupPosition][childPosition]);
+        itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getNickName());
         return convertView;
     }
 
@@ -136,8 +136,4 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         public ImageView img;
     }
 
-    class ChildItem {
-        public String name;
-        public String img;
-    }
 }

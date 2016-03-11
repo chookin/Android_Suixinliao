@@ -11,49 +11,59 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.tencent.qcloud.presentation.presenter.GetMyGroupsPresenter;
-import com.tencent.qcloud.presentation.viewfeatures.JoinGroupsInfo;
+import com.tencent.TIMFriendGroup;
+import com.tencent.TIMUserProfile;
+import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
+import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 联系人界面
  */
-public class ContactFragment extends Fragment implements JoinGroupsInfo, View.OnClickListener {
-    private GetMyGroupsPresenter mGetMyGroupsPresenter;//获取分组的数据Presenter
+public class ContactFragment extends Fragment implements MyFriendGroupInfo, View.OnClickListener, AdapterView.OnItemClickListener {
+    private GetFriendGroupsPresenter mGetFriendGroupsPresenter;//获取分组的数据Presenter
 
     public ContactFragment() {
-        mGetMyGroupsPresenter = new GetMyGroupsPresenter(this);
     }
 
-
+    private List<TIMFriendGroup> mGroupName = new ArrayList<TIMFriendGroup>();
+    private List<TIMUserProfile> mOneGroupMembers = new ArrayList<TIMUserProfile>();
+    private List<List<TIMUserProfile>> mAllGroupMembers = new ArrayList<List<TIMUserProfile>>();
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private TextView mMoreBtn;
     private FrameLayout mNewFriBtn;
+    private int mSelectItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
+        View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
         mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
+        mGroupListView.setOnItemClickListener(this);
         mNewFriBtn =(FrameLayout)contactLayout.findViewById(R.id.newfriend_btn);
         mNewFriBtn.setOnClickListener(this);
         mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
         mMoreBtn.setOnClickListener(this);
-        mGroupListAdapter = new ExpandGroupListAdapter(getActivity());
-
+        mGroupListAdapter = new ExpandGroupListAdapter(getActivity(),mGroupName, mAllGroupMembers);
         mGroupListView.setAdapter(mGroupListAdapter);
+        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this,getActivity());
         return contactLayout;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        mGetFriendGroupsPresenter.getFriendGroupList();
     }
 
     @Override
@@ -61,13 +71,6 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
         super.onStop();
     }
 
-    /**
-     * 显示自己的分组信息
-     */
-    @Override
-    public void showJoinGroupList() {
-
-    }
 
     @Override
     public void onClick(View view) {
@@ -96,7 +99,6 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
                 inviteDialog.dismiss();
             }
         });
-
         managerGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,5 +115,28 @@ public class ContactFragment extends Fragment implements JoinGroupsInfo, View.On
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        mSelectItem = position;
+    }
 
+    @Override
+    public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
+        mGroupName.clear();
+        for(TIMFriendGroup group: timFriendGroups){
+            mGroupName.add(group);
+        }
+        mGroupListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showGroupMember(List<TIMUserProfile> timUserProfiles) {
+        mOneGroupMembers.clear();
+        for(TIMUserProfile member: timUserProfiles){
+            mOneGroupMembers.add(member);
+
+        }
+        mAllGroupMembers.add(mOneGroupMembers);
+        mGroupListAdapter.notifyDataSetChanged();
+    }
 }

@@ -4,68 +4,58 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
-import com.tencent.TIMGroupBaseInfo;
-import com.tencent.TIMGroupManager;
+import com.tencent.TIMFriendResult;
+import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.viewfeatures.ManagerGroupView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * 群信息逻辑
+ * 群组信息逻辑
  */
 public class ManagerMyGroupPresenter extends Presenter {
 
     private ManagerGroupView view;
     private Context mContext;
+    private  List<String> users = new ArrayList<String>() ;
     public ManagerMyGroupPresenter(ManagerGroupView view,Context context) {
         this.view = view;
         mContext = context;
     }
 
-
     /**
-     * 获取自己所在群组
-     */
-    public void getMyGroupList() {
-        TIMGroupManager.getInstance().getGroupList(new TIMValueCallBack<List<TIMGroupBaseInfo>>() {
-            @Override
-            public void onError(int i, String s) {
-
-            }
-            @Override
-            public void onSuccess(List<TIMGroupBaseInfo> timGroupBaseInfos) {
-                view.showMyGroupList(timGroupBaseInfos);
-            }
-        });
-    }
-
-    /**
-     * 创建一个新群
+     * 创建一个新分组
      */
     public void createEmptyGroup(String groupname) {
-        TIMGroupManager.CreateGroupParam groupParam = TIMGroupManager.getInstance().new CreateGroupParam();
-        groupParam.setGroupType("Public");
-        groupParam.setGroupName(groupname);
-        TIMGroupManager.getInstance().createGroup(groupParam, new TIMValueCallBack<String>() {
+        List<String> createGroup = new ArrayList<String>() ;
+        createGroup.clear();
+        createGroup.add(groupname);
+        TIMFriendshipManager.getInstance().createFriendGroup(createGroup, users, new TIMValueCallBack<List<TIMFriendResult>>() {
             @Override
             public void onError(int i, String s) {
-                Toast.makeText(mContext, "create group failed!!!!", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(List<TIMFriendResult> timFriendResults) {
                 Toast.makeText(mContext, "create group success!!!!", Toast.LENGTH_SHORT).show();
                 view.notifyGroupListChange();
             }
         });
-
     }
 
-
+    /**
+     * 删除一个分组
+     * @param id
+     */
     public void deleteGroup(String id){
-        TIMGroupManager.getInstance().deleteGroup(id, new TIMCallBack() {
+        List<String> deletegroup = new ArrayList<String>();
+        deletegroup.clear();
+        deletegroup.add(id);
+        TIMFriendshipManager.getInstance().deleteFriendGroup(deletegroup, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
 
@@ -75,9 +65,10 @@ public class ManagerMyGroupPresenter extends Presenter {
             public void onSuccess() {
                 view.notifyGroupListChange();
                 Toast.makeText(mContext, "delete group success!!!!", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
+
+
 
 }
