@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupDetailInfo;
+import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.presenter.ConversationPresenter;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
@@ -20,6 +21,7 @@ import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ConversationAdapter;
 import com.tencent.qcloud.timchat.model.Conversation;
+import com.tencent.qcloud.timchat.model.MessageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,22 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     }
 
     /**
+     * 更新最新消息显示
+     *
+     * @param message 最后一条消息
+     */
+    @Override
+    public void updateMessage(TIMMessage message) {
+        Conversation conversation = new Conversation(message.getConversation());
+        for(Conversation item:conversationList){
+            if (conversation.equals(item)){
+                item.setLastMessage(MessageFactory.getMessage(message));
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
      * 显示群资料
      *
      * @param groupInfos 群资料信息列表
@@ -120,6 +138,15 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             }
         }
         conversationList.add(new Conversation(conversation));
+    }
+
+
+    /**
+     * 将会话设置会话列表第一个
+     */
+    private void upateToFirst(Conversation conversation){
+
+
     }
 
 

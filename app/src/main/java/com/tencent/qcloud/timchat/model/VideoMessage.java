@@ -12,6 +12,7 @@ import com.tencent.TIMMessage;
 import com.tencent.TIMSnapshot;
 import com.tencent.TIMVideoElem;
 import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.ui.VideoActivity;
 import com.tencent.qcloud.timchat.utils.FileUtil;
@@ -28,6 +29,10 @@ public class VideoMessage extends Message {
     public VideoMessage(Context context, TIMMessage message){
         this.message = message;
         this.context = context;
+    }
+
+    public VideoMessage(TIMMessage message){
+        this.message = message;
     }
 
     /**
@@ -80,6 +85,14 @@ public class VideoMessage extends Message {
 
     }
 
+    /**
+     * 获取消息摘要
+     */
+    @Override
+    public String getSummary() {
+        return MyApplication.getContext().getString(R.string.summary_video);
+    }
+
 
     /**
      * 显示缩略图
@@ -93,6 +106,7 @@ public class VideoMessage extends Message {
     }
 
     private void showVideo(String path){
+        if (context == null) return;
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("path", path);
         context.startActivity(intent);

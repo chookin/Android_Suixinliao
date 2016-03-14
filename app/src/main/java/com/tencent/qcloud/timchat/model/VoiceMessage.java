@@ -87,6 +87,15 @@ public class VoiceMessage extends Message {
         });
     }
 
+
+    /**
+     * 获取消息摘要
+     */
+    @Override
+    public String getSummary() {
+        return MyApplication.getContext().getString(R.string.summary_voice);
+    }
+
     private void playAudio() {
         TIMSoundElem elem = (TIMSoundElem) message.getElement(0);
 

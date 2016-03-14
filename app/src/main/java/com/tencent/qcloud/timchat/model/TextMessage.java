@@ -40,6 +40,13 @@ public class TextMessage extends Message {
         getBubbleView(viewHolder).addView(tv);
     }
 
+    /**
+     * 获取消息摘要
+     */
+    @Override
+    public String getSummary() {
+        return ((TIMTextElem) message.getElement(0)).getText();
+    }
 
 
 }

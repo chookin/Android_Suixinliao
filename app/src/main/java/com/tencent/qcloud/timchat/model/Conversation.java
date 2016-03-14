@@ -8,6 +8,7 @@ import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.utils.TimeUtil;
 
 import java.io.Serializable;
 
@@ -15,6 +16,8 @@ import java.io.Serializable;
  * 会话数据
  */
 public class Conversation implements Serializable {
+
+    private TIMConversation conversation;
 
     //会话对象id
     private String identify;
@@ -33,6 +36,7 @@ public class Conversation implements Serializable {
 
 
     public Conversation(TIMConversation conversation){
+        this.conversation = conversation;
         this.type = conversation.getType();
         this.identify = conversation.getPeer();
         if (type == TIMConversationType.System){
@@ -83,6 +87,30 @@ public class Conversation implements Serializable {
             return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_head);
         }
         return null;
+    }
+
+    /**
+     * 获取最后一条消息摘要
+     */
+    public String getLastMessageSummary(){
+        if (lastMessage == null) return "";
+        return lastMessage.getSummary();
+    }
+
+    /**
+     * 获取最后一条消息时间
+     */
+    public String getLastMessageTime(){
+        if (lastMessage == null) return "";
+        return TimeUtil.getTimeStr(lastMessage.getMessage().timestamp());
+    }
+
+    /**
+     * 获取未读消息数量
+     */
+    public long getUnreadNum(){
+        if (conversation == null) return 0;
+        return conversation.getUnreadMessageNum();
     }
 
 
