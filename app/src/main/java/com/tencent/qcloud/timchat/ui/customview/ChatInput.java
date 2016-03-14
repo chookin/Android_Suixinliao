@@ -1,7 +1,9 @@
 package com.tencent.qcloud.timchat.ui.customview;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
@@ -57,6 +59,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         BtnImage.setOnClickListener(this);
         LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
         BtnPhoto.setOnClickListener(this);
+        LinearLayout btnVideo = (LinearLayout) findViewById(R.id.btn_video);
+        btnVideo.setOnClickListener(this);
         setSendBtn();
         btnKeyboard = (ImageButton) findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
@@ -250,6 +254,11 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 break;
             case R.id.btn_keyboard:
                 updateView(InputMode.TEXT);
+                break;
+            case R.id.btn_video:
+                if (getContext() instanceof FragmentActivity){
+                    VideoInputDialog.show(((FragmentActivity) getContext()).getSupportFragmentManager());
+                }
                 break;
         }
     }

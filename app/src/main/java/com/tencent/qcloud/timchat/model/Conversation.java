@@ -1,7 +1,13 @@
 package com.tencent.qcloud.timchat.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
+import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.R;
 
 import java.io.Serializable;
 
@@ -22,12 +28,20 @@ public class Conversation implements Serializable {
     //最后一条消息
     private Message lastMessage;
 
+    //头像图片
+    private Bitmap avatar;
+
 
     public Conversation(TIMConversation conversation){
         this.type = conversation.getType();
         this.identify = conversation.getPeer();
-        this.name = conversation.getPeer();
+        if (type == TIMConversationType.System){
+            name=MyApplication.getContext().getString(R.string.conversation_system);
+        }else{
+            name=conversation.getPeer();
+        }
     }
+
 
 
     public String getIdentify() {
@@ -61,6 +75,16 @@ public class Conversation implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Bitmap getAvatar() {
+        if (type == TIMConversationType.System){
+            return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_news);
+        }else if (type == TIMConversationType.C2C||type == TIMConversationType.Group){
+            return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_head);
+        }
+        return null;
+    }
+
 
     @Override
     public boolean equals(Object o) {

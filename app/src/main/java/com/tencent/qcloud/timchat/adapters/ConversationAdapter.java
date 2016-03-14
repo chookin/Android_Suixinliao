@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.Conversation;
+import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
 
 import java.util.List;
 
@@ -42,24 +43,19 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }else{
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
             viewHolder = new ViewHolder();
-            viewHolder.TvName = (TextView) view.findViewById(R.id.name);
+            viewHolder.tvName = (TextView) view.findViewById(R.id.name);
+            viewHolder.avatar = (CircleImageView) view.findViewById(R.id.avatar);
             view.setTag(viewHolder);
         }
         final Conversation data = getItem(position);
-        switch (data.getType()){
-            case C2C:
-                viewHolder.TvName.setText(data.getIdentify());
-                break;
-            case Group:
-                viewHolder.TvName.setText(data.getName());
-                break;
-        }
-
+        viewHolder.tvName.setText(data.getName());
+        viewHolder.avatar.setImageBitmap(data.getAvatar());
         return view;
     }
 
     public class ViewHolder{
-        public TextView TvName;
+        public TextView tvName;
+        public CircleImageView avatar;
 
     }
 }

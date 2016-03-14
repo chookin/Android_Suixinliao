@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ChatActivity extends Activity implements ChatView {
+public class ChatActivity extends FragmentActivity implements ChatView {
 
     private static final String TAG = "ChatActivity";
 
@@ -118,6 +119,7 @@ public class ChatActivity extends Activity implements ChatView {
                 break;
             case Video:
                 mMessage = new VideoMessage(this, message);
+                break;
         }
         if (mMessage != null){
             messageList.add(mMessage);

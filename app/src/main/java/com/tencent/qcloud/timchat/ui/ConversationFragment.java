@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.ConversationPresenter;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 会话列表界面
  */
 public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView {
 
@@ -76,8 +77,16 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         this.conversationList.clear();
         groupList = new ArrayList<>();
         for (TIMConversation item:conversationList){
-            this.conversationList.add(new Conversation(item));
-            groupList.add(item.getPeer());
+            switch (item.getType()){
+                case C2C:
+                case Group:
+                    this.conversationList.add(new Conversation(item));
+                    groupList.add(item.getPeer());
+                    break;
+                case System:
+                    updateSystemConversation(item);
+                    break;
+            }
         }
         groupInfoPresenter = new GroupInfoPresenter(this,groupList,true);
         groupInfoPresenter.getGroupDetailInfo();
@@ -99,4 +108,19 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         }
         adapter.notifyDataSetChanged();
     }
+
+
+    /**
+     * 更新系统消息
+     */
+    private void updateSystemConversation(TIMConversation conversation){
+        for (Conversation item : conversationList){
+            if (item.getType() == TIMConversationType.System){
+                break;
+            }
+        }
+        conversationList.add(new Conversation(conversation));
+    }
+
+
 }

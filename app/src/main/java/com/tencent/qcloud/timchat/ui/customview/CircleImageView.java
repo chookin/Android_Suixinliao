@@ -34,7 +34,7 @@ public class CircleImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mBitmap == null) {
+        if (mBitmap == null||mBitmapShader == null) {
             return;
         }
         if(mBitmap.getHeight() == 0 || mBitmap.getWidth() == 0)
@@ -45,6 +45,7 @@ public class CircleImageView extends ImageView {
     }
 
     private void init(){
+        if (mBitmap == null) return;
         mBitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -54,24 +55,28 @@ public class CircleImageView extends ImageView {
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
         mBitmap = bm;
+        init();
     }
 
     @Override
     public void setImageDrawable(Drawable drawable) {
         super.setImageDrawable(drawable);
         mBitmap = getBitmapFromDrawable(drawable);
+        init();
     }
 
     @Override
     public void setImageResource(@DrawableRes int resId) {
         super.setImageResource(resId);
         mBitmap = getBitmapFromDrawable(getDrawable());
+        init();
     }
 
     @Override
     public void setImageURI(Uri uri) {
         super.setImageURI(uri);
         mBitmap = uri != null ? getBitmapFromDrawable(getDrawable()) : null;
+        init();
     }
 
 
