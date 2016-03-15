@@ -32,7 +32,7 @@ public class ConversationPresenter extends Presenter implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent){
             TIMMessage msg = (TIMMessage) data;
-//            view.updateMessage(msg);
+            view.updateMessage(msg);
         }
     }
 

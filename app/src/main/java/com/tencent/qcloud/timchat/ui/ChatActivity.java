@@ -1,6 +1,5 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -194,6 +193,18 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             presenter.sendMessage(message.getMessage());
         }
     }
+
+    /**
+     * 发送小视频消息
+     *
+     * @param fileName 文件名
+     */
+    @Override
+    public void sendVideo(String fileName) {
+        Message message = new VideoMessage(fileName);
+        presenter.sendMessage(message.getMessage());
+    }
+
 
     /**
      * 结束发送语音消息

@@ -24,8 +24,8 @@ public class TimeUtil {
     public static String getTimeStr(long timeStamp){
         if (timeStamp==0) return "";
         Calendar inputTime = Calendar.getInstance();
-        Date currenTimeZone = inputTime.getTime();
         inputTime.setTimeInMillis(timeStamp*1000);
+        Date currenTimeZone = inputTime.getTime();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);

@@ -57,7 +57,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         viewHolder.time.setText(data.getLastMessageTime());
         long unRead = data.getUnreadNum();
         if (unRead <= 0){
-            viewHolder.unread.setVisibility(View.GONE);
+            viewHolder.unread.setVisibility(View.INVISIBLE);
         }else{
             viewHolder.unread.setVisibility(View.VISIBLE);
             String unReadStr = String.valueOf(unRead);

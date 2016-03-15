@@ -14,6 +14,7 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 

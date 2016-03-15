@@ -1,14 +1,20 @@
 package com.tencent.qcloud.timchat.utils;
 
+import android.graphics.Bitmap;
+
 import com.tencent.qcloud.timchat.MyApplication;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 文件工具类
  */
 public class FileUtil {
 
+    private static final String TAG = "FileUtil";
     private static String pathDiv = "/";
     private static File cacheDir = MyApplication.getContext().getCacheDir();
 
@@ -31,6 +37,33 @@ public class FileUtil {
     public static boolean isCacheFileExist(String fileName){
         File file = new File(getCacheFilePath(fileName));
         return file.exists();
+    }
+
+
+    /**
+     * 将图片存储为文件
+     *
+     * @param bitmap 图片
+     */
+    public static String createFile(Bitmap bitmap,String filename){
+        File f = new File(cacheDir, filename);
+        try{
+            if (f.createNewFile()){
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                FileOutputStream fos = new FileOutputStream(f);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+            }
+        }catch (IOException e){
+            LogUtils.e(TAG,"create bitmap file error" + e);
+        }
+        if (f.exists()){
+            return f.getAbsolutePath();
+        }
+        return null;
     }
 
 

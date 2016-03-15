@@ -113,6 +113,15 @@ public class Conversation implements Serializable {
         return conversation.getUnreadMessageNum();
     }
 
+    /**
+     * 将所有消息标记为已读
+     */
+    public void readAllMessage(){
+        if (conversation != null){
+            conversation.setReadMessage();
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
