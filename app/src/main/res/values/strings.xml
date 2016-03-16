@@ -27,6 +27,12 @@
     <string name="addfriend">添加好友</string>
     <string name="manangergroup">管理分组</string>
 
+    <!-- contact fragment -->
+    <string name="setting_logout">退出登录</string>
+    <string name="setting_logout_fail">退出登录失败，请稍后重试</string>
+    <string name="setting_friend_confirm">好友申请</string>
+    <string name="setting_friend_need_confirm">需验证</string>
+
 
     <!-- Add newfriend activity -->
     <string name="search_default">搜索</string>
@@ -62,6 +68,8 @@
     <!-- profile activity -->
     <string name="profile_detail">详细资料</string>
     <string name="profile_back">返回</string>
+    <string name="profile_id">账号</string>
+    <string name="profile_remark">备注名</string>
 
 
     <!-- Add newfri activity -->

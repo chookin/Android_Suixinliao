@@ -15,7 +15,7 @@ import java.io.Serializable;
 /**
  * 会话数据
  */
-public class Conversation implements Serializable {
+public class Conversation implements Comparable {
 
     private TIMConversation conversation;
 
@@ -141,6 +141,31 @@ public class Conversation implements Serializable {
     }
 
 
-
-
+    /**
+     * Compares this object to the specified object to determine their relative
+     * order.
+     *
+     * @param another the object to compare to this instance.
+     * @return a negative integer if this instance is less than {@code another};
+     * a positive integer if this instance is greater than
+     * {@code another}; 0 if this instance has the same order as
+     * {@code another}.
+     * @throws ClassCastException if {@code another} cannot be converted into something
+     *                            comparable to {@code this} instance.
+     */
+    @Override
+    public int compareTo(Object another) {
+        if (another instanceof Conversation){
+            Conversation anotherConversation = (Conversation) another;
+            if (anotherConversation.lastMessage ==null && lastMessage == null) return 0;
+            if (anotherConversation.lastMessage == null) return -1;
+            if (lastMessage == null) return 1;
+            long timeGap = anotherConversation.lastMessage.getMessage().timestamp() - lastMessage.getMessage().timestamp();
+            if (timeGap > 0) return  1;
+            else if (timeGap < 0) return -1;
+            return 0;
+        }else{
+            throw new ClassCastException();
+        }
+    }
 }

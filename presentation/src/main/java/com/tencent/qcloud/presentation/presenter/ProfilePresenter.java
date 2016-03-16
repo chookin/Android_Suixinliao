@@ -23,21 +23,42 @@ public class ProfilePresenter extends Presenter {
 
 
     /**
-     * 加载页面逻辑
+     * 获取自己资料时，identify可以为空
      */
-    public void start() {
-        if (identify == null) return;
-        TIMFriendshipManager.getInstance().getFriendsProfile(Collections.singletonList(identify), new TIMValueCallBack<List<TIMUserProfile>>(){
-            @Override
-            public void onError(int code, String desc){
+    public ProfilePresenter(ProfileView view){
+        this.view = view;
+    }
 
-            }
 
-            @Override
-            public void onSuccess(List<TIMUserProfile> result){
-                view.showProfile(result.get(0));
-            }
-        });
+    /**
+     * 获取用户资料
+     */
+    public void getProfile() {
+        if (identify == null){
+            TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
+                @Override
+                public void onError(int i, String s) {
+
+                }
+
+                @Override
+                public void onSuccess(TIMUserProfile timUserProfile) {
+                    view.showProfile(timUserProfile);
+                }
+            });
+        }else{
+            TIMFriendshipManager.getInstance().getFriendsProfile(Collections.singletonList(identify), new TIMValueCallBack<List<TIMUserProfile>>(){
+                @Override
+                public void onError(int code, String desc){
+
+                }
+
+                @Override
+                public void onSuccess(List<TIMUserProfile> result){
+                    view.showProfile(result.get(0));
+                }
+            });
+        }
 
     }
 

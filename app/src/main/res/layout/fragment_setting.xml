@@ -1,30 +1,99 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
     tools:context="com.tencent.qcloud.timchat.ui.SettingFragment">
 
     <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleText="@string/home_setting_tab" />
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line"
+        android:layout_marginTop="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <com.tencent.qcloud.timchat.ui.customview.CircleImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/head3"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginLeft="20dp">
+            <TextView
+                android:id="@id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@id/idtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_gray1"
+                android:layout_marginTop="3dp"
+                android:textSize="14sp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line" />
 
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line"
+        android:layout_marginTop="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text="@string/setting_friend_confirm"/>
+        <TextView
+            android:id="@+id/need_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:textSize="18sp"
+            android:textColor="@color/text_gray1"
+            android:text="@string/setting_friend_need_confirm"/>
+
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line" />
 
     <TextView
-        android:id="@+id/myId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="text" />
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorRed"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/setting_logout"/>
 
-    <TextView
-        android:id="@+id/allow_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="no need by my confirm"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="100dp"
-        />
-
-</FrameLayout>
+</LinearLayout>

@@ -6,10 +6,11 @@ import android.util.Log;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendAllowType;
 import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMManager;
 import com.tencent.qcloud.presentation.viewfeatures.SettingsFeature;
 
 /**
- * 设置界面Presenter dadfadafdfafdadfadfadfa
+ * 设置界面Presenter
  */
 public class SettingsPresenter extends Presenter {
     private static final String TAG = SettingsPresenter.class.getSimpleName();
@@ -19,6 +20,9 @@ public class SettingsPresenter extends Presenter {
         this.view = view;
         mContext = context;
     }
+
+
+    
 
 
     public void setDefaultAllowType(){
@@ -35,6 +39,21 @@ public class SettingsPresenter extends Presenter {
                 view.showMyAllowedStatus(1);
             }
 
+        });
+    }
+
+
+    public void Logout(){
+        TIMManager.getInstance().logout(new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                view.onLogoutResult(false);
+            }
+
+            @Override
+            public void onSuccess() {
+                view.onLogoutResult(true);
+            }
         });
     }
 }

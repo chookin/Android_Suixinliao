@@ -7,4 +7,11 @@ public interface SettingsFeature extends MvpView {
 
 
     void showMyAllowedStatus(int status);
+
+    /**
+     * 退出回调
+     *
+     * @param isSuccess 是否成功
+     */
+    void onLogoutResult(boolean isSuccess);
 }
