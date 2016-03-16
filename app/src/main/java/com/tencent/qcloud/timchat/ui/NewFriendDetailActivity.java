@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -36,6 +37,9 @@ public class NewFriendDetailActivity extends Activity implements View.OnClickLis
     public void onClick(View view) {
         if (view.getId() == R.id.agree_btn) {
             mResponseFriInvitePresenter.answerFriInvite(id, true);
+            Intent intent = new Intent(NewFriendDetailActivity.this, ProfileActivity.class);
+            intent.putExtra("identify", id);
+            startActivity(intent);
         }
         if (view.getId() == R.id.refuse_btn) {
             mResponseFriInvitePresenter.answerFriInvite(id, false);

@@ -105,16 +105,16 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
      */
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
-        ItemHolder itemHolder = null;
+        ChildrenHolder itemHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
-            itemHolder = new ItemHolder();
+            itemHolder = new ChildrenHolder();
             itemHolder.itemname = (TextView) convertView.findViewById(R.id.group_member_name);
 //            itemHolder.img = (ImageView) convertView
 //             .findViewById(R.id.img);
             convertView.setTag(itemHolder);
         } else {
-            itemHolder = (ItemHolder) convertView.getTag();
+            itemHolder = (ChildrenHolder) convertView.getTag();
         }
         itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
         return convertView;
@@ -131,7 +131,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         public ImageView img;
     }
 
-    class ItemHolder {
+    class ChildrenHolder {
         public TextView itemname;
         public ImageView img;
     }
