@@ -49,6 +49,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
         mGroupList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(groups.get(i).equals(getResources().getString(R.string.profile_group)))
                 mGetFriendGroupsPresenter.addFriendsToFriendGroup(groups.get(i).toString(), identify, new TIMValueCallBack<List<TIMFriendResult>>() {
                     @Override
                     public void onError(int i, String s) {
@@ -90,6 +91,8 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
 
     @Override
     public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
+        groups.clear();
+        groups.add(getResources().getString(R.string.profile_group));
         for(TIMFriendGroup groupItem : timFriendGroups){
             groups.add(groupItem.getGroupName());
         }
