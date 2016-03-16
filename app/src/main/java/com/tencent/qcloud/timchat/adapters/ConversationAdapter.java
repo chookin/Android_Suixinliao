@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.Conversation;
+import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
 
 import java.util.List;
 
@@ -42,24 +43,43 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }else{
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
             viewHolder = new ViewHolder();
-            viewHolder.TvName = (TextView) view.findViewById(R.id.name);
+            viewHolder.tvName = (TextView) view.findViewById(R.id.name);
+            viewHolder.avatar = (CircleImageView) view.findViewById(R.id.avatar);
+            viewHolder.lastMessage = (TextView) view.findViewById(R.id.last_message);
+            viewHolder.time = (TextView) view.findViewById(R.id.message_time);
+            viewHolder.unread = (TextView) view.findViewById(R.id.unread_num);
             view.setTag(viewHolder);
         }
         final Conversation data = getItem(position);
-        switch (data.getType()){
-            case C2C:
-                viewHolder.TvName.setText(data.getIdentify());
-                break;
-            case Group:
-                viewHolder.TvName.setText(data.getName());
-                break;
+        viewHolder.tvName.setText(data.getName());
+        viewHolder.avatar.setImageBitmap(data.getAvatar());
+        viewHolder.lastMessage.setText(data.getLastMessageSummary());
+        viewHolder.time.setText(data.getLastMessageTime());
+        long unRead = data.getUnreadNum();
+        if (unRead <= 0){
+            viewHolder.unread.setVisibility(View.INVISIBLE);
+        }else{
+            viewHolder.unread.setVisibility(View.VISIBLE);
+            String unReadStr = String.valueOf(unRead);
+            if (unRead < 10){
+                viewHolder.unread.setBackground(getContext().getResources().getDrawable(R.drawable.point1));
+            }else{
+                viewHolder.unread.setBackground(getContext().getResources().getDrawable(R.drawable.point2));
+                if (unRead > 99){
+                    unReadStr = getContext().getResources().getString(R.string.time_more);
+                }
+            }
+            viewHolder.unread.setText(unReadStr);
         }
-
         return view;
     }
 
     public class ViewHolder{
-        public TextView TvName;
+        public TextView tvName;
+        public CircleImageView avatar;
+        public TextView lastMessage;
+        public TextView time;
+        public TextView unread;
 
     }
 }

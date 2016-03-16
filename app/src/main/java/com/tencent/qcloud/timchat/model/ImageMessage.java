@@ -11,6 +11,7 @@ import com.tencent.TIMImageType;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 
@@ -63,5 +64,13 @@ public class ImageMessage extends Message {
             }
         }
 
+    }
+
+    /**
+     * 获取消息摘要
+     */
+    @Override
+    public String getSummary() {
+        return MyApplication.getContext().getString(R.string.summary_image);
     }
 }

@@ -64,6 +64,14 @@ public interface ChatView extends MvpView {
 
 
     /**
+     * 发送小视频消息
+     *
+     * @param fileName 文件名
+     */
+    void sendVideo(String fileName);
+
+
+    /**
      * 结束发送语音消息
      *
      */

@@ -51,4 +51,10 @@ public abstract class Message {
         return message.isSelf();
     }
 
+    /**
+     * 获取消息摘要
+     *
+     */
+    public abstract String getSummary();
+
 }

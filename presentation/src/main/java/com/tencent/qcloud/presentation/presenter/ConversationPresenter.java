@@ -1,8 +1,11 @@
 package com.tencent.qcloud.presentation.presenter;
 
+import android.util.Log;
+
 import com.tencent.TIMConversation;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
+import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 
@@ -16,6 +19,7 @@ import java.util.Observer;
  */
 public class ConversationPresenter extends Presenter implements Observer {
 
+    private static final String TAG = "ConversationPresenter";
     private ConversationView view;
 
     public ConversationPresenter(ConversationView view){
@@ -28,8 +32,16 @@ public class ConversationPresenter extends Presenter implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent){
             TIMMessage msg = (TIMMessage) data;
-
+            view.updateMessage(msg);
         }
+    }
+
+    /**
+     * 中止页面逻辑
+     */
+    public void stop() {
+        //注销消息监听
+        MessageEvent.getInstance().deleteObserver(this);
     }
 
 
@@ -43,6 +55,23 @@ public class ConversationPresenter extends Presenter implements Observer {
             //根据索引获取会话
             TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
             list.add(conversation);
+            conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
+                @Override
+                public void onError(int i, String s) {
+                    Log.e(TAG,"get message error"+s);
+                }
+
+                @Override
+                public void onSuccess(List<TIMMessage> timMessages) {
+//                    for (TIMMessage message:timMessages){
+//                        if (!message.remove()){
+//                            view.updateMessage(message);
+//                            break;
+//                        }
+//                    }
+                    view.updateMessage(timMessages.get(0));
+                }
+            });
         }
         view.initView(list);
     }

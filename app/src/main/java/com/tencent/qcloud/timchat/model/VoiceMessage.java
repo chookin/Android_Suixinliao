@@ -14,6 +14,7 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 
@@ -85,6 +86,15 @@ public class VoiceMessage extends Message {
                 VoiceMessage.this.playAudio();
             }
         });
+    }
+
+
+    /**
+     * 获取消息摘要
+     */
+    @Override
+    public String getSummary() {
+        return MyApplication.getContext().getString(R.string.summary_voice);
     }
 
     private void playAudio() {

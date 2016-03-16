@@ -15,9 +15,11 @@
     <color name="text_gray1">#777777</color>
     <color name="text_blue1">#1173CB</color>
     <color name="text_blue2">#1173CA</color>
+    <color name="panel_black">#25272A</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-
+    <!--蒙版-->
+    <color name="colorMask">#66000000</color>
 
 
     <!--app主色调，背景色-->
@@ -66,6 +68,5 @@
     <color name="colorGray5">#505050</color>
     <!--gray6-->
     <color name="colorGray6">#141414</color>
-    <!--蒙版-->
-    <color name="colorMask">#66000000</color>
+
 </resources>

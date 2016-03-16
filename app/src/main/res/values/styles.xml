@@ -19,4 +19,8 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="maskDialog" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/colorMask</item>
+    </style>
+
 </resources>

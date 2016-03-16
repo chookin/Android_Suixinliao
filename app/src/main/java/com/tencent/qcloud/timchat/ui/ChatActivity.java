@@ -1,12 +1,12 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +21,7 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
+import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ChatActivity extends Activity implements ChatView {
+public class ChatActivity extends FragmentActivity implements ChatView {
 
     private static final String TAG = "ChatActivity";
 
@@ -104,21 +105,7 @@ public class ChatActivity extends Activity implements ChatView {
      */
     @Override
     public void showMessage(TIMMessage message) {
-        Message mMessage = null;
-        switch (message.getElement(0).getType()){
-            case Text:
-            case Face:
-                mMessage = new TextMessage(message);
-                break;
-            case Image:
-                mMessage = new ImageMessage(message);
-                break;
-            case Sound:
-                mMessage = new VoiceMessage(message);
-                break;
-            case Video:
-                mMessage = new VideoMessage(this, message);
-        }
+        Message mMessage = MessageFactory.getMessage(message,this);
         if (mMessage != null){
             messageList.add(mMessage);
             adapter.notifyDataSetChanged();
@@ -206,6 +193,18 @@ public class ChatActivity extends Activity implements ChatView {
             presenter.sendMessage(message.getMessage());
         }
     }
+
+    /**
+     * 发送小视频消息
+     *
+     * @param fileName 文件名
+     */
+    @Override
+    public void sendVideo(String fileName) {
+        Message message = new VideoMessage(fileName);
+        presenter.sendMessage(message.getMessage());
+    }
+
 
     /**
      * 结束发送语音消息
