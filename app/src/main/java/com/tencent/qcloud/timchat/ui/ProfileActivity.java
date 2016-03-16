@@ -96,8 +96,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showGroupMember(List<TIMUserProfile> timUserProfiles) {}
+
 
     /**
      * Called when a view has been clicked.
@@ -118,4 +117,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
                 break;
         }
     }
+
+    public void showGroupMember(String groupname,List<TIMUserProfile> timUserProfiles) {}
+
 }

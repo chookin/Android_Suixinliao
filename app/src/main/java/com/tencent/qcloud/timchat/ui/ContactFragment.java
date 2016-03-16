@@ -35,7 +35,9 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
     public ContactFragment() {
     }
 
-    private List<TIMFriendGroup> mGroupName = new ArrayList<TIMFriendGroup>();
+    private List<TIMFriendGroup> mGroupTitleList = new ArrayList<TIMFriendGroup>();
+    private List<String> mGroupName = new ArrayList<String>();
+
     private List<TIMUserProfile> mOneGroupMembers = new ArrayList<TIMUserProfile>();
     private List<List<TIMUserProfile>> mAllGroupMembers = new ArrayList<List<TIMUserProfile>>();
     private ExpandGroupListAdapter mGroupListAdapter;
@@ -50,13 +52,13 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
         mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
         mGroupListView.setOnItemClickListener(this);
-        mNewFriBtn =(FrameLayout)contactLayout.findViewById(R.id.newfriend_btn);
+        mNewFriBtn = (FrameLayout) contactLayout.findViewById(R.id.newfriend_btn);
         mNewFriBtn.setOnClickListener(this);
         mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
         mMoreBtn.setOnClickListener(this);
-        mGroupListAdapter = new ExpandGroupListAdapter(getActivity(),mGroupName, mAllGroupMembers);
+        mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), mGroupTitleList, mAllGroupMembers);
         mGroupListView.setAdapter(mGroupListAdapter);
-        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this,getActivity());
+        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this, getActivity());
         return contactLayout;
     }
 
@@ -77,8 +79,8 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         if (view.getId() == R.id.contact_add) {
             showMoveDialog();
         }
-        if(view.getId() == R.id.newfriend_btn){
-            Intent intent = new Intent(getActivity(),NewFriendActivity.class);
+        if (view.getId() == R.id.newfriend_btn) {
+            Intent intent = new Intent(getActivity(), NewFriendActivity.class);
             getActivity().startActivity(intent);
 
         }
@@ -86,6 +88,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
 
     private Dialog inviteDialog;
     private TextView addFriend, managerGroup;
+
     private void showMoveDialog() {
         inviteDialog = new Dialog(getActivity(), R.style.dialog);
         inviteDialog.setContentView(R.layout.contact_more);
@@ -102,13 +105,13 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         managerGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ManagerGroupActivity.class);
+                Intent intent = new Intent(getActivity(), ManagerGroupActivity.class);
                 getActivity().startActivity(intent);
                 inviteDialog.dismiss();
             }
         });
         Window window = inviteDialog.getWindow();
-        window.setGravity(Gravity.TOP|Gravity.RIGHT);
+        window.setGravity(Gravity.TOP | Gravity.RIGHT);
         WindowManager.LayoutParams lp = window.getAttributes();
         window.setAttributes(lp);
         inviteDialog.show();
@@ -122,21 +125,25 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
 
     @Override
     public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
+        mGroupTitleList.clear();
         mGroupName.clear();
-        for(TIMFriendGroup group: timFriendGroups){
-            mGroupName.add(group);
+        for (TIMFriendGroup group : timFriendGroups) {
+            mGroupTitleList.add(group);
+            mGroupName.add(group.getGroupName());
         }
         mGroupListAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showGroupMember(List<TIMUserProfile> timUserProfiles) {
+    public void showGroupMember(String groupname, List<TIMUserProfile> timUserProfiles) {
+        int index = mGroupName.indexOf(groupname);
         mOneGroupMembers.clear();
-        for(TIMUserProfile member: timUserProfiles){
+        for (TIMUserProfile member : timUserProfiles) {
             mOneGroupMembers.add(member);
 
         }
-        mAllGroupMembers.add(mOneGroupMembers);
+        if (index != -1)
+            mAllGroupMembers.add(index, mOneGroupMembers);
         mGroupListAdapter.notifyDataSetChanged();
     }
 }
