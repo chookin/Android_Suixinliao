@@ -12,5 +12,5 @@ public interface MyFriendGroupInfo extends MvpView {
 
     void showMyGroupList(List<TIMFriendGroup> timFriendGroups);
 
-    void showGroupMember(List<TIMUserProfile> timUserProfiles);
+    void showGroupMember(String groupname,List<TIMUserProfile> timUserProfiles);
 }

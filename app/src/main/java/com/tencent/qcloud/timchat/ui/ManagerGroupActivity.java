@@ -135,7 +135,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
     }
 
     @Override
-    public void showGroupMember(List<TIMUserProfile> timUserProfiles) {
+    public void showGroupMember(String groupname,List<TIMUserProfile> timUserProfiles) {
 
     }
 }

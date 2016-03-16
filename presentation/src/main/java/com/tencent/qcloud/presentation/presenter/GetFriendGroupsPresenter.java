@@ -40,7 +40,7 @@ public class GetFriendGroupsPresenter extends Presenter {
             public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
                 view.showMyGroupList(timFriendGroups);
                 for (TIMFriendGroup group : timFriendGroups) {
-                    getFriendProfile(group.getUsers());
+                    getFriendProfile(group.getGroupName(),group.getUsers());
 
                 }
             }
@@ -48,7 +48,7 @@ public class GetFriendGroupsPresenter extends Presenter {
     }
 
 
-    public void getFriendProfile(List<String> users) {
+    public void getFriendProfile(final String groupname,List<String> users) {
         TIMFriendshipManager.getInstance().getFriendsProfile(users, new TIMValueCallBack<List<TIMUserProfile>>() {
             @Override
             public void onError(int i, String s) {
@@ -57,7 +57,7 @@ public class GetFriendGroupsPresenter extends Presenter {
 
             @Override
             public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                view.showGroupMember(timUserProfiles);
+                view.showGroupMember(groupname,timUserProfiles);
             }
         });
     }

@@ -93,5 +93,5 @@ public class ProfileActivity extends Activity implements ProfileView,MyFriendGro
     }
 
     @Override
-    public void showGroupMember(List<TIMUserProfile> timUserProfiles) {}
+    public void showGroupMember(String groupname,List<TIMUserProfile> timUserProfiles) {}
 }
