@@ -19,7 +19,7 @@ import com.tencent.qcloud.tlslibrary.service.TLSService;
 public class SplashActivity extends Activity implements SplashView,TIMCallBack{
 
     SplashPresenter presenter;
-    private int LOGIN_RESULT_CODE = 0;
+    private int LOGIN_RESULT_CODE = 100;
 
 
     @Override
@@ -45,9 +45,9 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
      */
     @Override
     public void navToLogin() {
-        Intent intent = new Intent(SplashActivity.this, HostLoginActivity.class);
-        // 传入应用的包名
-        intent.putExtra(Constants.EXTRA_THIRDAPP_PACKAGE_NAME_SUCC, "com.tencent.qcloud.timchat");
+        Intent intent = new Intent(this, HostLoginActivity.class);
+//        // 传入应用的包名
+//        intent.putExtra(Constants.EXTRA_THIRDAPP_PACKAGE_NAME_SUCC, "com.tencent.qcloud.timchat");
         startActivityForResult(intent, LOGIN_RESULT_CODE);
     }
 
