@@ -11,7 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.timchat.model.UserInfo;
-import com.tencent.qcloud.tlslibrary.service.InitService;
+import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 
 
@@ -29,7 +29,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         InitBusiness.start(context);
-        InitService.init(context);
+        TlsBusiness.init(context);
         String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));

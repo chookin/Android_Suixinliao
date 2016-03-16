@@ -114,7 +114,9 @@ public class HostLoginActivity extends Activity {
                         if (Constants.thirdappClassNameFail != null) {
                             intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_FAIL, Constants.thirdappClassNameFail);
                         }
-                        startActivityForResult(intent, 0);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+//                        startActivityForResult(intent, 0);
+                        startActivity(intent);
                         finish();
                     }
                 });

@@ -18,6 +18,7 @@ import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.presentation.viewfeatures.SettingsFeature;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 /**
  * 设置页面
@@ -74,6 +75,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
     @Override
     public void onLogoutResult(boolean isSuccess) {
         if (isSuccess){
+            TlsBusiness.logout(UserInfo.getInstance().getId());
             UserInfo.getInstance().setId(null);
             Intent intent = new Intent(getActivity(),SplashActivity.class);
             getActivity().finish();
