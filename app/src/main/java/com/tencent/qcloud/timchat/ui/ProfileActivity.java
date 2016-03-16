@@ -35,7 +35,7 @@ public class ProfileActivity extends Activity implements ProfileView,MyFriendGro
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, groups);
         mGroupList.setAdapter(mAdapter);
         presenter = new ProfilePresenter(this, Id);
-        presenter.start();
+        presenter.getProfile();
         mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this,this);
         mGetFriendGroupsPresenter.getFriendGroupList();
     }
