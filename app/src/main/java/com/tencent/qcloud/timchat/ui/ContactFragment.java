@@ -127,9 +127,12 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
     public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
         mGroupTitleList.clear();
         mGroupName.clear();
+        mAllGroupMembers.clear();
         for (TIMFriendGroup group : timFriendGroups) {
             mGroupTitleList.add(group);
             mGroupName.add(group.getGroupName());
+            mAllGroupMembers.add(new ArrayList<TIMUserProfile>());
+
         }
         mGroupListAdapter.notifyDataSetChanged();
     }
@@ -140,10 +143,9 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         mOneGroupMembers.clear();
         for (TIMUserProfile member : timUserProfiles) {
             mOneGroupMembers.add(member);
-
+            if(index !=-1)
+            mAllGroupMembers.get(index).add(member);
         }
-        if (index != -1)
-            mAllGroupMembers.add(index, mOneGroupMembers);
         mGroupListAdapter.notifyDataSetChanged();
     }
 }
