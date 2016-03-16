@@ -152,13 +152,5 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     }
 
 
-    /**
-     * 将会话设置会话列表第一个
-     */
-    private void upateToFirst(Conversation conversation){
-
-
-    }
-
 
 }

@@ -46,8 +46,6 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
     @Override
     public void navToLogin() {
         Intent intent = new Intent(this, HostLoginActivity.class);
-//        // 传入应用的包名
-//        intent.putExtra(Constants.EXTRA_THIRDAPP_PACKAGE_NAME_SUCC, "com.tencent.qcloud.timchat");
         startActivityForResult(intent, LOGIN_RESULT_CODE);
     }
 
