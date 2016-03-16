@@ -72,6 +72,7 @@
     <string name="profile_remark">备注名</string>
     <string name="profile_chat">发送消息</string>
     <string name="profile_del">删除好友</string>
+    <string name="profile_group">添加分组</string>
 
 
     <!-- Add newfri activity -->
