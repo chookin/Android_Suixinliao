@@ -2,12 +2,17 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMFriendGroup;
+import com.tencent.TIMFriendResult;
 import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
 import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
@@ -18,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends Activity implements ProfileView,MyFriendGroupInfo {
-
+    private static final String TAG = ProfileActivity.class.getSimpleName();
     private ProfilePresenter presenter;
     private GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ArrayList<String> groups = new ArrayList<String>();
@@ -38,6 +43,30 @@ public class ProfileActivity extends Activity implements ProfileView,MyFriendGro
         presenter.start();
         mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this,this);
         mGetFriendGroupsPresenter.getFriendGroupList();
+        mGroupList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mGetFriendGroupsPresenter.addFriendsToFriendGroup(groups.get(i).toString(), Id, new TIMValueCallBack<List<TIMFriendResult>>() {
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                        Toast.makeText(ProfileActivity.this, "add to group succ!!!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
     }
 
     /**

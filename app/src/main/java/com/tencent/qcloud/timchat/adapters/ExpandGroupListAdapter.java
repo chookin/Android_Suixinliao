@@ -116,7 +116,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         } else {
             itemHolder = (ItemHolder) convertView.getTag();
         }
-        itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getNickName());
+        itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
         return convertView;
     }
 

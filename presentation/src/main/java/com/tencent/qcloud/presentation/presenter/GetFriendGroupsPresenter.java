@@ -3,11 +3,13 @@ package com.tencent.qcloud.presentation.presenter;
 import android.content.Context;
 
 import com.tencent.TIMFriendGroup;
+import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +60,12 @@ public class GetFriendGroupsPresenter extends Presenter {
                 view.showGroupMember(timUserProfiles);
             }
         });
+    }
+
+    public void addFriendsToFriendGroup(String groupname, String user, TIMValueCallBack<java.util.List<TIMFriendResult>> cb) {
+        List<String> users = new ArrayList<String>();
+        users.add(user);
+        TIMFriendshipManager.getInstance().addFriendsToFriendGroup(groupname, users, cb);
     }
 
 }
