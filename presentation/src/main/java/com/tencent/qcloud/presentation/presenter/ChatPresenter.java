@@ -66,7 +66,7 @@ public class ChatPresenter extends Presenter implements Observer {
 
             @Override
             public void onSuccess(TIMMessage msg) {//发送消息成功
-                view.onSendMessageSuccess(msg);
+                MessageEvent.getInstance().onNewMessage(msg);
             }
         });
     }

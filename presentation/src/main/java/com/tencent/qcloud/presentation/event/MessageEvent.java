@@ -29,4 +29,12 @@ public class MessageEvent extends Observable implements TIMMessageListener {
         }
         return false;
     }
+
+    /**
+     * 主动通知新消息
+     */
+    public void onNewMessage(TIMMessage message){
+        setChanged();
+        notifyObservers(message);
+    }
 }

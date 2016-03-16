@@ -62,6 +62,8 @@
     <!-- profile activity -->
     <string name="profile_detail">详细资料</string>
     <string name="profile_back">返回</string>
+    <string name="profile_id">账号</string>
+    <string name="profile_remark">备注名</string>
 
 
     <!-- Add newfri activity -->

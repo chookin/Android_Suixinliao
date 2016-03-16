@@ -33,5 +33,9 @@ public class ProfileActivity extends Activity implements ProfileView {
     public void showProfile(TIMUserProfile profile) {
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(profile.getNickName());
+        TextView id = (TextView) findViewById(R.id.id);
+        id.setText(profile.getIdentifier());
+        TextView remark = (TextView) findViewById(R.id.remark);
+        remark.setText(profile.getRemark());
     }
 }

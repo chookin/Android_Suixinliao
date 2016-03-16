@@ -24,6 +24,7 @@ import com.tencent.qcloud.timchat.model.Conversation;
 import com.tencent.qcloud.timchat.model.MessageFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -111,12 +112,12 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             if (conversation.equals(c)){
                 c.setLastMessage(MessageFactory.getMessage(message));
                 iterator.remove();
-                conversationList.add(c);
-                adapter.notifyDataSetChanged();
-                return;
+                conversation = c;
+                break;
             }
         }
         conversationList.add(conversation);
+        Collections.sort(conversationList);
         adapter.notifyDataSetChanged();
     }
 
