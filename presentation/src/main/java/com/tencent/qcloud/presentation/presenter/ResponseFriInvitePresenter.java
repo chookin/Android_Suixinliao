@@ -9,6 +9,7 @@ import com.tencent.TIMFriendResponseType;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.presentation.viewfeatures.AgreeNewFriend;
 
 /**
  * Created by admin on 16/3/10.
@@ -16,19 +17,22 @@ import com.tencent.TIMValueCallBack;
 public class ResponseFriInvitePresenter extends Presenter {
     private static final String TAG = ResponseFriInvitePresenter.class.getSimpleName();
     private Context mContext;
+    private AgreeNewFriend mAgree;
 
-    public ResponseFriInvitePresenter(Context context) {
+    public ResponseFriInvitePresenter(Context context, AgreeNewFriend view) {
         mContext = context;
+        mAgree = view;
     }
 
 
-    public void answerFriInvite(String id, boolean decision) {
+    public void answerFriInvite(String id, final boolean decision) {
         TIMFriendAddResponse response = new TIMFriendAddResponse();
         response.setIdentifier(id);
         response.setRemark("response");
         if (decision == true) {
             response.setType(TIMFriendResponseType.AgreeAndAdd);
-        }else{
+
+        } else {
             response.setType(TIMFriendResponseType.Reject);
         }
         TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
@@ -39,6 +43,8 @@ public class ResponseFriInvitePresenter extends Presenter {
 
             @Override
             public void onSuccess(TIMFriendResult arg0) {
+                if (decision == true)
+                    mAgree.jumpIntoProfileActicity();
                 Toast.makeText(mContext, "reponse suc !!!!", Toast.LENGTH_SHORT).show();
             }
 
