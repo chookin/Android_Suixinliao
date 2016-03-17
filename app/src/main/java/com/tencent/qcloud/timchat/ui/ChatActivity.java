@@ -28,10 +28,12 @@ import com.tencent.qcloud.timchat.model.VoiceMessage;
 import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
+import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.RecorderUtil;
 
 import java.io.File;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,8 +95,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         presenter.stop();
     }
 
@@ -139,11 +141,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void sendImage() {
-        fileUri = getOutputMediaFileUri();
+        File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
+        if (tempFile != null){
+            fileUri = Uri.fromFile(tempFile);
+        }
         Intent intent_album=new Intent("android.intent.action.GET_CONTENT");
         intent_album.setType("image/*");
-        intent_album.putExtra(MediaStore.EXTRA_OUTPUT,fileUri);
-        startActivityForResult(intent_album,IMAGE_STORE);
+        intent_album.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        startActivityForResult(intent_album, IMAGE_STORE);
     }
 
     /**
@@ -152,13 +157,17 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     @Override
     public void sendPhoto() {
         Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = getOutputMediaFileUri(); // create a file to save the image
+        File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
+        if (tempFile != null){
+            fileUri = Uri.fromFile(tempFile);
+        }
+//        fileUri = getOutputMediaFileUri(); // create a file to save the image
         intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
         startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     /**
-     * 发送照片消息
+     * 发送文本消息
      */
     @Override
     public void sendText() {
@@ -214,32 +223,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
     }
 
-    private Uri getOutputMediaFileUri(){
-        File file=getOutputMediaFile();
-        if (file==null) return null;
-        return Uri.fromFile(file);
-    }
-
-    private File getOutputMediaFile(){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "TIMChat");
-        if (!mediaStorageDir.exists()){
-            if (!mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + ".jpg");
-
-        return mediaFile;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -250,7 +233,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                     Message message = new ImageMessage(file.getAbsolutePath());
                     presenter.sendMessage(message.getMessage());
 
-
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
@@ -259,8 +241,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
         }else if (requestCode== IMAGE_STORE){
             if (resultCode == RESULT_OK){
-                Message message = new ImageMessage(getRealFilePath(data.getData()));
-                presenter.sendMessage(message.getMessage());
+
+//                Message message = new ImageMessage(getRealFilePath(data.getData()));
+//                presenter.sendMessage(message.getMessage());
+
             }
 
         }

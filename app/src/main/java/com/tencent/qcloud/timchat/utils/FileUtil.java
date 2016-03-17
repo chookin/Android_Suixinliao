@@ -16,12 +16,27 @@ public class FileUtil {
 
     private static final String TAG = "FileUtil";
     private static String pathDiv = "/";
-    private static File cacheDir = MyApplication.getContext().getCacheDir();
+    private static File cacheDir = MyApplication.getContext().getExternalCacheDir();
 
     private FileUtil() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
+
+
+    /**
+     * 创建临时文件
+     *
+     * @param type 文件类型
+     */
+    public static File getTempFile(FileType type){
+        try{
+            return File.createTempFile(type.toString(), null, cacheDir);
+        }catch (IOException e){
+            return null;
+        }
+    }
+
 
     /**
      * 获取缓存文件地址
@@ -64,6 +79,13 @@ public class FileUtil {
             return f.getAbsolutePath();
         }
         return null;
+    }
+
+    public enum FileType{
+        IMG,
+        AUDIO,
+        VIDEO,
+        FILE,
     }
 
 
