@@ -59,6 +59,7 @@ public class ImageMessage extends Message {
                         imageView.setImageBitmap(bitmap);
                         getBubbleView(viewHolder).removeAllViews();
                         getBubbleView(viewHolder).addView(imageView);
+                        showStatus(viewHolder);
                     }
                 });
             }

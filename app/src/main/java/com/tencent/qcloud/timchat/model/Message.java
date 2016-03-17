@@ -13,6 +13,7 @@ public abstract class Message {
 
     TIMMessage message;
 
+
     public TIMMessage getMessage() {
         return message;
     }
@@ -44,6 +45,24 @@ public abstract class Message {
     }
 
     /**
+     * 显示消息状态
+     *
+     * @param viewHolder 界面样式
+     */
+    public void showStatus(ChatAdapter.ViewHolder viewHolder){
+        switch (message.status()){
+            case Sending:
+                viewHolder.error.setVisibility(View.GONE);
+                viewHolder.sending.setVisibility(View.VISIBLE);
+                break;
+            case SendSucc:
+                viewHolder.error.setVisibility(View.GONE);
+                viewHolder.sending.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    /**
      * 判断是否是自己发的
      *
      */
@@ -56,5 +75,7 @@ public abstract class Message {
      *
      */
     public abstract String getSummary();
+
+
 
 }

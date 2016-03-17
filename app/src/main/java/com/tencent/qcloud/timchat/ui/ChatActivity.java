@@ -107,12 +107,17 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void showMessage(TIMMessage message) {
-        Message mMessage = MessageFactory.getMessage(message,this);
-        if (mMessage != null){
-            messageList.add(mMessage);
+        if (message == null){
             adapter.notifyDataSetChanged();
-            listView.setSelection(adapter.getCount() - 1);
+        }else{
+            Message mMessage = MessageFactory.getMessage(message,this);
+            if (mMessage != null){
+                messageList.add(mMessage);
+                adapter.notifyDataSetChanged();
+                listView.setSelection(adapter.getCount() - 1);
+            }
         }
+
     }
 
     /**
@@ -161,7 +166,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         if (tempFile != null){
             fileUri = Uri.fromFile(tempFile);
         }
-//        fileUri = getOutputMediaFileUri(); // create a file to save the image
         intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
         startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
@@ -171,7 +175,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void sendText() {
-        presenter.sendMessage((new TextMessage(input.getText())).getMessage());
+        Message message = new TextMessage(input.getText());
+        presenter.sendMessage(message.getMessage());
         input.setText("");
     }
 
@@ -250,6 +255,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         }
 
     }
+
+
 
     /**
      * 从uri转化为地址

@@ -81,10 +81,13 @@ public class Conversation implements Comparable {
     }
 
     public Bitmap getAvatar() {
-        if (type == TIMConversationType.System){
-            return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_news);
-        }else if (type == TIMConversationType.C2C||type == TIMConversationType.Group){
-            return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_head);
+        switch (type){
+            case System:
+                return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_news);
+            case C2C:
+                return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.head_other);
+            case Group:
+                return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.head_group);
         }
         return null;
     }

@@ -14,7 +14,7 @@
             android:id="@+id/leftAvatar"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_head"
+            android:src="@drawable/head_other"
             android:layout_alignParentLeft="true"/>
         <RelativeLayout
             android:id="@+id/leftMessage"
@@ -41,7 +41,7 @@
             android:id="@+id/rightAvatar"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_head"
+            android:src="@drawable/head_me"
             android:layout_alignParentRight="true"/>
         <RelativeLayout
             android:id="@+id/rightMessage"
@@ -54,6 +54,25 @@
             android:gravity="center"
             android:layout_toLeftOf="@id/rightAvatar"
             android:background="@drawable/bubble_blue"/>
+        <RelativeLayout
+            android:id="@+id/sendStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/rightMessage">
+            <ProgressBar
+                android:id="@+id/sending"
+                android:layout_width="15dp"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/sendError"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_error"/>
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

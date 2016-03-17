@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
-import com.tencent.TIMElem;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
@@ -55,8 +54,8 @@ public class ChatPresenter extends Presenter implements Observer {
      *
      * @param message 发送的消息
      */
-    public void sendMessage(TIMMessage message) {
-        conversation.sendMessage(message, new TIMValueCallBack<TIMMessage>() {//发送消息回调
+    public void sendMessage(final TIMMessage message) {
+        conversation.sendMessage(message, new TIMValueCallBack<TIMMessage>() {
             @Override
             public void onError(int code, String desc) {//发送消息失败
                 //错误码code和错误描述desc，可用于定位请求失败原因
@@ -65,10 +64,14 @@ public class ChatPresenter extends Presenter implements Observer {
             }
 
             @Override
-            public void onSuccess(TIMMessage msg) {//发送消息成功
-                MessageEvent.getInstance().onNewMessage(msg);
+            public void onSuccess(TIMMessage msg) {
+                //发送消息成功,消息状态已在sdk中修改，此时只需更新界面
+                MessageEvent.getInstance().onNewMessage(null);
+
             }
         });
+        //message对象为发送中状态
+        MessageEvent.getInstance().onNewMessage(message);
     }
 
 
@@ -85,10 +88,8 @@ public class ChatPresenter extends Presenter implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent){
             TIMMessage msg = (TIMMessage) data;
-            if (msg.getConversation().getPeer().equals(conversation.getPeer())&&msg.getConversation().getType()==conversation.getType()){
-                if (msg.getElementCount()!=0){
-                    view.showMessage(msg);
-                }
+            if (msg==null||msg.getConversation().getPeer().equals(conversation.getPeer())&&msg.getConversation().getType()==conversation.getType()){
+                view.showMessage(msg);
             }
         }
     }
@@ -109,6 +110,7 @@ public class ChatPresenter extends Presenter implements Observer {
             }
         });
     }
+
 
 
 
