@@ -31,8 +31,6 @@ public class Conversation implements Comparable {
     //最后一条消息
     private Message lastMessage;
 
-    //头像图片
-    private Bitmap avatar;
 
 
     public Conversation(TIMConversation conversation){
@@ -80,16 +78,16 @@ public class Conversation implements Comparable {
         this.name = name;
     }
 
-    public Bitmap getAvatar() {
+    public int getAvatar() {
         switch (type){
             case System:
-                return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.ic_news);
+                return R.drawable.ic_news;
             case C2C:
-                return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.head_other);
+                return R.drawable.head_other;
             case Group:
-                return BitmapFactory.decodeResource(MyApplication.getContext().getResources(), R.drawable.head_group);
+                return R.drawable.head_group;
         }
-        return null;
+        return 0;
     }
 
     /**
