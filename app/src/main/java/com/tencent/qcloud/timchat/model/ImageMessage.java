@@ -2,6 +2,8 @@ package com.tencent.qcloud.timchat.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -17,6 +19,7 @@ import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * 图片消息数据
@@ -116,9 +119,30 @@ public class ImageMessage extends Message {
                 inSampleSize *= 2;
             }
         }
-        options.inSampleSize = inSampleSize;
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(path, options);
+        Bitmap bitmap = null;
+        try{
+            options.inSampleSize = inSampleSize;
+            options.inJustDecodeBounds = false;
+            Matrix mat = new Matrix();
+            bitmap = BitmapFactory.decodeFile(path, options);
+            ExifInterface ei =  new ExifInterface(path);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch(orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    mat.postRotate(90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    mat.postRotate(180);
+                    break;
+            }
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
+        }catch (IOException e){
+            return null;
+        }finally {
+            if (bitmap != null){
+                bitmap.recycle();
+            }
+        }
 
     }
 }
