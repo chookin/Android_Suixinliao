@@ -9,11 +9,14 @@ import com.tencent.TIMImage;
 import com.tencent.TIMImageElem;
 import com.tencent.TIMImageType;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageStatus;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.utils.LogUtils;
+
+import java.io.File;
 
 /**
  * 图片消息数据
@@ -42,28 +45,40 @@ public class ImageMessage extends Message {
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder) {
         TIMImageElem e = (TIMImageElem) message.getElement(0);
-        for(TIMImage image : e.getImageList()) {
-            if (image.getType() == TIMImageType.Thumb){
-                image.getImage(new TIMValueCallBack<byte[]>() {
-                    @Override
-                    public void onError(int code, String desc) {//获取图片失败
-                        //错误码code和错误描述desc，可用于定位请求失败原因
-                        //错误码code含义请参见错误码表
-                        LogUtils.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
-                    }
+        switch (message.status()){
+            case Sending:
 
-                    @Override
-                    public void onSuccess(byte[] data) {//成功，参数为图片数据
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        ImageView imageView = new ImageView(MyApplication.getContext());
-                        imageView.setImageBitmap(bitmap);
-                        getBubbleView(viewHolder).removeAllViews();
-                        getBubbleView(viewHolder).addView(imageView);
-                        showStatus(viewHolder);
+                ImageView imageView = new ImageView(MyApplication.getContext());
+                imageView.setImageBitmap(getThumb(e.getPath()));
+                getBubbleView(viewHolder).removeAllViews();
+                getBubbleView(viewHolder).addView(imageView);
+                break;
+            case SendSucc:
+                for(TIMImage image : e.getImageList()) {
+                    if (image.getType() == TIMImageType.Thumb){
+                        image.getImage(new TIMValueCallBack<byte[]>() {
+                            @Override
+                            public void onError(int code, String desc) {//获取图片失败
+                                //错误码code和错误描述desc，可用于定位请求失败原因
+                                //错误码code含义请参见错误码表
+                                LogUtils.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                            }
+
+                            @Override
+                            public void onSuccess(byte[] data) {//成功，参数为图片数据
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                ImageView imageView = new ImageView(MyApplication.getContext());
+                                imageView.setImageBitmap(bitmap);
+                                getBubbleView(viewHolder).removeAllViews();
+                                getBubbleView(viewHolder).addView(imageView);
+                            }
+                        });
                     }
-                });
-            }
+                }
+                break;
         }
+        showStatus(viewHolder);
+
 
     }
 
@@ -73,5 +88,37 @@ public class ImageMessage extends Message {
     @Override
     public String getSummary() {
         return MyApplication.getContext().getString(R.string.summary_image);
+    }
+
+    /**
+     * 生成缩略图
+     * 缩略图是将原图等比压缩，压缩后宽、高中较小的一个等于198像素
+     * 详细信息参见文档
+     */
+    private Bitmap getThumb(String path){
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+        int reqWidth, reqHeight, width=options.outWidth, height=options.outHeight;
+        if (width > height){
+            reqWidth = 198;
+            reqHeight = (reqWidth * height)/width;
+        }else{
+            reqHeight = 198;
+            reqWidth = (width * reqHeight)/height;
+        }
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        options.inSampleSize = inSampleSize;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(path, options);
+
     }
 }

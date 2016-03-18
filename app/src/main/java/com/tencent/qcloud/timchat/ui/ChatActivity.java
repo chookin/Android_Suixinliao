@@ -237,7 +237,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 if (file.exists()) {
                     Message message = new ImageMessage(file.getAbsolutePath());
                     presenter.sendMessage(message.getMessage());
-
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture

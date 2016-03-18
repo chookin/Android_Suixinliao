@@ -31,7 +31,9 @@ public class FileUtil {
      */
     public static File getTempFile(FileType type){
         try{
-            return File.createTempFile(type.toString(), null, cacheDir);
+            File file = File.createTempFile(type.toString(), null, cacheDir);
+            file.deleteOnExit();
+            return file;
         }catch (IOException e){
             return null;
         }
