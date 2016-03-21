@@ -5,7 +5,10 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:name=".MyApplication"
@@ -40,6 +43,10 @@
         <activity android:name=".ui.NewFriendDetailActivity" >
         </activity>
         <activity android:name=".ui.VideoActivity" >
+        </activity>
+        <activity android:name=".ui.ChatSettingActivity" >
+        </activity>
+        <activity android:name=".ui.GroupChatSettingActivity" >
         </activity>
     </application>
 

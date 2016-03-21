@@ -51,45 +51,24 @@
         android:layout_height="1px"
         android:background="@color/line" />
 
-    <View android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line"
-        android:layout_marginTop="20dp"/>
-    <LinearLayout
+    
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/friend_confirm"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:text="@string/setting_friend_confirm"/>
-        <TextView
-            android:id="@+id/need_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/text_gray1"
-            android:text="@string/setting_friend_need_confirm"/>
-
-    </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:name="@string/setting_friend_confirm"
+        app:content="@string/setting_friend_need_confirm"
+        app:isBottom="true"
+        app:canNav="true"/>
 
     <TextView
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/colorRed"
         android:textSize="18sp"
-        android:textColor="@color/white"
+        android:background="@drawable/bg_negative_btn"
+        android:textColor="@color/text_btn"
         android:gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"

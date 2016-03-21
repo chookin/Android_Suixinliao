@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
@@ -33,10 +32,7 @@ import com.tencent.qcloud.timchat.utils.RecorderUtil;
 
 import java.io.File;
 
-import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends FragmentActivity implements ChatView {
@@ -82,14 +78,31 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         });
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(name);
-        title.setMoreImgAction(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
-                intent.putExtra("identify", identify);
-                startActivity(intent);
-            }
-        });
+        switch (type){
+            case C2C:
+                title.setMoreImg(R.drawable.btn_person);
+                title.setMoreImgAction(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
+                        intent.putExtra("identify", identify);
+                        startActivity(intent);
+                    }
+                });
+                break;
+            case Group:
+                title.setMoreImg(R.drawable.btn_group);
+                title.setMoreImgAction(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ChatActivity.this, GroupChatSettingActivity.class);
+                        intent.putExtra("identify", identify);
+                        startActivity(intent);
+                    }
+                });
+                break;
+
+        }
         voiceSendingView = (VoiceSendingView) findViewById(R.id.voice_sending);
         presenter.start();
     }

@@ -3,6 +3,7 @@ package com.tencent.qcloud.timchat.model;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 
@@ -39,6 +40,17 @@ public abstract class Message {
         }else{
             viewHolder.leftPanel.setVisibility(View.VISIBLE);
             viewHolder.rightPanel.setVisibility(View.GONE);
+            //群聊显示名称，群名片>个人昵称>identify
+            if (message.getConversation().getType() == TIMConversationType.Group){
+                viewHolder.sender.setVisibility(View.VISIBLE);
+                String name = "";
+                if (message.getSenderGroupMemberProfile()!=null) name = message.getSenderGroupMemberProfile().getNameCard();
+                if (name.equals("")&&message.getSenderProfile()!=null) name = message.getSenderProfile().getNickName();
+                if (name.equals("")) name = message.getSender();
+                viewHolder.sender.setText(name);
+            }else{
+                viewHolder.sender.setVisibility(View.GONE);
+            }
             return viewHolder.leftMessage;
         }
 

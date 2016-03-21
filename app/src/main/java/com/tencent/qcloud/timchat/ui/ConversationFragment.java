@@ -153,6 +153,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             }
         }
         conversationList.add(new Conversation(conversation));
+        Collections.sort(conversationList);
     }
 
 
