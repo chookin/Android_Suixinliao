@@ -72,6 +72,7 @@ public class ManagerGroupListPresenter extends Presenter {
         TIMGroupManager.getInstance().getSelfInfo(groupId, new TIMValueCallBack<TIMGroupSelfInfo>() {
             @Override
             public void onError(int i, String s) {
+
                 grouptype = -1;
             }
             @Override

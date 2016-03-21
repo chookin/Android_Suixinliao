@@ -10,15 +10,19 @@ import com.tencent.TIMGroupBaseInfo;
 import com.tencent.qcloud.presentation.presenter.ManagerGroupListPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.PulicGroupListView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.adapters.MySimpleAdapter;
+import com.tencent.qcloud.timchat.model.ItemData;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class PublicGroupActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
-//    MySimpleAdapter
+    MySimpleAdapter mOwnerGroupAdapter;
+    private ArrayList<ItemData> mOwnGroupData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +31,6 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
         mOwnerGroup = (ListView)findViewById(R.id.created_group_list);
         mManagerGroup = (ListView)findViewById(R.id.hosted_group_list);
         mJoinGroup = (ListView)findViewById(R.id.joined_group_list);
-
-
         TemplateTitle title = (TemplateTitle) findViewById(R.id.public_group_actionbar);
         title.setMoreTextAction(new View.OnClickListener() {
             @Override
@@ -38,7 +40,9 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
             }
         });
 
-
+        mOwnGroupData = new ArrayList<ItemData>();
+        mOwnerGroupAdapter = new MySimpleAdapter(this,mOwnGroupData);
+        mOwnerGroup.setAdapter(mOwnerGroupAdapter);
         mManagerGroupListPresenter = new ManagerGroupListPresenter(this, this);
         mManagerGroupListPresenter.getMyPulicGroupList();
 
@@ -46,7 +50,14 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
 
     @Override
     public void showMyPublicGroupListByType(List<TIMGroupBaseInfo> createGroup, List<TIMGroupBaseInfo> hostGroup, List<TIMGroupBaseInfo> memberGroup) {
-
+        for(TIMGroupBaseInfo groupinfo : createGroup){
+            ItemData groupData = new ItemData();
+            groupData.setID(groupinfo.getGroupId());
+            groupData.setName(groupinfo.getGroupName());
+            groupData.setAvatar(groupinfo.getFaceUrl());
+            mOwnGroupData.add(groupData);
+        }
+        mOwnerGroupAdapter.notifyDataSetChanged();
     }
 
 }
