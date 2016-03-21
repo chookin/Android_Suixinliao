@@ -29,7 +29,7 @@ public class ManagerFriendGroupPresenter extends Presenter {
     /**
      * 创建一个新分组
      */
-    public void createEmptyGroup(String groupname) {
+    public void createEmptyFriendGroup(String groupname) {
         List<String> createGroup = new ArrayList<String>() ;
         createGroup.clear();
         createGroup.add(groupname);
@@ -51,7 +51,7 @@ public class ManagerFriendGroupPresenter extends Presenter {
      * 删除一个分组
      * @param id
      */
-    public void deleteGroup(String id){
+    public void deleteFriendGroup(String id){
         List<String> deletegroup = new ArrayList<String>();
         deletegroup.clear();
         deletegroup.add(id);
