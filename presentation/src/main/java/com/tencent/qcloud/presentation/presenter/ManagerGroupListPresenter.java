@@ -31,7 +31,7 @@ public class ManagerGroupListPresenter extends Presenter {
         mPulicGroupListView = view;
     }
 
-    public void getMyPulicGroupList() {
+    public void getMyGroupList(final String type) {
         TIMGroupManager.getInstance().getGroupList(new TIMValueCallBack<List<TIMGroupBaseInfo>>() {
             @Override
             public void onError(int i, String s) {
@@ -44,13 +44,14 @@ public class ManagerGroupListPresenter extends Presenter {
                 mPublicGroupHostList.clear();
                 mPublicGroupMemberList.clear();
                 for (TIMGroupBaseInfo groupinfo : timGroupBaseInfos) {
-                    if (groupinfo.getGroupType().equals("Public")) {
+                    if (groupinfo.getGroupType().equals(type)) {
                         definePulicGroupType(groupinfo);
                     }
                 }
             }
         });
     }
+
 
 
 

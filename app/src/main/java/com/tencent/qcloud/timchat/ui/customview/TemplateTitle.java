@@ -111,6 +111,16 @@ public class TemplateTitle extends RelativeLayout {
     }
 
 
+    /**
+     * 设置更多文字内容
+     * @param text
+     */
+    public void setMoreTextContext(String text){
+        tvMore.setText(text);
+    }
+
+
+
 
 
 

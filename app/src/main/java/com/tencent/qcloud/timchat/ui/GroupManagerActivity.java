@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tencent.TIMGroupBaseInfo;
 import com.tencent.qcloud.presentation.presenter.ManagerGroupListPresenter;
@@ -18,11 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PublicGroupActivity extends Activity implements PulicGroupListView {
+public class GroupManagerActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
     MySimpleAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
     private ArrayList<ItemTIMProfile> mOwnGroupData,mManagerGroupData,mJoinGroupData;
+    private TextView mSubtitleCreate,mSubtitleManager,mSubtitleJoin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,18 +32,25 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
         mOwnerGroup = (ListView)findViewById(R.id.created_group_list);
         mManagerGroup = (ListView)findViewById(R.id.hosted_group_list);
         mJoinGroup = (ListView)findViewById(R.id.joined_group_list);
+
+        mSubtitleCreate = (TextView)findViewById(R.id.subtitle_owner);
+        mSubtitleManager =(TextView)findViewById(R.id.subtitle_manager);
+        mSubtitleJoin =(TextView)findViewById(R.id.subtitle_join);
+
         TemplateTitle title = (TemplateTitle) findViewById(R.id.public_group_actionbar);
         title.setMoreTextAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PublicGroupActivity.this, CreateGroupActivity.class);
+                Intent intent = new Intent(GroupManagerActivity.this, CreateGroupActivity.class);
                 startActivity(intent);
             }
         });
+
+
+
         mOwnGroupData = new ArrayList<ItemTIMProfile>();
         mManagerGroupData = new ArrayList<ItemTIMProfile>();
         mJoinGroupData = new ArrayList<ItemTIMProfile>();
-
         mOwnerGroupAdapter = new MySimpleAdapter(this,mOwnGroupData);
         mManagerGroupAdapter = new MySimpleAdapter(this,mManagerGroupData);
         mJoinGroupAdapter = new MySimpleAdapter(this,mJoinGroupData);
@@ -49,7 +58,24 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
         mManagerGroup.setAdapter(mManagerGroupAdapter);
         mJoinGroup.setAdapter(mJoinGroupAdapter);
         mManagerGroupListPresenter = new ManagerGroupListPresenter(this, this);
-        mManagerGroupListPresenter.getMyPulicGroupList();
+        String type = getIntent().getStringExtra("type");
+        if(type.equals("ChatRoom")){
+            title.setTitleText(getResources().getString(R.string.title_chatroom));
+            title.setMoreTextContext(getResources().getString(R.string.btn__create_chatroom));
+            mSubtitleCreate.setText(getResources().getString(R.string.subtitle_owner_chatrrom));
+            mSubtitleManager.setText(getResources().getString(R.string.subtitle_hosting_chatroom));
+            mSubtitleJoin.setText(getResources().getString(R.string.subtitle_joined_chatroom));
+            mManagerGroupListPresenter.getMyGroupList("ChatRoom");
+        }
+        if(type.equals("Public")){
+            title.setTitleText(getResources().getString(R.string.title_public_group));
+            title.setMoreTextContext(getResources().getString(R.string.btn__create_public_group));
+            mSubtitleCreate.setText(getResources().getString(R.string.subtitle_created_public_group));
+            mSubtitleManager.setText(getResources().getString(R.string.subtitle_hosting_public_group));
+            mSubtitleJoin.setText(getResources().getString(R.string.subtitle_joined_public_group));
+            mManagerGroupListPresenter.getMyGroupList("Public");
+        }
+
 
     }
 

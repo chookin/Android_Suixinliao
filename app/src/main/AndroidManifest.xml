@@ -37,7 +37,7 @@
         <activity android:name=".ui.ManagerGroupActivity" />
         <activity android:name=".ui.NewFriendDetailActivity" />
         <activity android:name=".ui.VideoActivity" />
-        <activity android:name=".ui.PublicGroupActivity" />
+        <activity android:name=".ui.GroupManagerActivity" />
         <activity android:name=".ui.CreateGroupActivity" />
         <activity android:name=".ui.ChooseMembersActivity" />
         <activity android:name=".ui.ChatSettingActivity" />
