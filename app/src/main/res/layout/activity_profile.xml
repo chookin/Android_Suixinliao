@@ -28,7 +28,7 @@
             android:layout_width="115dp"
             android:layout_height="115dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/ic_head" />
+            android:src="@drawable/head_other" />
 
         <TextView
             android:id="@+id/name"
@@ -38,69 +38,26 @@
             android:textColor="@color/text_gray1"
             android:textSize="16sp" />
     </LinearLayout>
-
-    <View android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line"
-        android:layout_marginTop="20dp"/>
-    <LinearLayout
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/id"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:text="@string/profile_id"/>
-        <TextView
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/text_gray1"/>
-
-    </LinearLayout>
-    <View android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:text="@string/profile_remark"/>
-        <TextView
-            android:id="@+id/remark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/text_gray1"/>
-
-    </LinearLayout>
-
-
-
-    <Spinner
-        android:id="@+id/set_group"
-        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_height="30dp"
-        android:background="@color/white" />
+        app:name="@string/profile_id"/>
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:canNav="true"
+        app:name="@string/profile_remark"/>
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:canNav="true"
+        app:isBottom="true"
+        app:name="@string/profile_now_group"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,6 +72,7 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_negative_btn"
             android:textColor="@color/text_btn"
+            android:textSize="18sp"
             android:gravity="center"
             android:clickable="true"
             android:onClick="onClick"
@@ -127,6 +85,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/bg_positive_btn"
             android:textColor="@color/text_btn"
+            android:textSize="18sp"
             android:clickable="true"
             android:gravity="center"
             android:onClick="onClick"

@@ -85,7 +85,7 @@ public class VideoMessage extends Message {
                 }
             });
         }
-
+        showStatus(viewHolder);
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

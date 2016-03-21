@@ -119,12 +119,11 @@ public class ImageMessage extends Message {
                 inSampleSize *= 2;
             }
         }
-        Bitmap bitmap = null;
         try{
             options.inSampleSize = inSampleSize;
             options.inJustDecodeBounds = false;
             Matrix mat = new Matrix();
-            bitmap = BitmapFactory.decodeFile(path, options);
+            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
             ExifInterface ei =  new ExifInterface(path);
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             switch(orientation) {
@@ -138,11 +137,6 @@ public class ImageMessage extends Message {
             return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
         }catch (IOException e){
             return null;
-        }finally {
-            if (bitmap != null){
-                bitmap.recycle();
-            }
         }
-
     }
 }

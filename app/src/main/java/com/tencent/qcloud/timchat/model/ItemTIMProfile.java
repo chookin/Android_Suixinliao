@@ -3,7 +3,7 @@ package com.tencent.qcloud.timchat.model;
 /**
  * Created by admin on 16/3/4.
  */
-public class ItemData {
+public class ItemTIMProfile {
     private String id;
     private String name;
     private boolean needVerify;
@@ -18,7 +18,7 @@ public class ItemData {
 
     private String avatar;
 
-    public ItemData() {
+    public ItemTIMProfile() {
         // TODO Auto-generated constructor stub
     }
 

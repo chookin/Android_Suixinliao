@@ -38,7 +38,8 @@
 
     <!-- Add newfriend activity -->
     <string name="search_default">搜索</string>
-    <string name="search_back">取消</string>
+    <string name="search_cancel">取消</string>
+    <string name="search_hint">搜索ID或手机号</string>
 
     <!-- Add newfriend detail activity -->
     <string name="title_addfri">添加好友</string>
@@ -75,6 +76,7 @@
     <string name="profile_chat">发送消息</string>
     <string name="profile_del">删除好友</string>
     <string name="profile_group">添加分组</string>
+    <string name="profile_now_group">所在分组</string>
 
     <!-- chat setting activity -->
     <string name="chat_setting_title">聊天设置</string>
