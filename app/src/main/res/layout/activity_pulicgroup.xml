@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray2"
+    android:orientation="vertical">
+
+    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+        android:id="@+id/public_group_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:backText="@string/profile_back"
+        app:canBack="true"
+        app:moreText="@string/btn__create_public_group"
+        app:titleText="@string/title_public_group" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"
+        android:text="@string/subtitle_created_group" />
+
+    <ListView
+        android:id="@+id/created_group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="#e0e0e0"
+        android:dividerHeight="0.5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"
+        android:text="@string/subtitle_created_group" />
+
+
+    <ListView
+        android:id="@+id/hosted_group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="#e0e0e0"
+        android:dividerHeight="0.5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"
+        android:text="@string/subtitle_created_group" />
+
+    <ListView
+        android:id="@+id/joined_group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="#e0e0e0"
+        android:dividerHeight="0.5dp" />
+
+
+</LinearLayout>

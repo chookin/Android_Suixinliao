@@ -41,6 +41,12 @@
         </activity>
         <activity android:name=".ui.VideoActivity" >
         </activity>
+        <activity android:name=".ui.PublicGroupActivity" >
+        </activity>
+        <activity android:name=".ui.CreateGroupActivity" >
+        </activity>
+        <activity android:name=".ui.ChooseMembersActivity" >
+        </activity>
     </application>
 
 </manifest>
