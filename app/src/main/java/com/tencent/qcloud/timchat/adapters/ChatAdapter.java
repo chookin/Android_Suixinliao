@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.Message;
@@ -46,6 +49,9 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             viewHolder.rightMessage = (RelativeLayout) view.findViewById(R.id.rightMessage);
             viewHolder.leftPanel = (RelativeLayout) view.findViewById(R.id.leftPanel);
             viewHolder.rightPanel = (RelativeLayout) view.findViewById(R.id.rightPanel);
+            viewHolder.sending = (ProgressBar) view.findViewById(R.id.sending);
+            viewHolder.error = (ImageView) view.findViewById(R.id.sendError);
+            viewHolder.sender = (TextView) view.findViewById(R.id.sender);
             view.setTag(viewHolder);
         }
         final Message data = getItem(position);
@@ -58,6 +64,9 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         public RelativeLayout rightMessage;
         public RelativeLayout leftPanel;
         public RelativeLayout rightPanel;
+        public ProgressBar sending;
+        public ImageView error;
+        public TextView sender;
 
     }
 }

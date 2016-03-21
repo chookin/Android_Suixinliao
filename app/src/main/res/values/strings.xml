@@ -75,6 +75,12 @@
     <string name="profile_del">删除好友</string>
     <string name="profile_group">添加分组</string>
 
+    <!-- chat setting activity -->
+    <string name="chat_setting_title">聊天设置</string>
+    <string name="chat_setting_group_member">群成员</string>
+    <string name="chat_setting_group_id">群组ID</string>
+    <string name="chat_setting_group_name">群名称</string>
+
 
     <!-- Add newfri activity -->
     <string name="title_new_fri">新朋友</string>
@@ -93,6 +99,7 @@
     <string name="time_month">月</string>
     <string name="time_year">年</string>
     <string name="time_more">99+</string>
+    <string name="title_activity_group_chat_setting">GroupChatSettingActivity</string>
 
     <!--publicgroup-->
     <string name="title_public_group">公开群</string>

@@ -77,6 +77,17 @@ public class TemplateTitle extends RelativeLayout {
         tvTitle.setText(titleText);
     }
 
+    /**
+     * 标题更多按钮
+     *
+     * @param img 设置更多按钮
+     */
+    public void setMoreImg(int img){
+        moreImg = img;
+        ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
+        moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg));
+    }
+
 
     /**
      * 设置更多按钮事件

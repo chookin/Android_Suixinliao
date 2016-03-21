@@ -32,6 +32,7 @@ public class VideoMessage extends Message {
 
     private static final String TAG = "VideoMessage";
     private Context context;
+    private Bitmap thumb;
 
     public VideoMessage(Context context, TIMMessage message){
         this.message = message;
@@ -46,7 +47,7 @@ public class VideoMessage extends Message {
         message = new TIMMessage();
         TIMVideoElem elem = new TIMVideoElem();
         elem.setVideoPath(FileUtil.getCacheFilePath(fileName));
-        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(FileUtil.getCacheFilePath(fileName), MediaStore.Images.Thumbnails.MINI_KIND);
+        thumb = ThumbnailUtils.createVideoThumbnail(FileUtil.getCacheFilePath(fileName), MediaStore.Images.Thumbnails.MINI_KIND);
         elem.setSnapshotPath(FileUtil.createFile(thumb, new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())));
         TIMSnapshot snapshot = new TIMSnapshot();
         snapshot.setType("PNG");

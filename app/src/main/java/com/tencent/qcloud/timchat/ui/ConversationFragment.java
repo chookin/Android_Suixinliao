@@ -105,6 +105,10 @@ public class ConversationFragment extends Fragment implements ConversationView,G
      */
     @Override
     public void updateMessage(TIMMessage message) {
+        if (message == null){
+            adapter.notifyDataSetChanged();
+            return;
+        }
         Conversation conversation = new Conversation(message.getConversation());
         Iterator<Conversation> iterator =conversationList.iterator();
         while (iterator.hasNext()){
@@ -149,6 +153,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             }
         }
         conversationList.add(new Conversation(conversation));
+        Collections.sort(conversationList);
     }
 
 

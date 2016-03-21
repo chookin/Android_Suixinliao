@@ -14,19 +14,34 @@
             android:id="@+id/leftAvatar"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_head"
+            android:src="@drawable/head_other"
             android:layout_alignParentLeft="true"/>
-        <RelativeLayout
-            android:id="@+id/leftMessage"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="5dp"
-            android:gravity="center"
             android:layout_toRightOf="@id/leftAvatar"
-            android:background="@drawable/bubble_gray"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/sender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_gray1"
+                android:layout_marginLeft="6dp"
+                android:layout_marginBottom="3dp"
+                android:textSize="12sp"
+                android:text="name"/>
+            <RelativeLayout
+                android:id="@+id/leftMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:gravity="center"
+                android:background="@drawable/bubble_gray"/>
+        </LinearLayout>
+
 
     </RelativeLayout>
     <RelativeLayout
@@ -41,7 +56,7 @@
             android:id="@+id/rightAvatar"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_head"
+            android:src="@drawable/head_me"
             android:layout_alignParentRight="true"/>
         <RelativeLayout
             android:id="@+id/rightMessage"
@@ -54,6 +69,25 @@
             android:gravity="center"
             android:layout_toLeftOf="@id/rightAvatar"
             android:background="@drawable/bubble_blue"/>
+        <RelativeLayout
+            android:id="@+id/sendStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/rightMessage">
+            <ProgressBar
+                android:id="@+id/sending"
+                android:layout_width="15dp"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/sendError"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_error"/>
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

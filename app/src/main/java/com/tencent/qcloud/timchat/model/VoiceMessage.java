@@ -86,6 +86,7 @@ public class VoiceMessage extends Message {
                 VoiceMessage.this.playAudio();
             }
         });
+        showStatus(viewHolder);
     }
 
 
@@ -109,12 +110,7 @@ public class VoiceMessage extends Message {
             @Override
             public void onSuccess(byte[] bytes) {
                 try{
-
-                    File tempAudio = File.createTempFile("tempRecvAudio", "mp3", MyApplication.getContext().getCacheDir());
-                    LogUtils.d(TAG, "internal " + MyApplication.getContext().getCacheDir().getAbsolutePath());
-                    LogUtils.d(TAG, "external " + MyApplication.getContext().getExternalCacheDir().getAbsolutePath());
-
-                    tempAudio.deleteOnExit();
+                    File tempAudio = FileUtil.getTempFile(FileUtil.FileType.AUDIO);
                     FileOutputStream fos = new FileOutputStream(tempAudio);
                     fos.write(bytes);
                     fos.close();
@@ -123,8 +119,6 @@ public class VoiceMessage extends Message {
                 }catch (IOException e){
 
                 }
-
-
             }
         });
     }
