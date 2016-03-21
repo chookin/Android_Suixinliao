@@ -24,5 +24,7 @@
         <attr name="isBottom" format="boolean"/>
         <!-- 是否可以跳转 -->
         <attr name="canNav" format="boolean"/>
+        <!-- 是否是开关 -->
+        <attr name="isSwitch" format="boolean"/>
     </declare-styleable>
 </resources>

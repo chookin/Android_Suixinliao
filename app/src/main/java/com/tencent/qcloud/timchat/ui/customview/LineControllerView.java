@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
@@ -20,6 +21,7 @@ public class LineControllerView extends LinearLayout {
     private boolean isBottom;
     private String content;
     private boolean canNav;
+    private boolean isSwitch;
 
     public LineControllerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,6 +32,7 @@ public class LineControllerView extends LinearLayout {
             content = ta.getString(R.styleable.LineControllerView_content);
             isBottom = ta.getBoolean(R.styleable.LineControllerView_isBottom, false);
             canNav = ta.getBoolean(R.styleable.LineControllerView_canNav,false);
+            isSwitch = ta.getBoolean(R.styleable.LineControllerView_isSwitch,false);
             setUpView();
         } finally {
             ta.recycle();
@@ -46,6 +49,10 @@ public class LineControllerView extends LinearLayout {
         bottomLine.setVisibility(isBottom ? VISIBLE : GONE);
         ImageView navArrow = (ImageView) findViewById(R.id.rightArrow);
         navArrow.setVisibility(canNav?VISIBLE:GONE);
+        LinearLayout contentPanel = (LinearLayout) findViewById(R.id.contentText);
+        contentPanel.setVisibility(isSwitch?GONE:VISIBLE);
+        Switch switchPanel = (Switch) findViewById(R.id.btnSwitch);
+        switchPanel.setVisibility(isSwitch?VISIBLE:GONE);
 
     }
 
