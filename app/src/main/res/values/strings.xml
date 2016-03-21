@@ -27,6 +27,7 @@
     <string name="chatroom">聊天室</string>
     <string name="addfriend">添加好友</string>
     <string name="manangergroup">管理分组</string>
+    <string name="title_default_name">默认分组</string>
 
     <!-- contact fragment -->
     <string name="setting_logout">退出登录</string>

@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMUserProfile;
@@ -22,6 +23,7 @@ import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
+import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +58,25 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         mNewFriBtn.setOnClickListener(this);
         mPublicGroupBtn= (FrameLayout) contactLayout.findViewById(R.id.btn_public_group);
         mPublicGroupBtn.setOnClickListener(this);
-        mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
-        mMoreBtn.setOnClickListener(this);
+        TemplateTitle title = (TemplateTitle)contactLayout.findViewById(R.id.contact_antionbar);
+        title.setMoreImgAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMoveDialog();
+            }
+        });
         mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), mGroupTitleList, mAllGroupMembers);
         mGroupListView.setAdapter(mGroupListAdapter);
+        mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                Toast.makeText(getActivity(), ""+mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(),ProfileActivity.class);
+                intent.putExtra("identify",mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
+                startActivity(intent);
+                return false;
+            }
+        });
         mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this, getActivity());
         return contactLayout;
     }
@@ -78,9 +95,9 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.contact_add) {
-            showMoveDialog();
-        }
+//        if (view.getId() == R.id.contact_add) {
+//            showMoveDialog();
+//        }
         if (view.getId() == R.id.newfriend_btn) {
             Intent intent = new Intent(getActivity(), NewFriendActivity.class);
             getActivity().startActivity(intent);
@@ -138,7 +155,6 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
             mGroupTitleList.add(group);
             mGroupName.add(group.getGroupName());
             mAllGroupMembers.add(new ArrayList<TIMUserProfile>());
-
         }
         mGroupListAdapter.notifyDataSetChanged();
     }

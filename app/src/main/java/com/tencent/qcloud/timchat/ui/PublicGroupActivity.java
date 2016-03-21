@@ -21,8 +21,8 @@ import java.util.List;
 public class PublicGroupActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
-    MySimpleAdapter mOwnerGroupAdapter;
-    private ArrayList<ItemData> mOwnGroupData;
+    MySimpleAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
+    private ArrayList<ItemData> mOwnGroupData,mManagerGroupData,mJoinGroupData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,15 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
                 startActivity(intent);
             }
         });
-
         mOwnGroupData = new ArrayList<ItemData>();
+        mManagerGroupData = new ArrayList<ItemData>();
+        mJoinGroupData = new ArrayList<ItemData>();
         mOwnerGroupAdapter = new MySimpleAdapter(this,mOwnGroupData);
+        mManagerGroupAdapter = new MySimpleAdapter(this,mManagerGroupData);
+        mJoinGroupAdapter = new MySimpleAdapter(this,mJoinGroupData);
         mOwnerGroup.setAdapter(mOwnerGroupAdapter);
+        mManagerGroup.setAdapter(mManagerGroupAdapter);
+        mJoinGroup.setAdapter(mJoinGroupAdapter);
         mManagerGroupListPresenter = new ManagerGroupListPresenter(this, this);
         mManagerGroupListPresenter.getMyPulicGroupList();
 
@@ -50,6 +55,9 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
 
     @Override
     public void showMyPublicGroupListByType(List<TIMGroupBaseInfo> createGroup, List<TIMGroupBaseInfo> hostGroup, List<TIMGroupBaseInfo> memberGroup) {
+        mOwnGroupData.clear();
+        mManagerGroupData.clear();
+        mJoinGroupData.clear();
         for(TIMGroupBaseInfo groupinfo : createGroup){
             ItemData groupData = new ItemData();
             groupData.setID(groupinfo.getGroupId());
@@ -58,6 +66,23 @@ public class PublicGroupActivity extends Activity implements PulicGroupListView 
             mOwnGroupData.add(groupData);
         }
         mOwnerGroupAdapter.notifyDataSetChanged();
+        for(TIMGroupBaseInfo groupinfo : hostGroup){
+            ItemData groupData = new ItemData();
+            groupData.setID(groupinfo.getGroupId());
+            groupData.setName(groupinfo.getGroupName());
+            groupData.setAvatar(groupinfo.getFaceUrl());
+            mManagerGroupData.add(groupData);
+        }
+        mManagerGroupAdapter.notifyDataSetChanged();
+        for(TIMGroupBaseInfo groupinfo : memberGroup){
+            ItemData groupData = new ItemData();
+            groupData.setID(groupinfo.getGroupId());
+            groupData.setName(groupinfo.getGroupName());
+            groupData.setAvatar(groupinfo.getFaceUrl());
+            mJoinGroupData.add(groupData);
+        }
+        mJoinGroupAdapter.notifyDataSetChanged();
+
     }
 
 }

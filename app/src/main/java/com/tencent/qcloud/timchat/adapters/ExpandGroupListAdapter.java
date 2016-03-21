@@ -98,11 +98,18 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_group, null);
             groupHolder = new GroupHolder();
             groupHolder.groupname = (TextView) convertView.findViewById(R.id.group_name);
+            groupHolder.tag = (TextView) convertView.findViewById(R.id.group_tag);
             // groupHolder.img = (ImageView) convertView
             // .findViewById(R.id.img);
             convertView.setTag(groupHolder);
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
+        }
+
+        if(isExpanded){
+            groupHolder.tag.setBackgroundResource(R.drawable.open);
+        }else{
+            groupHolder.tag.setBackgroundResource(R.drawable.close);
         }
         groupHolder.groupname.setText(mGroups.get(groupPosition).getGroupName());
         return convertView;
@@ -150,13 +157,13 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return false;
+        return true;
     }
 
 
     class GroupHolder {
         public TextView groupname;
-        public ImageView img;
+        public TextView tag;
     }
 
     class ChildrenHolder {

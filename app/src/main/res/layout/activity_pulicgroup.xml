@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:gravity="center_vertical"
-        android:text="@string/subtitle_created_group" />
+        android:text="@string/subtitle_hosting_group" />
 
 
     <ListView
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:gravity="center_vertical"
-        android:text="@string/subtitle_created_group" />
+        android:text="@string/subtitle_joined_group" />
 
     <ListView
         android:id="@+id/joined_group_list"
