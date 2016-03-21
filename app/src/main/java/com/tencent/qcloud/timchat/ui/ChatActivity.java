@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
@@ -58,7 +59,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         final String identify = getIntent().getStringExtra("identify");
         final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
         final String name = getIntent().getStringExtra("name");
-        presenter = new ChatPresenter(this,identify,type);
+        presenter = new ChatPresenter(this, identify, type);
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
@@ -78,7 +79,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         });
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(name);
-        switch (type){
+        switch (type) {
             case C2C:
                 title.setMoreImg(R.drawable.btn_person);
                 title.setMoreImgAction(new View.OnClickListener() {
@@ -120,11 +121,11 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void showMessage(TIMMessage message) {
-        if (message == null){
+        if (message == null) {
             adapter.notifyDataSetChanged();
-        }else{
-            Message mMessage = MessageFactory.getMessage(message,this);
-            if (mMessage != null){
+        } else {
+            Message mMessage = MessageFactory.getMessage(message, this);
+            if (mMessage != null) {
                 messageList.add(mMessage);
                 adapter.notifyDataSetChanged();
                 listView.setSelection(adapter.getCount() - 1);
@@ -159,13 +160,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void sendImage() {
-        File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
-        if (tempFile != null){
-            fileUri = Uri.fromFile(tempFile);
-        }
-        Intent intent_album=new Intent("android.intent.action.GET_CONTENT");
+        Intent intent_album = new Intent("android.intent.action.GET_CONTENT");
         intent_album.setType("image/*");
-        intent_album.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         startActivityForResult(intent_album, IMAGE_STORE);
     }
 
@@ -176,10 +172,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     public void sendPhoto() {
         Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
-        if (tempFile != null){
+        if (tempFile != null) {
             fileUri = Uri.fromFile(tempFile);
         }
-        intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+        intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
@@ -192,7 +188,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         presenter.sendMessage(message.getMessage());
         input.setText("");
     }
-
 
 
     /**
@@ -213,10 +208,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         voiceSendingView.release();
         voiceSendingView.setVisibility(View.GONE);
         recorder.stopRecording();
-        if (recorder.getTimeInterval() < 1){
-            Toast.makeText(this,getResources().getString(R.string.chat_audio_too_short),Toast.LENGTH_SHORT).show();
-        }else{
-            Message message = new VoiceMessage(recorder.getTimeInterval(),recorder.getDate());
+        if (recorder.getTimeInterval() < 1) {
+            Toast.makeText(this, getResources().getString(R.string.chat_audio_too_short), Toast.LENGTH_SHORT).show();
+        } else {
+            Message message = new VoiceMessage(recorder.getTimeInterval(), recorder.getDate());
             presenter.sendMessage(message.getMessage());
         }
     }
@@ -251,43 +246,16 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                     Message message = new ImageMessage(file.getAbsolutePath());
                     presenter.sendMessage(message.getMessage());
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
-            } else {
             }
-
-        }else if (requestCode== IMAGE_STORE){
-            if (resultCode == RESULT_OK){
-
-//                Message message = new ImageMessage(getRealFilePath(data.getData()));
-//                presenter.sendMessage(message.getMessage());
-
+        } else if (requestCode == IMAGE_STORE) {
+            if (resultCode == RESULT_OK) {
+                Message message = new ImageMessage(FileUtil.getImageFilePath(this, data.getData()));
+                presenter.sendMessage(message.getMessage());
             }
 
         }
 
     }
 
-
-
-    /**
-     * 从uri转化为地址
-     *
-     * @param uri uri
-     *
-     */
-    private String getRealFilePath(final Uri uri) {
-        String result;
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        if (cursor == null) {
-            result = uri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
-    }
 
 }

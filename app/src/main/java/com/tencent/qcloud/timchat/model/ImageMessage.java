@@ -138,11 +138,6 @@ public class ImageMessage extends Message {
             return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
         }catch (IOException e){
             return null;
-        }finally {
-            if (bitmap != null){
-                bitmap.recycle();
-            }
         }
-
     }
 }
