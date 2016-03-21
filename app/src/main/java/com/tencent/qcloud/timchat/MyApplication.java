@@ -9,12 +9,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushListener;
+import com.tencent.TIMOfflinePushNotification;
+import com.tencent.qalsdk.sdk.MsfSdkUtils;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
-
-
 
 
 /**
@@ -28,9 +30,19 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+
+        if (MsfSdkUtils.isMainProcess(this)) {
+            TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
+                @Override
+                public void handleNotification(TIMOfflinePushNotification timOfflinePushNotification) {
+                    timOfflinePushNotification.doNotify(getApplicationContext(), R.drawable.ic_launcher);
+                }
+            });
+        }
+
         InitBusiness.start(context);
         TlsBusiness.init(context);
-        String id =  TLSService.getInstance().getLastUserIdentifier();
+        String id = TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
         ImageLoaderInit();
@@ -39,7 +51,6 @@ public class MyApplication extends Application {
     public static Context getContext() {
         return context;
     }
-
 
 
     private void ImageLoaderInit() {
