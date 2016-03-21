@@ -43,7 +43,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private TextView mMoreBtn;
-    private FrameLayout mNewFriBtn;
+    private FrameLayout mNewFriBtn,mPublicGroupBtn;
     private int mSelectItem;
 
     @Override
@@ -54,6 +54,8 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         mGroupListView.setOnItemClickListener(this);
         mNewFriBtn = (FrameLayout) contactLayout.findViewById(R.id.newfriend_btn);
         mNewFriBtn.setOnClickListener(this);
+        mPublicGroupBtn= (FrameLayout) contactLayout.findViewById(R.id.btn_public_group);
+        mPublicGroupBtn.setOnClickListener(this);
         mMoreBtn = (TextView) contactLayout.findViewById(R.id.contact_add);
         mMoreBtn.setOnClickListener(this);
         mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), mGroupTitleList, mAllGroupMembers);
@@ -83,6 +85,10 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
             Intent intent = new Intent(getActivity(), NewFriendActivity.class);
             getActivity().startActivity(intent);
 
+        }
+        if (view.getId() == R.id.btn_public_group) {
+            Intent intent = new Intent(getActivity(), PublicGroupActivity.class);
+            getActivity().startActivity(intent);
         }
     }
 

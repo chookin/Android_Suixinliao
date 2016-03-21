@@ -12,7 +12,10 @@ import com.tencent.TIMFriendGroup;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.timchat.R;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.tencent.qcloud.timchat.R.color.colorLabelRed;
 
 /**
  * 分组信息Adapters
@@ -21,12 +24,24 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
     private List<TIMFriendGroup> mGroups;
     private List<List<TIMUserProfile>> mAllGroupMembers;
     private Context mContext;
+    private int resourceId = -1;
+    private List<TIMUserProfile> mChooseMembers;
 
 
     public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers) {
         mContext = context;
         mGroups = groups;
         mAllGroupMembers = allgroupMembers;
+
+    }
+
+    public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers, int resource) {
+        mContext = context;
+        mGroups = groups;
+        mAllGroupMembers = allgroupMembers;
+        resourceId = resource;
+        mChooseMembers = new ArrayList<TIMUserProfile>();
+        mChooseMembers.clear();
 
     }
 
@@ -104,11 +119,24 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
      * @return
      */
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
+    public View getChildView(final int groupPosition,final int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
         ChildrenHolder itemHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
             itemHolder = new ChildrenHolder();
+            if (resourceId != -1) {
+                convertView = LayoutInflater.from(mContext).inflate(resourceId, null);
+                itemHolder.tag = (TextView) convertView.findViewById(R.id.choose_tag);
+                final ChildrenHolder finalItemHolder = itemHolder;
+                itemHolder.tag.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finalItemHolder.tag.setBackgroundColor(mContext.getResources().getColor(colorLabelRed));
+                        mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
+                    }
+                });
+            } else {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
+            }
             itemHolder.itemname = (TextView) convertView.findViewById(R.id.group_member_name);
 //            itemHolder.img = (ImageView) convertView
 //             .findViewById(R.id.img);
@@ -134,6 +162,11 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
     class ChildrenHolder {
         public TextView itemname;
         public ImageView img;
+        public TextView tag;
+    }
+
+    public List<TIMUserProfile> getChooseList(){
+        return mChooseMembers;
     }
 
 }

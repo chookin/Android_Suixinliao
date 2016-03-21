@@ -16,12 +16,12 @@ import java.util.List;
 /**
  * 群组信息逻辑
  */
-public class ManagerMyGroupPresenter extends Presenter {
+public class ManagerFriendGroupPresenter extends Presenter {
 
     private ManagerGroupView view;
     private Context mContext;
     private  List<String> users = new ArrayList<String>() ;
-    public ManagerMyGroupPresenter(ManagerGroupView view,Context context) {
+    public ManagerFriendGroupPresenter(ManagerGroupView view, Context context) {
         this.view = view;
         mContext = context;
     }

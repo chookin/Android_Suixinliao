@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
-import com.tencent.qcloud.presentation.presenter.ManagerMyGroupPresenter;
+import com.tencent.qcloud.presentation.presenter.ManagerFriendGroupPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ManagerGroupView;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.timchat.R;
@@ -25,7 +25,7 @@ import java.util.List;
  * 查找添加新朋友
  */
 public class ManagerGroupActivity extends Activity implements ManagerGroupView, MyFriendGroupInfo,View.OnClickListener {
-    ManagerMyGroupPresenter mManagerMyGroupPresenter;
+    ManagerFriendGroupPresenter mManagerMyGroupPresenter;
     GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ListView mMyGroupList;
     private List<TIMFriendGroup> mMyListTitle;
@@ -36,7 +36,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manager_group);
-        mManagerMyGroupPresenter = new ManagerMyGroupPresenter(this, getBaseContext());
+        mManagerMyGroupPresenter = new ManagerFriendGroupPresenter(this, getBaseContext());
         mMyGroupList = (ListView) findViewById(R.id.group_list);
         mAddGroup = (TextView) findViewById(R.id.add_group);
         mAddGroup.setOnClickListener(this);
@@ -85,7 +85,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
                 if (groupname == null || groupname.equals("")) {
                     Toast.makeText(ManagerGroupActivity.this, "empty input", Toast.LENGTH_SHORT).show();
                 } else {
-                    mManagerMyGroupPresenter.createEmptyGroup(groupname);
+                    mManagerMyGroupPresenter.createEmptyFriendGroup(groupname);
                 }
                 addGroupDialog.dismiss();
             }
@@ -117,7 +117,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mManagerMyGroupPresenter.deleteGroup(groupinfo.getGroupName());
+                mManagerMyGroupPresenter.deleteFriendGroup(groupinfo.getGroupName());
                 deleteGroupDialog.dismiss();
             }
         });

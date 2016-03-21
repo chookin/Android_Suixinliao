@@ -23,6 +23,7 @@ public class TemplateTitle extends RelativeLayout {
     private String backText;
     private String moreText;
     private int moreImg;
+    private TextView tvMore;
 
 
     public TemplateTitle(Context context, AttributeSet attrs) {
@@ -60,7 +61,7 @@ public class TemplateTitle extends RelativeLayout {
             ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
             moreImgView.setImageDrawable(getContext().getResources().getDrawable(moreImg));
         }
-        TextView tvMore = (TextView) findViewById(R.id.txt_more);
+        tvMore = (TextView) findViewById(R.id.txt_more);
         tvMore.setText(moreText);
     }
 
@@ -97,6 +98,18 @@ public class TemplateTitle extends RelativeLayout {
         ImageView moreImgView = (ImageView) findViewById(R.id.img_more);
         moreImgView.setOnClickListener(listener);
     }
+
+
+
+    /**
+     * 设置更多按钮事件
+     *
+     * @param listener 事件监听
+     */
+    public void setMoreTextAction(View.OnClickListener listener){
+        tvMore.setOnClickListener(listener);
+    }
+
 
 
 

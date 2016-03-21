@@ -8,6 +8,7 @@
     <string name="cancel">取消</string>
     <string name="agree">同意</string>
     <string name="refuse">拒绝</string>
+    <string name="done">完成</string>
 
 
 
@@ -106,5 +107,18 @@
     <string name="time_more">99+</string>
     <string name="title_activity_group_chat_setting">GroupChatSettingActivity</string>
 
+    <!--publicgroup-->
+    <string name="title_public_group">公开群</string>
+    <string name="btn__create_public_group">创建公开群</string>
+    <string name="subtitle_created_group">我创建的公开群</string>
+    <string name="subtitle_hosting_group">我管理的公开群</string>
+    <string name="subtitle_joined_group">我加入的公开群</string>
+
+
+    <!--creategroup-->
+    <string name="title_create_group">创建群</string>
+    <string name="subtitle_create_group_name">群名称</string>
+    <string name="btn_add_member">添加群成员</string>
+    <string name="title_choose_group_members">选择联系人</string>
 
 </resources>
