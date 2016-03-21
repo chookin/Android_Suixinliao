@@ -10,18 +10,18 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.model.PersonInfo;
+import com.tencent.qcloud.timchat.model.ItemData;
 
 import java.util.ArrayList;
 
 /**
  * 搜索结果
  */
-public class SearchResultAdapter extends BaseAdapter {
+public class MySimpleAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<PersonInfo> mSearchResult;
+    private ArrayList<ItemData> mSearchResult;
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    public SearchResultAdapter(Context context, ArrayList<PersonInfo> searchResult) {
+    public MySimpleAdapter(Context context, ArrayList<ItemData> searchResult) {
         mContext = context;
         mSearchResult = searchResult;
     }

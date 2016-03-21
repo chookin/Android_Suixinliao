@@ -14,8 +14,8 @@ import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.presentation.presenter.SearchFriendPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SearchFriendData;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.SearchResultAdapter;
-import com.tencent.qcloud.timchat.model.PersonInfo;
+import com.tencent.qcloud.timchat.adapters.MySimpleAdapter;
+import com.tencent.qcloud.timchat.model.ItemData;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     TextView mBtnSearch;
     EditText mSearchText;
     ListView mSearchPersonList;
-    SearchResultAdapter mSearchResultAdapter;
-    ArrayList<PersonInfo> searchResult= new ArrayList<PersonInfo> ();
-    PersonInfo mSelectedPerson ;
+    MySimpleAdapter mSearchResultAdapter;
+    ArrayList<ItemData> searchResult= new ArrayList<ItemData> ();
+    ItemData mSelectedPerson ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
         mBtnSearch = (TextView) findViewById(R.id.search_icon);
         mSearchText = (EditText) findViewById(R.id.search_context);
         mSearchPersonList =(ListView) findViewById(R.id.person_searchresult);
-        mSearchResultAdapter = new SearchResultAdapter(this,searchResult);
+        mSearchResultAdapter = new MySimpleAdapter(this,searchResult);
         mSearchPersonList.setAdapter(mSearchResultAdapter);
         mSearchPersonList.setOnItemClickListener(this);
         mBtnSearch.setOnClickListener(this);
@@ -51,7 +51,7 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     @Override
     public void showSearchReuslt(TIMUserProfile userProfile) {
         LogUtils.i(""+userProfile);
-        PersonInfo info = new PersonInfo();
+        ItemData info = new ItemData();
         info.setID(userProfile.getIdentifier());
         info.setName(userProfile.getNickName());
         info.setNeedVerify(userProfile.getAllowType() == TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM);
@@ -64,7 +64,7 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     @Override
     public void showSearchReusltList(ArrayList<TIMUserProfile> mSearchResult) {
         for(TIMUserProfile person : mSearchResult){
-            PersonInfo info = new PersonInfo();
+            ItemData info = new ItemData();
             info.setID(person.getIdentifier());
             info.setName(person.getNickName());
             info.setNeedVerify(person.getAllowType() == TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM);
