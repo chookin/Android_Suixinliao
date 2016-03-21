@@ -25,6 +25,7 @@ public class GroupChatSettingActivity extends Activity implements GroupInfoView 
         identify = getIntent().getStringExtra("identify");
         groupInfoPresenter = new GroupInfoPresenter(this, new ArrayList<String>() {
             {add(identify);}}, true);
+        groupInfoPresenter.getGroupDetailInfo();
     }
 
     /**
@@ -37,5 +38,23 @@ public class GroupChatSettingActivity extends Activity implements GroupInfoView 
         TIMGroupDetailInfo info = groupInfos.get(0);
         LineControllerView member = (LineControllerView) findViewById(R.id.member);
         member.setContent(String.valueOf(info.getMemberNum()));
+        LineControllerView name = (LineControllerView) findViewById(R.id.nameText);
+        name.setContent(info.getGroupName());
+        LineControllerView id = (LineControllerView) findViewById(R.id.idText);
+        id.setContent(info.getGroupId());
+        LineControllerView intro = (LineControllerView) findViewById(R.id.groupIntro);
+        intro.setContent(info.getGroupIntroduction());
+        LineControllerView opt = (LineControllerView) findViewById(R.id.addOpt);
+        switch (info.getGroupAddOpt()){
+            case TIM_GROUP_ADD_AUTH:
+                opt.setContent(getResources().getString(R.string.chat_setting_group_auth));
+                break;
+            case TIM_GROUP_ADD_ANY:
+                opt.setContent(getResources().getString(R.string.chat_setting_group_all_accept));
+                break;
+            case TIM_GROUP_ADD_FORBID:
+                opt.setContent(getResources().getString(R.string.chat_setting_group_all_reject));
+                break;
+        }
     }
 }
