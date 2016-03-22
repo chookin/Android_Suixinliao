@@ -118,12 +118,21 @@
     <string name="subtitle_joined_public_group">我加入的公开群</string>
 
 
-    <!--publicgroup-->
+    <!--chatroom-->
     <string name="title_chatroom">聊天室</string>
     <string name="btn__create_chatroom">创建聊天室</string>
     <string name="subtitle_owner_chatrrom">我创建的聊天室</string>
     <string name="subtitle_hosting_chatroom">我管理的聊天室</string>
     <string name="subtitle_joined_chatroom">我加入的聊天室</string>
+
+
+
+    <!--privategroup-->
+    <string name="title_private_group">讨论组</string>
+    <string name="btn__create_private_group">创建讨论组</string>
+    <string name="subtitle_owner_private_group">我创建的讨论组</string>
+    <string name="subtitle_hosting_private_group">我管理的讨论组</string>
+    <string name="subtitle_joined_private_group">我加入的讨论组</string>
 
 
 

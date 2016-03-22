@@ -45,7 +45,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private TextView mMoreBtn;
-    private FrameLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn;
+    private FrameLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn,mPrivateGroupBtn;
     private int mSelectItem;
 
     @Override
@@ -60,6 +60,8 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         mPublicGroupBtn.setOnClickListener(this);
         mChatRoomBtn = (FrameLayout) contactLayout.findViewById(R.id.btn_chatroom);
         mChatRoomBtn.setOnClickListener(this);
+        mPrivateGroupBtn = (FrameLayout) contactLayout.findViewById(R.id.btn_private_group);
+        mPrivateGroupBtn.setOnClickListener(this);
         TemplateTitle title = (TemplateTitle) contactLayout.findViewById(R.id.contact_antionbar);
         title.setMoreImgAction(new View.OnClickListener() {
             @Override
@@ -113,6 +115,11 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         if (view.getId() == R.id.btn_chatroom) {
             Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
             intent.putExtra("type", "ChatRoom");
+            getActivity().startActivity(intent);
+        }
+        if (view.getId() == R.id.btn_private_group) {
+            Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
+            intent.putExtra("type", "Private");
             getActivity().startActivity(intent);
         }
     }

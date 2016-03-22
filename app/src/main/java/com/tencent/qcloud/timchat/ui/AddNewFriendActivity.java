@@ -88,7 +88,7 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
         Intent person = new Intent(this,AddNewFriendDetailActivity.class);
         person.putExtra("Id",mSelectedPerson.getID());
         person.putExtra("name",mSelectedPerson.getName());
-        person.putExtra("avatar",mSelectedPerson.getName());
+        person.putExtra("avatar",mSelectedPerson.getAvatar());
         startActivity(person);
     }
 

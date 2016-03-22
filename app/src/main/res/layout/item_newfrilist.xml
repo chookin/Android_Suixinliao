@@ -6,7 +6,7 @@
         android:id="@+id/newfri_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/head"
+        android:background="@drawable/head_other"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         />

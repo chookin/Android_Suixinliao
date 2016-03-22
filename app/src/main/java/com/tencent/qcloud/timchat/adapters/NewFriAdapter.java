@@ -47,7 +47,7 @@ public class NewFriAdapter extends BaseAdapter {
 
     @Override
     public View getView(int groupPosition, View convertView, ViewGroup viewGroup) {
-        ItemHolder Holder = null;
+        ItemHolder Holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_newfrilist, null);
             Holder = new ItemHolder();
@@ -92,7 +92,6 @@ public class NewFriAdapter extends BaseAdapter {
             });
         }else if(entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE){
             holder.status.setText("已添加");
-            holder.status.setBackground(mContext.getResources().getDrawable(R.color.tencent_tls_ui_transparent));
             holder.status.setClickable(false);
         }
     }

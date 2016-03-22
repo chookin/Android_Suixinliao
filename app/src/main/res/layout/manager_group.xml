@@ -12,15 +12,40 @@
         app:canBack="true"
         app:titleText="@string/title_manager_group" />
 
-    <TextView
-        android:id="@+id/add_group"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:id="@+id/add_group"
         android:background="@color/white"
-        android:drawableLeft="@drawable/more"
-        android:drawablePadding="10dp"
-        android:gravity="left|center_vertical"
-        android:text="@string/add_new_group" />
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/more" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="@string/add_new_group" />
+
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/add_group"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:drawableLeft="@drawable/more"-->
+        <!--android:drawablePadding="10dp"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:text="@string/add_new_group" />-->
 
     <ListView
         android:id="@+id/group_list"

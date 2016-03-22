@@ -90,6 +90,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="80dp"
+            android:id="@+id/btn_private_group"
             android:layout_gravity="center_vertical"
             android:layout_weight="1">
 
