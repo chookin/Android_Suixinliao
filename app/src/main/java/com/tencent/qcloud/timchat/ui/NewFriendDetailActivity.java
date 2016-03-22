@@ -48,7 +48,5 @@ public class NewFriendDetailActivity extends Activity implements View.OnClickLis
     }
 
     @Override
-    public void jumpIntoProfileActicity() {
-
-    }
+    public void jumpIntoProfileActicity() {}
 }
