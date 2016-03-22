@@ -20,6 +20,7 @@ import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.CategoryItem;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 
 import java.util.ArrayList;
@@ -145,7 +146,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
         if (requestCode == CHANGE_CATEGORY_CODE) {
             if (resultCode == RESULT_OK) {
                 LineControllerView category = (LineControllerView) findViewById(R.id.group);
-                category.setContent(data.getStringExtra("category"));
+                category.setContent(categoryStr = data.getStringExtra("category"));
             }
         }
 
