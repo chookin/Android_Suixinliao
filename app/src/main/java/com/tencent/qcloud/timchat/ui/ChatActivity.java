@@ -22,6 +22,7 @@ import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.MessageFactory;
+import com.tencent.qcloud.timchat.model.SystemMessage;
 import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
@@ -126,6 +127,11 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         } else {
             Message mMessage = MessageFactory.getMessage(message, this);
             if (mMessage != null) {
+                if (messageList.size()==0){
+                    mMessage.setHasTime(null);
+                }else{
+                    mMessage.setHasTime(messageList.get(messageList.size()-1).getMessage());
+                }
                 messageList.add(mMessage);
                 adapter.notifyDataSetChanged();
                 listView.setSelection(adapter.getCount() - 1);
@@ -256,6 +262,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         }
 
     }
+
+
 
 
 }

@@ -48,22 +48,21 @@ public class MySimpleAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_searchresult, null);
             Holder = new ItemHolder();
-            Holder.groupname = (TextView) convertView.findViewById(R.id.person_name);
+            Holder.tvName = (TextView) convertView.findViewById(R.id.name);
 //            Holder.img = (ImageView) convertView.findViewById(R.id.person_avatar);
             convertView.setTag(Holder);
         } else {
             Holder = (ItemHolder) convertView.getTag();
         }
-        Holder.groupname.setText(mSearchResult.get(groupPosition).getName());
-//        Holder.img.setText(mSearchResult.get(groupPosition).getName());
-//        if (imageLoader != null)
-//            imageLoader.displayImage(mSearchResult.get(groupPosition).ge, Holder.img);
+        Holder.tvName.setText(mSearchResult.get(groupPosition).getName());
+
         return convertView;
     }
 
     class ItemHolder {
         public TextView groupname;
         public ImageView img;
+        public TextView tvName;
     }
 
 }
