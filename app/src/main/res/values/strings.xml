@@ -27,6 +27,7 @@
     <string name="chatroom">聊天室</string>
     <string name="addfriend">添加好友</string>
     <string name="manangergroup">管理分组</string>
+    <string name="title_default_name">默认分组</string>
 
     <!-- contact fragment -->
     <string name="setting_logout">退出登录</string>
@@ -112,9 +113,18 @@
     <!--publicgroup-->
     <string name="title_public_group">公开群</string>
     <string name="btn__create_public_group">创建公开群</string>
-    <string name="subtitle_created_group">我创建的公开群</string>
-    <string name="subtitle_hosting_group">我管理的公开群</string>
-    <string name="subtitle_joined_group">我加入的公开群</string>
+    <string name="subtitle_created_public_group">我创建的公开群</string>
+    <string name="subtitle_hosting_public_group">我管理的公开群</string>
+    <string name="subtitle_joined_public_group">我加入的公开群</string>
+
+
+    <!--publicgroup-->
+    <string name="title_chatroom">聊天室</string>
+    <string name="btn__create_chatroom">创建聊天室</string>
+    <string name="subtitle_owner_chatrrom">我创建的聊天室</string>
+    <string name="subtitle_hosting_chatroom">我管理的聊天室</string>
+    <string name="subtitle_joined_chatroom">我加入的聊天室</string>
+
 
 
     <!--creategroup-->

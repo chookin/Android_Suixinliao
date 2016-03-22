@@ -15,7 +15,7 @@ import com.tencent.qcloud.presentation.presenter.SearchFriendPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SearchFriendData;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.MySimpleAdapter;
-import com.tencent.qcloud.timchat.model.SearchResult;
+import com.tencent.qcloud.timchat.model.ItemTIMProfile;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     ListView mSearchList;
     EditText mSearchInput;
     MySimpleAdapter mSearchResultAdapter;
-    ArrayList<SearchResult> searchResult= new ArrayList<> ();
-    SearchResult mSelectedPerson ;
+    ArrayList<ItemTIMProfile> searchResult= new ArrayList<> ();
+    ItemTIMProfile mSelectedPerson ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     @Override
     public void showSearchReuslt(TIMUserProfile userProfile) {
         LogUtils.i(""+userProfile);
-        SearchResult info = new SearchResult();
+        ItemTIMProfile info = new ItemTIMProfile();
         info.setID(userProfile.getIdentifier());
         info.setName(userProfile.getNickName());
         info.setNeedVerify(userProfile.getAllowType() == TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM);
@@ -63,7 +63,7 @@ public class AddNewFriendActivity extends Activity implements SearchFriendData, 
     @Override
     public void showSearchReusltList(ArrayList<TIMUserProfile> mSearchResult) {
         for(TIMUserProfile person : mSearchResult){
-            SearchResult info = new SearchResult();
+            ItemTIMProfile info = new ItemTIMProfile();
             info.setID(person.getIdentifier());
             info.setName(person.getNickName());
             info.setNeedVerify(person.getAllowType() == TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM);

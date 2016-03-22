@@ -30,6 +30,22 @@ public class GetFriendGroupsPresenter extends Presenter {
      * 获取自己所在群组
      */
     public void getFriendGroupList() {
+
+//        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
+//            @Override
+//            public void onError(int i, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
+//                view.showMyGroupList(timFriendGroups);
+//                for (TIMFriendGroup group : timFriendGroups) {
+//                    getFriendProfile(group.getGroupName(),group.getUsers());
+//
+//                }
+//            }
+//        });
         TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
             @Override
             public void onError(int i, String s) {
@@ -40,7 +56,7 @@ public class GetFriendGroupsPresenter extends Presenter {
             public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
                 view.showMyGroupList(timFriendGroups);
                 for (TIMFriendGroup group : timFriendGroups) {
-                    getFriendProfile(group.getGroupName(),group.getUsers());
+                    getFriendProfile(group.getGroupName(), group.getUsers());
 
                 }
             }
@@ -57,7 +73,7 @@ public class GetFriendGroupsPresenter extends Presenter {
 
             @Override
             public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                view.showGroupMember(groupname,timUserProfiles);
+                view.showGroupMember(groupname, timUserProfiles);
             }
         });
     }

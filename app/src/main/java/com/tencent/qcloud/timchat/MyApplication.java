@@ -19,6 +19,8 @@ import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 
 
+
+
 /**
  * 全局Application
  */
@@ -31,18 +33,18 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
 
-        if (MsfSdkUtils.isMainProcess(this)) {
+        if(MsfSdkUtils.isMainProcess(this)){
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override
                 public void handleNotification(TIMOfflinePushNotification timOfflinePushNotification) {
-                    timOfflinePushNotification.doNotify(getApplicationContext(), R.drawable.ic_launcher);
+                    timOfflinePushNotification.doNotify(getApplicationContext(),R.drawable.ic_launcher);
                 }
             });
         }
 
         InitBusiness.start(context);
         TlsBusiness.init(context);
-        String id = TLSService.getInstance().getLastUserIdentifier();
+        String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
         ImageLoaderInit();
@@ -51,6 +53,7 @@ public class MyApplication extends Application {
     public static Context getContext() {
         return context;
     }
+
 
 
     private void ImageLoaderInit() {
