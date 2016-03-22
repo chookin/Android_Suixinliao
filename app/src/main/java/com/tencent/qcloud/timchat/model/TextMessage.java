@@ -23,7 +23,7 @@ public class TextMessage extends Message {
         message = new TIMMessage();
         TIMTextElem elem = new TIMTextElem();
         elem.setText(s);
-        if (message.addElement(elem) != 0) return;
+        message.addElement(elem);
     }
 
     /**

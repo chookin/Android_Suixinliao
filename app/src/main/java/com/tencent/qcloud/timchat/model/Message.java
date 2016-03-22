@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.TimeUtil;
 
 /**
  * 消息数据基类
@@ -13,6 +14,8 @@ import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 public abstract class Message {
 
     TIMMessage message;
+
+    private boolean hasTime;
 
 
     public TIMMessage getMessage() {
@@ -33,6 +36,8 @@ public abstract class Message {
      * @param viewHolder 界面样式
      */
     public RelativeLayout getBubbleView(ChatAdapter.ViewHolder viewHolder){
+        viewHolder.systemMessage.setVisibility(hasTime?View.VISIBLE:View.GONE);
+        viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
         if (message.isSelf()){
             viewHolder.leftPanel.setVisibility(View.GONE);
             viewHolder.rightPanel.setVisibility(View.VISIBLE);
@@ -88,6 +93,25 @@ public abstract class Message {
      */
     public abstract String getSummary();
 
+    /**
+     * 是否需要显示时间获取
+     *
+     */
+    public boolean getHasTime() {
+        return hasTime;
+    }
 
 
+    /**
+     * 是否需要显示时间设置
+     *
+     * @param message 上一条消息
+     */
+    public void setHasTime(TIMMessage message){
+        if (message == null){
+            hasTime = true;
+            return;
+        }
+        hasTime = this.message.timestamp() - message.timestamp() > 300;
+     }
 }
