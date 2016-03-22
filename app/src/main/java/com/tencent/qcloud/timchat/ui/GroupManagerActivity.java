@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * 群组管理类 用于创建群
+ */
 public class GroupManagerActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
@@ -87,6 +90,12 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
 
     }
 
+    /**
+     * 数据方法
+     * @param createGroup
+     * @param hostGroup
+     * @param memberGroup
+     */
     @Override
     public void showMyPublicGroupListByType(List<TIMGroupBaseInfo> createGroup, List<TIMGroupBaseInfo> hostGroup, List<TIMGroupBaseInfo> memberGroup) {
         mOwnGroupData.clear();

@@ -3,8 +3,12 @@ package com.tencent.qcloud.timchat.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +34,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
     private ListView mMyGroupList;
     private List<TIMFriendGroup> mMyListTitle;
     private GroupListAdapter mGroupListAdapter;
-    private TextView mAddGroup;
+    private LinearLayout mAddGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
         setContentView(R.layout.manager_group);
         mManagerMyGroupPresenter = new ManagerFriendGroupPresenter(this, getBaseContext());
         mMyGroupList = (ListView) findViewById(R.id.group_list);
-        mAddGroup = (TextView) findViewById(R.id.add_group);
+        mAddGroup = (LinearLayout) findViewById(R.id.add_group);
         mAddGroup.setOnClickListener(this);
         mMyListTitle = new ArrayList<TIMFriendGroup>();
         mGroupListAdapter = new GroupListAdapter(this, mMyListTitle, this);
@@ -90,6 +94,10 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
                 addGroupDialog.dismiss();
             }
         });
+        Window window = addGroupDialog.getWindow();
+        window.setGravity(Gravity.TOP);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        window.setAttributes(lp);
         addGroupDialog.show();
     }
 

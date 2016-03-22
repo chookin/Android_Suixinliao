@@ -20,7 +20,7 @@ public class AddNewFriendDetailActivity extends Activity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addnew_detail);
         mNameText = (TextView) findViewById(R.id.nametext);
-        mIDText = (TextView) findViewById(R.id.idtext);
+        mIDText = (TextView) findViewById(R.id.detail_id);
         mInviteButton = (TextView) findViewById(R.id.btn_invite_addnew);
         id = getIntent().getStringExtra("Id");
         String name = getIntent().getStringExtra("name");

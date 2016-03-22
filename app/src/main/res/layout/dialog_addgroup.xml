@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="240dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="top|center"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="100dp"
+    android:layout_gravity="center_horizontal"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -15,6 +15,8 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/add_dialog_title"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="18sp" />
 
     <TextView
@@ -24,6 +26,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/add_dialog_subtitle"
+        android:textColor="@color/black"
         />
 
     <EditText
