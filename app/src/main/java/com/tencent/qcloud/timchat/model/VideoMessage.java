@@ -32,7 +32,6 @@ public class VideoMessage extends Message {
 
     private static final String TAG = "VideoMessage";
     private Context context;
-    private Bitmap thumb;
 
     public VideoMessage(Context context, TIMMessage message){
         this.message = message;
@@ -47,7 +46,7 @@ public class VideoMessage extends Message {
         message = new TIMMessage();
         TIMVideoElem elem = new TIMVideoElem();
         elem.setVideoPath(FileUtil.getCacheFilePath(fileName));
-        thumb = ThumbnailUtils.createVideoThumbnail(FileUtil.getCacheFilePath(fileName), MediaStore.Images.Thumbnails.MINI_KIND);
+        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(FileUtil.getCacheFilePath(fileName), MediaStore.Images.Thumbnails.MINI_KIND);
         elem.setSnapshotPath(FileUtil.createFile(thumb, new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())));
         TIMSnapshot snapshot = new TIMSnapshot();
         snapshot.setType("PNG");
@@ -69,30 +68,30 @@ public class VideoMessage extends Message {
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder) {
         final TIMVideoElem e = (TIMVideoElem) message.getElement(0);
-        final TIMSnapshot snapshot = e.getSnapshotInfo();
-        if (FileUtil.isCacheFileExist(snapshot.getUuid())){
-            showSnapshot(viewHolder,snapshot);
-        }else{
-            snapshot.getImage(FileUtil.getCacheFilePath(snapshot.getUuid()), new TIMCallBack() {
-                @Override
-                public void onError(int i, String s) {
-                    LogUtils.d(TAG, "get snapshot failed. code: " + i + " errmsg: " + s);
-                }
+        switch (message.status()){
+            case Sending:
+//                String path = e
+                break;
+            case SendSucc:
 
-                @Override
-                public void onSuccess() {
-                    showSnapshot(viewHolder, snapshot);
-                }
-            });
-        }
-        showStatus(viewHolder);
-        getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String fileName = e.getVideoInfo().getUuid();
-                if (FileUtil.isCacheFileExist(fileName)){
-                    showVideo(FileUtil.getCacheFilePath(fileName));
+                final TIMSnapshot snapshot = e.getSnapshotInfo();
+                if (FileUtil.isCacheFileExist(snapshot.getUuid())){
+                    showSnapshot(viewHolder,BitmapFactory.decodeFile(FileUtil.getCacheFilePath(snapshot.getUuid()), new BitmapFactory.Options()));
                 }else{
+                    snapshot.getImage(FileUtil.getCacheFilePath(snapshot.getUuid()), new TIMCallBack() {
+                        @Override
+                        public void onError(int i, String s) {
+                            LogUtils.d(TAG, "get snapshot failed. code: " + i + " errmsg: " + s);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            showSnapshot(viewHolder, BitmapFactory.decodeFile(FileUtil.getCacheFilePath(snapshot.getUuid()), new BitmapFactory.Options()));
+                        }
+                    });
+                }
+                final String fileName = e.getVideoInfo().getUuid();
+                if (!FileUtil.isCacheFileExist(fileName)) {
                     e.getVideoInfo().getVideo(FileUtil.getCacheFilePath(fileName), new TIMCallBack() {
                         @Override
                         public void onError(int i, String s) {
@@ -101,14 +100,15 @@ public class VideoMessage extends Message {
 
                         @Override
                         public void onSuccess() {
-                            showVideo(FileUtil.getCacheFilePath(fileName));
+                            setVideoEvent(viewHolder,fileName);
                         }
                     });
+                }else{
+                    setVideoEvent(viewHolder,fileName);
                 }
-
-            }
-        });
-
+                break;
+        }
+        showStatus(viewHolder);
     }
 
     /**
@@ -123,8 +123,8 @@ public class VideoMessage extends Message {
     /**
      * 显示缩略图
      */
-    private void showSnapshot(final ChatAdapter.ViewHolder viewHolder,final TIMSnapshot snapshot){
-        Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.getCacheFilePath(snapshot.getUuid()), new BitmapFactory.Options());
+    private void showSnapshot(final ChatAdapter.ViewHolder viewHolder,final Bitmap bitmap){
+        if (bitmap == null) return;
         ImageView imageView = new ImageView(MyApplication.getContext());
         imageView.setImageBitmap(bitmap);
         getBubbleView(viewHolder).removeAllViews();
@@ -136,5 +136,14 @@ public class VideoMessage extends Message {
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("path", path);
         context.startActivity(intent);
+    }
+
+    private void setVideoEvent(final ChatAdapter.ViewHolder viewHolder, final String fileName){
+        getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVideo(FileUtil.getCacheFilePath(fileName));
+            }
+        });
     }
 }

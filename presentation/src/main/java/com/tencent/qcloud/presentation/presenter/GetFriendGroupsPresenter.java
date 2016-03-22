@@ -1,6 +1,7 @@
 package com.tencent.qcloud.presentation.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMFriendResult;
@@ -19,11 +20,9 @@ public class GetFriendGroupsPresenter extends Presenter {
 
 
     private MyFriendGroupInfo view;
-    private Context mContext;
 
-    public GetFriendGroupsPresenter(MyFriendGroupInfo view, Context context) {
+    public GetFriendGroupsPresenter(MyFriendGroupInfo view) {
         this.view = view;
-        mContext = context;
     }
 
     /**
@@ -49,6 +48,7 @@ public class GetFriendGroupsPresenter extends Presenter {
         TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
             @Override
             public void onError(int i, String s) {
+                Log.d("","error" + s);
 
             }
 

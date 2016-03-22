@@ -43,7 +43,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
         mMyListTitle = new ArrayList<TIMFriendGroup>();
         mGroupListAdapter = new GroupListAdapter(this, mMyListTitle, this);
         mMyGroupList.setAdapter(mGroupListAdapter);
-        mGetFriendGroupsPresenter =new GetFriendGroupsPresenter(this, getBaseContext());
+        mGetFriendGroupsPresenter =new GetFriendGroupsPresenter(this);
         mGetFriendGroupsPresenter.getFriendGroupList();
     }
 
