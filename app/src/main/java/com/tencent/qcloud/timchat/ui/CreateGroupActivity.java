@@ -12,21 +12,25 @@ import com.tencent.qcloud.timchat.R;
 /**
  * Created by admin on 16/3/17.
  */
-public class CreateGroupActivity extends Activity{
+public class CreateGroupActivity extends Activity {
     TextView mAddMembers;
     EditText mInputView;
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creategroup);
-        mInputView = (EditText)findViewById(R.id.input_group_name);
-        mAddMembers = (TextView)findViewById(R.id.btn_add_group_member);
+        type = getIntent().getStringExtra("type");
+        mInputView = (EditText) findViewById(R.id.input_group_name);
+        mAddMembers = (TextView) findViewById(R.id.btn_add_group_member);
         mAddMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CreateGroupActivity.this, ChooseMembersActivity.class);
-                String groupname =mInputView.getText().toString();
-                intent.putExtra("groupname",groupname);
+                String groupname = mInputView.getText().toString();
+                intent.putExtra("groupname", groupname);
+                intent.putExtra("type", type);
                 startActivity(intent);
             }
         });

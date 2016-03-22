@@ -33,12 +33,13 @@ public class ChooseMembersActivity extends Activity implements MyFriendGroupInfo
     private GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ManagerGroupListPresenter mManagerGroupListPresenter;
     private List<String> mGroupName = new ArrayList<String>();
-    private String mGName;
+    private String mGName,mType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosemembers);
         mGName = getIntent().getStringExtra("groupname");
+        mType = getIntent().getStringExtra("type");
         mGroupListView = (ExpandableListView) findViewById(R.id.friendlist);
         mGroupListAdapter = new ExpandGroupListAdapter(this, mGroupTitleList, mAllGroupMembers,R.layout.item_choose_childmember);
         mGroupListView.setAdapter(mGroupListAdapter);
@@ -50,7 +51,7 @@ public class ChooseMembersActivity extends Activity implements MyFriendGroupInfo
         title.setMoreTextAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mManagerGroupListPresenter.createGroup(mGName, "Public", mGroupListAdapter.getChooseList(), new TIMValueCallBack() {
+                mManagerGroupListPresenter.createGroup(mGName, mType, mGroupListAdapter.getChooseList(), new TIMValueCallBack() {
                     @Override
                     public void onError(int i, String s) {
                         Toast.makeText(ChooseMembersActivity.this, "create room fail!!: "+s+" code:"+i, Toast.LENGTH_LONG).show();
