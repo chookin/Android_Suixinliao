@@ -15,21 +15,29 @@ import com.tencent.qcloud.timchat.R;
  */
 public class NewFriendDetailActivity extends Activity implements View.OnClickListener ,AgreeNewFriend{
 
-    private TextView mIdView, mBtnAgree, mBtnRefuse;
+    private TextView mIdView, mBtnAgree, mBtnRefuse,mName;
     private ResponseFriInvitePresenter mResponseFriInvitePresenter;
-    private String id;
+    private String id,name="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newfri_detail);
         mIdView = (TextView) findViewById(R.id.newfri_info_id);
+        mName = (TextView) findViewById(R.id.profile_name);
+
         mBtnAgree = (TextView) findViewById(R.id.agree_btn);
         mBtnRefuse = (TextView) findViewById(R.id.refuse_btn);
         mBtnAgree.setOnClickListener(this);
         mBtnRefuse.setOnClickListener(this);
         mResponseFriInvitePresenter = new ResponseFriInvitePresenter(this,this);
         id = getIntent().getStringExtra("id");
+        name = getIntent().getStringExtra("name");
+        if(!name.equals("")){
+            mName.setText(name);
+        }else{
+            mName.setText(id);
+        }
         mIdView.setText(id);
     }
 

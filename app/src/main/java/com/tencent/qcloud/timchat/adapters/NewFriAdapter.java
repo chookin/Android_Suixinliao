@@ -23,7 +23,8 @@ public class NewFriAdapter extends BaseAdapter {
     private List<TIMFriendFutureItem> mNewFriList;
     private ImageLoader imageLoader = ImageLoader.getInstance();
     private NewFriendActivity mParent;
-    public NewFriAdapter(Context context, List<TIMFriendFutureItem> newfriendlist,NewFriendActivity activity) {
+
+    public NewFriAdapter(Context context, List<TIMFriendFutureItem> newfriendlist, NewFriendActivity activity) {
         mContext = context;
         mNewFriList = newfriendlist;
         mParent = activity;
@@ -58,9 +59,13 @@ public class NewFriAdapter extends BaseAdapter {
         } else {
             Holder = (ItemHolder) convertView.getTag();
         }
-//        mNewFriList.get(groupPosition).get
-
-        Holder.id.setText(mNewFriList.get(groupPosition).getIdentifier());
+        String name= "";
+        name = mNewFriList.get(groupPosition).getProfile().getNickName();
+        if (!name.equals("")) {
+            Holder.id.setText(name);
+        }else{
+            Holder.id.setText(mNewFriList.get(groupPosition).getIdentifier());
+        }
         discideStatus(Holder, mNewFriList.get(groupPosition));
 //        Holder.img.setText(mNewFriList.get(groupPosition).getName());
 //        if (imageLoader != null)
@@ -75,12 +80,12 @@ public class NewFriAdapter extends BaseAdapter {
 
     }
 
-    private void discideStatus(final ItemHolder holder, final TIMFriendFutureItem entity){
-        if(entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_PENDENCY_OUT_TYPE){
+    private void discideStatus(final ItemHolder holder, final TIMFriendFutureItem entity) {
+        if (entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_PENDENCY_OUT_TYPE) {
             holder.status.setText("待验证");
             holder.status.setBackground(mContext.getResources().getDrawable(R.color.colorGray2));
             holder.status.setClickable(false);
-        }else if(entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE){
+        } else if (entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE) {
             holder.status.setBackground(mContext.getResources().getDrawable(R.drawable.newfri_agree));
             holder.status.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,7 +95,7 @@ public class NewFriAdapter extends BaseAdapter {
                 }
 
             });
-        }else if(entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE){
+        } else if (entity.getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE) {
             holder.status.setText("已添加");
             holder.status.setClickable(false);
         }

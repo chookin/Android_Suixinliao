@@ -5,7 +5,7 @@ package com.tencent.qcloud.timchat.model;
  */
 public class ItemTIMProfile {
     private String id;
-    private String name;
+    private String name="";
     private boolean needVerify;
 
     public String getAvatar() {

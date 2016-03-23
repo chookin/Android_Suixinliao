@@ -31,22 +31,7 @@ public class GetFriendGroupsPresenter extends Presenter {
      */
     public void getFriendGroupList() {
 
-//        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
-//            @Override
-//            public void onError(int i, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
-//                view.showMyGroupList(timFriendGroups);
-//                for (TIMFriendGroup group : timFriendGroups) {
-//                    getFriendProfile(group.getGroupName(),group.getUsers());
-//
-//                }
-//            }
-//        });
-        TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
             @Override
             public void onError(int i, String s) {
 
@@ -56,11 +41,26 @@ public class GetFriendGroupsPresenter extends Presenter {
             public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
                 view.showMyGroupList(timFriendGroups);
                 for (TIMFriendGroup group : timFriendGroups) {
-                    getFriendProfile(group.getGroupName(), group.getUsers());
+                    getFriendProfile(group.getGroupName(),group.getUsers());
 
                 }
             }
         });
+//        TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
+//            @Override
+//            public void onError(int i, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
+//                view.showMyGroupList(timFriendGroups);
+//                for (TIMFriendGroup group : timFriendGroups) {
+//                    getFriendProfile(group.getGroupName(), group.getUsers());
+//
+//                }
+//            }
+//        });
     }
 
 
