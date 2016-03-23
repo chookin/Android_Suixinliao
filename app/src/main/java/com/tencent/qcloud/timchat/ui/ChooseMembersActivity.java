@@ -43,7 +43,7 @@ public class ChooseMembersActivity extends Activity implements MyFriendGroupInfo
         mGroupListView = (ExpandableListView) findViewById(R.id.friendlist);
         mGroupListAdapter = new ExpandGroupListAdapter(this, mGroupTitleList, mAllGroupMembers,R.layout.item_choose_childmember);
         mGroupListView.setAdapter(mGroupListAdapter);
-        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this, this);
+        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this);
         mGetFriendGroupsPresenter.getFriendGroupList();
         mManagerGroupListPresenter = new ManagerGroupListPresenter(this,this);
 

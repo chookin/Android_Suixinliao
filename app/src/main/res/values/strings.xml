@@ -142,4 +142,8 @@
     <string name="btn_add_member">添加群成员</string>
     <string name="title_choose_group_members">选择联系人</string>
 
+
+    <!-- change category activity -->
+    <string name="change_category_title">移至分组</string>
+
 </resources>

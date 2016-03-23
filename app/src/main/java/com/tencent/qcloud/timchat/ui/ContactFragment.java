@@ -81,7 +81,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
                 return false;
             }
         });
-        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this, getActivity());
+        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this);
         return contactLayout;
     }
 

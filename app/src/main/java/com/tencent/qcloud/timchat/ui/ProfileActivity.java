@@ -20,19 +20,25 @@ import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.CategoryItem;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends Activity implements ProfileView, MyFriendGroupInfo, View.OnClickListener {
+
+
     private static final String TAG = ProfileActivity.class.getSimpleName();
+
+    private final int CHANGE_CATEGORY_CODE = 100;
+
     private ProfilePresenter presenter;
     private GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ArrayList<String> groups = new ArrayList<String>();
     private Spinner mGroupList;
     ArrayAdapter<String> mAdapter;
-    private String identify, nameStr;
+    private String identify, categoryStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +51,12 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
 //        mGroupList.setAdapter(mAdapter);
         presenter = new ProfilePresenter(this, identify);
         presenter.getProfile();
-        mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this,this);
-        mGetFriendGroupsPresenter.getFriendGroupList();
+
 //        mGroupList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 //                if(groups.get(i).equals(getResources().getString(R.string.profile_group)))
-//                mGetFriendGroupsPresenter.addFriendsToFriendGroup(groups.get(i).toString(), identify, new TIMValueCallBack<List<TIMFriendResult>>() {
-//                    @Override
-//                    public void onError(int i, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(List<TIMFriendResult> timFriendResults) {
-//                        Toast.makeText(ProfileActivity.this, "add to group succ!!!", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
+
 //            }
 //
 //            @Override
@@ -87,6 +81,9 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
         id.setContent(profile.getIdentifier());
         LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
         remark.setContent(profile.getRemark());
+        LineControllerView category = (LineControllerView) findViewById(R.id.group);
+        //一个用户可以在多个分组内，客户端逻辑保证一个人只存在于一个分组
+        category.setContent(categoryStr = profile.getFriendGroups().size() == 0?"":profile.getFriendGroups().get(0));
 
     }
 
@@ -113,12 +110,18 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
             case R.id.btn_chat:
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("identify", identify);
-                intent.putExtra("name", nameStr);
+//                intent.putExtra("name", nameStr);
                 intent.putExtra("type", TIMConversationType.C2C);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.btn_del:
+                break;
+            case R.id.group:
+                Intent changeCategoryIntent = new Intent(this, ChangeCategoryActivity.class);
+                changeCategoryIntent.putExtra("identify", identify);
+                changeCategoryIntent.putExtra("category", categoryStr);
+                startActivityForResult(changeCategoryIntent, CHANGE_CATEGORY_CODE);
                 break;
         }
     }
@@ -135,6 +138,18 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
         if (!profile.getRemark().equals("")) return profile.getRemark();
         if (!profile.getNickName().equals("")) return profile.getNickName();
         return profile.getIdentifier();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CHANGE_CATEGORY_CODE) {
+            if (resultCode == RESULT_OK) {
+                LineControllerView category = (LineControllerView) findViewById(R.id.group);
+                category.setContent(categoryStr = data.getStringExtra("category"));
+            }
+        }
+
     }
 
 }

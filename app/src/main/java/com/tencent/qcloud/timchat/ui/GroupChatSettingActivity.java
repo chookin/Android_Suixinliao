@@ -10,6 +10,8 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GroupChatSettingActivity extends Activity implements GroupInfoView {
@@ -23,8 +25,7 @@ public class GroupChatSettingActivity extends Activity implements GroupInfoView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat_setting);
         identify = getIntent().getStringExtra("identify");
-        groupInfoPresenter = new GroupInfoPresenter(this, new ArrayList<String>() {
-            {add(identify);}}, true);
+        groupInfoPresenter = new GroupInfoPresenter(this, Collections.singletonList(identify), true);
         groupInfoPresenter.getGroupDetailInfo();
     }
 
