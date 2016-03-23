@@ -70,7 +70,7 @@ public class VideoMessage extends Message {
         final TIMVideoElem e = (TIMVideoElem) message.getElement(0);
         switch (message.status()){
             case Sending:
-//                String path = e
+                showSnapshot(viewHolder,BitmapFactory.decodeFile(e.getSnapshotPath(), new BitmapFactory.Options()));
                 break;
             case SendSucc:
 
