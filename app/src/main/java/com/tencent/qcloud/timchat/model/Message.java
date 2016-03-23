@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.model;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -15,6 +16,8 @@ public abstract class Message {
 
     TIMMessage message;
 
+    private Context context;
+
     private boolean hasTime;
 
 
@@ -27,8 +30,9 @@ public abstract class Message {
      * 显示消息
      *
      * @param viewHolder 界面样式
+     * @param context 显示消息的上下文
      */
-    public abstract void showMessage(ChatAdapter.ViewHolder viewHolder);
+    public abstract void showMessage(ChatAdapter.ViewHolder viewHolder, Context context);
 
     /**
      * 获取显示气泡
@@ -74,6 +78,10 @@ public abstract class Message {
                 break;
             case SendSucc:
                 viewHolder.error.setVisibility(View.GONE);
+                viewHolder.sending.setVisibility(View.GONE);
+                break;
+            case SendFail:
+                viewHolder.error.setVisibility(View.VISIBLE);
                 viewHolder.sending.setVisibility(View.GONE);
                 break;
         }

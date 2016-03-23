@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.model;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -53,9 +54,10 @@ public class VoiceMessage extends Message {
      * 显示消息
      *
      * @param viewHolder 界面样式
+     * @param context 显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
         LinearLayout linearLayout = new LinearLayout(MyApplication.getContext());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setGravity(Gravity.CENTER);

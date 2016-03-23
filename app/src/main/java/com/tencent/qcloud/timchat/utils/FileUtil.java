@@ -90,6 +90,25 @@ public class FileUtil {
         return null;
     }
 
+    /**
+     * 将数据存储为文件
+     *
+     * @param data 数据
+     */
+    public static void createFile(byte[] data,String filename){
+        File f = new File(cacheDir, filename);
+        try{
+            if (f.createNewFile()){
+                FileOutputStream fos = new FileOutputStream(f);
+                fos.write(data);
+                fos.flush();
+                fos.close();
+            }
+        }catch (IOException e){
+            LogUtils.e(TAG,"create bitmap file error" + e);
+        }
+    }
+
 
     /**
      * 从URI获取图片文件地址

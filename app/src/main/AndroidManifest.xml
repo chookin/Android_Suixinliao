@@ -66,6 +66,8 @@
 
         <activity android:name=".ui.ChangeCategoryActivity" >
         </activity>
+        <activity android:name=".ui.ImageViewActivity" >
+        </activity>
     </application>
 
 </manifest>
