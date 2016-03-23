@@ -64,9 +64,10 @@ public class VideoMessage extends Message {
      * 显示消息
      *
      * @param viewHolder 界面样式
+     * @param context 显示消息的上下文
      */
     @Override
-    public void showMessage(final ChatAdapter.ViewHolder viewHolder) {
+    public void showMessage(final ChatAdapter.ViewHolder viewHolder, Context context) {
         final TIMVideoElem e = (TIMVideoElem) message.getElement(0);
         switch (message.status()){
             case Sending:

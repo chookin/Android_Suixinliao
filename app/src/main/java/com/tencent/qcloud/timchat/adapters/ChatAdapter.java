@@ -56,7 +56,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             view.setTag(viewHolder);
         }
         final Message data = getItem(position);
-        data.showMessage(viewHolder);
+        data.showMessage(viewHolder, getContext());
         return view;
     }
 

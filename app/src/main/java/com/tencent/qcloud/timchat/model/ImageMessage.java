@@ -1,10 +1,13 @@
 package com.tencent.qcloud.timchat.model;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.tencent.TIMImage;
@@ -16,6 +19,8 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.ui.ImageViewActivity;
+import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.io.File;
@@ -44,9 +49,10 @@ public class ImageMessage extends Message {
      * 显示消息
      *
      * @param viewHolder 界面样式
+     * @param context 显示消息的上下文
      */
     @Override
-    public void showMessage(final ChatAdapter.ViewHolder viewHolder) {
+    public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
         TIMImageElem e = (TIMImageElem) message.getElement(0);
         switch (message.status()){
             case Sending:
@@ -76,6 +82,28 @@ public class ImageMessage extends Message {
                                 getBubbleView(viewHolder).addView(imageView);
                             }
                         });
+                    }
+                    if (image.getType() == TIMImageType.Original){
+                        final String uuid = image.getUuid();
+                        if (FileUtil.isCacheFileExist(uuid)){
+                            setImageEvent(viewHolder,uuid,context);
+                        }else{
+                            image.getImage(new TIMValueCallBack<byte[]>() {
+                                @Override
+                                public void onError(int code, String desc) {//获取图片失败
+                                    //错误码code和错误描述desc，可用于定位请求失败原因
+                                    //错误码code含义请参见错误码表
+                                    LogUtils.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                                }
+
+                                @Override
+                                public void onSuccess(byte[] data) {//成功，参数为图片数据
+                                    FileUtil.createFile(data, uuid);
+                                    setImageEvent(viewHolder, uuid,context);
+                                }
+                            });
+                        }
+
                     }
                 }
                 break;
@@ -138,5 +166,16 @@ public class ImageMessage extends Message {
         }catch (IOException e){
             return null;
         }
+    }
+
+    private void setImageEvent(final ChatAdapter.ViewHolder viewHolder, final String fileName,final Context context){
+        getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImageViewActivity.class);
+                intent.putExtra("filename",fileName);
+                context.startActivity(intent);
+            }
+        });
     }
 }
