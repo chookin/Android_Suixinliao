@@ -50,7 +50,7 @@ public class NewFriendActivity extends Activity implements AdapterView.OnItemCli
         TIMFriendFutureItem person = mNewFriListReuslt.get(i);
         Intent intent = new Intent(NewFriendActivity.this, NewFriendDetailActivity.class);
         intent.putExtra("id", person.getIdentifier());
-        intent.putExtra("name", person.getIdentifier());
+        intent.putExtra("name", person.getProfile().getNickName());
         intent.putExtra("detail", person.getAddWording());
         startActivity(intent);
     }

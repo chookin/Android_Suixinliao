@@ -11,7 +11,7 @@ import com.tencent.TIMGroupBaseInfo;
 import com.tencent.qcloud.presentation.presenter.ManagerGroupListPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.PulicGroupListView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.MySimpleAdapter;
+import com.tencent.qcloud.timchat.adapters.CommonAdapter;
 import com.tencent.qcloud.timchat.model.ItemTIMProfile;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
@@ -25,7 +25,7 @@ import java.util.List;
 public class GroupManagerActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
-    MySimpleAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
+    CommonAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
     private ArrayList<ItemTIMProfile> mOwnGroupData,mManagerGroupData,mJoinGroupData;
     private TextView mSubtitleCreate,mSubtitleManager,mSubtitleJoin;
     private String mGroupType;
@@ -47,9 +47,9 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
         mOwnGroupData = new ArrayList<ItemTIMProfile>();
         mManagerGroupData = new ArrayList<ItemTIMProfile>();
         mJoinGroupData = new ArrayList<ItemTIMProfile>();
-        mOwnerGroupAdapter = new MySimpleAdapter(this,mOwnGroupData);
-        mManagerGroupAdapter = new MySimpleAdapter(this,mManagerGroupData);
-        mJoinGroupAdapter = new MySimpleAdapter(this,mJoinGroupData);
+        mOwnerGroupAdapter = new CommonAdapter(this,mOwnGroupData);
+        mManagerGroupAdapter = new CommonAdapter(this,mManagerGroupData);
+        mJoinGroupAdapter = new CommonAdapter(this,mJoinGroupData);
         mOwnerGroup.setAdapter(mOwnerGroupAdapter);
         mManagerGroup.setAdapter(mManagerGroupAdapter);
         mJoinGroup.setAdapter(mJoinGroupAdapter);

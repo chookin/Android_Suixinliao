@@ -3,12 +3,16 @@ package com.tencent.qcloud.timchat.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
+import com.tencent.TIMFriendshipManager;
 import com.tencent.qcloud.timchat.R;
 
 /**
@@ -22,26 +26,14 @@ public class HomeActivity extends FragmentActivity {
     private int mTitleArray[] = {R.string.home_conversation_tab, R.string.home_contact_tab, R.string.home_setting_tab};
     private int mImageViewArray[] = {R.drawable.tab_conversation, R.drawable.tab_contact, R.drawable.tab_setting};
     private String mTextviewArray[] = {"contact", "conversation", "setting"};
-
+    private long flags = 0xff;//IMSDK 全部获取
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-//        long flags = 0xff;
-//        TIMFriendshipManager.getInstance().getFriendshipProxy().syncWithFlags(flags, null, new TIMCallBack() {
-//            @Override
-//            public void onError(int i, String s) {
-//                Log.e(TAG, "init fail! code:" + i + "         " + s);
-//                Toast.makeText(HomeActivity.this, "init fail! code:" + i + "         " + s, Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onSuccess() {
-//                Toast.makeText(HomeActivity.this, "init succ!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        syncImSDk();
 
     }
 
@@ -75,5 +67,23 @@ public class HomeActivity extends FragmentActivity {
         }
 
         return view;
+    }
+
+    /**
+     * IMSDK数据同步接口
+     */
+    private void syncImSDk() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().syncWithFlags(flags, null, new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                Log.e(TAG, "init fail! code:" + i + "         " + s);
+                Toast.makeText(HomeActivity.this, "sync fail! code:" + i + "         " + s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess() {
+//                Toast.makeText(HomeActivity.this, "sync succ!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

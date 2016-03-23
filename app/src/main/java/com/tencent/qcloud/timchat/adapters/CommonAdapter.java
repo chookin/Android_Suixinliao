@@ -17,11 +17,12 @@ import java.util.ArrayList;
 /**
  * 搜索结果
  */
-public class MySimpleAdapter extends BaseAdapter {
+public class CommonAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<ItemTIMProfile> mSearchResult;
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    public MySimpleAdapter(Context context, ArrayList<ItemTIMProfile> searchResult) {
+
+    public CommonAdapter(Context context, ArrayList<ItemTIMProfile> searchResult) {
         mContext = context;
         mSearchResult = searchResult;
     }
@@ -54,7 +55,11 @@ public class MySimpleAdapter extends BaseAdapter {
         } else {
             Holder = (ItemHolder) convertView.getTag();
         }
-        Holder.tvName.setText(mSearchResult.get(groupPosition).getName());
+        if (!mSearchResult.get(groupPosition).getName().equals("")) {
+            Holder.tvName.setText(mSearchResult.get(groupPosition).getName());
+        } else {
+            Holder.tvName.setText(mSearchResult.get(groupPosition).getID());
+        }
 
         return convertView;
     }
