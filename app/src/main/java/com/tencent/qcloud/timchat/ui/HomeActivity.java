@@ -3,16 +3,12 @@ package com.tencent.qcloud.timchat.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.tencent.TIMCallBack;
-import com.tencent.TIMFriendshipManager;
 import com.tencent.qcloud.timchat.R;
 
 /**
@@ -33,8 +29,6 @@ public class HomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-        syncImSDk();
-
     }
 
     private void initView() {
@@ -69,21 +63,5 @@ public class HomeActivity extends FragmentActivity {
         return view;
     }
 
-    /**
-     * IMSDK数据同步接口
-     */
-    private void syncImSDk() {
-        TIMFriendshipManager.getInstance().getFriendshipProxy().syncWithFlags(flags, null, new TIMCallBack() {
-            @Override
-            public void onError(int i, String s) {
-                Log.e(TAG, "init fail! code:" + i + "         " + s);
-                Toast.makeText(HomeActivity.this, "sync fail! code:" + i + "         " + s, Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onSuccess() {
-//                Toast.makeText(HomeActivity.this, "sync succ!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

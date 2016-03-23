@@ -8,21 +8,24 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:background="@color/text_blue1"
+        android:background="@drawable/unselected"
          />
+
 
     <com.tencent.qcloud.timchat.ui.customview.CircleImageView
         android:id="@+id/group_member_avatar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="20dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_gravity="top|center"
-        android:src="@drawable/test_head" />
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/head_other" />
 
     <TextView
         android:id="@+id/group_member_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:text="text" />
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="" />
 </LinearLayout>

@@ -15,8 +15,6 @@ import com.tencent.qcloud.timchat.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tencent.qcloud.timchat.R.color.colorLabelRed;
-
 /**
  * 分组信息Adapters
  */
@@ -106,14 +104,14 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) convertView.getTag();
         }
 
-        if(isExpanded){
+        if (isExpanded) {
             groupHolder.tag.setBackgroundResource(R.drawable.open);
-        }else{
+        } else {
             groupHolder.tag.setBackgroundResource(R.drawable.close);
         }
-        if(mGroups.get(groupPosition).getGroupName().equals("")){
+        if (mGroups.get(groupPosition).getGroupName().equals("")) {
             groupHolder.groupname.setText(mContext.getResources().getString(R.string.title_default_name));
-        }else{
+        } else {
             groupHolder.groupname.setText(mGroups.get(groupPosition).getGroupName());
         }
 
@@ -131,7 +129,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
      * @return
      */
     @Override
-    public View getChildView(final int groupPosition,final int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
         ChildrenHolder itemHolder = null;
         if (convertView == null) {
             itemHolder = new ChildrenHolder();
@@ -142,8 +140,13 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
                 itemHolder.tag.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        finalItemHolder.tag.setBackgroundColor(mContext.getResources().getColor(colorLabelRed));
-                        mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
+                        if (!mChooseMembers.contains(mAllGroupMembers.get(groupPosition).get(childPosition))) {
+                            finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
+                            mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
+                        }else{
+                            finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
+                            mChooseMembers.remove(mAllGroupMembers.get(groupPosition).get(childPosition));
+                        }
                     }
                 });
             } else {
@@ -177,7 +180,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         public TextView tag;
     }
 
-    public List<TIMUserProfile> getChooseList(){
+    public List<TIMUserProfile> getChooseList() {
         return mChooseMembers;
     }
 

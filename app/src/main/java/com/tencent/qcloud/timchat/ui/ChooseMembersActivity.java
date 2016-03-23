@@ -46,7 +46,6 @@ public class ChooseMembersActivity extends Activity implements MyFriendGroupInfo
         mGetFriendGroupsPresenter = new GetFriendGroupsPresenter(this);
         mGetFriendGroupsPresenter.getFriendGroupList();
         mManagerGroupListPresenter = new ManagerGroupListPresenter(this,this);
-
         TemplateTitle title = (TemplateTitle) findViewById(R.id.choose_members_actionbar);
         title.setMoreTextAction(new View.OnClickListener() {
             @Override
@@ -60,6 +59,7 @@ public class ChooseMembersActivity extends Activity implements MyFriendGroupInfo
                     @Override
                     public void onSuccess(Object o) {
                         Toast.makeText(ChooseMembersActivity.this, "create room succ!!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
             }

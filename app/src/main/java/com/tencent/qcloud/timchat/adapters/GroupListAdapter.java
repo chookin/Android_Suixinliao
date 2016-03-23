@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.TIMFriendGroup;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.ManagerGroupActivity;
+import com.tencent.qcloud.timchat.ui.ManagerFriendGroupActivity;
 
 import java.util.List;
 
@@ -21,8 +21,8 @@ public class GroupListAdapter extends BaseAdapter {
     private Context mContext;
     private List<TIMFriendGroup> mGroupList;
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    private ManagerGroupActivity mManagerGroupActivity;
-    public GroupListAdapter(Context context, List<TIMFriendGroup> grouplist,ManagerGroupActivity activity) {
+    private ManagerFriendGroupActivity mManagerGroupActivity;
+    public GroupListAdapter(Context context, List<TIMFriendGroup> grouplist,ManagerFriendGroupActivity activity) {
         mContext = context;
         mGroupList = grouplist;
         mManagerGroupActivity = activity;
@@ -63,7 +63,15 @@ public class GroupListAdapter extends BaseAdapter {
         } else {
             Holder = (ItemHolder) convertView.getTag();
         }
-        Holder.groupname.setText(mGroupList.get(groupPosition).getGroupName());
+
+        if(mGroupList.get(groupPosition).getGroupName().equals("")){
+            Holder.groupname.setText(mContext.getResources().getString(R.string.title_default_name));
+            Holder.delete.setVisibility(View.INVISIBLE);
+        }else{
+            Holder.groupname.setText(mGroupList.get(groupPosition).getGroupName());
+        }
+
+
 //        Holder.img.setText(mGroupList.get(groupPosition).getName());
 //        if (imageLoader != null)
 //            imageLoader.displayImage(mGroupList.get(groupPosition).ge, Holder.img);
