@@ -25,7 +25,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/head3"/>
+            android:src="@drawable/head_other"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,16 +52,27 @@
         android:layout_height="1px"
         android:background="@color/line" />
 
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/change_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:name="name"
+        app:content="@string/nick_name_change"
+        app:isBottom="true"
+        app:canNav="true"/>
+
     
     <com.tencent.qcloud.timchat.ui.customview.LineControllerView
         android:id="@+id/friend_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         app:name="@string/setting_friend_confirm"
         app:content="@string/setting_friend_need_confirm"
         app:isBottom="true"
         app:canNav="true"/>
+
+
 
     <TextView
         android:id="@+id/logout"

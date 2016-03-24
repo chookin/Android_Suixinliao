@@ -4,7 +4,6 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +91,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
      */
     @Override
     public void showProfile(TIMUserProfile profile) {
-        name.setText(profile.getNickName());
-        id.setText(profile.getIdentifier());
+        name.setText("name "+profile.getNickName());
+        id.setText("id "+profile.getIdentifier());
     }
 }

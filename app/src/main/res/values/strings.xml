@@ -36,6 +36,10 @@
     <string name="setting_friend_need_confirm">需验证</string>
 
 
+    <!-- settings fragment -->
+    <string name="nick_name_change">昵称修改</string>
+
+
     <!-- Add newfriend activity -->
     <string name="search_default">搜索</string>
     <string name="search_cancel">取消</string>

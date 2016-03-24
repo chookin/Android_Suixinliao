@@ -32,7 +32,7 @@
         <activity android:name=".ui.AddNewFriendDetailActivity" />
         <activity android:name=".ui.NewFriendActivity" />
         <activity android:name=".ui.ProfileActivity" />
-        <activity android:name=".ui.ManagerGroupActivity" />
+        <activity android:name=".ui.ManagerFriendGroupActivity" />
         <activity android:name=".ui.NewFriendDetailActivity" />
         <activity android:name=".ui.VideoActivity" />
         <activity android:name=".ui.GroupManagerActivity" />

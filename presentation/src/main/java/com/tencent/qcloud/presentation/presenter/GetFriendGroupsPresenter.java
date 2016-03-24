@@ -1,6 +1,5 @@
 package com.tencent.qcloud.presentation.presenter;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.tencent.TIMFriendGroup;
@@ -20,6 +19,7 @@ public class GetFriendGroupsPresenter extends Presenter {
 
 
     private MyFriendGroupInfo view;
+    private static final String TAG = GetFriendGroupsPresenter.class.getSimpleName();
 
     public GetFriendGroupsPresenter(MyFriendGroupInfo view) {
         this.view = view;
@@ -29,26 +29,11 @@ public class GetFriendGroupsPresenter extends Presenter {
      * 获取自己所在群组
      */
     public void getFriendGroupList() {
-
-        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
-            @Override
-            public void onError(int i, String s) {
-                Log.d("","error" + s);
-
-            }
-
-            @Override
-            public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
-                view.showMyGroupList(timFriendGroups);
-                for (TIMFriendGroup group : timFriendGroups) {
-                    getFriendProfile(group.getGroupName(),group.getUsers());
-
-                }
-            }
-        });
-//        TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
+        Log.i(TAG, "getFriendGroupList ");
+//        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
 //            @Override
 //            public void onError(int i, String s) {
+//                Log.d("", "error" + s);
 //
 //            }
 //
@@ -61,10 +46,25 @@ public class GetFriendGroupsPresenter extends Presenter {
 //                }
 //            }
 //        });
+        TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
+                view.showMyGroupList(timFriendGroups);
+                for (TIMFriendGroup group : timFriendGroups) {
+                    getFriendProfile(group.getGroupName(), group.getUsers());
+
+                }
+            }
+        });
     }
 
 
-    public void getFriendProfile(final String groupname,List<String> users) {
+    public void getFriendProfile(final String groupname, List<String> users) {
         TIMFriendshipManager.getInstance().getFriendsProfile(users, new TIMValueCallBack<List<TIMUserProfile>>() {
             @Override
             public void onError(int i, String s) {

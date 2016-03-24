@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * 查找添加新朋友
  */
-public class ManagerGroupActivity extends Activity implements ManagerGroupView, MyFriendGroupInfo,View.OnClickListener {
+public class ManagerFriendGroupActivity extends Activity implements ManagerGroupView, MyFriendGroupInfo,View.OnClickListener {
     ManagerFriendGroupPresenter mManagerMyGroupPresenter;
     GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ListView mMyGroupList;
@@ -87,7 +87,7 @@ public class ManagerGroupActivity extends Activity implements ManagerGroupView, 
             public void onClick(View view) {
                 String groupname = inputView.getText().toString();
                 if (groupname == null || groupname.equals("")) {
-                    Toast.makeText(ManagerGroupActivity.this, "empty input", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManagerFriendGroupActivity.this, "empty input", Toast.LENGTH_SHORT).show();
                 } else {
                     mManagerMyGroupPresenter.createEmptyFriendGroup(groupname);
                 }
