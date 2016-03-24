@@ -16,8 +16,6 @@ public abstract class Message {
 
     TIMMessage message;
 
-    private Context context;
-
     private boolean hasTime;
 
 
@@ -83,6 +81,7 @@ public abstract class Message {
             case SendFail:
                 viewHolder.error.setVisibility(View.VISIBLE);
                 viewHolder.sending.setVisibility(View.GONE);
+                viewHolder.leftPanel.setVisibility(View.GONE);
                 break;
         }
     }

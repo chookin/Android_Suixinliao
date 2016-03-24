@@ -1,6 +1,5 @@
 package com.tencent.qcloud.timchat.model;
 
-import android.content.Context;
 
 import com.tencent.TIMMessage;
 
@@ -30,24 +29,5 @@ public class MessageFactory {
                 return null;
         }
     }
-
-
-    /**
-     * 消息工厂方法,用于制造需要跳转的message
-     */
-    public static Message getMessage(TIMMessage message,Context context){
-        switch (message.getElement(0).getType()){
-            case Text:
-            case Face:
-            case Image:
-            case Sound:
-                return getMessage(message);
-            case Video:
-                return new VideoMessage(context, message);
-            default:
-                return null;
-        }
-    }
-
 
 }
