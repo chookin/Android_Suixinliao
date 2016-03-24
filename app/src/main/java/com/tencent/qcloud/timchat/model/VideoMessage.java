@@ -31,12 +31,8 @@ import java.util.Date;
 public class VideoMessage extends Message {
 
     private static final String TAG = "VideoMessage";
-    private Context context;
 
-    public VideoMessage(Context context, TIMMessage message){
-        this.message = message;
-        this.context = context;
-    }
+
 
     public VideoMessage(TIMMessage message){
         this.message = message;
@@ -67,7 +63,7 @@ public class VideoMessage extends Message {
      * @param context 显示消息的上下文
      */
     @Override
-    public void showMessage(final ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
         final TIMVideoElem e = (TIMVideoElem) message.getElement(0);
         switch (message.status()){
             case Sending:
@@ -101,11 +97,11 @@ public class VideoMessage extends Message {
 
                         @Override
                         public void onSuccess() {
-                            setVideoEvent(viewHolder,fileName);
+                            setVideoEvent(viewHolder,fileName,context);
                         }
                     });
                 }else{
-                    setVideoEvent(viewHolder,fileName);
+                    setVideoEvent(viewHolder,fileName,context);
                 }
                 break;
         }
@@ -132,18 +128,18 @@ public class VideoMessage extends Message {
         getBubbleView(viewHolder).addView(imageView);
     }
 
-    private void showVideo(String path){
+    private void showVideo(String path, Context context){
         if (context == null) return;
         Intent intent = new Intent(context, VideoActivity.class);
         intent.putExtra("path", path);
         context.startActivity(intent);
     }
 
-    private void setVideoEvent(final ChatAdapter.ViewHolder viewHolder, final String fileName){
+    private void setVideoEvent(final ChatAdapter.ViewHolder viewHolder, final String fileName,final Context context){
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showVideo(FileUtil.getCacheFilePath(fileName));
+                showVideo(FileUtil.getCacheFilePath(fileName),context);
             }
         });
     }

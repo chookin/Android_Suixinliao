@@ -125,7 +125,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         if (message == null) {
             adapter.notifyDataSetChanged();
         } else {
-            Message mMessage = MessageFactory.getMessage(message, this);
+            Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
                 if (messageList.size()==0){
                     mMessage.setHasTime(null);

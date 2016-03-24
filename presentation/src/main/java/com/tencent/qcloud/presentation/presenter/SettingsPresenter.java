@@ -26,7 +26,7 @@ public class SettingsPresenter extends Presenter {
 
 
     public void setDefaultAllowType(){
-        TIMFriendshipManager.getInstance().setAllowType(TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM, new TIMCallBack() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().setAllowType(TIMFriendAllowType.TIM_FRIEND_NEED_CONFIRM, new TIMCallBack() {
 
             @Override
             public void onError(int arg0, String arg1) {

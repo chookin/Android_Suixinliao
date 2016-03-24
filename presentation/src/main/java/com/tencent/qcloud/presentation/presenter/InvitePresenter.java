@@ -40,7 +40,7 @@ public class InvitePresenter extends Presenter {
         friend.setAddrSource("qq");
         reqList.add(friend);
         Log.d(TAG, "add friend here:" + id);
-        TIMFriendshipManager.getInstance().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
 
             @Override
             public void onError(int arg0, String arg1) {
