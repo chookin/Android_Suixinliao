@@ -69,6 +69,7 @@ public class GroupListAdapter extends BaseAdapter {
             Holder.delete.setVisibility(View.INVISIBLE);
         }else{
             Holder.groupname.setText(mGroupList.get(groupPosition).getGroupName());
+            Holder.delete.setVisibility(View.VISIBLE);
         }
 
 
