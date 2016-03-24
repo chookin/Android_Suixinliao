@@ -3,6 +3,7 @@ package com.tencent.qcloud.presentation.presenter;
 import android.util.Log;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
@@ -54,6 +55,7 @@ public class ConversationPresenter extends Presenter implements Observer {
         for(long i = 0; i < cnt; ++i) {
             //根据索引获取会话
             TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
+            if (conversation.getType() == TIMConversationType.System) continue;
             list.add(conversation);
             conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override

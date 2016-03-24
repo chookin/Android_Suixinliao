@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.Conversation;
 import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
+import com.tencent.qcloud.timchat.utils.TimeUtil;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         viewHolder.tvName.setText(data.getName());
         viewHolder.avatar.setImageResource(data.getAvatar());
         viewHolder.lastMessage.setText(data.getLastMessageSummary());
-        viewHolder.time.setText(data.getLastMessageTime());
+        viewHolder.time.setText(TimeUtil.getTimeStr(data.getLastMessageTime()));
         long unRead = data.getUnreadNum();
         if (unRead <= 0){
             viewHolder.unread.setVisibility(View.INVISIBLE);

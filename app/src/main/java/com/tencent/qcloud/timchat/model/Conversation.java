@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.model;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -16,60 +17,53 @@ import java.io.Serializable;
 /**
  * 会话数据
  */
-public class Conversation implements Comparable {
-
-    private TIMConversation conversation;
+public abstract class Conversation implements Comparable {
 
     //会话对象id
-    private String identify;
+    protected String identify;
 
     //会话类型
-    private TIMConversationType type;
+    protected TIMConversationType type;
 
     //会话对象名称
-    private String name;
-
-    //最后一条消息
-    private Message lastMessage;
+    protected String name;
 
 
+    /**
+     * 获取最后一条消息的时间
+     */
+    abstract public long getLastMessageTime();
 
-    public Conversation(TIMConversation conversation){
-        this.conversation = conversation;
-        this.type = conversation.getType();
-        this.identify = conversation.getPeer();
-        if (type == TIMConversationType.System){
-            name=MyApplication.getContext().getString(R.string.conversation_system);
-        }else{
-            name=conversation.getPeer();
-        }
-    }
+    /**
+     * 获取未读消息数量
+     */
+    abstract public long getUnreadNum();
 
 
+    /**
+     * 将所有消息标记为已读
+     */
+    abstract public void readAllMessage();
 
-    public String getIdentify() {
-        return identify;
-    }
 
-    public void setIdentify(String identify) {
-        this.identify = identify;
-    }
+    /**
+     * 获取头像
+     */
+    abstract public int getAvatar();
 
-    public TIMConversationType getType() {
-        return type;
-    }
 
-    public void setType(TIMConversationType type) {
-        this.type = type;
-    }
+    /**
+     * 跳转到聊天界面或会话详情
+     *
+     * @param context 跳转上下文
+     */
+    abstract public void navToDetail(Context context);
 
-    public Message getLastMessage() {
-        return lastMessage;
-    }
+    /**
+     * 获取最后一条消息摘要
+     */
+    abstract public String getLastMessageSummary();
 
-    public void setLastMessage(Message lastMessage) {
-        this.lastMessage = lastMessage;
-    }
 
     public String getName() {
         return name;
@@ -79,51 +73,9 @@ public class Conversation implements Comparable {
         this.name = name;
     }
 
-    public int getAvatar() {
-        switch (type){
-            case System:
-                return R.drawable.ic_news;
-            case C2C:
-                return R.drawable.head_other;
-            case Group:
-                return R.drawable.head_group;
-        }
-        return 0;
+    public String getIdentify(){
+        return identify;
     }
-
-    /**
-     * 获取最后一条消息摘要
-     */
-    public String getLastMessageSummary(){
-        if (lastMessage == null) return "";
-        return lastMessage.getSummary();
-    }
-
-    /**
-     * 获取最后一条消息时间
-     */
-    public String getLastMessageTime(){
-        if (lastMessage == null) return "";
-        return TimeUtil.getTimeStr(lastMessage.getMessage().timestamp());
-    }
-
-    /**
-     * 获取未读消息数量
-     */
-    public long getUnreadNum(){
-        if (conversation == null) return 0;
-        return conversation.getUnreadMessageNum();
-    }
-
-    /**
-     * 将所有消息标记为已读
-     */
-    public void readAllMessage(){
-        if (conversation != null){
-            conversation.setReadMessage();
-        }
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -159,10 +111,14 @@ public class Conversation implements Comparable {
     public int compareTo(Object another) {
         if (another instanceof Conversation){
             Conversation anotherConversation = (Conversation) another;
-            if (anotherConversation.lastMessage ==null && lastMessage == null) return 0;
-            if (anotherConversation.lastMessage == null) return -1;
-            if (lastMessage == null) return 1;
-            long timeGap = anotherConversation.lastMessage.getMessage().timestamp() - lastMessage.getMessage().timestamp();
+//            if (anotherConversation.lastMessage ==null && lastMessage == null) return 0;
+//            if (anotherConversation.lastMessage == null) return -1;
+//            if (lastMessage == null) return 1;
+//            long timeGap = anotherConversation.lastMessage.getMessage().timestamp() - lastMessage.getMessage().timestamp();
+//            if (timeGap > 0) return  1;
+//            else if (timeGap < 0) return -1;
+//            return 0
+            long timeGap = anotherConversation.getLastMessageTime() - getLastMessageTime();
             if (timeGap > 0) return  1;
             else if (timeGap < 0) return -1;
             return 0;
@@ -170,4 +126,7 @@ public class Conversation implements Comparable {
             throw new ClassCastException();
         }
     }
+
+
+
 }

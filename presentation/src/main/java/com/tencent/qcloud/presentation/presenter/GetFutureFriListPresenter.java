@@ -86,17 +86,65 @@ public class GetFutureFriListPresenter extends Presenter {
         response.setIdentifier(id);
         response.setRemark("response");
         response.setType(TIMFriendResponseType.AgreeAndAdd);
-        TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>(){
+        TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
             @Override
             public void onError(int arg0, String arg1) {
                 // TODO Auto-generated method stub
-                Log.e(TAG,"addFriendResponse error:" + arg0 + ":" + arg1);
+                Log.e(TAG, "addFriendResponse error:" + arg0 + ":" + arg1);
             }
 
             @Override
             public void onSuccess(TIMFriendResult arg0) {
                 // TODO Auto-generated method stub
 
+            }
+
+        });
+    }
+
+    public void getUnreadCount(){
+        if(beginMeta == null){
+            beginMeta = new TIMFriendFutureMeta();
+            //	beginMeta.setTimestamp(0);
+            //	beginMeta.setNumPerPage(20);
+            //	beginMeta.setSeq(0);
+            beginMeta.setReqNum(20);
+            beginMeta.setPendencySeq(0);
+            beginMeta.setDirectionType(TIMPageDirectionType.TIM_PAGE_DIRECTION_DOWN_TYPE);
+
+
+            reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_NICK;
+            reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_FACE_URL;
+            reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_REMARK ;
+            reqFlag |= TIMFriendshipManager.TIM_PROFILE_FLAG_ALLOW_TYPE ;
+
+            futureFlags |= TIMFriendshipManager.TIM_FUTURE_FRIEND_DECIDE_TYPE;
+            futureFlags |= TIMFriendshipManager.TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE;
+            futureFlags |= TIMFriendshipManager.TIM_FUTURE_FRIEND_PENDENCY_OUT_TYPE;
+            futureFlags |= TIMFriendshipManager.TIM_FUTURE_FRIEND_RECOMMEND_TYPE;
+        }
+
+
+        TIMFriendshipManager.getInstance().getFutureFriends(reqFlag, futureFlags, null,beginMeta, new TIMValueCallBack<TIMGetFriendFutureListSucc>(){
+
+            @Override
+            public void onError(int arg0, String arg1) {
+                Log.i(TAG, "onError code"+arg0+" name " +arg1);
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onSuccess(TIMGetFriendFutureListSucc arg0) {
+                // TODO Auto-generated method stub
+                beginMeta = arg0.getMeta();
+                beginMeta.getPendencyUnReadCnt();
+
+//                if(beginMeta.getTimestamp() == 0){
+//                    mBMore = false;
+//                }
+                List<TIMFriendFutureItem> items = arg0.getItems();
+                view.showFutureFriListData(items);
             }
 
         });

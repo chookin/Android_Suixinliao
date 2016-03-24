@@ -11,17 +11,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tencent.TIMConversation;
-import com.tencent.TIMConversationType;
+import com.tencent.TIMFriendFutureItem;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.presenter.ConversationPresenter;
+import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
+import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ConversationAdapter;
 import com.tencent.qcloud.timchat.model.Conversation;
+import com.tencent.qcloud.timchat.model.FriendshipConversation;
 import com.tencent.qcloud.timchat.model.MessageFactory;
+import com.tencent.qcloud.timchat.model.NomalConversation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,14 +36,16 @@ import java.util.List;
 /**
  * 会话列表界面
  */
-public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView {
+public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView,FriendshipMessageView {
 
     private List<Conversation> conversationList = new LinkedList<>();
     private ConversationAdapter adapter;
     private ListView listView;
     private ConversationPresenter presenter;
     private GroupInfoPresenter groupInfoPresenter;
+    private FriendshipManagerPresenter friendshipManagerPresenter;
     private List<String> groupList;
+    private FriendshipConversation friendshipConversation;
 
 
     public ConversationFragment() {
@@ -57,15 +63,11 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                intent.putExtra("identify", conversationList.get(position).getIdentify());
-                intent.putExtra("name", conversationList.get(position).getName());
-                intent.putExtra("type", conversationList.get(position).getType());
-                conversationList.get(position).readAllMessage();
+                conversationList.get(position).navToDetail(getActivity());
                 adapter.notifyDataSetChanged();
-                startActivity(intent);
             }
         });
+        friendshipManagerPresenter = new FriendshipManagerPresenter(this);
         presenter = new ConversationPresenter(this);
         presenter.getConversation();
         return view;
@@ -86,16 +88,14 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             switch (item.getType()){
                 case C2C:
                 case Group:
-                    this.conversationList.add(new Conversation(item));
+                    this.conversationList.add(new NomalConversation(item));
                     groupList.add(item.getPeer());
-                    break;
-                case System:
-                    updateSystemConversation(item);
                     break;
             }
         }
         groupInfoPresenter = new GroupInfoPresenter(this,groupList,true);
         groupInfoPresenter.getGroupDetailInfo();
+        updateSystemConversation();
     }
 
     /**
@@ -109,14 +109,15 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             adapter.notifyDataSetChanged();
             return;
         }
-        Conversation conversation = new Conversation(message.getConversation());
+        Conversation conversation = new NomalConversation(message.getConversation());
         Iterator<Conversation> iterator =conversationList.iterator();
         while (iterator.hasNext()){
             Conversation c = iterator.next();
             if (conversation.equals(c)){
-                c.setLastMessage(MessageFactory.getMessage(message));
+                NomalConversation nomalConversation = (NomalConversation) c;
+                nomalConversation.setLastMessage(MessageFactory.getMessage(message));
                 iterator.remove();
-                conversation = c;
+                conversation = nomalConversation;
                 break;
             }
         }
@@ -146,16 +147,39 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     /**
      * 更新系统消息
      */
-    private void updateSystemConversation(TIMConversation conversation){
-        for (Conversation item : conversationList){
-            if (item.getType() == TIMConversationType.System){
-                break;
-            }
-        }
-        conversationList.add(new Conversation(conversation));
-        Collections.sort(conversationList);
+    private void updateSystemConversation(){
+        friendshipManagerPresenter.getFriendshipLastMessage();
+
     }
 
 
+    /**
+     * 获取好友关系链管理系统消息未读数的回调
+     *
+     * @param unreadCount 未读数量
+     */
+    @Override
+    public void onGetFriendshipUnreadCount(long unreadCount) {
+        friendshipConversation.setUnreadCount(unreadCount);
+        adapter.notifyDataSetChanged();
+    }
 
+    /**
+     * 获取好友关系链管理系统最后一条消息的回调
+     *
+     * @param message 最后一条消息
+     * @param unreadCount 未读数
+     */
+    @Override
+    public void onGetFriendshipLastMessage(TIMFriendFutureItem message, long unreadCount) {
+        if (friendshipConversation == null){
+            friendshipConversation = new FriendshipConversation(message);
+            conversationList.add(friendshipConversation);
+        }else{
+            friendshipConversation.setLastMessage(message);
+        }
+        friendshipConversation.setUnreadCount(unreadCount);
+        Collections.sort(conversationList);
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -68,6 +68,8 @@
         </activity>
         <activity android:name=".ui.ImageViewActivity" >
         </activity>
+        <activity android:name=".ui.EditActivity" >
+        </activity>
     </application>
 
 </manifest>

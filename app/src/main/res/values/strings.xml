@@ -18,6 +18,8 @@
 
     <!-- conversation fragment -->
     <string name="conversation_system">系统消息</string>
+    <string name="conversation_system_friend">新朋友</string>
+    <string name="conversation_system_group">群组消息</string>
 
     <!-- contact fragment -->
     <string name="home_contact_tab">联系人</string>
@@ -29,15 +31,14 @@
     <string name="manangergroup">管理分组</string>
     <string name="title_default_name">默认分组</string>
 
-    <!-- contact fragment -->
+    <!-- settings fragment -->
     <string name="setting_logout">退出登录</string>
     <string name="setting_logout_fail">退出登录失败，请稍后重试</string>
     <string name="setting_friend_confirm">好友申请</string>
     <string name="setting_friend_need_confirm">需验证</string>
+    <string name="setting_nick_name_change">修改昵称</string>
 
 
-    <!-- settings fragment -->
-    <string name="nick_name_change">昵称修改</string>
 
 
     <!-- Add newfriend activity -->
@@ -105,6 +106,8 @@
     <string name="summary_image">[图片]</string>
     <string name="summary_voice">[语音]</string>
     <string name="summary_video">[小视频]</string>
+    <string name="summary_friend_add">请求添加好友</string>
+    <string name="summary_friend_recommend">推荐添加好友</string>
 
     <!-- time -->
     <string name="time_yesterday">昨天</string>

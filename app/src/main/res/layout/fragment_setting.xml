@@ -53,18 +53,16 @@
         android:background="@color/line" />
 
     <com.tencent.qcloud.timchat.ui.customview.LineControllerView
-        android:id="@+id/change_name"
+        android:id="@+id/nickName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:name="name"
-        app:content="@string/nick_name_change"
-        app:isBottom="true"
         app:canNav="true"/>
 
     
     <com.tencent.qcloud.timchat.ui.customview.LineControllerView
-        android:id="@+id/friend_confirm"
+        android:id="@+id/friendConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:name="@string/setting_friend_confirm"

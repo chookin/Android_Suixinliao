@@ -17,6 +17,7 @@ import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.presentation.viewfeatures.SettingsFeature;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 /**
@@ -28,6 +29,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
     private SettingsPresenter mSettingsPresenter;
     private ProfilePresenter profilePresenter;
     private TextView id,name;
+    private final int REQ_CHANGE_NICK = 3000;
 
 
 
@@ -53,6 +55,13 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
             public void onClick(View v) {
                 mSettingsPresenter.Logout();
 
+            }
+        });
+        LineControllerView nickName = (LineControllerView) view.findViewById(R.id.nickName);
+        nickName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditActivity.navToEdit(getActivity(), getResources().getString(R.string.setting_nick_name_change),REQ_CHANGE_NICK);
             }
         });
         return view ;

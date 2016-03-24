@@ -52,18 +52,6 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
         presenter = new ProfilePresenter(this, identify);
         presenter.getProfile();
 
-//        mGroupList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if(groups.get(i).equals(getResources().getString(R.string.profile_group)))
-
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
 
 
     }
