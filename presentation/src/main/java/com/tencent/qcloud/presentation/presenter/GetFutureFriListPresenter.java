@@ -56,7 +56,7 @@ public class GetFutureFriListPresenter extends Presenter {
         }
 
 
-        TIMFriendshipManager.getInstance().getFutureFriends(reqFlag, futureFlags, null,beginMeta, new TIMValueCallBack<TIMGetFriendFutureListSucc>(){
+        TIMFriendshipManager.getInstance().getFriendshipProxy().getFutureFriends(reqFlag, futureFlags, null,beginMeta, new TIMValueCallBack<TIMGetFriendFutureListSucc>(){
 
             @Override
             public void onError(int arg0, String arg1) {
@@ -86,7 +86,11 @@ public class GetFutureFriListPresenter extends Presenter {
         response.setIdentifier(id);
         response.setRemark("response");
         response.setType(TIMFriendResponseType.AgreeAndAdd);
-        TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
+
+//        TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
+
+        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>(){
+
             @Override
             public void onError(int arg0, String arg1) {
                 // TODO Auto-generated method stub

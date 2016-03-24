@@ -35,7 +35,7 @@ public class ResponseFriInvitePresenter extends Presenter {
         } else {
             response.setType(TIMFriendResponseType.Reject);
         }
-        TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
             @Override
             public void onError(int arg0, String arg1) {
                 Log.e(TAG, "addFriendResponse error:" + arg0 + ":" + arg1);

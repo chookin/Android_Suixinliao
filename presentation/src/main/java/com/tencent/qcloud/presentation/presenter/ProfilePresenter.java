@@ -36,7 +36,7 @@ public class ProfilePresenter extends Presenter {
      */
     public void getProfile() {
         if (identify == null){
-            TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
+            TIMFriendshipManager.getInstance().getFriendshipProxy().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
                 @Override
                 public void onError(int i, String s) {
 
@@ -48,7 +48,7 @@ public class ProfilePresenter extends Presenter {
                 }
             });
         }else{
-            TIMFriendshipManager.getInstance().getFriendsProfile(Collections.singletonList(identify), new TIMValueCallBack<List<TIMUserProfile>>(){
+            TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendsProfile(Collections.singletonList(identify), new TIMValueCallBack<List<TIMUserProfile>>(){
                 @Override
                 public void onError(int code, String desc){
 

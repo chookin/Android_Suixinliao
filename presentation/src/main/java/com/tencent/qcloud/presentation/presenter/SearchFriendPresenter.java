@@ -36,7 +36,7 @@ public class SearchFriendPresenter extends Presenter {
     public void searchByID(String id) {
         mSearchId = id;
         Log.i(TAG, "searchByID:" + mSearchId);
-        TIMFriendshipManager.getInstance().searchFriend(mSearchId, new TIMValueCallBack<TIMUserProfile>() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().searchFriend(mSearchId, new TIMValueCallBack<TIMUserProfile>() {
             @Override
             public void onError(int arg0, String arg1) {
                 Log.i(TAG, "onError " + arg0);
@@ -57,7 +57,7 @@ public class SearchFriendPresenter extends Presenter {
 
     private void searchByNick(String nick,int mPage,int max) {
         Log.d(TAG, "searchFriend by nick:"+nick);
-        TIMFriendshipManager.getInstance().searchUser(nick, mPage, max, new TIMValueCallBack<TIMUserSearchSucc>() {
+        TIMFriendshipManager.getInstance().getFriendshipProxy().searchUser(nick, mPage, max, new TIMValueCallBack<TIMUserSearchSucc>() {
 
             @Override
             public void onError(int arg0, String arg1) {

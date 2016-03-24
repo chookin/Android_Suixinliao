@@ -65,7 +65,6 @@ public class ChooseMembersActivity extends Activity implements MyFriendGroupInfo
             }
         });
 
-
     }
 
     @Override
