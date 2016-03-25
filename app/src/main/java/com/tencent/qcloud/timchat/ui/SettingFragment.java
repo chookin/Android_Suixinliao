@@ -100,7 +100,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
      */
     @Override
     public void showProfile(TIMUserProfile profile) {
-        name.setText("name "+profile.getNickName());
-        id.setText("id "+profile.getIdentifier());
+        name.setText(profile.getNickName());
+        id.setText(profile.getIdentifier());
     }
 }

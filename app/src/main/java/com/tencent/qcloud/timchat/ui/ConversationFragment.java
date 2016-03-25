@@ -11,19 +11,24 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendFutureItem;
 import com.tencent.TIMGroupDetailInfo;
+import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.presenter.ConversationPresenter;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
+import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
+import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ConversationAdapter;
 import com.tencent.qcloud.timchat.model.Conversation;
 import com.tencent.qcloud.timchat.model.FriendshipConversation;
+import com.tencent.qcloud.timchat.model.GroupManageConversation;
 import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.NomalConversation;
 
@@ -36,16 +41,19 @@ import java.util.List;
 /**
  * 会话列表界面
  */
-public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView,FriendshipMessageView {
+public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView,FriendshipMessageView,GroupManageMessageView {
 
+    private View view;
     private List<Conversation> conversationList = new LinkedList<>();
     private ConversationAdapter adapter;
     private ListView listView;
     private ConversationPresenter presenter;
     private GroupInfoPresenter groupInfoPresenter;
     private FriendshipManagerPresenter friendshipManagerPresenter;
+    private GroupManagerPresenter groupManagerPresenter;
     private List<String> groupList;
     private FriendshipConversation friendshipConversation;
+    private GroupManageConversation groupManageConversation;
 
 
     public ConversationFragment() {
@@ -56,20 +64,23 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_conversation, container, false);
-        listView = (ListView) view.findViewById(R.id.list);
-        adapter = new ConversationAdapter(getActivity(), R.layout.item_conversation, conversationList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                conversationList.get(position).navToDetail(getActivity());
-                adapter.notifyDataSetChanged();
-            }
-        });
-        friendshipManagerPresenter = new FriendshipManagerPresenter(this);
-        presenter = new ConversationPresenter(this);
-        presenter.getConversation();
+        if (view == null){
+            view = inflater.inflate(R.layout.fragment_conversation, container, false);
+            listView = (ListView) view.findViewById(R.id.list);
+            adapter = new ConversationAdapter(getActivity(), R.layout.item_conversation, conversationList);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    conversationList.get(position).navToDetail(getActivity());
+                    adapter.notifyDataSetChanged();
+                }
+            });
+            friendshipManagerPresenter = new FriendshipManagerPresenter(this);
+            groupManagerPresenter = new GroupManagerPresenter(this);
+            presenter = new ConversationPresenter(this);
+            presenter.getConversation();
+        }
         return view;
 
     }
@@ -109,15 +120,17 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             adapter.notifyDataSetChanged();
             return;
         }
-        Conversation conversation = new NomalConversation(message.getConversation());
+        if (message.getConversation().getType() == TIMConversationType.System){
+            updateSystemConversation();
+            return;
+        }
+        NomalConversation conversation = new NomalConversation(message.getConversation());
+        conversation.setLastMessage(MessageFactory.getMessage(message));
         Iterator<Conversation> iterator =conversationList.iterator();
         while (iterator.hasNext()){
             Conversation c = iterator.next();
             if (conversation.equals(c)){
-                NomalConversation nomalConversation = (NomalConversation) c;
-                nomalConversation.setLastMessage(MessageFactory.getMessage(message));
                 iterator.remove();
-                conversation = nomalConversation;
                 break;
             }
         }
@@ -149,20 +162,10 @@ public class ConversationFragment extends Fragment implements ConversationView,G
      */
     private void updateSystemConversation(){
         friendshipManagerPresenter.getFriendshipLastMessage();
-
+        groupManagerPresenter.getGroupManageLastMessage();
     }
 
 
-    /**
-     * 获取好友关系链管理系统消息未读数的回调
-     *
-     * @param unreadCount 未读数量
-     */
-    @Override
-    public void onGetFriendshipUnreadCount(long unreadCount) {
-        friendshipConversation.setUnreadCount(unreadCount);
-        adapter.notifyDataSetChanged();
-    }
 
     /**
      * 获取好友关系链管理系统最后一条消息的回调
@@ -179,6 +182,25 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             friendshipConversation.setLastMessage(message);
         }
         friendshipConversation.setUnreadCount(unreadCount);
+        Collections.sort(conversationList);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 获取群管理最后一条系统消息的回调
+     *
+     * @param message     最后一条消息
+     * @param unreadCount 未读数
+     */
+    @Override
+    public void onGetGroupManageLastMessage(TIMGroupPendencyItem message, long unreadCount) {
+        if (groupManageConversation == null){
+            groupManageConversation = new GroupManageConversation(message);
+            conversationList.add(groupManageConversation);
+        }else{
+            groupManageConversation.setLastMessage(message);
+        }
+        groupManageConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
         adapter.notifyDataSetChanged();
     }

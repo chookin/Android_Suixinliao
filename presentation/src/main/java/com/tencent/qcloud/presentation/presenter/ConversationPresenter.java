@@ -65,12 +65,6 @@ public class ConversationPresenter extends Presenter implements Observer {
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
-//                    for (TIMMessage message:timMessages){
-//                        if (!message.remove()){
-//                            view.updateMessage(message);
-//                            break;
-//                        }
-//                    }
                     view.updateMessage(timMessages.get(0));
                 }
             });

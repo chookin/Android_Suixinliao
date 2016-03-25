@@ -8,13 +8,6 @@ import com.tencent.TIMFriendFutureItem;
 public interface FriendshipMessageView {
 
 
-    /**
-     * 获取好友关系链管理系统消息未读数的回调
-     *
-     * @param unreadCount 未读数量
-     */
-    void onGetFriendshipUnreadCount(long unreadCount);
-
 
     /**
      * 获取好友关系链管理最后一条系统消息的回调
