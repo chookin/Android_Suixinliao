@@ -11,8 +11,8 @@ import com.tencent.TIMGroupBaseInfo;
 import com.tencent.qcloud.presentation.presenter.ManagerGroupListPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.PulicGroupListView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.CommonAdapter;
-import com.tencent.qcloud.timchat.model.ItemTIMProfile;
+import com.tencent.qcloud.timchat.adapters.ProfileAdapter;
+import com.tencent.qcloud.timchat.model.ProfileItem;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ import java.util.List;
 public class GroupManagerActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
-    CommonAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
-    private ArrayList<ItemTIMProfile> mOwnGroupData,mManagerGroupData,mJoinGroupData;
+    ProfileAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
+    private ArrayList<ProfileItem> mOwnGroupData,mManagerGroupData,mJoinGroupData;
     private TextView mSubtitleCreate,mSubtitleManager,mSubtitleJoin;
     private String mGroupType;
     @Override
@@ -44,12 +44,12 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
 
         TemplateTitle title = (TemplateTitle) findViewById(R.id.public_group_actionbar);
 
-        mOwnGroupData = new ArrayList<ItemTIMProfile>();
-        mManagerGroupData = new ArrayList<ItemTIMProfile>();
-        mJoinGroupData = new ArrayList<ItemTIMProfile>();
-        mOwnerGroupAdapter = new CommonAdapter(this,mOwnGroupData);
-        mManagerGroupAdapter = new CommonAdapter(this,mManagerGroupData);
-        mJoinGroupAdapter = new CommonAdapter(this,mJoinGroupData);
+        mOwnGroupData = new ArrayList<ProfileItem>();
+        mManagerGroupData = new ArrayList<ProfileItem>();
+        mJoinGroupData = new ArrayList<ProfileItem>();
+        mOwnerGroupAdapter = new ProfileAdapter(this,mOwnGroupData);
+        mManagerGroupAdapter = new ProfileAdapter(this,mManagerGroupData);
+        mJoinGroupAdapter = new ProfileAdapter(this,mJoinGroupData);
         mOwnerGroup.setAdapter(mOwnerGroupAdapter);
         mManagerGroup.setAdapter(mManagerGroupAdapter);
         mJoinGroup.setAdapter(mJoinGroupAdapter);
@@ -102,26 +102,26 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
         mManagerGroupData.clear();
         mJoinGroupData.clear();
         for(TIMGroupBaseInfo groupinfo : createGroup){
-            ItemTIMProfile groupData = new ItemTIMProfile();
+            ProfileItem groupData = new ProfileItem();
             groupData.setID(groupinfo.getGroupId());
             groupData.setName(groupinfo.getGroupName());
-            groupData.setAvatar(groupinfo.getFaceUrl());
+            groupData.setAvatarUrl(groupinfo.getFaceUrl());
             mOwnGroupData.add(groupData);
         }
         mOwnerGroupAdapter.notifyDataSetChanged();
         for(TIMGroupBaseInfo groupinfo : hostGroup){
-            ItemTIMProfile groupData = new ItemTIMProfile();
+            ProfileItem groupData = new ProfileItem();
             groupData.setID(groupinfo.getGroupId());
             groupData.setName(groupinfo.getGroupName());
-            groupData.setAvatar(groupinfo.getFaceUrl());
+            groupData.setAvatarUrl(groupinfo.getFaceUrl());
             mManagerGroupData.add(groupData);
         }
         mManagerGroupAdapter.notifyDataSetChanged();
         for(TIMGroupBaseInfo groupinfo : memberGroup){
-            ItemTIMProfile groupData = new ItemTIMProfile();
+            ProfileItem groupData = new ProfileItem();
             groupData.setID(groupinfo.getGroupId());
             groupData.setName(groupinfo.getGroupName());
-            groupData.setAvatar(groupinfo.getFaceUrl());
+            groupData.setAvatarUrl(groupinfo.getFaceUrl());
             mJoinGroupData.add(groupData);
         }
         mJoinGroupAdapter.notifyDataSetChanged();

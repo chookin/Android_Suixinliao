@@ -77,7 +77,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
                 }
             });
             friendshipManagerPresenter = new FriendshipManagerPresenter(this);
-            groupManagerPresenter = new GroupManagerPresenter(this);
+            groupManagerPresenter = new GroupManagerPresenter(this, this);
             presenter = new ConversationPresenter(this);
             presenter.getConversation();
         }
@@ -130,6 +130,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         while (iterator.hasNext()){
             Conversation c = iterator.next();
             if (conversation.equals(c)){
+                conversation = (NomalConversation) c;
                 iterator.remove();
                 break;
             }

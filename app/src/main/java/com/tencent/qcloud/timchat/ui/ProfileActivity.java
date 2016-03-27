@@ -4,23 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendGroup;
-import com.tencent.TIMFriendResult;
 import com.tencent.TIMUserProfile;
-import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
 import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.model.CategoryItem;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 
 import java.util.ArrayList;
@@ -95,7 +90,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_chat:
+            case R.id.btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("identify", identify);
 //                intent.putExtra("name", nameStr);
@@ -103,7 +98,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.btn_del:
+            case R.id.btnDel:
                 break;
             case R.id.group:
                 Intent changeCategoryIntent = new Intent(this, ChangeCategoryActivity.class);

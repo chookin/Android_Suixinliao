@@ -125,13 +125,14 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
     }
 
     private Dialog inviteDialog;
-    private TextView addFriend, managerGroup;
+    private TextView addFriend, managerGroup,addGroup;
 
     private void showMoveDialog() {
         inviteDialog = new Dialog(getActivity(), R.style.dialog);
         inviteDialog.setContentView(R.layout.contact_more);
         addFriend = (TextView) inviteDialog.findViewById(R.id.add_friend);
         managerGroup = (TextView) inviteDialog.findViewById(R.id.manager_group);
+        addGroup = (TextView) inviteDialog.findViewById(R.id.add_group);
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,6 +145,14 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ManagerFriendGroupActivity.class);
+                getActivity().startActivity(intent);
+                inviteDialog.dismiss();
+            }
+        });
+        addGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchGroupActivity.class);
                 getActivity().startActivity(intent);
                 inviteDialog.dismiss();
             }

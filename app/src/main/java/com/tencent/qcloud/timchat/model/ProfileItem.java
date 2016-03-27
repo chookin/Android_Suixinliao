@@ -3,22 +3,40 @@ package com.tencent.qcloud.timchat.model;
 /**
  * Created by admin on 16/3/4.
  */
-public class ItemTIMProfile {
+public class ProfileItem {
+
     private String id;
     private String name="";
+    private String avatarUrl;
+    private String description;
     private boolean needVerify;
+    private int avatarRes;
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
-    private String avatar;
+    public int getAvatarRes() {
+        return avatarRes;
+    }
 
-    public ItemTIMProfile() {
+    public void setAvatarRes(int avatarRes) {
+        this.avatarRes = avatarRes;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ProfileItem() {
         // TODO Auto-generated constructor stub
     }
 

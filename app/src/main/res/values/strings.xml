@@ -28,6 +28,7 @@
     <string name="discuss_group">讨论组</string>
     <string name="chatroom">聊天室</string>
     <string name="addfriend">添加好友</string>
+    <string name="contact_add_group">添加群组</string>
     <string name="manangergroup">管理分组</string>
     <string name="title_default_name">默认分组</string>
 
@@ -83,7 +84,7 @@
     <string name="profile_group">添加分组</string>
     <string name="profile_now_group">所在分组</string>
 
-    <!-- chat setting activity -->
+    <!-- group profile activity -->
     <string name="chat_setting_title">聊天设置</string>
     <string name="chat_setting_group_member">群成员</string>
     <string name="chat_setting_group_id">群组ID</string>
@@ -94,6 +95,8 @@
     <string name="chat_setting_group_all_accept">允许任何人加入</string>
     <string name="chat_setting_group_all_reject">禁止加入</string>
     <string name="chat_setting_group_auth">需群主审核</string>
+    <string name="chat_setting_quit">退出群</string>
+    <string name="chat_setting_add">加入群</string>
 
 
     <!-- Add newfri activity -->
@@ -152,5 +155,8 @@
 
     <!-- change category activity -->
     <string name="change_category_title">移至分组</string>
+
+    <!-- search group activity -->
+    <string name="search_group_hint">搜索ID或名称</string>
 
 </resources>

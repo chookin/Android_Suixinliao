@@ -39,7 +39,7 @@
         <activity android:name=".ui.CreateGroupActivity" />
         <activity android:name=".ui.ChooseMembersActivity" />
         <activity android:name=".ui.ChatSettingActivity" />
-        <activity android:name=".ui.GroupChatSettingActivity" />
+        <activity android:name=".ui.GroupProfileActivity" />
 
         <service
             android:name="com.tencent.qalsdk.service.QalService"
@@ -69,6 +69,8 @@
         <activity android:name=".ui.ImageViewActivity" >
         </activity>
         <activity android:name=".ui.EditActivity" >
+        </activity>
+        <activity android:name=".ui.SearchGroupActivity" >
         </activity>
     </application>
 

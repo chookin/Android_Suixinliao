@@ -1,5 +1,8 @@
 package com.tencent.qcloud.timchat.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 用户数据
  */
@@ -12,9 +15,6 @@ public class UserInfo {
 
     public static UserInfo getInstance() {
         return ourInstance;
-    }
-
-    private UserInfo() {
     }
 
     public String getId() {
@@ -32,4 +32,5 @@ public class UserInfo {
     public void setUserSig(String userSig) {
         this.userSig = userSig;
     }
+
 }

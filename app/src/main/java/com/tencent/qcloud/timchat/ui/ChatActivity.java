@@ -1,10 +1,8 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
@@ -22,7 +20,6 @@ import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.MessageFactory;
-import com.tencent.qcloud.timchat.model.SystemMessage;
 import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
@@ -97,7 +94,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 title.setMoreImgAction(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ChatActivity.this, GroupChatSettingActivity.class);
+                        Intent intent = new Intent(ChatActivity.this, GroupProfileActivity.class);
                         intent.putExtra("identify", identify);
                         startActivity(intent);
                     }
