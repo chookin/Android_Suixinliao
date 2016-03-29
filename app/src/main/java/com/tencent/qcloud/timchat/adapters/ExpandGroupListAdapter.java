@@ -91,14 +91,12 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
      */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup viewGroup) {
-        GroupHolder groupHolder = null;
+        GroupHolder groupHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_group, null);
             groupHolder = new GroupHolder();
-            groupHolder.groupname = (TextView) convertView.findViewById(R.id.group_name);
-            groupHolder.tag = (TextView) convertView.findViewById(R.id.group_tag);
-            // groupHolder.img = (ImageView) convertView
-            // .findViewById(R.id.img);
+            groupHolder.groupname = (TextView) convertView.findViewById(R.id.groupName);
+            groupHolder.tag = (ImageView) convertView.findViewById(R.id.groupTag);
             convertView.setTag(groupHolder);
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
@@ -154,8 +152,6 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             }
 
             itemHolder.itemname = (TextView) convertView.findViewById(R.id.group_member_name);
-//            itemHolder.img = (ImageView) convertView
-//             .findViewById(R.id.img);
             convertView.setTag(itemHolder);
         } else {
             itemHolder = (ChildrenHolder) convertView.getTag();
@@ -178,7 +174,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
 
     class GroupHolder {
         public TextView groupname;
-        public TextView tag;
+        public ImageView tag;
     }
 
     class ChildrenHolder {

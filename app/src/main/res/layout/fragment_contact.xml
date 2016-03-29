@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGray2"
     android:orientation="vertical"
     tools:context="com.tencent.qcloud.timchat.ui.ContactFragment">
 
@@ -14,120 +13,98 @@
         app:moreImg="@drawable/management"
         app:titleText="@string/home_contact_tab"/>
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:background="@color/colorGray1">-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:textSize="18sp"-->
-            <!--android:text="@string/home_contact_tab" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/contact_add"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_gravity="right|center_vertical"-->
-            <!--android:background="@drawable/management"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--/>-->
-
-    <!--</FrameLayout>-->
-
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="80dp"
         android:background="@color/white"
+        android:gravity="center"
         android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:id="@+id/newfriend_btn"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
+        <LinearLayout
+            android:id="@+id/btnNewFriend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:layout_weight="1">
-
-            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="top|center"
-                android:src="@drawable/friend" />
-
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/friend"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 android:text="@string/new_friend" />
-        </FrameLayout>
+        </LinearLayout>
 
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:id="@+id/btn_public_group"
-            android:layout_gravity="center_vertical"
+        <LinearLayout
+            android:id="@+id/btnPublicGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:layout_weight="1">
-
-            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="top|center"
-                android:src="@drawable/group" />
-
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/group"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
                 android:text="@string/public_group" />
-        </FrameLayout>
+        </LinearLayout>
 
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:id="@+id/btn_private_group"
-            android:layout_gravity="center_vertical"
+        <LinearLayout
+            android:id="@+id/btnPrivateGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:layout_weight="1">
-
-            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="top|center"
-                android:src="@drawable/discussion" />
-
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/discussion"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
                 android:text="@string/discuss_group" />
-        </FrameLayout>
+        </LinearLayout>
 
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:id="@+id/btn_chatroom"
-            android:layout_gravity="center_vertical"
+        <LinearLayout
+            android:id="@+id/btnChatroom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:layout_weight="1">
-
-            <com.tencent.qcloud.timchat.ui.customview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="top|center"
-                android:src="@drawable/chatroom" />
-
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/chatroom"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
                 android:text="@string/chatroom" />
-        </FrameLayout>
+        </LinearLayout>
+
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line"/>
 
     <ExpandableListView
         android:id="@+id/grouplist"

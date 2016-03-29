@@ -26,7 +26,7 @@
 
     <!-- contact fragment -->
     <string name="home_contact_tab">联系人</string>
-    <string name="new_friend">新的朋友</string>
+    <string name="new_friend">新朋友</string>
     <string name="public_group">公开群</string>
     <string name="discuss_group">讨论组</string>
     <string name="chatroom">聊天室</string>

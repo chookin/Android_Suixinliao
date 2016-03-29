@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:minHeight="40dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/group_tag"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/close"
-        />
-
-
-    <TextView
-        android:id="@+id/group_name"
+    <ImageView
+        android:id="@+id/groupTag"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="35dp"
-        android:gravity="center_vertical"
-        android:text="@string/title_default_name" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:id="@+id/groupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 </LinearLayout>

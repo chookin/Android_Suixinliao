@@ -50,7 +50,7 @@ public class GroupListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_mylist, null);
             Holder = new ItemHolder();
-            Holder.groupname = (TextView) convertView.findViewById(R.id.group_name);
+            Holder.groupname = (TextView) convertView.findViewById(R.id.groupName);
             Holder.delete = (TextView) convertView.findViewById(R.id.delete_group);
             Holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override

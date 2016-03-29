@@ -13,7 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +45,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private TextView mMoreBtn;
-    private FrameLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn,mPrivateGroupBtn;
+    private LinearLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn,mPrivateGroupBtn;
     private int mSelectItem;
 
     @Override
@@ -54,13 +54,13 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
         mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
         mGroupListView.setOnItemClickListener(this);
-        mNewFriBtn = (FrameLayout) contactLayout.findViewById(R.id.newfriend_btn);
+        mNewFriBtn = (LinearLayout) contactLayout.findViewById(R.id.btnNewFriend);
         mNewFriBtn.setOnClickListener(this);
-        mPublicGroupBtn = (FrameLayout) contactLayout.findViewById(R.id.btn_public_group);
+        mPublicGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPublicGroup);
         mPublicGroupBtn.setOnClickListener(this);
-        mChatRoomBtn = (FrameLayout) contactLayout.findViewById(R.id.btn_chatroom);
+        mChatRoomBtn = (LinearLayout) contactLayout.findViewById(R.id.btnChatroom);
         mChatRoomBtn.setOnClickListener(this);
-        mPrivateGroupBtn = (FrameLayout) contactLayout.findViewById(R.id.btn_private_group);
+        mPrivateGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPrivateGroup);
         mPrivateGroupBtn.setOnClickListener(this);
         TemplateTitle title = (TemplateTitle) contactLayout.findViewById(R.id.contact_antionbar);
         title.setMoreImgAction(new View.OnClickListener() {
@@ -74,7 +74,6 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Toast.makeText(getActivity(), "" + mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 intent.putExtra("identify", mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
                 startActivity(intent);
@@ -102,22 +101,22 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
 //        if (view.getId() == R.id.contact_add) {
 //            showMoveDialog();
 //        }
-        if (view.getId() == R.id.newfriend_btn) {
+        if (view.getId() == R.id.btnNewFriend) {
             Intent intent = new Intent(getActivity(), NewFriendActivity.class);
             getActivity().startActivity(intent);
 
         }
-        if (view.getId() == R.id.btn_public_group) {
+        if (view.getId() == R.id.btnPublicGroup) {
             Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
             intent.putExtra("type", "Public");
             getActivity().startActivity(intent);
         }
-        if (view.getId() == R.id.btn_chatroom) {
+        if (view.getId() == R.id.btnChatroom) {
             Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
             intent.putExtra("type", "ChatRoom");
             getActivity().startActivity(intent);
         }
-        if (view.getId() == R.id.btn_private_group) {
+        if (view.getId() == R.id.btnPrivateGroup) {
             Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
             intent.putExtra("type", "Private");
             getActivity().startActivity(intent);

@@ -64,7 +64,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
         nickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditActivity.navToEdit(SettingFragment.this, getResources().getString(R.string.setting_nick_name_change), REQ_CHANGE_NICK, new EditActivity.EditInterface() {
+                EditActivity.navToEdit(SettingFragment.this, getResources().getString(R.string.setting_nick_name_change),name.getText().toString(), REQ_CHANGE_NICK, new EditActivity.EditInterface() {
                     @Override
                     public void onEdit(String text, TIMCallBack callBack) {
                         profilePresenter.changeNickName(text,callBack);

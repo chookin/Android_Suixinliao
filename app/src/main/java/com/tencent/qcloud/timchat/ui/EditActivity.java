@@ -20,6 +20,7 @@ public class EditActivity extends Activity implements TIMCallBack{
 
     private static EditInterface editAction;
     public final static String RETURN_EXTRA = "result";
+    private static String defaultString;
     private EditText input;
 
     /**
@@ -27,13 +28,15 @@ public class EditActivity extends Activity implements TIMCallBack{
      *
      * @param context fragment context
      * @param title 界面标题
+     * @param defaultStr 默认文案
      * @param reqCode 请求码，用于识别返回结果
      * @param action 操作回调
      */
-    public static void navToEdit(Fragment context, String title, int reqCode,EditInterface action){
+    public static void navToEdit(Fragment context, String title, String defaultStr, int reqCode,EditInterface action){
         Intent intent = new Intent(context.getActivity(), EditActivity.class);
         intent.putExtra("title", title);
         context.startActivityForResult(intent, reqCode);
+        defaultString = defaultStr;
         editAction = action;
     }
 
@@ -43,13 +46,15 @@ public class EditActivity extends Activity implements TIMCallBack{
      *
      * @param context activity context
      * @param title 界面标题
+     * @param defaultStr 默认文案
      * @param reqCode 请求码，用于识别返回结果
      * @param action 操作回调
      */
-    public static void navToEdit(Activity context, String title, int reqCode,EditInterface action){
+    public static void navToEdit(Activity context, String title, String defaultStr, int reqCode,EditInterface action){
         Intent intent = new Intent(context, EditActivity.class);
         intent.putExtra("title", title);
         context.startActivityForResult(intent, reqCode);
+        defaultString = defaultStr;
         editAction = action;
     }
 
@@ -60,6 +65,7 @@ public class EditActivity extends Activity implements TIMCallBack{
         setContentView(R.layout.activity_edit);
         getIntent().getStringExtra("title");
         input = (EditText) findViewById(R.id.editContent);
+        if (defaultString != null) input.setText(defaultString);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.editTitle);
         title.setTitleText(getIntent().getStringExtra("title"));
         title.setMoreTextAction(new View.OnClickListener() {
@@ -70,6 +76,13 @@ public class EditActivity extends Activity implements TIMCallBack{
         });
 
 
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        defaultString = null;
+        editAction = null;
     }
 
     @Override
