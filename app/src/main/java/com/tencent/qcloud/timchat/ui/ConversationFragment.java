@@ -129,7 +129,6 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             return;
         }
         NomalConversation conversation = new NomalConversation(message.getConversation());
-        conversation.setLastMessage(MessageFactory.getMessage(message));
         Iterator<Conversation> iterator =conversationList.iterator();
         while (iterator.hasNext()){
             Conversation c = iterator.next();
@@ -139,6 +138,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
                 break;
             }
         }
+        conversation.setLastMessage(MessageFactory.getMessage(message));
         conversationList.add(conversation);
         Collections.sort(conversationList);
         adapter.notifyDataSetChanged();

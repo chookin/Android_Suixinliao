@@ -84,6 +84,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 return false;
             }
         });
+        presenter.getConversation().setReadMessage();
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(presenter.getConversation().getPeer());
         switch (type) {

@@ -51,12 +51,7 @@ public class NomalConversation extends Conversation {
      */
     @Override
     public void navToDetail(Context context) {
-        readAllMessage();
-        Intent intent = new Intent(context, ChatActivity.class);
-        intent.putExtra("identify", identify);
-        intent.putExtra("name", name);
-        intent.putExtra("type", type);
-        context.startActivity(intent);
+        ChatActivity.navToChat(context,identify,type);
     }
 
     /**
