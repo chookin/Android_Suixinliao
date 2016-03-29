@@ -3,20 +3,54 @@ package com.tencent.qcloud.timchat.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
+/**
+ * 修改文本页面
+ */
 public class EditActivity extends Activity implements TIMCallBack{
 
 
-    private String result;
+    private static EditInterface editAction;
+    public final static String RETURN_EXTRA = "result";
+    private EditText input;
 
-    public static void navToEdit(Activity context, String title, int reqCode){
+    /**
+     * 启动修改文本界面
+     *
+     * @param context fragment context
+     * @param title 界面标题
+     * @param reqCode 请求码，用于识别返回结果
+     * @param action 操作回调
+     */
+    public static void navToEdit(Fragment context, String title, int reqCode,EditInterface action){
+        Intent intent = new Intent(context.getActivity(), EditActivity.class);
+        intent.putExtra("title", title);
+        context.startActivityForResult(intent, reqCode);
+        editAction = action;
+    }
+
+
+    /**
+     * 启动修改文本界面
+     *
+     * @param context activity context
+     * @param title 界面标题
+     * @param reqCode 请求码，用于识别返回结果
+     * @param action 操作回调
+     */
+    public static void navToEdit(Activity context, String title, int reqCode,EditInterface action){
         Intent intent = new Intent(context, EditActivity.class);
         intent.putExtra("title", title);
         context.startActivityForResult(intent, reqCode);
+        editAction = action;
     }
 
 
@@ -25,18 +59,33 @@ public class EditActivity extends Activity implements TIMCallBack{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         getIntent().getStringExtra("title");
+        input = (EditText) findViewById(R.id.editContent);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.editTitle);
         title.setTitleText(getIntent().getStringExtra("title"));
+        title.setMoreTextAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editAction.onEdit(input.getText().toString(),EditActivity.this);
+            }
+        });
+
 
     }
 
     @Override
     public void onError(int i, String s) {
-        //TODO
+        Toast.makeText(this,getResources().getString(R.string.edit_error),Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra(RETURN_EXTRA,input.getText().toString());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
+    public interface EditInterface{
+        void onEdit(String text, TIMCallBack callBack);
     }
 }

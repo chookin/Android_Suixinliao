@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
 import com.tencent.qcloud.presentation.presenter.SettingsPresenter;
@@ -18,6 +19,7 @@ import com.tencent.qcloud.presentation.viewfeatures.SettingsFeature;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 /**
@@ -29,7 +31,8 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
     private SettingsPresenter mSettingsPresenter;
     private ProfilePresenter profilePresenter;
     private TextView id,name;
-    private final int REQ_CHANGE_NICK = 3000;
+    private LineControllerView nickName;
+    private final int REQ_CHANGE_NICK = 1000;
 
 
 
@@ -57,11 +60,17 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
 
             }
         });
-        LineControllerView nickName = (LineControllerView) view.findViewById(R.id.nickName);
+        nickName = (LineControllerView) view.findViewById(R.id.nickName);
         nickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditActivity.navToEdit(getActivity(), getResources().getString(R.string.setting_nick_name_change),REQ_CHANGE_NICK);
+                EditActivity.navToEdit(SettingFragment.this, getResources().getString(R.string.setting_nick_name_change), REQ_CHANGE_NICK, new EditActivity.EditInterface() {
+                    @Override
+                    public void onEdit(String text, TIMCallBack callBack) {
+                        profilePresenter.changeNickName(text,callBack);
+                    }
+                });
+
             }
         });
         return view ;
@@ -100,7 +109,22 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
      */
     @Override
     public void showProfile(TIMUserProfile profile) {
-        name.setText(profile.getNickName());
         id.setText(profile.getIdentifier());
+        setNickName(profile.getNickName());
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQ_CHANGE_NICK){
+            setNickName(data.getStringExtra(EditActivity.RETURN_EXTRA));
+        }
+
+    }
+
+    private void setNickName(String name){
+        this.name.setText(name);
+        nickName.setContent(name);
+    }
+
+
 }

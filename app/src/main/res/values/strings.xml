@@ -170,4 +170,7 @@
     <!-- search group activity -->
     <string name="search_group_hint">搜索ID或名称</string>
 
+    <!-- edit activity -->
+    <string name="edit_error">修改失败</string>
+
 </resources>

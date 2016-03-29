@@ -65,21 +65,12 @@ public class ProfilePresenter extends Presenter {
 
     /**
      * 修改自己的昵称
+     *
+     * @param newName 新名字
+     * @param callBack 回调
      */
-    public void changeNickName(String newName){
-        //设置新昵称为cat
-        TIMFriendshipManager.getInstance().setNickName(newName, new TIMCallBack(){
-            @Override
-            public void onError(int code, String desc){
-                //错误码code和错误描述desc，可用于定位请求失败原因
-                //错误码code列表请参见错误码表
-            }
-
-            @Override
-            public void onSuccess(){
-
-            }
-        });
+    public void changeNickName(String newName,TIMCallBack callBack){
+        TIMFriendshipManager.getInstance().setNickName(newName,callBack);
     }
 
 

@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -23,6 +24,7 @@ public class HomeActivity extends FragmentActivity {
     private int mImageViewArray[] = {R.drawable.tab_conversation, R.drawable.tab_contact, R.drawable.tab_setting};
     private String mTextviewArray[] = {"contact", "conversation", "setting"};
     private long flags = 0xff;//IMSDK 全部获取
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,11 @@ public class HomeActivity extends FragmentActivity {
         }
 
         return view;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
 
