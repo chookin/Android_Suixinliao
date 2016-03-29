@@ -143,7 +143,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
                         if (!mChooseMembers.contains(mAllGroupMembers.get(groupPosition).get(childPosition))) {
                             finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
                             mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
-                        }else{
+                        } else {
                             finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
                             mChooseMembers.remove(mAllGroupMembers.get(groupPosition).get(childPosition));
                         }
@@ -152,6 +152,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             } else {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
             }
+
             itemHolder.itemname = (TextView) convertView.findViewById(R.id.group_member_name);
 //            itemHolder.img = (ImageView) convertView
 //             .findViewById(R.id.img);
@@ -159,7 +160,13 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         } else {
             itemHolder = (ChildrenHolder) convertView.getTag();
         }
-        itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
+        //优先显示昵称
+        String nickname = mAllGroupMembers.get(groupPosition).get(childPosition).getNickName();
+        if (nickname.equals("")) {
+            itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
+        } else {
+            itemHolder.itemname.setText(nickname);
+        }
         return convertView;
     }
 
