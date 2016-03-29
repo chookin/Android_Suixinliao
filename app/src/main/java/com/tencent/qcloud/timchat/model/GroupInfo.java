@@ -7,6 +7,7 @@ import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupSettings;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class GroupInfo implements TIMGroupAssistantListener, GroupInfoView {
 
+    private final String TAG = "GroupInfo";
     private List<TIMGroupDetailInfo> groupList;
     private GroupManagerPresenter presenter;
 

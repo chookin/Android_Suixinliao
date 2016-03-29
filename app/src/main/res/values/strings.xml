@@ -7,10 +7,13 @@
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
     <string name="agree">同意</string>
+    <string name="agreed">已同意</string>
     <string name="refuse">拒绝</string>
+    <string name="refused">已拒绝</string>
     <string name="done">完成</string>
 
-
+    <!-- home activity -->
+    <string name="send_success">发送成功</string>
 
     <!-- home activity -->
     <string name="home_conversation_tab">会话</string>
@@ -96,7 +99,7 @@
     <string name="chat_setting_group_all_reject">禁止加入</string>
     <string name="chat_setting_group_auth">需群主审核</string>
     <string name="chat_setting_quit">退出群</string>
-    <string name="chat_setting_add">加入群</string>
+    <string name="chat_setting_add">申请加群</string>
 
 
     <!-- Add newfri activity -->
@@ -111,6 +114,14 @@
     <string name="summary_video">[小视频]</string>
     <string name="summary_friend_add">请求添加好友</string>
     <string name="summary_friend_recommend">推荐添加好友</string>
+    <string name="summary_me">我</string>
+    <string name="summary_group_apply">申请加群</string>
+    <string name="summary_group_invite">邀请</string>
+    <string name="summary_group_add">加入群</string>
+    <string name="summary_agree">同意</string>
+    <string name="summary_disagree">拒绝</string>
+    <string name="summary_invite_person">邀请人</string>
+    <string name="summary_handle_person">处理人</string>
 
     <!-- time -->
     <string name="time_yesterday">昨天</string>
