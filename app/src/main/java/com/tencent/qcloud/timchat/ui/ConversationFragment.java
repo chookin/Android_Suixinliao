@@ -31,6 +31,7 @@ import com.tencent.qcloud.timchat.model.FriendshipConversation;
 import com.tencent.qcloud.timchat.model.GroupManageConversation;
 import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.NomalConversation;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +43,8 @@ import java.util.List;
  * 会话列表界面
  */
 public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView,FriendshipMessageView,GroupManageMessageView {
+
+    private final String TAG = "ConversationFragment";
 
     private View view;
     private List<Conversation> conversationList = new LinkedList<>();
@@ -77,7 +80,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
                 }
             });
             friendshipManagerPresenter = new FriendshipManagerPresenter(this);
-            groupManagerPresenter = new GroupManagerPresenter(this, this);
+            groupManagerPresenter = new GroupManagerPresenter(this, this, null);
             presenter = new ConversationPresenter(this);
             presenter.getConversation();
         }
@@ -121,6 +124,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             return;
         }
         if (message.getConversation().getType() == TIMConversationType.System){
+            LogUtils.d(TAG, "onMemberJoin system message");
             updateSystemConversation();
             return;
         }
@@ -205,4 +209,16 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         Collections.sort(conversationList);
         adapter.notifyDataSetChanged();
     }
+
+    /**
+     * 获取群管理系统消息的回调
+     *
+     * @param message 分页的消息列表
+     */
+    @Override
+    public void onGetGroupManageMessage(List<TIMGroupPendencyItem> message) {
+
+    }
+
+
 }

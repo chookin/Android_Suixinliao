@@ -72,6 +72,10 @@
         </activity>
         <activity android:name=".ui.SearchGroupActivity" >
         </activity>
+        <activity android:name=".ui.ApplyGroupActivity" >
+        </activity>
+        <activity android:name=".ui.GroupManageMessageActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -2,18 +2,16 @@ package com.tencent.qcloud.presentation.presenter;
 
 import android.util.Log;
 
-import com.tencent.TIMGroupAssistant;
-import com.tencent.TIMGroupAssistantListener;
-import com.tencent.TIMGroupBaseInfo;
+import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
-import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupPendencyGetParam;
 import com.tencent.TIMGroupPendencyListGetSucc;
 import com.tencent.TIMGroupSearchSucc;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
+import com.tencent.qcloud.presentation.viewfeatures.GroupMemberManageView;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,18 +25,25 @@ public class GroupManagerPresenter {
 
     private GroupManageMessageView messageView;
     private GroupInfoView infoView;
+    private GroupMemberManageView manageView;
+    private long timeStamp = 0;
 
     public GroupManagerPresenter(GroupManageMessageView view){
-        this(view, null);
+        this(view, null, null);
     }
 
     public GroupManagerPresenter(GroupInfoView view){
         infoView = view;
     }
 
-    public GroupManagerPresenter(GroupManageMessageView view1, GroupInfoView view2){
+    public GroupManagerPresenter(GroupMemberManageView view){
+        this(null, null, view);
+    }
+
+    public GroupManagerPresenter(GroupManageMessageView view1, GroupInfoView view2, GroupMemberManageView view3){
         messageView = view1;
         infoView = view2;
+        manageView = view3;
     }
 
 
@@ -60,11 +65,41 @@ public class GroupManagerPresenter {
             public void onSuccess(TIMGroupPendencyListGetSucc timGroupPendencyListGetSucc) {
                 if (messageView != null && timGroupPendencyListGetSucc.getPendencies().size() > 0){
                     messageView.onGetGroupManageLastMessage(timGroupPendencyListGetSucc.getPendencies().get(0),
-                            0);
+                            timGroupPendencyListGetSucc.getPendencyMeta().getUnReadCount());
                 }
             }
         });
     }
+
+
+    /**
+     * 获取群管理消息
+     *
+     * @param pageSize 每次拉取数量
+     */
+    public void getGroupManageMessage(int pageSize){
+        TIMGroupPendencyGetParam param = new TIMGroupPendencyGetParam();
+        param.setNumPerPage(pageSize);
+        param.setTimestamp(timeStamp);
+        TIMGroupManager.getInstance().getGroupPendencyList(param, new TIMValueCallBack<TIMGroupPendencyListGetSucc>() {
+            @Override
+            public void onError(int i, String s) {
+                Log.i(TAG, "onError code" + i + " msg " + s);
+            }
+
+            @Override
+            public void onSuccess(TIMGroupPendencyListGetSucc timGroupPendencyListGetSucc) {
+                if (messageView != null){
+                    messageView.onGetGroupManageMessage(timGroupPendencyListGetSucc.getPendencies());
+                }
+            }
+        });
+    }
+
+
+
+
+
 
     /**
      * 按照群名称搜索群
@@ -94,10 +129,10 @@ public class GroupManagerPresenter {
     /**
      * 按照群ID搜索群
      *
-     * @param id 群组ID
+     * @param groupId 群组ID
      */
-    public void searchGroupByID(String id){
-        TIMGroupManager.getInstance().getGroupPublicInfo(Collections.singletonList(id), new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
+    public void searchGroupByID(String groupId){
+        TIMGroupManager.getInstance().getGroupPublicInfo(Collections.singletonList(groupId), new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
             @Override
             public void onError(int i, String s) {
                 Log.i(TAG, "onError code" + i + " msg " + s);
@@ -132,6 +167,23 @@ public class GroupManagerPresenter {
         });
 
     }
+
+
+    /**
+     * 申请加入群
+     *
+     * @param groupId 群组ID
+     * @param reason 申请理由
+     * @param callBack 回调
+     */
+    public static void applyJoinGroup(String groupId, String reason, TIMCallBack callBack){
+        TIMGroupManager.getInstance().applyJoinGroup(groupId, reason, callBack);
+    }
+
+
+
+
+
 
 
 }

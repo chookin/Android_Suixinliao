@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
+import com.tencent.qcloud.presentation.viewfeatures.GroupMemberManageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
@@ -85,7 +87,9 @@ public class GroupProfileActivity extends Activity implements GroupInfoView, Vie
             case R.id.btnDel:
                 break;
             case R.id.controlOutGroup:
-                LogUtils.d(TAG, "add group action");
+                Intent intent = new Intent(this, ApplyGroupActivity.class);
+                intent.putExtra("identify", identify);
+                startActivity(intent);
                 break;
         }
     }
