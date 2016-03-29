@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,6 +50,15 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private VoiceSendingView voiceSendingView;
     private RecorderUtil recorder = new RecorderUtil();
 
+
+    public static void navToChat(Context context, String identify, TIMConversationType type){
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra("identify", identify);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +66,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         final String identify = getIntent().getStringExtra("identify");
         final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
-        final String name = getIntent().getStringExtra("name");
         presenter = new ChatPresenter(this, identify, type);
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
@@ -76,7 +85,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             }
         });
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
-        title.setTitleText(name);
+        title.setTitleText(presenter.getConversation().getPeer());
         switch (type) {
             case C2C:
                 title.setMoreImg(R.drawable.btn_person);

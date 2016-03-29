@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
@@ -74,9 +75,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra("identify", mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
-                startActivity(intent);
+                ChatActivity.navToChat(getActivity(),mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier(), TIMConversationType.C2C);
                 return false;
             }
         });

@@ -50,6 +50,13 @@ public class ChatPresenter extends Presenter implements Observer {
     }
 
     /**
+     * 获取聊天TIM会话
+     */
+    public TIMConversation getConversation(){
+        return conversation;
+    }
+
+    /**
      * 中止页面逻辑
      *
      * @param message 发送的消息
