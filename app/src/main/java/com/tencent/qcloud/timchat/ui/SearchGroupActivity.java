@@ -13,8 +13,11 @@ import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.ProfileAdapter;
+import com.tencent.qcloud.timchat.adapters.ProfileAdapter1;
+import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
+import com.tencent.qcloud.timchat.model.GroupProfile;
 import com.tencent.qcloud.timchat.model.ProfileItem;
+import com.tencent.qcloud.timchat.model.ProfileSummary;
 import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -25,8 +28,8 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
     private final String TAG = "SearchGroupActivity";
 
     private GroupManagerPresenter groupManagerPresenter;
-    private List<ProfileItem> searchResult= new ArrayList<>();
-    private ProfileAdapter adapter;
+    private List<ProfileSummary> list= new ArrayList<>();
+    private ProfileSummaryAdapter adapter;
     private EditText searchInput;
     private ListView listView;
 
@@ -36,15 +39,13 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
         setContentView(R.layout.activity_search_group);
         searchInput = (EditText) findViewById(R.id.inputSearch);
         listView =(ListView) findViewById(R.id.list);
-        adapter = new ProfileAdapter(this, searchResult);
+        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
         groupManagerPresenter = new GroupManagerPresenter(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SearchGroupActivity.this, GroupProfileActivity.class);
-                intent.putExtra("identify", searchResult.get(position).getID());
-                startActivity(intent);
+                list.get(position).showDetail(SearchGroupActivity.this);
             }
         });
     }
@@ -84,15 +85,9 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
      */
     @Override
     public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
-        LogUtils.i(TAG, "get group info size " + groupInfos.size());
-        searchResult.clear();
+        list.clear();
         for (TIMGroupDetailInfo item : groupInfos){
-            ProfileItem profileItem = new ProfileItem();
-            profileItem.setAvatarRes(R.drawable.head_group);
-            profileItem.setID(item.getGroupId());
-            profileItem.setName(item.getGroupName());
-            profileItem.setDescription(item.getGroupId());
-            searchResult.add(profileItem);
+            list.add(new GroupProfile(item));
         }
         adapter.notifyDataSetChanged();
     }

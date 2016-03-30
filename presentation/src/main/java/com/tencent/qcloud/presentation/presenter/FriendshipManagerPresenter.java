@@ -2,13 +2,21 @@ package com.tencent.qcloud.presentation.presenter;
 
 import android.util.Log;
 
+import com.tencent.TIMAddFriendRequest;
 import com.tencent.TIMFriendFutureMeta;
+import com.tencent.TIMFriendResult;
+import com.tencent.TIMFriendStatus;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGetFriendFutureListSucc;
 import com.tencent.TIMPageDirectionType;
+import com.tencent.TIMUserSearchSucc;
 import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 好友关系链管理逻辑
@@ -20,14 +28,27 @@ public class FriendshipManagerPresenter {
 
     private FriendshipMessageView friendshipMessageView;
     private FriendshipManageView friendshipManageView;
+    private FriendInfoView friendInfoView;
+    private final int PAGE_SIZE = 20;
+    private int index;
+    private boolean isEnd;
 
     public FriendshipManagerPresenter(FriendshipMessageView view){
-        this(view, null);
+        this(view, null, null);
     }
 
-    public FriendshipManagerPresenter(FriendshipMessageView view1, FriendshipManageView view2){
+    public FriendshipManagerPresenter(FriendInfoView view){
+        this(null, null, view);
+    }
+
+    public FriendshipManagerPresenter(FriendshipManageView view){
+        this(null, view, null);
+    }
+
+    public FriendshipManagerPresenter(FriendshipMessageView view1, FriendshipManageView view2, FriendInfoView view3){
         friendshipManageView = view2;
         friendshipMessageView = view1;
+        friendInfoView = view3;
     }
 
 
@@ -64,6 +85,70 @@ public class FriendshipManagerPresenter {
                         arg0.getMeta().getRecommendUnReadCnt();
                 if (friendshipMessageView != null && arg0.getItems().size() > 0){
                     friendshipMessageView.onGetFriendshipLastMessage(arg0.getItems().get(0), unread);
+                }
+            }
+
+        });
+    }
+
+    /**
+     * 按照名称搜索好友
+     *
+     * @param key 关键字
+     */
+    public void searchFriendByName(String key){
+        if (friendInfoView == null) return;
+        if (!isEnd){
+            TIMFriendshipManager.getInstance().getFriendshipProxy().searchUser(key, index++, PAGE_SIZE, new TIMValueCallBack<TIMUserSearchSucc>() {
+
+                @Override
+                public void onError(int arg0, String arg1) {
+
+                }
+
+                @Override
+                public void onSuccess(TIMUserSearchSucc data) {
+                    int getNum = data.getInfoList().size() + (index-1)*PAGE_SIZE;
+                    isEnd = getNum == data.getTotalNum();
+                    friendInfoView.showFriendInfo(data.getInfoList());
+                }
+
+            });
+        }else{
+            friendInfoView.showFriendInfo(null);
+        }
+
+    }
+
+
+    /**
+     * 添加好友
+     *
+     * @param id 添加对象Identify
+     * @param remark 备注名
+     * @param message 附加消息
+     */
+    public void addFriend(final String id,String remark,String message){
+        if (friendshipManageView == null) return;
+        List<TIMAddFriendRequest> reqList = new ArrayList<>();
+        TIMAddFriendRequest req = new TIMAddFriendRequest();
+        req.setAddWording(message);
+        req.setIdentifier(id);
+        req.setRemark(remark);
+        reqList.add(req);
+        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
+
+            @Override
+            public void onError(int arg0, String arg1) {
+                friendshipManageView.onAddFriend(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN);
+            }
+
+            @Override
+            public void onSuccess(List<TIMFriendResult> arg0) {
+                for (TIMFriendResult item : arg0) {
+                    if (item.getIdentifer().equals(id)){
+                        friendshipManageView.onAddFriend(item.getStatus());
+                    }
                 }
             }
 

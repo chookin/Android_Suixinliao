@@ -10,7 +10,7 @@
         android:id="@+id/contact_antionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:moreImg="@drawable/management"
+        app:moreImg="@drawable/ic_add_more"
         app:titleText="@string/home_contact_tab"/>
 
 

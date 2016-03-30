@@ -11,7 +11,7 @@ import com.tencent.TIMGroupBaseInfo;
 import com.tencent.qcloud.presentation.presenter.ManagerGroupListPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.PulicGroupListView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.ProfileAdapter;
+import com.tencent.qcloud.timchat.adapters.ProfileAdapter1;
 import com.tencent.qcloud.timchat.model.ProfileItem;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
@@ -25,7 +25,7 @@ import java.util.List;
 public class GroupManagerActivity extends Activity implements PulicGroupListView {
     ManagerGroupListPresenter mManagerGroupListPresenter;
     ListView mOwnerGroup,mManagerGroup,mJoinGroup;
-    ProfileAdapter mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
+    ProfileAdapter1 mOwnerGroupAdapter,mManagerGroupAdapter,mJoinGroupAdapter;
     private ArrayList<ProfileItem> mOwnGroupData,mManagerGroupData,mJoinGroupData;
     private TextView mSubtitleCreate,mSubtitleManager,mSubtitleJoin;
     private String mGroupType;
@@ -47,9 +47,9 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
         mOwnGroupData = new ArrayList<ProfileItem>();
         mManagerGroupData = new ArrayList<ProfileItem>();
         mJoinGroupData = new ArrayList<ProfileItem>();
-        mOwnerGroupAdapter = new ProfileAdapter(this,mOwnGroupData);
-        mManagerGroupAdapter = new ProfileAdapter(this,mManagerGroupData);
-        mJoinGroupAdapter = new ProfileAdapter(this,mJoinGroupData);
+        mOwnerGroupAdapter = new ProfileAdapter1(this,mOwnGroupData);
+        mManagerGroupAdapter = new ProfileAdapter1(this,mManagerGroupData);
+        mJoinGroupAdapter = new ProfileAdapter1(this,mJoinGroupData);
         mOwnerGroup.setAdapter(mOwnerGroupAdapter);
         mManagerGroup.setAdapter(mManagerGroupAdapter);
         mJoinGroup.setAdapter(mJoinGroupAdapter);
@@ -106,6 +106,7 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
             groupData.setID(groupinfo.getGroupId());
             groupData.setName(groupinfo.getGroupName());
             groupData.setAvatarUrl(groupinfo.getFaceUrl());
+            groupData.setAvatarRes(R.drawable.head_group);
             mOwnGroupData.add(groupData);
         }
         mOwnerGroupAdapter.notifyDataSetChanged();
@@ -114,6 +115,7 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
             groupData.setID(groupinfo.getGroupId());
             groupData.setName(groupinfo.getGroupName());
             groupData.setAvatarUrl(groupinfo.getFaceUrl());
+            groupData.setAvatarRes(R.drawable.head_group);
             mManagerGroupData.add(groupData);
         }
         mManagerGroupAdapter.notifyDataSetChanged();
@@ -122,6 +124,7 @@ public class GroupManagerActivity extends Activity implements PulicGroupListView
             groupData.setID(groupinfo.getGroupId());
             groupData.setName(groupinfo.getGroupName());
             groupData.setAvatarUrl(groupinfo.getFaceUrl());
+            groupData.setAvatarRes(R.drawable.head_group);
             mJoinGroupData.add(groupData);
         }
         mJoinGroupAdapter.notifyDataSetChanged();

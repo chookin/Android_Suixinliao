@@ -27,19 +27,14 @@ public class InvitePresenter extends Presenter {
 
 
 
-    public void onInviteFriend(String id,String mark,String other,String source){
-        String info = other;
-        if(info.equals("")){
-            info = "请求添加你为好友";
-        }
-        List<TIMAddFriendRequest> reqList = new ArrayList<TIMAddFriendRequest>();
+    public void onInviteFriend(String id,String remark,String message){
+        List<TIMAddFriendRequest> reqList = new ArrayList<>();
         TIMAddFriendRequest friend = new TIMAddFriendRequest();
-        friend.setAddWording(info);
+        friend.setAddWording(message);
         friend.setIdentifier(id);
-        friend.setRemark(info);
+        friend.setRemark(remark);
         friend.setAddrSource("qq");
         reqList.add(friend);
-        Log.d(TAG, "add friend here:" + id);
         TIMFriendshipManager.getInstance().getFriendshipProxy().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
 
             @Override

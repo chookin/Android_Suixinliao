@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendGroup;
@@ -134,7 +133,7 @@ public class ContactFragment extends Fragment implements MyFriendGroupInfo, View
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddNewFriendActivity.class);
+                Intent intent = new Intent(getActivity(), SearchFriendActivity.class);
                 getActivity().startActivity(intent);
                 inviteDialog.dismiss();
             }

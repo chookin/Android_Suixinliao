@@ -28,8 +28,8 @@
         <activity
             android:name=".ui.ChatActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.AddNewFriendActivity" />
-        <activity android:name=".ui.AddNewFriendDetailActivity" />
+        <activity android:name=".ui.SearchFriendActivity" />
+        <activity android:name=".ui.AddFriendActivity" />
         <activity android:name=".ui.NewFriendActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.ManagerFriendGroupActivity" />

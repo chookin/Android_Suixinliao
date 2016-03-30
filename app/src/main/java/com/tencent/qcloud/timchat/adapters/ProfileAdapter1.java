@@ -14,13 +14,13 @@ import com.tencent.qcloud.timchat.model.ProfileItem;
 import java.util.List;
 
 /**
- * 人或群资料的adapter
+ * 人或群的adapter
  */
-public class ProfileAdapter extends BaseAdapter {
+public class ProfileAdapter1 extends BaseAdapter {
     private Context mContext;
     private List<ProfileItem> itemList;
 
-    public ProfileAdapter(Context context, List<ProfileItem> searchResult) {
+    public ProfileAdapter1(Context context, List<ProfileItem> searchResult) {
         mContext = context;
         itemList = searchResult;
     }
