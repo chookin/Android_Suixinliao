@@ -28,26 +28,24 @@ import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * 联系人界面
  */
-public class ContactFragment extends Fragment implements  View.OnClickListener, AdapterView.OnItemClickListener {
+public class ContactFragment extends Fragment implements  View.OnClickListener, Observer {
 
 
-    private List<List<TIMUserProfile>> mAllGroupMembers = new ArrayList<>();
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
-    private TextView mMoreBtn;
     private LinearLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn,mPrivateGroupBtn;
-    private int mSelectItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
         mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
-        mGroupListView.setOnItemClickListener(this);
         mNewFriBtn = (LinearLayout) contactLayout.findViewById(R.id.btnNewFriend);
         mNewFriBtn.setOnClickListener(this);
         mPublicGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPublicGroup);
@@ -80,9 +78,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
 
     @Override
     public void onClick(View view) {
-//        if (view.getId() == R.id.contact_add) {
-//            showMoveDialog();
-//        }
+
         if (view.getId() == R.id.btnNewFriend) {
             Intent intent = new Intent(getActivity(), NewFriendActivity.class);
             getActivity().startActivity(intent);
@@ -146,9 +142,18 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
     }
 
 
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        mSelectItem = position;
+    public void update(Observable observable, Object data) {
+        if (observable instanceof FriendshipInfo){
+            mGroupListAdapter.notifyDataSetChanged();
+        }
     }
-
 }

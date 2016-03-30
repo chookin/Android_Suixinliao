@@ -23,8 +23,8 @@ public class MessageEvent extends Observable implements TIMMessageListener {
 
     @Override
     public boolean onNewMessages(List<TIMMessage> list) {
-        setChanged();
         for (TIMMessage item:list){
+            setChanged();
             notifyObservers(item);
         }
         return false;
