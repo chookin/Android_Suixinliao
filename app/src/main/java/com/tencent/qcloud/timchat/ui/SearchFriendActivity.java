@@ -36,9 +36,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Vi
     ListView mSearchList;
     EditText mSearchInput;
     ProfileSummaryAdapter adapter;
-    ArrayList<ProfileItem> searchResult= new ArrayList<> ();
     List<ProfileSummary> list = new ArrayList<>();
-    ProfileItem mSelectedPerson ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,10 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Vi
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_ENTER:
+                list.clear();
+                adapter.notifyDataSetChanged();
                 presenter.searchFriendByName(mSearchInput.getText().toString());
+                presenter.searchFriendById(mSearchInput.getText().toString());
                 return true;
 
             default:
@@ -88,6 +89,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Vi
      */
     @Override
     public void showFriendInfo(List<TIMUserProfile> friends) {
+        if (friends == null) return;
         for (TIMUserProfile item : friends){
             list.add(new FriendProfile(item));
         }

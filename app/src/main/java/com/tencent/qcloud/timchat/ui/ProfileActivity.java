@@ -1,18 +1,23 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendGroup;
+import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
+import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
 import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
+import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.timchat.R;
@@ -21,7 +26,7 @@ import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends Activity implements ProfileView, MyFriendGroupInfo, View.OnClickListener {
+public class ProfileActivity extends Activity implements ProfileView, FriendshipManageView, MyFriendGroupInfo, View.OnClickListener {
 
 
     private static final String TAG = ProfileActivity.class.getSimpleName();
@@ -29,11 +34,20 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
     private final int CHANGE_CATEGORY_CODE = 100;
 
     private ProfilePresenter presenter;
+    private FriendshipManagerPresenter friendshipManagerPresenter;
     private GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ArrayList<String> groups = new ArrayList<String>();
     private Spinner mGroupList;
     ArrayAdapter<String> mAdapter;
     private String identify, categoryStr;
+
+
+    public static void navToProfile(Context context, String identify){
+        Intent intent = new Intent(context, ProfileActivity.class);
+        intent.putExtra("identify", identify);
+        context.startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +60,7 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
 //        mGroupList.setAdapter(mAdapter);
         presenter = new ProfilePresenter(this, identify);
         presenter.getProfile();
+        friendshipManagerPresenter = new FriendshipManagerPresenter(this);
 
 
 
@@ -93,12 +108,12 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
             case R.id.btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("identify", identify);
-//                intent.putExtra("name", nameStr);
                 intent.putExtra("type", TIMConversationType.C2C);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.btnDel:
+                friendshipManagerPresenter.delFriend(identify);
                 break;
             case R.id.group:
                 Intent changeCategoryIntent = new Intent(this, ChangeCategoryActivity.class);
@@ -135,4 +150,32 @@ public class ProfileActivity extends Activity implements ProfileView, MyFriendGr
 
     }
 
+    /**
+     * 添加好友结果回调
+     *
+     * @param status 返回状态
+     */
+    @Override
+    public void onAddFriend(TIMFriendStatus status) {
+
+    }
+
+    /**
+     * 删除好友结果回调
+     *
+     * @param status 返回状态
+     */
+    @Override
+    public void onDelFriend(TIMFriendStatus status) {
+        switch (status){
+            case TIM_FRIEND_STATUS_SUCC:
+                Toast.makeText(this, getResources().getString(R.string.profile_del_succeed), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case TIM_FRIEND_STATUS_UNKNOWN:
+                Toast.makeText(this, getResources().getString(R.string.profile_del_fail), Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
 }

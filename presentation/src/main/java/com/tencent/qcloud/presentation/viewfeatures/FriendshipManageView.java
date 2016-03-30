@@ -13,4 +13,11 @@ public interface FriendshipManageView {
      * @param status 返回状态
      */
     void onAddFriend(TIMFriendStatus status);
+
+    /**
+     * 删除好友结果回调
+     *
+     * @param status 返回状态
+     */
+    void onDelFriend(TIMFriendStatus status);
 }

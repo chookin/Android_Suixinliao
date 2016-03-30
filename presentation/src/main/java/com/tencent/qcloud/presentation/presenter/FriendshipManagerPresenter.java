@@ -3,12 +3,14 @@ package com.tencent.qcloud.presentation.presenter;
 import android.util.Log;
 
 import com.tencent.TIMAddFriendRequest;
+import com.tencent.TIMDelFriendType;
 import com.tencent.TIMFriendFutureMeta;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGetFriendFutureListSucc;
 import com.tencent.TIMPageDirectionType;
+import com.tencent.TIMUserProfile;
 import com.tencent.TIMUserSearchSucc;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
@@ -16,6 +18,7 @@ import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -120,6 +123,27 @@ public class FriendshipManagerPresenter {
 
     }
 
+    /**
+     * 按照ID搜索好友
+     *
+     * @param identify id
+     */
+    public void searchFriendById(String identify){
+        if (friendInfoView == null) return;
+        TIMFriendshipManager.getInstance().getFriendshipProxy().searchFriend(identify, new TIMValueCallBack<TIMUserProfile>() {
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onSuccess(TIMUserProfile profile) {
+                friendInfoView.showFriendInfo(Collections.singletonList(profile));
+            }
+        });
+
+    }
+
 
     /**
      * 添加好友
@@ -152,6 +176,35 @@ public class FriendshipManagerPresenter {
                 }
             }
 
+        });
+    }
+
+
+    /**
+     * 删除好友
+     *
+     * @param id 删除对象Identify
+     */
+    public void delFriend(final String id){
+        if (friendshipManageView == null) return;
+        List<TIMAddFriendRequest> reqList = new ArrayList<>();
+        TIMAddFriendRequest req = new TIMAddFriendRequest();
+        req.setIdentifier(id);
+        reqList.add(req);
+        TIMFriendshipManager.getInstance().delFriend(TIMDelFriendType.TIM_FRIEND_DEL_BOTH, reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
+            @Override
+            public void onError(int i, String s) {
+                friendshipManageView.onAddFriend(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN);
+            }
+
+            @Override
+            public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                for (TIMFriendResult item : timFriendResults) {
+                    if (item.getIdentifer().equals(id)){
+                        friendshipManageView.onDelFriend(item.getStatus());
+                    }
+                }
+            }
         });
     }
 

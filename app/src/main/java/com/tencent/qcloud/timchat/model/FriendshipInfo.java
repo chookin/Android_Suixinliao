@@ -113,4 +113,19 @@ public class FriendshipInfo extends Observable implements TIMCallBack, TIMFriend
     }
 
 
+    /**
+     * 判断是否是好友
+     *
+     * @param identify 需判断的identify
+     */
+    public boolean isFriend(String identify){
+        for (TIMFriendGroup group : friendGroupList){
+            for (TIMUserProfile user : group.getProfiles()){
+                if (user.getIdentifier().equals(identify)) return true;
+            }
+        }
+        return false;
+    }
+
+
 }

@@ -78,4 +78,14 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (LOGIN_RESULT_CODE == requestCode) {
+            String id = TLSService.getInstance().getLastUserIdentifier();
+            UserInfo.getInstance().setId(id);
+            UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
+            navToHome();
+        }
+    }
+
 }

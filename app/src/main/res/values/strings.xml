@@ -90,6 +90,8 @@
     <string name="profile_del">删除好友</string>
     <string name="profile_group">添加分组</string>
     <string name="profile_now_group">所在分组</string>
+    <string name="profile_del_succeed">删除好友成功</string>
+    <string name="profile_del_fail">删除好友失败</string>
 
     <!-- group profile activity -->
     <string name="chat_setting_title">聊天设置</string>

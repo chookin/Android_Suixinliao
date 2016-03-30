@@ -116,6 +116,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQ_CHANGE_NICK){
+            if (data.getStringExtra(EditActivity.RETURN_EXTRA) == null) return;
             setNickName(data.getStringExtra(EditActivity.RETURN_EXTRA));
         }
 

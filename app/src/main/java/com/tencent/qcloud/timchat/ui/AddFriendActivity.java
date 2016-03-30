@@ -76,4 +76,14 @@ public class AddFriendActivity extends Activity implements View.OnClickListener,
 
     }
 
+    /**
+     * 删除好友结果回调
+     *
+     * @param status 返回状态
+     */
+    @Override
+    public void onDelFriend(TIMFriendStatus status) {
+
+    }
+
 }

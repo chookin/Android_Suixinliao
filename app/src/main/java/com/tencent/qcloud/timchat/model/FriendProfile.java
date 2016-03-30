@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.AddFriendActivity;
+import com.tencent.qcloud.timchat.ui.ProfileActivity;
 
 /**
  * 好友资料
@@ -64,9 +65,13 @@ public class FriendProfile implements ProfileSummary {
      */
     @Override
     public void showDetail(Context context) {
-        Intent person = new Intent(context,AddFriendActivity.class);
-        person.putExtra("id",profile.getIdentifier());
-        person.putExtra("name",getName());
-        context.startActivity(person);
+        if (FriendshipInfo.getInstance().isFriend(profile.getIdentifier())){
+            ProfileActivity.navToProfile(context, profile.getIdentifier());
+        }else{
+            Intent person = new Intent(context,AddFriendActivity.class);
+            person.putExtra("id",profile.getIdentifier());
+            person.putExtra("name",getName());
+            context.startActivity(person);
+        }
     }
 }
