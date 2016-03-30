@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import com.tencent.TIMFriendStatus;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
-import com.tencent.qcloud.presentation.presenter.InvitePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
@@ -63,8 +61,17 @@ public class AddFriendActivity extends Activity implements View.OnClickListener,
                 finish();
                 break;
             case TIM_FRIEND_STATUS_SUCC:
-
-
+                Toast.makeText(this, getResources().getString(R.string.add_friend_added), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case TIM_ADD_FRIEND_STATUS_FRIEND_SIDE_FORBID_ADD:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_refuse_all), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case TIM_ADD_FRIEND_STATUS_IN_OTHER_SIDE_BLACK_LIST:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_to_blacklist), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
         }
 
     }

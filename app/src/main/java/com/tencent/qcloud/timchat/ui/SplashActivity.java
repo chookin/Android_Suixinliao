@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.tencent.TIMCallBack;
+import com.tencent.openqq.protocol.imsdk.im_open_common;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
@@ -69,8 +71,8 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
      */
     @Override
     public void onSuccess() {
-        presenter.syncImsdk();
         GroupInfo.getInstance().init();
+        FriendshipInfo.getInstance().init();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();

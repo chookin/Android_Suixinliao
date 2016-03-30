@@ -16,32 +16,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 分组信息Adapters
+ * 分组列表Adapters
  */
 public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
     private List<TIMFriendGroup> mGroups;
-    private List<List<TIMUserProfile>> mAllGroupMembers;
+//    private List<List<TIMUserProfile>> mAllGroupMembers;
     private Context mContext;
     private int resourceId = -1;
     private List<TIMUserProfile> mChooseMembers;
 
 
-    public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers) {
+
+    public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups) {
         mContext = context;
         mGroups = groups;
-        mAllGroupMembers = allgroupMembers;
 
     }
 
     public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers, int resource) {
         mContext = context;
         mGroups = groups;
-        mAllGroupMembers = allgroupMembers;
+//        mAllGroupMembers = allgroupMembers;
         resourceId = resource;
         mChooseMembers = new ArrayList<TIMUserProfile>();
         mChooseMembers.clear();
 
     }
+
+
 
     @Override
     public int getGroupCount() {
@@ -50,8 +52,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        if (mAllGroupMembers.size() == 0) return 0;
-        return mAllGroupMembers.get(i).size();
+        return mGroups.get(i).getProfiles().size();
     }
 
     @Override
@@ -61,8 +62,9 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        if (mAllGroupMembers.size() == 0) return null;
-        return mAllGroupMembers.get(groupPosition).get(childPosition);
+//        if (mAllGroupMembers.size() == 0) return null;
+//        return mAllGroupMembers.get(groupPosition).get(childPosition);
+        return mGroups.get(groupPosition).getProfiles().get(childPosition);
     }
 
     @Override
@@ -135,18 +137,18 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
                 convertView = LayoutInflater.from(mContext).inflate(resourceId, null);
                 itemHolder.tag = (TextView) convertView.findViewById(R.id.choose_tag);
                 final ChildrenHolder finalItemHolder = itemHolder;
-                itemHolder.tag.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (!mChooseMembers.contains(mAllGroupMembers.get(groupPosition).get(childPosition))) {
-                            finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
-                            mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
-                        } else {
-                            finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
-                            mChooseMembers.remove(mAllGroupMembers.get(groupPosition).get(childPosition));
-                        }
-                    }
-                });
+//                itemHolder.tag.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (!mChooseMembers.contains(mAllGroupMembers.get(groupPosition).get(childPosition))) {
+//                            finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
+//                            mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
+//                        } else {
+//                            finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
+//                            mChooseMembers.remove(mAllGroupMembers.get(groupPosition).get(childPosition));
+//                        }
+//                    }
+//                });
             } else {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
             }
@@ -157,9 +159,10 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             itemHolder = (ChildrenHolder) convertView.getTag();
         }
         //优先显示昵称
-        String nickname = mAllGroupMembers.get(groupPosition).get(childPosition).getNickName();
+        TIMUserProfile data = (TIMUserProfile) getChild(groupPosition,childPosition);
+        String nickname = data.getNickName();
         if (nickname.equals("")) {
-            itemHolder.itemname.setText(mAllGroupMembers.get(groupPosition).get(childPosition).getIdentifier());
+            itemHolder.itemname.setText(data.getIdentifier());
         } else {
             itemHolder.itemname.setText(nickname);
         }

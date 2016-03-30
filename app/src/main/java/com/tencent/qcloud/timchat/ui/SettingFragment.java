@@ -122,6 +122,7 @@ public class SettingFragment extends Fragment implements SettingsFeature,Profile
     }
 
     private void setNickName(String name){
+        if (name == null) return;
         this.name.setText(name);
         nickName.setContent(name);
     }
