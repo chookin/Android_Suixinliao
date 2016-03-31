@@ -23,7 +23,7 @@
         <activity
             android:name="com.tencent.qcloud.tlslibrary.activity.HostLoginActivity"
             android:label="@string/tencent_tls_ui_app_name"
-            android:launchMode="singleTask"
+
             android:theme="@style/tencent_tls_ui_theme">
         </activity>
         <activity
