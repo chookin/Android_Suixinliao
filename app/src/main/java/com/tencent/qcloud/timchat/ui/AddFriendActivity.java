@@ -86,4 +86,15 @@ public class AddFriendActivity extends Activity implements View.OnClickListener,
 
     }
 
+    /**
+     * 修改好友分组回调
+     *
+     * @param status    返回状态
+     * @param groupName 分组名
+     */
+    @Override
+    public void onChangeGroup(TIMFriendStatus status, String groupName) {
+
+    }
+
 }

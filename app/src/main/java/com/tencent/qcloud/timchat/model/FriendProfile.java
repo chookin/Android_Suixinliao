@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.tencent.TIMUserProfile;
+import com.tencent.qcloud.presentation.event.FriendshipInfo;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.AddFriendActivity;
 import com.tencent.qcloud.timchat.ui.ProfileActivity;

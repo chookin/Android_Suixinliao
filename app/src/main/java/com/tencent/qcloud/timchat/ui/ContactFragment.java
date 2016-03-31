@@ -11,23 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tencent.TIMConversationType;
-import com.tencent.TIMFriendGroup;
-import com.tencent.TIMUserProfile;
-import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
-import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
-import com.tencent.qcloud.timchat.model.FriendshipInfo;
+import com.tencent.qcloud.presentation.event.FriendshipInfo;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 

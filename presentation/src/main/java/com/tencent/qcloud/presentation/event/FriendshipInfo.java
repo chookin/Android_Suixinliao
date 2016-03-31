@@ -1,4 +1,6 @@
-package com.tencent.qcloud.timchat.model;
+package com.tencent.qcloud.presentation.event;
+
+import android.util.Log;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendGroup;
@@ -8,7 +10,6 @@ import com.tencent.TIMFriendshipProxyStatus;
 import com.tencent.TIMSNSChangeInfo;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class FriendshipInfo extends Observable implements TIMCallBack, TIMFriend
 
     @Override
     public void onError(int i, String s) {
-        LogUtils.e(TAG, "sync friendship error "+ s);
+        Log.e(TAG, "sync friendship error " + s);
     }
 
     @Override
@@ -125,6 +126,32 @@ public class FriendshipInfo extends Observable implements TIMCallBack, TIMFriend
             }
         }
         return false;
+    }
+
+
+    /**
+     * 获取好友资料
+     *
+     * @param identify 好友id
+     */
+    public TIMUserProfile getProfile(String identify){
+        for (TIMFriendGroup group : friendGroupList){
+            for (TIMUserProfile user : group.getProfiles()){
+                if (user.getIdentifier().equals(identify)) return user;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 获取好友分组列表
+     *
+     */
+    public String[] getGroupList(){
+        String[] groups = new String[friendGroupList.size()];
+        for (int i = 0; i < friendGroupList.size(); ++i) groups[i] = friendGroupList.get(i).getGroupName();
+        return groups;
     }
 
 

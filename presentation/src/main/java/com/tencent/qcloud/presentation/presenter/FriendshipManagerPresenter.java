@@ -1,5 +1,6 @@
 package com.tencent.qcloud.presentation.presenter;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.tencent.TIMAddFriendRequest;
@@ -173,6 +174,28 @@ public class FriendshipManagerPresenter {
     }
 
 
+
+    /**
+     * 获取用户的资料，用于非好友
+     *
+     * @param users 用户identify
+     */
+    public void getUserProfile(List<String> users){
+        if (friendInfoView == null) return;
+        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendsProfile(users, new TIMValueCallBack<List<TIMUserProfile>>() {
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onSuccess(List<TIMUserProfile> timUserProfiles) {
+                friendInfoView.showUserInfo(timUserProfiles);
+            }
+        });
+    }
+
+
     /**
      * 按照名称搜索好友
      *
@@ -309,7 +332,71 @@ public class FriendshipManagerPresenter {
      * @param callBack 回调
      */
     public static void setMyNick(String name, TIMCallBack callBack){
-        TIMFriendshipManager.getInstance().setNickName(name, callBack);
+        TIMFriendshipManager.getInstance().getFriendshipProxy().setNickName(name, callBack);
+    }
+
+
+    /**
+     * 设置好友备注
+     *
+     * @param identify 好友identify
+     * @param name 备注名
+     * @param callBack 回调
+     */
+    public static void setRemarkName(String identify, String name, TIMCallBack callBack){
+        TIMFriendshipManager.getInstance().getFriendshipProxy().setFriendRemark(identify, name, callBack);
+    }
+
+
+    /**
+     * 设置好友备注
+     *
+     * @param identify 好友identify
+     * @param src 源分组，为空表示默认分组
+     * @param dest 目的分组，为空表示默认分组
+     */
+    public void changeFriendGroup(final String identify,final @Nullable String src,final @Nullable String dest){
+        if (friendshipManageView == null || src != null && dest != null && src.equals(dest)) return;
+        if (src != null){
+            TIMFriendshipManager.getInstance().getFriendshipProxy().delFriendsFromFriendGroup(src, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+                @Override
+                public void onError(int i, String s) {
+                    friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN, src);
+                }
+
+                @Override
+                public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                    if (dest != null){
+                        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+                            @Override
+                            public void onError(int i, String s) {
+                                friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN, null);
+                            }
+
+                            @Override
+                            public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                                friendshipManageView.onChangeGroup(timFriendResults.get(0).getStatus(), dest);
+                            }
+                        });
+                    }else{
+                        friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_SUCC, dest);
+                    }
+                }
+            });
+        }else{
+            if (dest == null) return;
+            TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+                @Override
+                public void onError(int i, String s) {
+                    friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN, null);
+                }
+
+                @Override
+                public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                    friendshipManageView.onChangeGroup(timFriendResults.get(0).getStatus(), dest);
+                }
+            });
+        }
     }
 
 }

@@ -110,7 +110,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             groupHolder.tag.setBackgroundResource(R.drawable.close);
         }
         if (mGroups.get(groupPosition).getGroupName().equals("")) {
-            groupHolder.groupname.setText(mContext.getResources().getString(R.string.title_default_name));
+            groupHolder.groupname.setText(mContext.getResources().getString(R.string.default_group_name));
         } else {
             groupHolder.groupname.setText(mGroups.get(groupPosition).getGroupName());
         }

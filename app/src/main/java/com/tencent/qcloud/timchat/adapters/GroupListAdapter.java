@@ -65,7 +65,7 @@ public class GroupListAdapter extends BaseAdapter {
         }
 
         if(mGroupList.get(groupPosition).getGroupName().equals("")){
-            Holder.groupname.setText(mContext.getResources().getString(R.string.title_default_name));
+            Holder.groupname.setText(mContext.getResources().getString(R.string.default_group_name));
             Holder.delete.setVisibility(View.INVISIBLE);
         }else{
             Holder.groupname.setText(mGroupList.get(groupPosition).getGroupName());

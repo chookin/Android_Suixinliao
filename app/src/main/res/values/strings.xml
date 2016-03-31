@@ -14,6 +14,8 @@
     <string name="friend_allow_all">允许任何人添加</string>
     <string name="friend_refuse_all">拒绝任何人添加</string>
     <string name="friend_need_confirm">需验证</string>
+    <string name="default_group_name">默认分组</string>
+    <string name="change_group_error">修改分组失败</string>
 
     <!-- home activity -->
     <string name="send_success">发送成功</string>
@@ -36,7 +38,7 @@
     <string name="addfriend">添加好友</string>
     <string name="contact_add_group">添加群组</string>
     <string name="manangergroup">管理分组</string>
-    <string name="title_default_name">默认分组</string>
+
 
     <!-- settings fragment -->
     <string name="setting_logout">退出登录</string>
@@ -90,6 +92,7 @@
     <string name="profile_back">返回</string>
     <string name="profile_id">账号</string>
     <string name="profile_remark">备注名</string>
+    <string name="profile_remark_edit">修改备注</string>
     <string name="profile_chat">发送消息</string>
     <string name="profile_del">删除好友</string>
     <string name="profile_group">添加分组</string>

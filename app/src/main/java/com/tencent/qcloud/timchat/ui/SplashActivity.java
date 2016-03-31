@@ -10,7 +10,7 @@ import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.model.FriendshipInfo;
+import com.tencent.qcloud.presentation.event.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
@@ -80,10 +80,12 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (LOGIN_RESULT_CODE == requestCode) {
-            String id = TLSService.getInstance().getLastUserIdentifier();
-            UserInfo.getInstance().setId(id);
-            UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
-            navToHome();
+            if (resultCode == RESULT_OK){
+                String id = TLSService.getInstance().getLastUserIdentifier();
+                UserInfo.getInstance().setId(id);
+                UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
+                navToHome();
+            }
         }
     }
 

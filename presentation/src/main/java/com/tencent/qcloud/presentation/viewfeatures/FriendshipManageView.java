@@ -20,4 +20,13 @@ public interface FriendshipManageView {
      * @param status 返回状态
      */
     void onDelFriend(TIMFriendStatus status);
+
+
+    /**
+     * 修改好友分组回调
+     *
+     * @param status 返回状态
+     * @param groupName 分组名
+     */
+    void onChangeGroup(TIMFriendStatus status, String groupName);
 }

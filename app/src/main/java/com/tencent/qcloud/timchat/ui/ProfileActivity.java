@@ -1,44 +1,34 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
-import com.tencent.TIMFriendGroup;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
+import com.tencent.qcloud.presentation.event.FriendshipInfo;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
-import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
-import com.tencent.qcloud.presentation.presenter.ProfilePresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
-import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
-import com.tencent.qcloud.presentation.viewfeatures.ProfileView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
+import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ProfileActivity extends Activity implements ProfileView, FriendshipManageView, MyFriendGroupInfo, View.OnClickListener {
+public class ProfileActivity extends FragmentActivity implements FriendshipManageView,  View.OnClickListener {
 
 
     private static final String TAG = ProfileActivity.class.getSimpleName();
 
     private final int CHANGE_CATEGORY_CODE = 100;
+    private final int CHANGE_REMARK_CODE = 200;
 
-    private ProfilePresenter presenter;
     private FriendshipManagerPresenter friendshipManagerPresenter;
-    private GetFriendGroupsPresenter mGetFriendGroupsPresenter;
-    private ArrayList<String> groups = new ArrayList<String>();
-    private Spinner mGroupList;
-    ArrayAdapter<String> mAdapter;
     private String identify, categoryStr;
 
 
@@ -53,47 +43,43 @@ public class ProfileActivity extends Activity implements ProfileView, Friendship
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-//        mGroupList = (Spinner)findViewById(R.id.set_group);
         identify = getIntent().getStringExtra("identify");
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, groups);
-//        mGroupList.setAdapter(mAdapter);
-        presenter = new ProfilePresenter(this, identify);
-        presenter.getProfile();
         friendshipManagerPresenter = new FriendshipManagerPresenter(this);
-
-
-
+        showProfile(identify);
     }
 
     /**
      * 显示用户信息
      *
-     * @param profile
+     * @param identify
      */
-    @Override
-    public void showProfile(TIMUserProfile profile) {
+    public void showProfile(String identify) {
+        final TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+        if (profile == null) return;
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(getName(profile));
         LineControllerView id = (LineControllerView) findViewById(R.id.id);
         id.setContent(profile.getIdentifier());
         LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
         remark.setContent(profile.getRemark());
+        remark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditActivity.navToEdit(ProfileActivity.this, getString(R.string.profile_remark_edit), profile.getRemark(), CHANGE_REMARK_CODE, new EditActivity.EditInterface() {
+                    @Override
+                    public void onEdit(String text, TIMCallBack callBack) {
+                        FriendshipManagerPresenter.setRemarkName(profile.getIdentifier(), text, callBack);
+                    }
+                });
+
+            }
+        });
         LineControllerView category = (LineControllerView) findViewById(R.id.group);
         //一个用户可以在多个分组内，客户端逻辑保证一个人只存在于一个分组
-        category.setContent(categoryStr = profile.getFriendGroups().size() == 0?"":profile.getFriendGroups().get(0));
+        category.setContent(categoryStr = profile.getFriendGroups().size() == 0 ? getString(R.string.default_group_name) : profile.getFriendGroups().get(0));
 
     }
 
-    @Override
-    public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
-        groups.clear();
-        groups.add(getResources().getString(R.string.profile_group));
-        for(TIMFriendGroup groupItem : timFriendGroups){
-            groups.add(groupItem.getGroupName());
-        }
-        mAdapter.notifyDataSetChanged();
-    }
 
 
 
@@ -116,15 +102,30 @@ public class ProfileActivity extends Activity implements ProfileView, Friendship
                 friendshipManagerPresenter.delFriend(identify);
                 break;
             case R.id.group:
-                Intent changeCategoryIntent = new Intent(this, ChangeCategoryActivity.class);
-                changeCategoryIntent.putExtra("identify", identify);
-                changeCategoryIntent.putExtra("category", categoryStr);
-                startActivityForResult(changeCategoryIntent, CHANGE_CATEGORY_CODE);
+//                Intent changeCategoryIntent = new Intent(this, ChangeCategoryActivity.class);
+//                changeCategoryIntent.putExtra("identify", identify);
+//                changeCategoryIntent.putExtra("category", categoryStr);
+//                startActivityForResult(changeCategoryIntent, CHANGE_CATEGORY_CODE);
+                final String[] groups = FriendshipInfo.getInstance().getGroupList();
+                for (int i = 0; i < groups.length; ++i) {
+                    if (groups[i].equals("")) {
+                        groups[i] = getString(R.string.default_group_name);
+                        break;
+                    }
+                }
+                new ListPickerDialog().show(groups, getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (groups[which].equals(categoryStr)) return;
+                        friendshipManagerPresenter.changeFriendGroup(identify,
+                                categoryStr.equals(getString(R.string.default_group_name))?null:categoryStr,
+                                groups[which].equals(getString(R.string.default_group_name))?null:groups[which]);
+                    }
+                });
                 break;
         }
     }
 
-    public void showGroupMember(String groupname,List<TIMUserProfile> timUserProfiles) {}
 
 
     /**
@@ -145,6 +146,11 @@ public class ProfileActivity extends Activity implements ProfileView, Friendship
             if (resultCode == RESULT_OK) {
                 LineControllerView category = (LineControllerView) findViewById(R.id.group);
                 category.setContent(categoryStr = data.getStringExtra("category"));
+            }
+        }else if (requestCode == CHANGE_REMARK_CODE){
+            if (resultCode == RESULT_OK) {
+                LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
+                remark.setContent(data.getStringExtra(EditActivity.RETURN_EXTRA));
             }
         }
 
@@ -177,5 +183,30 @@ public class ProfileActivity extends Activity implements ProfileView, Friendship
                 break;
         }
 
+    }
+
+    /**
+     * 修改好友分组回调
+     *
+     * @param status    返回状态
+     * @param groupName 分组名
+     */
+    @Override
+    public void onChangeGroup(TIMFriendStatus status, String groupName) {
+        LineControllerView category = (LineControllerView) findViewById(R.id.group);
+        if (groupName == null){
+            groupName = getString(R.string.default_group_name);
+        }
+        switch (status){
+            case TIM_FRIEND_STATUS_UNKNOWN:
+                Toast.makeText(this, getString(R.string.change_group_error),Toast.LENGTH_SHORT).show();
+            case TIM_FRIEND_STATUS_SUCC:
+                category.setContent(groupName);
+                break;
+            default:
+                Toast.makeText(this, getString(R.string.change_group_error),Toast.LENGTH_SHORT).show();
+                category.setContent(getString(R.string.default_group_name));
+                break;
+        }
     }
 }
