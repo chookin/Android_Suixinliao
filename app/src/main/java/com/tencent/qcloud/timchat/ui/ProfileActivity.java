@@ -102,10 +102,6 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
                 friendshipManagerPresenter.delFriend(identify);
                 break;
             case R.id.group:
-//                Intent changeCategoryIntent = new Intent(this, ChangeCategoryActivity.class);
-//                changeCategoryIntent.putExtra("identify", identify);
-//                changeCategoryIntent.putExtra("category", categoryStr);
-//                startActivityForResult(changeCategoryIntent, CHANGE_CATEGORY_CODE);
                 final String[] groups = FriendshipInfo.getInstance().getGroupList();
                 for (int i = 0; i < groups.length; ++i) {
                     if (groups[i].equals("")) {

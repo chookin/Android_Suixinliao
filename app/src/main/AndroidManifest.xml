@@ -27,10 +27,12 @@
         <activity android:name=".ui.HomeActivity" />
         <activity
             android:name=".ui.ChatActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.SearchFriendActivity" />
         <activity android:name=".ui.AddFriendActivity" />
-        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.ProfileActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.ManagerFriendGroupActivity" />
         <activity android:name=".ui.NewFriendDetailActivity" />
         <activity android:name=".ui.VideoActivity" />
@@ -63,8 +65,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.ChangeCategoryActivity" >
-        </activity>
         <activity android:name=".ui.ImageViewActivity" >
         </activity>
         <activity android:name=".ui.EditActivity" >
