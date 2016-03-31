@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.tencent.TIMFriendFutureItem;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.NewFriendActivity;
+import com.tencent.qcloud.timchat.ui.FriendshipManageMessageActivity;
 
 /**
  * 新朋友会话
@@ -64,7 +64,7 @@ public class FriendshipConversation extends Conversation {
     @Override
     public void navToDetail(Context context) {
         readAllMessage();
-        Intent intent = new Intent(context, NewFriendActivity.class);
+        Intent intent = new Intent(context, FriendshipManageMessageActivity.class);
         context.startActivity(intent);
     }
 
@@ -74,13 +74,17 @@ public class FriendshipConversation extends Conversation {
     @Override
     public String getLastMessageSummary() {
         if (lastMessage == null) return "";
+        String name = lastMessage.getProfile().getNickName();
+        if (name.equals("")) name = lastMessage.getIdentifier();
         switch (lastMessage.getType()){
             case TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE://我收到的好友申请的未决消息
+                return name + MyApplication.getContext().getString(R.string.summary_friend_add);
             case TIM_FUTURE_FRIEND_PENDENCY_OUT_TYPE://我发出的好友申请的未决消息
+                return MyApplication.getContext().getString(R.string.summary_me) + MyApplication.getContext().getString(R.string.summary_friend_add_me) + name;
             case TIM_FUTURE_FRIEND_DECIDE_TYPE://已决消息
-                return lastMessage.getIdentifier() + MyApplication.getContext().getString(R.string.summary_friend_add);
+                return MyApplication.getContext().getString(R.string.summary_friend_added) + name;
             case TIM_FUTURE_FRIEND_RECOMMEND_TYPE://好友推荐
-                return lastMessage.getIdentifier() + MyApplication.getContext().getString(R.string.summary_friend_recommend);
+                return MyApplication.getContext().getString(R.string.summary_friend_recommend) + name;
             default:
                 return "";
         }

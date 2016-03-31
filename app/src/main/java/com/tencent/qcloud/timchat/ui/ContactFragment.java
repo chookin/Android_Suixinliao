@@ -80,7 +80,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
     public void onClick(View view) {
 
         if (view.getId() == R.id.btnNewFriend) {
-            Intent intent = new Intent(getActivity(), NewFriendActivity.class);
+            Intent intent = new Intent(getActivity(), FriendshipManageMessageActivity.class);
             getActivity().startActivity(intent);
 
         }

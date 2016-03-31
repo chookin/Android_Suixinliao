@@ -192,6 +192,16 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     }
 
     /**
+     * 获取好友关系链管理最后一条系统消息的回调
+     *
+     * @param message 消息列表
+     */
+    @Override
+    public void onGetFriendshipMessage(List<TIMFriendFutureItem> message) {
+
+    }
+
+    /**
      * 获取群管理最后一条系统消息的回调
      *
      * @param message     最后一条消息

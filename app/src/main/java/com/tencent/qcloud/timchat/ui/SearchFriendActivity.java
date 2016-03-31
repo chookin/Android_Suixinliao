@@ -85,12 +85,12 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Vi
     /**
      * 显示好友信息
      *
-     * @param friends 好友资料列表
+     * @param users 好友资料列表
      */
     @Override
-    public void showFriendInfo(List<TIMUserProfile> friends) {
-        if (friends == null) return;
-        for (TIMUserProfile item : friends){
+    public void showUserInfo(List<TIMUserProfile> users) {
+        if (users == null) return;
+        for (TIMUserProfile item : users){
             list.add(new FriendProfile(item));
         }
         adapter.notifyDataSetChanged();

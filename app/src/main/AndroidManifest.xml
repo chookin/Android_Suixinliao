@@ -30,7 +30,6 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.SearchFriendActivity" />
         <activity android:name=".ui.AddFriendActivity" />
-        <activity android:name=".ui.NewFriendActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.ManagerFriendGroupActivity" />
         <activity android:name=".ui.NewFriendDetailActivity" />
@@ -75,6 +74,8 @@
         <activity android:name=".ui.ApplyGroupActivity" >
         </activity>
         <activity android:name=".ui.GroupManageMessageActivity" >
+        </activity>
+        <activity android:name=".ui.FriendshipManageMessageActivity" >
         </activity>
     </application>
 

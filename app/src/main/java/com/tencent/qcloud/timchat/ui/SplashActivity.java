@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.tencent.TIMCallBack;
-import com.tencent.openqq.protocol.imsdk.im_open_common;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
@@ -38,7 +37,7 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
      */
     @Override
     public void navToHome() {
-        LoginBusiness.LoginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), this);
+        LoginBusiness.loginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), this);
     }
 
     /**

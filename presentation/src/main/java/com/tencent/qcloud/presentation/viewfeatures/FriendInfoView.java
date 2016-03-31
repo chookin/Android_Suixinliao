@@ -11,9 +11,9 @@ public interface FriendInfoView {
 
 
     /**
-     * 显示好友信息
+     * 显示用户信息
      *
-     * @param friends 好友资料列表
+     * @param users 资料列表
      */
-    void showFriendInfo(List<TIMUserProfile> friends);
+    void showUserInfo(List<TIMUserProfile> users);
 }
