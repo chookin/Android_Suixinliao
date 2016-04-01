@@ -31,8 +31,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.SearchFriendActivity" />
         <activity android:name=".ui.AddFriendActivity" />
-        <activity android:name=".ui.ProfileActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.ProfileActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.ManagerFriendGroupActivity" />
         <activity android:name=".ui.NewFriendDetailActivity" />
         <activity android:name=".ui.VideoActivity" />
@@ -76,6 +77,8 @@
         <activity android:name=".ui.GroupManageMessageActivity" >
         </activity>
         <activity android:name=".ui.FriendshipManageMessageActivity" >
+        </activity>
+        <activity android:name=".ui.GroupListActivity" >
         </activity>
     </application>
 

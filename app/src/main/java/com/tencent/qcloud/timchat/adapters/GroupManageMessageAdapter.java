@@ -15,6 +15,7 @@ import com.tencent.TIMGroupPendencyItem;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.List;
 
@@ -100,6 +101,7 @@ public class GroupManageMessageAdapter extends ArrayAdapter<TIMGroupPendencyItem
                         data.accept(null, new TIMCallBack() {
                             @Override
                             public void onError(int i, String s) {
+                                LogUtils.e("","");
                             }
 
                             @Override

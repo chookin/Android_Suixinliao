@@ -10,14 +10,11 @@ import android.widget.TextView;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
-import com.tencent.qcloud.presentation.viewfeatures.GroupMemberManageView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

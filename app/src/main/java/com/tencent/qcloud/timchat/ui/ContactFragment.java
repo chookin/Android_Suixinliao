@@ -19,6 +19,7 @@ import com.tencent.TIMConversationType;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
 import com.tencent.qcloud.presentation.event.FriendshipInfo;
+import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.Observable;
@@ -75,22 +76,15 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
         if (view.getId() == R.id.btnNewFriend) {
             Intent intent = new Intent(getActivity(), FriendshipManageMessageActivity.class);
             getActivity().startActivity(intent);
-
         }
         if (view.getId() == R.id.btnPublicGroup) {
-            Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
-            intent.putExtra("type", "Public");
-            getActivity().startActivity(intent);
+            showGroups(GroupInfo.publicGroup);
         }
         if (view.getId() == R.id.btnChatroom) {
-            Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
-            intent.putExtra("type", "ChatRoom");
-            getActivity().startActivity(intent);
+            showGroups(GroupInfo.chatRoom);
         }
         if (view.getId() == R.id.btnPrivateGroup) {
-            Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
-            intent.putExtra("type", "Private");
-            getActivity().startActivity(intent);
+            showGroups(GroupInfo.privateGroup);
         }
     }
 
@@ -148,5 +142,11 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
         if (observable instanceof FriendshipInfo){
             mGroupListAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void showGroups(String type){
+        Intent intent = new Intent(getActivity(), GroupListActivity.class);
+        intent.putExtra("type", type);
+        getActivity().startActivity(intent);
     }
 }
