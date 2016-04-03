@@ -11,26 +11,32 @@ import android.widget.TextView;
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.ProfileSummary;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分组列表Adapters
  */
 public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
     private List<TIMFriendGroup> mGroups;
-//    private List<List<TIMUserProfile>> mAllGroupMembers;
     private Context mContext;
     private int resourceId = -1;
     private List<TIMUserProfile> mChooseMembers;
 
+    private List<String> groups;
+    private Map<String, List<ProfileSummary>> mMembers;
 
 
-    public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups) {
+
+
+    public ExpandGroupListAdapter(Context context, List<String> groups, Map<String, List<ProfileSummary>> members){
         mContext = context;
-        mGroups = groups;
-
+        this.groups = groups;
+        mMembers = members;
     }
 
     public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers, int resource) {
@@ -47,24 +53,22 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return mGroups.size();
+        return groups.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return mGroups.get(i).getProfiles().size();
+        return mMembers.get(groups.get(i)).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return mGroups.get(groupPosition);
+        return groups.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-//        if (mAllGroupMembers.size() == 0) return null;
-//        return mAllGroupMembers.get(groupPosition).get(childPosition);
-        return mGroups.get(groupPosition).getProfiles().get(childPosition);
+        return mMembers.get(groups.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -103,18 +107,16 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
-
         if (isExpanded) {
             groupHolder.tag.setBackgroundResource(R.drawable.open);
         } else {
             groupHolder.tag.setBackgroundResource(R.drawable.close);
         }
-        if (mGroups.get(groupPosition).getGroupName().equals("")) {
+        if (groups.get(groupPosition).equals("")) {
             groupHolder.groupname.setText(mContext.getResources().getString(R.string.default_group_name));
         } else {
-            groupHolder.groupname.setText(mGroups.get(groupPosition).getGroupName());
+            groupHolder.groupname.setText(groups.get(groupPosition));
         }
-
         return convertView;
     }
 
@@ -130,42 +132,32 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
      */
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
-        ChildrenHolder itemHolder = null;
+        ChildrenHolder itemHolder;
         if (convertView == null) {
             itemHolder = new ChildrenHolder();
-            if (resourceId != -1) {
-                convertView = LayoutInflater.from(mContext).inflate(resourceId, null);
-                itemHolder.tag = (TextView) convertView.findViewById(R.id.choose_tag);
-                final ChildrenHolder finalItemHolder = itemHolder;
-//                itemHolder.tag.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        if (!mChooseMembers.contains(mAllGroupMembers.get(groupPosition).get(childPosition))) {
-//                            finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
-//                            mChooseMembers.add(mAllGroupMembers.get(groupPosition).get(childPosition));
-//                        } else {
-//                            finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
-//                            mChooseMembers.remove(mAllGroupMembers.get(groupPosition).get(childPosition));
-//                        }
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
+            itemHolder.tag = (ImageView) convertView.findViewById(R.id.chooseTag);
+            final ChildrenHolder finalItemHolder = itemHolder;
+//            itemHolder.tag.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (!mChooseMembers.contains(mGroups.get(groupPosition).getProfiles().get(childPosition))) {
+//                        finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
+//                        mChooseMembers.add(mGroups.get(groupPosition).getProfiles().get(childPosition));
+//                    } else {
+//                        finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
+//                        mChooseMembers.remove(mGroups.get(groupPosition).getProfiles().get(childPosition));
 //                    }
-//                });
-            } else {
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
-            }
+//                }
+//            });
 
-            itemHolder.itemname = (TextView) convertView.findViewById(R.id.group_member_name);
+            itemHolder.name = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(itemHolder);
         } else {
             itemHolder = (ChildrenHolder) convertView.getTag();
         }
-        //优先显示昵称
-        TIMUserProfile data = (TIMUserProfile) getChild(groupPosition,childPosition);
-        String nickname = data.getNickName();
-        if (nickname.equals("")) {
-            itemHolder.itemname.setText(data.getIdentifier());
-        } else {
-            itemHolder.itemname.setText(nickname);
-        }
+        ProfileSummary data = (ProfileSummary) getChild(groupPosition,childPosition);
+        itemHolder.name.setText(data.getName());
         return convertView;
     }
 
@@ -181,13 +173,14 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
     }
 
     class ChildrenHolder {
-        public TextView itemname;
-        public ImageView img;
-        public TextView tag;
+        public TextView name;
+        public ImageView avatar;
+        public ImageView tag;
     }
 
     public List<TIMUserProfile> getChooseList() {
         return mChooseMembers;
     }
+
 
 }

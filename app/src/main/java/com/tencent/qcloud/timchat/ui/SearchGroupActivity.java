@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,12 +12,9 @@ import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.adapters.ProfileAdapter1;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.GroupProfile;
-import com.tencent.qcloud.timchat.model.ProfileItem;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +41,7 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                list.get(position).showDetail(SearchGroupActivity.this);
+                list.get(position).onClick(SearchGroupActivity.this);
             }
         });
     }

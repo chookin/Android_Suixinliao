@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.tencent.TIMUserProfile;
-import com.tencent.qcloud.presentation.event.FriendshipInfo;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.AddFriendActivity;
 import com.tencent.qcloud.timchat.ui.ProfileActivity;
@@ -65,8 +65,8 @@ public class FriendProfile implements ProfileSummary {
      * @param context 上下文
      */
     @Override
-    public void showDetail(Context context) {
-        if (FriendshipInfo.getInstance().isFriend(profile.getIdentifier())){
+    public void onClick(Context context) {
+        if (FriendshipEvent.getInstance().isFriend(profile.getIdentifier())){
             ProfileActivity.navToProfile(context, profile.getIdentifier());
         }else{
             Intent person = new Intent(context,AddFriendActivity.class);

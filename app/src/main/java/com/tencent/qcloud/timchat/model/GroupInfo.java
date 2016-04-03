@@ -186,7 +186,7 @@ public class GroupInfo implements GroupInfoView,Observer {
          * @param context 上下文
          */
         @Override
-        public void showDetail(Context context) {
+        public void onClick(Context context) {
             Intent intent = new Intent(context, GroupProfileActivity.class);
             intent.putExtra("identify", identify);
             context.startActivity(intent);

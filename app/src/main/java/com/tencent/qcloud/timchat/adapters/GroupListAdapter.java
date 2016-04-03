@@ -73,9 +73,6 @@ public class GroupListAdapter extends BaseAdapter {
         }
 
 
-//        Holder.img.setText(mGroupList.get(groupPosition).getName());
-//        if (imageLoader != null)
-//            imageLoader.displayImage(mGroupList.get(groupPosition).ge, Holder.img);
         return convertView;
     }
 

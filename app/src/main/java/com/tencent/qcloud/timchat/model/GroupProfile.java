@@ -58,7 +58,7 @@ public class GroupProfile implements ProfileSummary {
      * @param context 上下文
      */
     @Override
-    public void showDetail(Context context) {
+    public void onClick(Context context) {
         Intent intent = new Intent(context, GroupProfileActivity.class);
         intent.putExtra("identify", profile.getGroupId());
         context.startActivity(intent);
