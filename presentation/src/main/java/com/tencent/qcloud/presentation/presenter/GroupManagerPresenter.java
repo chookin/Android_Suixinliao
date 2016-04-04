@@ -5,6 +5,7 @@ import android.util.Log;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
+import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupPendencyGetParam;
 import com.tencent.TIMGroupPendencyListGetSucc;
 import com.tencent.TIMGroupSearchSucc;
@@ -13,6 +14,7 @@ import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupMemberManageView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -178,6 +180,29 @@ public class GroupManagerPresenter {
      */
     public static void applyJoinGroup(String groupId, String reason, TIMCallBack callBack){
         TIMGroupManager.getInstance().applyJoinGroup(groupId, reason, callBack);
+    }
+
+
+    /**
+     * 创建群
+     *
+     * @param name 群名称
+     * @param type 群类型
+     * @param members 群成员
+     * @param callBack 回调
+     */
+    public static void createGroup(String name, String type, List<String> members, TIMValueCallBack<String> callBack){
+        List<TIMGroupMemberInfo> memberinfos = new ArrayList<>();
+        for (String member : members) {
+            TIMGroupMemberInfo newMember = new TIMGroupMemberInfo();
+            newMember.setUser(member);
+            memberinfos.add(newMember);
+        }
+        TIMGroupManager.CreateGroupParam groupGroupParam = TIMGroupManager.getInstance().new CreateGroupParam();
+        groupGroupParam.setGroupName(name);
+        groupGroupParam.setMembers(memberinfos);
+        groupGroupParam.setGroupType(type);
+        TIMGroupManager.getInstance().createGroup(groupGroupParam, callBack);
     }
 
 

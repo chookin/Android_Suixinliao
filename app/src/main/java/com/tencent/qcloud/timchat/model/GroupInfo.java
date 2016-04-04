@@ -8,6 +8,7 @@ import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.GroupProfileActivity;
 
@@ -25,15 +26,15 @@ import java.util.Observer;
 public class GroupInfo implements GroupInfoView,Observer {
 
 
-    private Map<String, List<GroupItem>> groups;
+    private Map<String, List<GroupProfile>> groups;
     private GroupManagerPresenter presenter;
     public static final String publicGroup = "Public", privateGroup = "Private", chatRoom = "ChatRoom";
 
     private GroupInfo(){
         groups = new HashMap<>();
-        groups.put(publicGroup,new ArrayList<GroupItem>());
-        groups.put(privateGroup, new ArrayList<GroupItem>());
-        groups.put(chatRoom, new ArrayList<GroupItem>());
+        groups.put(publicGroup,new ArrayList<GroupProfile>());
+        groups.put(privateGroup, new ArrayList<GroupProfile>());
+        groups.put(chatRoom, new ArrayList<GroupProfile>());
         //注册群关系监听
         GroupEvent.getInstance().addObserver(this);
         presenter = new GroupManagerPresenter(this);
@@ -56,7 +57,7 @@ public class GroupInfo implements GroupInfoView,Observer {
     @Override
     public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
         for (TIMGroupDetailInfo item : groupInfos){
-            groups.get(item.getGroupType()).add(new GroupItem(item));
+            groups.get(item.getGroupType()).add(new GroupProfile(item));
         }
     }
 
@@ -84,21 +85,21 @@ public class GroupInfo implements GroupInfoView,Observer {
     }
 
     private void updateGroup(TIMGroupDetailInfo info){
-        for (GroupItem item : groups.get(info.getGroupType())){
-            if (item.identify.equals(info.getGroupId())){
-                item.update(info);
+        for (GroupProfile item : groups.get(info.getGroupType())){
+            if (item.getIdentify().equals(info.getGroupId())){
+                item.setProfile(info);
                 return;
             }
         }
-        groups.get(info.getGroupType()).add(new GroupItem(info));
+        groups.get(info.getGroupType()).add(new GroupProfile(info));
     }
 
     private void delGroup(String id){
         for (String key : groups.keySet()){
-            Iterator<GroupItem> iterator = groups.get(key).iterator();
+            Iterator<GroupProfile> iterator = groups.get(key).iterator();
             while(iterator.hasNext()){
-                GroupItem item = iterator.next();
-                if (item.identify.equals(id)){
+                GroupProfile item = iterator.next();
+                if (item.getIdentify().equals(id)){
                     iterator.remove();
                     return;
                 }
@@ -113,8 +114,8 @@ public class GroupInfo implements GroupInfoView,Observer {
      */
     public boolean isInGroup(String id){
         for (String key : groups.keySet()){
-            for (GroupItem item : groups.get(key)){
-                if (item.identify.equals(id)) return true;
+            for (GroupProfile item : groups.get(key)){
+                if (item.getIdentify().equals(id)) return true;
             }
         }
         return false;
@@ -125,71 +126,22 @@ public class GroupInfo implements GroupInfoView,Observer {
      *
      * @param type 群类型
      */
-    public List<? extends ProfileSummary> getGroupListByType(String type){
-        return groups.get(type);
+    public List<ProfileSummary> getGroupListByType(String type){
+        List<ProfileSummary> result = new ArrayList<>();
+        result.addAll(groups.get(type));
+        return result;
     }
 
 
-    public class GroupItem implements ProfileSummary{
-
-        String name;
-        String identify;
-        //群类型, 目前支持三种群类型："Public", "Private", "ChatRoom"
-        String type;
-        TIMGroupMemberRoleType roleType;
-
-        public GroupItem(TIMGroupDetailInfo data){
-            name = data.getGroupName();
-            identify = data.getGroupId();
-            type = data.getGroupType();
+    public static String getTypeName(String type){
+        if (type.equals(GroupInfo.publicGroup)){
+            return MyApplication.getContext().getString(R.string.public_group);
+        }else if (type.equals(GroupInfo.privateGroup)){
+            return MyApplication.getContext().getString(R.string.discuss_group);
+        }else if (type.equals(GroupInfo.chatRoom)){
+            return MyApplication.getContext().getString(R.string.chatroom);
         }
-
-        public void update(TIMGroupDetailInfo data){
-            name = data.getGroupName();
-        }
-
-        /**
-         * 获取头像资源
-         */
-        @Override
-        public int getAvatarRes() {
-            return R.drawable.head_group;
-        }
-
-        /**
-         * 获取头像地址
-         */
-        @Override
-        public String getAvatarUrl() {
-            return null;
-        }
-
-        /**
-         * 获取名字
-         */
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * 获取描述信息
-         */
-        @Override
-        public String getDescription() {
-            return null;
-        }
-
-        /**
-         * 显示详情
-         *
-         * @param context 上下文
-         */
-        @Override
-        public void onClick(Context context) {
-            Intent intent = new Intent(context, GroupProfileActivity.class);
-            intent.putExtra("identify", identify);
-            context.startActivity(intent);
-        }
+        return "";
     }
+
 }

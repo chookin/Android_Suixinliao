@@ -16,6 +16,7 @@ public class FriendProfile implements ProfileSummary {
 
 
     private TIMUserProfile profile;
+    private boolean isSelected;
 
     public FriendProfile(TIMUserProfile profile){
         this.profile = profile;
@@ -74,5 +75,19 @@ public class FriendProfile implements ProfileSummary {
             person.putExtra("name",getName());
             context.startActivity(person);
         }
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+    /**
+     * 获取用户ID
+     */
+    public String getIdentify(){
+        return profile.getIdentifier();
     }
 }

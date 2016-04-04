@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
 
 import java.util.ArrayList;
@@ -24,26 +25,30 @@ import java.util.Map;
 public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
     private List<TIMFriendGroup> mGroups;
     private Context mContext;
-    private int resourceId = -1;
+    private boolean selectable;
     private List<TIMUserProfile> mChooseMembers;
 
     private List<String> groups;
-    private Map<String, List<ProfileSummary>> mMembers;
+    private Map<String, List<FriendProfile>> mMembers;
 
 
 
 
-    public ExpandGroupListAdapter(Context context, List<String> groups, Map<String, List<ProfileSummary>> members){
+    public ExpandGroupListAdapter(Context context, List<String> groups, Map<String, List<FriendProfile>> members){
+        this(context, groups, members, false);
+    }
+
+    public ExpandGroupListAdapter(Context context, List<String> groups, Map<String, List<FriendProfile>> members, boolean selectable){
         mContext = context;
         this.groups = groups;
         mMembers = members;
+        this.selectable = selectable;
     }
 
     public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers, int resource) {
         mContext = context;
         mGroups = groups;
 //        mAllGroupMembers = allgroupMembers;
-        resourceId = resource;
         mChooseMembers = new ArrayList<TIMUserProfile>();
         mChooseMembers.clear();
 
@@ -137,27 +142,15 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             itemHolder = new ChildrenHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
             itemHolder.tag = (ImageView) convertView.findViewById(R.id.chooseTag);
-            final ChildrenHolder finalItemHolder = itemHolder;
-//            itemHolder.tag.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if (!mChooseMembers.contains(mGroups.get(groupPosition).getProfiles().get(childPosition))) {
-//                        finalItemHolder.tag.setBackgroundResource(R.drawable.selected);
-//                        mChooseMembers.add(mGroups.get(groupPosition).getProfiles().get(childPosition));
-//                    } else {
-//                        finalItemHolder.tag.setBackgroundResource(R.drawable.unselected);
-//                        mChooseMembers.remove(mGroups.get(groupPosition).getProfiles().get(childPosition));
-//                    }
-//                }
-//            });
-
             itemHolder.name = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(itemHolder);
         } else {
             itemHolder = (ChildrenHolder) convertView.getTag();
         }
-        ProfileSummary data = (ProfileSummary) getChild(groupPosition,childPosition);
+        FriendProfile data = (FriendProfile) getChild(groupPosition,childPosition);
         itemHolder.name.setText(data.getName());
+        itemHolder.tag.setVisibility(selectable? View.VISIBLE : View.GONE);
+        itemHolder.tag.setImageResource(data.isSelected()?R.drawable.selected:R.drawable.unselected);
         return convertView;
     }
 

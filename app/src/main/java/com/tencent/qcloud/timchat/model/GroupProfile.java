@@ -19,6 +19,20 @@ public class GroupProfile implements ProfileSummary {
         this.profile = profile;
     }
 
+    /**
+     * 获取群ID
+     */
+    public String getIdentify(){
+        return profile.getGroupId();
+    }
+
+    public TIMGroupDetailInfo getProfile() {
+        return profile;
+    }
+
+    public void setProfile(TIMGroupDetailInfo profile) {
+        this.profile = profile;
+    }
 
     /**
      * 获取头像资源

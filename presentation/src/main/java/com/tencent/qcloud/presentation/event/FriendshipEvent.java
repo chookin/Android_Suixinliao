@@ -41,12 +41,7 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
         TIMFriendshipManager.getInstance().getFriendshipProxy().setListener(this);
     }
 
-    /**
-     * 获取好友列表
-     */
-    public List<TIMFriendGroup> getFriends(){
-        return friendGroupList;
-    }
+
 
     @Override
     public void onError(int i, String s) {

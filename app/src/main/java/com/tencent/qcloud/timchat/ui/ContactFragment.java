@@ -43,7 +43,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
-        mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
+        mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.groupList);
         mNewFriBtn = (LinearLayout) contactLayout.findViewById(R.id.btnNewFriend);
         mNewFriBtn.setOnClickListener(this);
         mPublicGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPublicGroup);
@@ -59,7 +59,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
                 showMoveDialog();
             }
         });
-        final Map<String, List<ProfileSummary>> friends = FriendshipInfo.getInstance().getFriendSummaries();
+        final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriendSummaries();
         mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), FriendshipInfo.getInstance().getGroups(), friends);
         mGroupListView.setAdapter(mGroupListAdapter);
         mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

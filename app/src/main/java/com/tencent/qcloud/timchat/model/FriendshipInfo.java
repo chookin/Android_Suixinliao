@@ -84,14 +84,8 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
     /**
      * 获取好友列表摘要
      */
-    public Map<String, List<ProfileSummary>> getFriendSummaries(){
-        Map<String, List<ProfileSummary>> result = new HashMap<>();
-        for (String key : groups){
-            List<ProfileSummary> list = new ArrayList<>();
-            list.addAll(friends.get(key));
-            result.put(key, list);
-        }
-        return result;
+    public Map<String, List<FriendProfile>> getFriendSummaries(){
+        return friends;
     }
 
 }
