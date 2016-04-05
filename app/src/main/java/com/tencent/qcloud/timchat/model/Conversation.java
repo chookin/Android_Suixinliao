@@ -111,13 +111,6 @@ public abstract class Conversation implements Comparable {
     public int compareTo(Object another) {
         if (another instanceof Conversation){
             Conversation anotherConversation = (Conversation) another;
-//            if (anotherConversation.lastMessage ==null && lastMessage == null) return 0;
-//            if (anotherConversation.lastMessage == null) return -1;
-//            if (lastMessage == null) return 1;
-//            long timeGap = anotherConversation.lastMessage.getMessage().timestamp() - lastMessage.getMessage().timestamp();
-//            if (timeGap > 0) return  1;
-//            else if (timeGap < 0) return -1;
-//            return 0
             long timeGap = anotherConversation.getLastMessageTime() - getLastMessageTime();
             if (timeGap > 0) return  1;
             else if (timeGap < 0) return -1;

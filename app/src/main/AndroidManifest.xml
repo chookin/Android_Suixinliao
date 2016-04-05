@@ -37,11 +37,11 @@
         <activity android:name=".ui.ManagerFriendGroupActivity" />
         <activity android:name=".ui.NewFriendDetailActivity" />
         <activity android:name=".ui.VideoActivity" />
-        <activity android:name=".ui.GroupManagerActivity" />
         <activity android:name=".ui.CreateGroupActivity" />
         <activity android:name=".ui.ChooseMembersActivity" />
         <activity android:name=".ui.ChatSettingActivity" />
-        <activity android:name=".ui.GroupProfileActivity" />
+        <activity android:name=".ui.GroupProfileActivity"
+            android:launchMode="singleTask"/>
 
         <service
             android:name="com.tencent.qalsdk.service.QalService"

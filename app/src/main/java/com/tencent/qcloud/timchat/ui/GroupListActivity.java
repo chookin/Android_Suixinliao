@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +37,15 @@ public class GroupListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 list.get(position).showDetail(GroupListActivity.this);
+            }
+        });
+        TemplateTitle title = (TemplateTitle) findViewById(R.id.groupListTitle);
+        title.setMoreTextAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupListActivity.this, CreateGroupActivity.class);
+                intent.putExtra("type", type);
+                startActivity(intent);
             }
         });
 

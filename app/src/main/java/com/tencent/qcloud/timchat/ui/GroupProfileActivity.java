@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
@@ -80,6 +81,7 @@ public class GroupProfileActivity extends Activity implements GroupInfoView, Vie
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnChat:
+                ChatActivity.navToChat(this,identify, TIMConversationType.Group);
                 break;
             case R.id.btnDel:
                 break;
