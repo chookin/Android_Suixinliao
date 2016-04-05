@@ -13,7 +13,7 @@ import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
-import com.tencent.qcloud.presentation.event.FriendshipInfo;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.timchat.R;
@@ -54,7 +54,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
      * @param identify
      */
     public void showProfile(String identify) {
-        final TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+        final TIMUserProfile profile = FriendshipEvent.getInstance().getProfile(identify);
         if (profile == null) return;
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(getName(profile));
@@ -102,7 +102,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
                 friendshipManagerPresenter.delFriend(identify);
                 break;
             case R.id.group:
-                final String[] groups = FriendshipInfo.getInstance().getGroupList();
+                final String[] groups = FriendshipEvent.getInstance().getGroupList();
                 for (int i = 0; i < groups.length; ++i) {
                     if (groups[i].equals("")) {
                         groups[i] = getString(R.string.default_group_name);

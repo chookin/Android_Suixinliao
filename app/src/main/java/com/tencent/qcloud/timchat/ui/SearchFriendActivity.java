@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,16 +8,12 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.tencent.TIMCallBack;
-import com.tencent.TIMFriendAllowType;
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
-import com.tencent.qcloud.presentation.presenter.SearchFriendPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.FriendProfile;
-import com.tencent.qcloud.timchat.model.ProfileItem;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
 
 import java.util.ArrayList;
@@ -63,7 +58,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Vi
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        list.get(i).showDetail(this);
+        list.get(i).onClick(this);
     }
 
     @Override

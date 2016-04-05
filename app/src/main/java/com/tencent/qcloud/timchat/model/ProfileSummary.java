@@ -35,11 +35,11 @@ public interface ProfileSummary {
 
 
     /**
-     * 显示详情
+     * 显示详情等点击事件
      *
      * @param context 上下文
      */
-    void showDetail(Context context);
+    void onClick(Context context);
 
 
 }

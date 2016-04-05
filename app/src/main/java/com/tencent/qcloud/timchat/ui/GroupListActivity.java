@@ -28,15 +28,15 @@ public class GroupListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
         type = getIntent().getStringExtra("type");
-        setTitle(type);
+        setTitle();
         listView =(ListView) findViewById(R.id.list);
-        list = (List<ProfileSummary>) GroupInfo.getInstance().getGroupListByType(type);
+        list = GroupInfo.getInstance().getGroupListByType(type);
         adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                list.get(position).showDetail(GroupListActivity.this);
+                list.get(position).onClick(GroupListActivity.this);
             }
         });
         TemplateTitle title = (TemplateTitle) findViewById(R.id.groupListTitle);
@@ -51,14 +51,16 @@ public class GroupListActivity extends Activity {
 
     }
 
-    private void setTitle(String type){
+    private void setTitle(){
         TemplateTitle title = (TemplateTitle) findViewById(R.id.groupListTitle);
-        if (type.equals(GroupInfo.publicGroup)){
-            title.setTitleText(getString(R.string.public_group));
-        }else if (type.equals(GroupInfo.privateGroup)){
-            title.setTitleText(getString(R.string.discuss_group));
-        }else if (type.equals(GroupInfo.chatRoom)){
-            title.setTitleText(getString(R.string.chatroom));
-        }
+        title.setTitleText(GroupInfo.getTypeName(type));
+        title.setMoreImgAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupListActivity.this, CreateGroupActivity.class);
+                intent.putExtra("type", type);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -7,7 +7,7 @@ import com.tencent.TIMConversationType;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
-import com.tencent.qcloud.presentation.event.FriendshipInfo;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 
@@ -35,7 +35,7 @@ public class ConversationPresenter extends Presenter implements Observer {
         if (observable instanceof MessageEvent){
             TIMMessage msg = (TIMMessage) data;
             view.updateMessage(msg);
-        }else if (observable instanceof FriendshipInfo){
+        }else if (observable instanceof FriendshipEvent){
             Log.d(TAG, "friend change");
         }
     }

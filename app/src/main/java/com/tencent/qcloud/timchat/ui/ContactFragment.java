@@ -15,13 +15,17 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tencent.TIMConversationType;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
-import com.tencent.qcloud.presentation.event.FriendshipInfo;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.timchat.model.FriendProfile;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
+import com.tencent.qcloud.timchat.model.ProfileSummary;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -39,7 +43,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
-        mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.grouplist);
+        mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.groupList);
         mNewFriBtn = (LinearLayout) contactLayout.findViewById(R.id.btnNewFriend);
         mNewFriBtn.setOnClickListener(this);
         mPublicGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPublicGroup);
@@ -55,12 +59,14 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
                 showMoveDialog();
             }
         });
-        mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), FriendshipInfo.getInstance().getFriends());
+        final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriendSummaries();
+        mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), FriendshipInfo.getInstance().getGroups(), friends);
         mGroupListView.setAdapter(mGroupListAdapter);
         mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                ProfileActivity.navToProfile(getActivity(),FriendshipInfo.getInstance().getFriends().get(groupPosition).getProfiles().get(childPosition).getIdentifier());
+//                ProfileActivity.navToProfile(getActivity(), FriendshipEvent.getInstance().getFriends().get(groupPosition).getProfiles().get(childPosition).getIdentifier());
+                friends.get(FriendshipInfo.getInstance().getGroups().get(groupPosition)).get(childPosition).onClick(getActivity());
                 return false;
             }
         });
@@ -139,7 +145,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
      */
     @Override
     public void update(Observable observable, Object data) {
-        if (observable instanceof FriendshipInfo){
+        if (observable instanceof FriendshipEvent){
             mGroupListAdapter.notifyDataSetChanged();
         }
     }

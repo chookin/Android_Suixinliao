@@ -19,19 +19,19 @@ import java.util.Observable;
  * 好友关系链数据缓存，维持更新状态，底层IMSDK会维护本地存储
  * 由于IMSDK有内存缓存，所以每次关系链变更时全量同步数据，此处也可以只更新变量数据
  */
-public class FriendshipInfo extends Observable implements TIMCallBack, TIMFriendshipProxyListener, TIMValueCallBack<List<TIMFriendGroup>> {
+public class FriendshipEvent extends Observable implements TIMCallBack, TIMFriendshipProxyListener, TIMValueCallBack<List<TIMFriendGroup>> {
 
-    private final String TAG = "FriendshipInfo";
+    private final String TAG = "FriendshipEvent";
 
     private boolean isInit;
     private List<TIMFriendGroup> friendGroupList;
 
 
-    private FriendshipInfo(){}
+    private FriendshipEvent(){}
 
-    private static FriendshipInfo instance = new FriendshipInfo();
+    private static FriendshipEvent instance = new FriendshipEvent();
 
-    public static FriendshipInfo getInstance(){
+    public static FriendshipEvent getInstance(){
         return instance;
     }
 
@@ -41,12 +41,7 @@ public class FriendshipInfo extends Observable implements TIMCallBack, TIMFriend
         TIMFriendshipManager.getInstance().getFriendshipProxy().setListener(this);
     }
 
-    /**
-     * 获取好友列表
-     */
-    public List<TIMFriendGroup> getFriends(){
-        return friendGroupList;
-    }
+
 
     @Override
     public void onError(int i, String s) {
@@ -154,5 +149,7 @@ public class FriendshipInfo extends Observable implements TIMCallBack, TIMFriend
         return groups;
     }
 
-
+    public boolean isInit() {
+        return isInit;
+    }
 }

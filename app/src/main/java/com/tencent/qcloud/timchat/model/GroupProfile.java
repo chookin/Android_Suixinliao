@@ -19,6 +19,20 @@ public class GroupProfile implements ProfileSummary {
         this.profile = profile;
     }
 
+    /**
+     * 获取群ID
+     */
+    public String getIdentify(){
+        return profile.getGroupId();
+    }
+
+    public TIMGroupDetailInfo getProfile() {
+        return profile;
+    }
+
+    public void setProfile(TIMGroupDetailInfo profile) {
+        this.profile = profile;
+    }
 
     /**
      * 获取头像资源
@@ -58,7 +72,7 @@ public class GroupProfile implements ProfileSummary {
      * @param context 上下文
      */
     @Override
-    public void showDetail(Context context) {
+    public void onClick(Context context) {
         Intent intent = new Intent(context, GroupProfileActivity.class);
         intent.putExtra("identify", profile.getGroupId());
         context.startActivity(intent);
