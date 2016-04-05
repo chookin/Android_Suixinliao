@@ -38,6 +38,7 @@ public class ChatPresenter extends Presenter implements Observer {
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
         getMessage();
+        conversation.setReadMessage();
     }
 
 

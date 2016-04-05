@@ -88,6 +88,12 @@ public class ConversationFragment extends Fragment implements ConversationView,G
 
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        adapter.notifyDataSetChanged();
+    }
+
 
     /**
      * 初始化界面或刷新界面

@@ -35,7 +35,7 @@
         <activity
             android:name="com.tencent.qcloud.tlslibrary.activity.IndependentLoginActivity"
             android:label="@string/tencent_tls_ui_title_activity_independent_login"
-            android:launchMode="singleTask"
+
             android:theme="@style/tencent_tls_ui_theme" >
         </activity>
         <activity
