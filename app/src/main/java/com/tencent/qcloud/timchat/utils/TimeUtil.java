@@ -45,8 +45,9 @@ public class TimeUtil {
                 SimpleDateFormat sdf = new SimpleDateFormat("M"+MyApplication.getContext().getResources().getString(R.string.time_month)+"d"+MyApplication.getContext().getResources().getString(R.string.time_day));
                 return sdf.format(currenTimeZone);
             }else{
-                SimpleDateFormat sdf = new SimpleDateFormat("YYYY"+MyApplication.getContext().getResources().getString(R.string.time_year)+"MM"+MyApplication.getContext().getResources().getString(R.string.time_month)+"dd"+MyApplication.getContext().getResources().getString(R.string.time_day));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy" + MyApplication.getContext().getResources().getString(R.string.time_year)+"MM"+MyApplication.getContext().getResources().getString(R.string.time_month)+"dd"+MyApplication.getContext().getResources().getString(R.string.time_day));
                 return sdf.format(currenTimeZone);
+
             }
 
         }
