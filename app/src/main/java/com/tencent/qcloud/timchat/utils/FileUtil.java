@@ -122,16 +122,20 @@ public class FileUtil {
         }
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat){
-            final String docId = DocumentsContract.getDocumentId(uri);
-            final String[] split = docId.split(":");
-            Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            try{
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
 
-            final String selection = "_id=?";
-            final String[] selectionArgs = new String[] {
-                    split[1]
-            };
-            return getDataColumn(context, contentUri, selection, selectionArgs);
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[] {
+                        split[1]
+                };
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }catch (IllegalArgumentException e){
+                return uri.getPath();
+            }
         }else{
             String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = ((Activity) context).managedQuery(uri, projection, null, null, null);

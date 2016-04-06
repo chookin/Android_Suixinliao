@@ -38,7 +38,6 @@ public class ChatPresenter extends Presenter implements Observer {
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
         getMessage();
-        conversation.setReadMessage();
     }
 
 
@@ -48,6 +47,7 @@ public class ChatPresenter extends Presenter implements Observer {
     public void stop() {
         //注销消息监听
         MessageEvent.getInstance().deleteObserver(this);
+        conversation.setReadMessage();
     }
 
     /**

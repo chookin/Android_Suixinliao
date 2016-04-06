@@ -34,6 +34,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback, M
             player.setDataSource(getIntent().getStringExtra("path"));
         } catch (IOException e) {
             e.printStackTrace();
+            finish();
         }
 
     }

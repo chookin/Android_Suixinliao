@@ -53,7 +53,7 @@ public class CreateGroupActivity extends Activity {
                             @Override
                             public void onSuccess(String s) {
                                 Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_succeed), Toast.LENGTH_SHORT).show();
-//                                finish();
+                                finish();
                             }
                         }
                 );

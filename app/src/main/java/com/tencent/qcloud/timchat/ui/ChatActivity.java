@@ -141,7 +141,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 }
                 messageList.add(mMessage);
                 adapter.notifyDataSetChanged();
-                listView.setSelection(adapter.getCount() - 1);
+                listView.setSelection(adapter.getCount());
             }
         }
 
