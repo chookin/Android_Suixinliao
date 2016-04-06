@@ -10,7 +10,11 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.tencent.TIMManager;
+import com.tencent.TIMUserStatusListener;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 /**
  * Tab页主界面
@@ -31,6 +35,13 @@ public class HomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
+        //互踢下线逻辑
+        TIMManager.getInstance().setUserStatusListener(new TIMUserStatusListener() {
+            @Override
+            public void onForceOffline() {
+                logout();
+            }
+        });
     }
 
     private void initView() {
@@ -68,6 +79,14 @@ public class HomeActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+    }
+
+    public void logout(){
+        TlsBusiness.logout(UserInfo.getInstance().getId());
+        UserInfo.getInstance().setId(null);
+        Intent intent = new Intent(HomeActivity.this,SplashActivity.class);
+        finish();
+        startActivity(intent);
     }
 
 

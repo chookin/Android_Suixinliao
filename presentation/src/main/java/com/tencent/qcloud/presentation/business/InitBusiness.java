@@ -1,8 +1,10 @@
 package com.tencent.qcloud.presentation.business;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.tencent.TIMManager;
+import com.tencent.TIMUserStatusListener;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 
 

@@ -67,11 +67,7 @@ public class SettingFragment extends Fragment implements FriendInfoView{
 
                         @Override
                         public void onSuccess() {
-                            TlsBusiness.logout(UserInfo.getInstance().getId());
-                            UserInfo.getInstance().setId(null);
-                            Intent intent = new Intent(getActivity(),SplashActivity.class);
-                            getActivity().finish();
-                            startActivity(intent);
+                            ((HomeActivity) getActivity()).logout();
                         }
                     });
                 }

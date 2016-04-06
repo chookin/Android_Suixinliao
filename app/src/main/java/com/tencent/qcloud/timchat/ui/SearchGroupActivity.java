@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
@@ -19,7 +20,7 @@ import com.tencent.qcloud.timchat.model.ProfileSummary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchGroupActivity extends Activity implements GroupInfoView, View.OnClickListener, KeyEvent.Callback{
+public class SearchGroupActivity extends Activity implements GroupInfoView, KeyEvent.Callback{
 
     private final String TAG = "SearchGroupActivity";
 
@@ -44,21 +45,15 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
                 list.get(position).onClick(SearchGroupActivity.this);
             }
         });
+        TextView tvCancel = (TextView) findViewById(R.id.cancel);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.cancel:
-                finish();
-                break;
-        }
-    }
 
 
 

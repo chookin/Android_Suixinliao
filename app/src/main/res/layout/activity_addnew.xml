@@ -51,7 +51,6 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/text_blue1"
             android:textSize="16sp"
-            android:onClick="onClick"
             android:text="@string/search_cancel" />
 
     </LinearLayout>
