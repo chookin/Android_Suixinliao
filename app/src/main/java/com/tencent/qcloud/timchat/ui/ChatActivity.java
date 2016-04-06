@@ -270,6 +270,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
     }
 
+    public void showLast(){
+        listView.setSelection(adapter.getCount()-1);
+    }
+
 
 
 
