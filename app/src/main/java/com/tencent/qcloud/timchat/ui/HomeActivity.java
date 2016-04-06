@@ -35,14 +35,11 @@ public class HomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
+        //互踢下线逻辑
         TIMManager.getInstance().setUserStatusListener(new TIMUserStatusListener() {
             @Override
             public void onForceOffline() {
-                TlsBusiness.logout(UserInfo.getInstance().getId());
-                UserInfo.getInstance().setId(null);
-                Intent intent = new Intent(HomeActivity.this,SplashActivity.class);
-                finish();
-                startActivity(intent);
+                logout();
             }
         });
     }
@@ -82,6 +79,14 @@ public class HomeActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+    }
+
+    public void logout(){
+        TlsBusiness.logout(UserInfo.getInstance().getId());
+        UserInfo.getInstance().setId(null);
+        Intent intent = new Intent(HomeActivity.this,SplashActivity.class);
+        finish();
+        startActivity(intent);
     }
 
 
