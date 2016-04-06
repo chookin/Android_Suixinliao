@@ -15,6 +15,7 @@ import com.tencent.TIMOfflinePushNotification;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.timchat.utils.CrashHandler;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 
@@ -37,6 +38,8 @@ public class MyApplication extends Application {
         String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
     }
 
     public static Context getContext() {

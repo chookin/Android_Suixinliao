@@ -82,11 +82,13 @@ public class HomeActivity extends FragmentActivity {
     }
 
     public void logout(){
-        TlsBusiness.logout(UserInfo.getInstance().getId());
-        UserInfo.getInstance().setId(null);
-        Intent intent = new Intent(HomeActivity.this,SplashActivity.class);
-        finish();
-        startActivity(intent);
+//        TlsBusiness.logout(UserInfo.getInstance().getId());
+//        UserInfo.getInstance().setId(null);
+//        Intent intent = new Intent(HomeActivity.this,SplashActivity.class);
+//        finish();
+//        startActivity(intent);
+        int[] i = new int[1];
+        int k = i[10];
     }
 
 
