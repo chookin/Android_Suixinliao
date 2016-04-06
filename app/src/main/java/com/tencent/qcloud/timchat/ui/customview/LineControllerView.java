@@ -48,9 +48,9 @@ public class LineControllerView extends LinearLayout {
         View bottomLine = findViewById(R.id.bottomLine);
         bottomLine.setVisibility(isBottom ? VISIBLE : GONE);
         ImageView navArrow = (ImageView) findViewById(R.id.rightArrow);
-        navArrow.setVisibility(canNav?VISIBLE:GONE);
+        navArrow.setVisibility(canNav ? VISIBLE : GONE);
         LinearLayout contentPanel = (LinearLayout) findViewById(R.id.contentText);
-        contentPanel.setVisibility(isSwitch?GONE:VISIBLE);
+        contentPanel.setVisibility(isSwitch ? GONE : VISIBLE);
         Switch switchPanel = (Switch) findViewById(R.id.btnSwitch);
         switchPanel.setVisibility(isSwitch?VISIBLE:GONE);
 
@@ -66,5 +66,15 @@ public class LineControllerView extends LinearLayout {
         this.content = content;
         TextView tvContent = (TextView) findViewById(R.id.content);
         tvContent.setText(content);
+    }
+
+
+    /**
+     * 获取内容
+     *
+     */
+    public String getContent(){
+        TextView tvContent = (TextView) findViewById(R.id.content);
+        return tvContent.getText().toString();
     }
 }

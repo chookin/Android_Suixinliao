@@ -254,15 +254,17 @@ public class FriendshipManagerPresenter {
      *
      * @param id 添加对象Identify
      * @param remark 备注名
+     * @param group 分组
      * @param message 附加消息
      */
-    public void addFriend(final String id,String remark,String message){
+    public void addFriend(final String id,String remark,String group,String message){
         if (friendshipManageView == null) return;
         List<TIMAddFriendRequest> reqList = new ArrayList<>();
         TIMAddFriendRequest req = new TIMAddFriendRequest();
         req.setAddWording(message);
         req.setIdentifier(id);
         req.setRemark(remark);
+        req.setFriendGroup(group);
         reqList.add(req);
         TIMFriendshipManager.getInstance().getFriendshipProxy().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
 

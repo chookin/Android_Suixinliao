@@ -79,6 +79,9 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
         return groups;
     }
 
+    public String[] getGroupsArray(){
+        return groups.toArray(new String[groups.size()]);
+    }
 
 
     /**

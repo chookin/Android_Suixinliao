@@ -1,27 +1,34 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMFriendStatus;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
+import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+
+import java.util.List;
 
 /**
  * 申请添加好友界面
  */
-public class AddFriendActivity extends Activity implements View.OnClickListener, FriendshipManageView {
+public class AddFriendActivity extends FragmentActivity implements View.OnClickListener, FriendshipManageView {
 
 
     private TextView tvName, btnAdd;
     private EditText editRemark, editMessage;
-    private LineControllerView idField;
+    private LineControllerView idField, groupField;
     private FriendshipManagerPresenter presenter;
     private String id;
 
@@ -34,6 +41,7 @@ public class AddFriendActivity extends Activity implements View.OnClickListener,
         id = getIntent().getStringExtra("id");
         tvName.setText(getIntent().getStringExtra("name"));
         idField.setContent(id);
+        groupField = (LineControllerView) findViewById(R.id.group);
         btnAdd = (TextView) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(this);
         editMessage = (EditText) findViewById(R.id.editMessage);
@@ -44,7 +52,21 @@ public class AddFriendActivity extends Activity implements View.OnClickListener,
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnAdd) {
-            presenter.addFriend(id, editRemark.getText().toString(), editMessage.getText().toString());
+            presenter.addFriend(id, editRemark.getText().toString(), groupField.getContent().equals(getString(R.string.default_group_name))?"":groupField.getContent(), editMessage.getText().toString());
+        }else if (view.getId() == R.id.group){
+            final String[] groups = FriendshipInfo.getInstance().getGroupsArray();
+            for (int i = 0; i < groups.length; ++i) {
+                if (groups[i].equals("")) {
+                    groups[i] = getString(R.string.default_group_name);
+                    break;
+                }
+            }
+            new ListPickerDialog().show(groups, getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    groupField.setContent(groups[which]);
+                }
+            });
         }
     }
 
