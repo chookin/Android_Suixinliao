@@ -7,14 +7,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tencent.TIMUserProfile;
+import com.tencent.imsdk.QLog;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.List;
 /**
  * 查找添加新朋友
  */
-public class SearchFriendActivity extends Activity implements FriendInfoView, View.OnClickListener, AdapterView.OnItemClickListener, KeyEvent.Callback {
+public class SearchFriendActivity extends Activity implements FriendInfoView, AdapterView.OnItemClickListener, KeyEvent.Callback {
 
     private final static String TAG = "SearchFriendActivity";
 
@@ -42,19 +45,16 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Vi
         mSearchList.setAdapter(adapter);
         mSearchList.setOnItemClickListener(this);
         presenter = new FriendshipManagerPresenter(this);
-
-    }
-
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.cancel:
+        TextView tvCancel = (TextView) findViewById(R.id.cancel);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
-                break;
-        }
+            }
+        });
     }
+
+
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
