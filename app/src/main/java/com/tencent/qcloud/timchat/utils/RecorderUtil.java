@@ -19,7 +19,9 @@ public class RecorderUtil {
     private long timeInterval;
 
     public RecorderUtil(){
-        mFileName = MyApplication.getContext().getExternalCacheDir().getAbsolutePath()+"/tempAudio.3gp";
+        if (FileUtil.isExternalStorageWritable()){
+            mFileName = MyApplication.getContext().getExternalCacheDir().getAbsolutePath() +"/tempAudio.3gp";
+        }
     }
 
     /**

@@ -89,12 +89,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         return view;
 
     }
-//
-//    @Override
-//    public void onStart(){
-//        super.onStart();
-//        adapter.notifyDataSetChanged();
-//    }
+
 
 
     /**

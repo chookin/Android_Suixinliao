@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.tencent.qcloud.timchat.MyApplication;
 
@@ -180,6 +182,20 @@ public class FileUtil {
                 cursor.close();
         }
         return null;
+    }
+
+
+    /**
+     * 判断外部存储是否可用
+     *
+     */
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        Log.e(TAG, "ExternalStorage not mounted");
+        return false;
     }
 
 
