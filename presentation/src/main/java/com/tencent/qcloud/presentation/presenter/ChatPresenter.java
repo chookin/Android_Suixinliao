@@ -1,5 +1,6 @@
 package com.tencent.qcloud.presentation.presenter;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.tencent.TIMConversation;
@@ -37,7 +38,7 @@ public class ChatPresenter extends Presenter implements Observer {
     public void start() {
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
-        getMessage();
+        getMessage(null);
     }
 
 
@@ -102,8 +103,14 @@ public class ChatPresenter extends Presenter implements Observer {
         }
     }
 
-    private void getMessage(){
-        conversation.getMessage(LAST_MESSAGE_NUM, null, new TIMValueCallBack<List<TIMMessage>>() {
+
+    /**
+     * 获取消息
+     *
+     * @param message 最后一条消息
+     */
+    public void getMessage(@Nullable TIMMessage message){
+        conversation.getMessage(LAST_MESSAGE_NUM, message, new TIMValueCallBack<List<TIMMessage>>() {
             @Override
             public void onError(int i, String s) {
                 Log.e(TAG,"get message error"+s);
@@ -111,10 +118,7 @@ public class ChatPresenter extends Presenter implements Observer {
 
             @Override
             public void onSuccess(List<TIMMessage> timMessages) {
-                Collections.reverse(timMessages);
-                for (TIMMessage msg:timMessages){
-                    view.showMessage(msg);
-                }
+                view.showMessage(timMessages);
             }
         });
     }

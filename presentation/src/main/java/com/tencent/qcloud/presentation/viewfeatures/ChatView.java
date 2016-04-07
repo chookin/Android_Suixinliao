@@ -2,6 +2,8 @@ package com.tencent.qcloud.presentation.viewfeatures;
 
 import com.tencent.TIMMessage;
 
+import java.util.List;
+
 /**
  * 聊天界面的接口
  */
@@ -11,6 +13,11 @@ public interface ChatView extends MvpView {
      * 显示消息
      */
     void showMessage(TIMMessage message);
+
+    /**
+     * 显示消息
+     */
+    void showMessage(List<TIMMessage> messages);
 
     /**
      * 发送消息成功

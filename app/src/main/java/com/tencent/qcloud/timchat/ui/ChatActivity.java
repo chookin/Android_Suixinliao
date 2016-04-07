@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
 import com.tencent.qcloud.timchat.utils.FileUtil;
+import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.RecorderUtil;
 
 import java.io.File;
@@ -82,6 +84,24 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                         break;
                 }
                 return false;
+            }
+        });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            private int firstItem;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && firstItem == 0) {
+                    //如果拉到顶端读取更多消息
+                    LogUtils.e("load more");
+                    presenter.getMessage(messageList.size()>0?messageList.get(0).getMessage():null);
+
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                firstItem = firstVisibleItem;
             }
         });
         presenter.getConversation().setReadMessage();
@@ -145,6 +165,27 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             }
         }
 
+    }
+
+    /**
+     * 显示消息
+     *
+     * @param messages
+     */
+    @Override
+    public void showMessage(List<TIMMessage> messages) {
+        for (int i = 0; i < messages.size(); ++i){
+            Message mMessage = MessageFactory.getMessage(messages.get(i));
+            if (mMessage == null) continue;
+            if (i != messages.size() - 1){
+                mMessage.setHasTime(messages.get(i+1));
+                messageList.add(0, mMessage);
+            }else{
+                messageList.add(0, mMessage);
+            }
+        }
+        adapter.notifyDataSetChanged();
+        listView.setSelection(messages.size() - 1);
     }
 
     /**
@@ -270,9 +311,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
     }
 
-    public void showLast(){
-        listView.setSelection(adapter.getCount()-1);
-    }
 
 
 
