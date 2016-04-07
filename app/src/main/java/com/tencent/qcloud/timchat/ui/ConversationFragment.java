@@ -4,6 +4,7 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,15 +85,16 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             presenter = new ConversationPresenter(this);
             presenter.getConversation();
         }
+        adapter.notifyDataSetChanged();
         return view;
 
     }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        adapter.notifyDataSetChanged();
-    }
+//
+//    @Override
+//    public void onStart(){
+//        super.onStart();
+//        adapter.notifyDataSetChanged();
+//    }
 
 
     /**

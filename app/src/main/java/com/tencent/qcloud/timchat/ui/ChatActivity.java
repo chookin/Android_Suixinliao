@@ -93,7 +93,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && firstItem == 0) {
                     //如果拉到顶端读取更多消息
-                    LogUtils.e("load more");
                     presenter.getMessage(messageList.size()>0?messageList.get(0).getMessage():null);
 
                 }

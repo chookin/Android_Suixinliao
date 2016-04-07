@@ -3,9 +3,11 @@ package com.tencent.qcloud.timchat.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.tencent.TIMCallBack;
+import com.tencent.imsdk.QLog;
 import com.tencent.openqq.protocol.imsdk.im_open_common;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
@@ -65,6 +67,11 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
      */
     @Override
     public void onError(int i, String s) {
+        Log.e(TAG, "login error : code " + i + " " + s);
+        if (i == 6208){
+            //离线状态下被其他终端踢下线，此时可以重新登录也可以做提示用户账号安全
+            navToHome();
+        }
 
     }
 
@@ -73,6 +80,7 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
      */
     @Override
     public void onSuccess() {
+        Log.i(TAG, "login succeed");
         GroupEvent.getInstance().init();
         FriendshipEvent.getInstance().init();
         Intent intent = new Intent(this, HomeActivity.class);
