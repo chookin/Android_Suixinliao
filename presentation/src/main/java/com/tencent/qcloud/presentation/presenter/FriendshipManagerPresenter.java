@@ -200,9 +200,14 @@ public class FriendshipManagerPresenter {
      * 按照名称搜索好友
      *
      * @param key 关键字
+     * @param start 是否从头开始
      */
-    public void searchFriendByName(String key){
+    public void searchFriendByName(String key, boolean start){
         if (friendInfoView == null) return;
+        if (start){
+            isEnd = false;
+            index = 0;
+        }
         if (!isEnd){
             TIMFriendshipManager.getInstance().getFriendshipProxy().searchUser(key, index++, PAGE_SIZE, new TIMValueCallBack<TIMUserSearchSucc>() {
 
@@ -217,7 +222,6 @@ public class FriendshipManagerPresenter {
                     isEnd = getNum == data.getTotalNum();
                     friendInfoView.showUserInfo(data.getInfoList());
                 }
-
             });
         }else{
             friendInfoView.showUserInfo(null);

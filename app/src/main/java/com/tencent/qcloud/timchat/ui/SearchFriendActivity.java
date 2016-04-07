@@ -10,14 +10,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tencent.TIMUserProfile;
-import com.tencent.imsdk.QLog;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +30,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     private FriendshipManagerPresenter presenter;
     ListView mSearchList;
     EditText mSearchInput;
+    TextView tvNoResult;
     ProfileSummaryAdapter adapter;
     List<ProfileSummary> list = new ArrayList<>();
 
@@ -41,6 +40,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
         setContentView(R.layout.activity_addnew);
         mSearchInput = (EditText) findViewById(R.id.inputSearch);
         mSearchList =(ListView) findViewById(R.id.list);
+        tvNoResult = (TextView) findViewById(R.id.noResult);
         adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         mSearchList.setAdapter(adapter);
         mSearchList.setOnItemClickListener(this);
@@ -67,14 +67,16 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
             case KeyEvent.KEYCODE_ENTER:
                 list.clear();
                 adapter.notifyDataSetChanged();
-                presenter.searchFriendByName(mSearchInput.getText().toString());
+                presenter.searchFriendByName(mSearchInput.getText().toString(),true);
                 presenter.searchFriendById(mSearchInput.getText().toString());
                 return true;
-
             default:
                 return super.onKeyUp(keyCode, event);
         }
     }
+
+
+
 
     /**
      * 显示好友信息
@@ -88,5 +90,10 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
             list.add(new FriendProfile(item));
         }
         adapter.notifyDataSetChanged();
+        if (list.size() == 0){
+            tvNoResult.setVisibility(View.VISIBLE);
+        }else{
+            tvNoResult.setVisibility(View.GONE);
+        }
     }
 }
