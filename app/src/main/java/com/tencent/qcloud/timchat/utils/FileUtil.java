@@ -25,7 +25,7 @@ public class FileUtil {
 
     private static final String TAG = "FileUtil";
     private static String pathDiv = "/";
-    private static File cacheDir = MyApplication.getContext().getExternalCacheDir();
+    private static File cacheDir = isExternalStorageWritable()?MyApplication.getContext().getCacheDir(): MyApplication.getContext().getExternalCacheDir();
 
     private FileUtil() {
         /* cannot be instantiated */
