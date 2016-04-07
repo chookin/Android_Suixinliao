@@ -176,6 +176,7 @@
     <string name="title_choose_group_members">选择联系人</string>
     <string name="create_group_fail">创建群失败</string>
     <string name="create_group_succeed">创建群成功</string>
+    <string name="create_group_need_name">请输入群名称</string>
 
 
     <!-- change category activity -->

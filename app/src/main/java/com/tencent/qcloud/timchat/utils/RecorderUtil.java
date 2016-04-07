@@ -1,6 +1,8 @@
 package com.tencent.qcloud.timchat.utils;
 
 import android.media.MediaRecorder;
+import android.util.Log;
+
 import com.tencent.qcloud.timchat.MyApplication;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +38,7 @@ public class RecorderUtil {
         try {
             mRecorder.prepare();
         } catch (IOException e) {
-            LogUtils.e(TAG, "prepare() failed");
+            Log.e(TAG, "prepare() failed");
         }
         mRecorder.start();
     }
@@ -64,7 +66,7 @@ public class RecorderUtil {
         try{
             return readFile(new File(mFileName));
         }catch (IOException e){
-            LogUtils.e(TAG, "read file error"+e);
+            Log.e(TAG, "read file error" + e);
             return null;
         }
     }

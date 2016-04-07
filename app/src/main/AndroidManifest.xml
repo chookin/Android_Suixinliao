@@ -35,7 +35,6 @@
             android:name=".ui.ProfileActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.ManagerFriendGroupActivity" />
-        <activity android:name=".ui.NewFriendDetailActivity" />
         <activity android:name=".ui.VideoActivity" />
         <activity android:name=".ui.CreateGroupActivity" />
         <activity android:name=".ui.GroupProfileActivity"

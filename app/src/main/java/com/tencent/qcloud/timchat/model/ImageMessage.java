@@ -14,17 +14,13 @@ import com.tencent.TIMImage;
 import com.tencent.TIMImageElem;
 import com.tencent.TIMImageType;
 import com.tencent.TIMMessage;
-import com.tencent.TIMMessageStatus;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
-import com.tencent.qcloud.timchat.ui.ChatActivity;
 import com.tencent.qcloud.timchat.ui.ImageViewActivity;
 import com.tencent.qcloud.timchat.utils.FileUtil;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -75,7 +71,7 @@ public class ImageMessage extends Message {
                                 public void onError(int code, String desc) {//获取图片失败
                                     //错误码code和错误描述desc，可用于定位请求失败原因
                                     //错误码code含义请参见错误码表
-                                    LogUtils.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
                                 }
 
                                 @Override
@@ -96,7 +92,7 @@ public class ImageMessage extends Message {
                                 public void onError(int code, String desc) {//获取图片失败
                                     //错误码code和错误描述desc，可用于定位请求失败原因
                                     //错误码code含义请参见错误码表
-                                    LogUtils.d(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
                                 }
 
                                 @Override

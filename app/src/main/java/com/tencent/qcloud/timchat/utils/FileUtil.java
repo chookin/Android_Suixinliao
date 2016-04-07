@@ -84,7 +84,7 @@ public class FileUtil {
                 fos.close();
             }
         }catch (IOException e){
-            LogUtils.e(TAG,"create bitmap file error" + e);
+            Log.e(TAG,"create bitmap file error" + e);
         }
         if (f.exists()){
             return f.getAbsolutePath();
@@ -107,7 +107,7 @@ public class FileUtil {
                 fos.close();
             }
         }catch (IOException e){
-            LogUtils.e(TAG,"create bitmap file error" + e);
+            Log.e(TAG,"create bitmap file error" + e);
         }
     }
 

@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.utils;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
 
 import com.tencent.qcloud.timchat.MyApplication;
 
@@ -42,7 +43,7 @@ public class MediaUtil {
             player.prepare();
             player.start();
         }catch (IOException e){
-            LogUtils.e(TAG,"play error:"+e);
+            Log.e(TAG, "play error:" + e);
         }
 
 

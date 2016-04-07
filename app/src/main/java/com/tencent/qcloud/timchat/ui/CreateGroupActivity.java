@@ -31,8 +31,12 @@ public class CreateGroupActivity extends Activity {
         mAddMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CreateGroupActivity.this, ChooseFriendActivity.class);
-                startActivityForResult(intent, CHOOSE_MEM_CODE);
+                if (mInputView.getText().toString().equals("")){
+                    Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_need_name), Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = new Intent(CreateGroupActivity.this, ChooseFriendActivity.class);
+                    startActivityForResult(intent, CHOOSE_MEM_CODE);
+                }
             }
         });
     }

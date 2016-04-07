@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,7 +20,6 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.ui.VideoActivity;
 import com.tencent.qcloud.timchat.utils.FileUtil;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 
 import java.text.SimpleDateFormat;
@@ -78,7 +78,7 @@ public class VideoMessage extends Message {
                     snapshot.getImage(FileUtil.getCacheFilePath(snapshot.getUuid()), new TIMCallBack() {
                         @Override
                         public void onError(int i, String s) {
-                            LogUtils.d(TAG, "get snapshot failed. code: " + i + " errmsg: " + s);
+                            Log.e(TAG, "get snapshot failed. code: " + i + " errmsg: " + s);
                         }
 
                         @Override
@@ -92,7 +92,7 @@ public class VideoMessage extends Message {
                     e.getVideoInfo().getVideo(FileUtil.getCacheFilePath(fileName), new TIMCallBack() {
                         @Override
                         public void onError(int i, String s) {
-                            LogUtils.d(TAG, "get video failed. code: " + i + " errmsg: " + s);
+                            Log.e(TAG, "get video failed. code: " + i + " errmsg: " + s);
                         }
 
                         @Override

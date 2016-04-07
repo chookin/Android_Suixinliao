@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import com.tencent.TIMCallBack;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 public class ApplyGroupActivity extends Activity implements TIMCallBack {
 

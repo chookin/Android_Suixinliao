@@ -7,8 +7,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 
-import com.tencent.qcloud.timchat.utils.LogUtils;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -87,7 +85,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
                 }
             }
-            LogUtils.d(TAG, "preview resolustion:" + result.width + "*" + result.height);
+            Log.d(TAG, "preview resolustion:" + result.width + "*" + result.height);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             parameters.setPreviewSize(result.height, result.width);
             mCamera.setParameters(parameters);

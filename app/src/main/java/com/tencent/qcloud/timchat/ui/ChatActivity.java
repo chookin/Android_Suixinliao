@@ -29,7 +29,6 @@ import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
 import com.tencent.qcloud.timchat.utils.FileUtil;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.RecorderUtil;
 
 import java.io.File;

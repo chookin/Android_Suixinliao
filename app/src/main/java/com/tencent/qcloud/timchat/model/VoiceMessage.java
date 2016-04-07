@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.utils.FileUtil;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 
 import java.io.File;

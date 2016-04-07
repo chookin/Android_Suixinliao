@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.tencent.TIMGroupPendencyItem;
@@ -9,7 +10,6 @@ import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.GroupManageMessageAdapter;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class GroupManageMessageActivity extends Activity implements GroupManageM
      */
     @Override
     public void onGetGroupManageMessage(List<TIMGroupPendencyItem> message) {
-        LogUtils.d(TAG, "get group manage message "+ message.size());
+        Log.d(TAG, "get group manage message " + message.size());
         list.addAll(message);
         adapter.notifyDataSetChanged();
 

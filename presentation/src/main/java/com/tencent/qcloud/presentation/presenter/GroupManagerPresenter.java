@@ -12,7 +12,7 @@ import com.tencent.TIMGroupSearchSucc;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
-import com.tencent.qcloud.presentation.viewfeatures.GroupMemberManageView;
+import com.tencent.qcloud.presentation.viewfeatures.GroupManageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +27,7 @@ public class GroupManagerPresenter {
 
     private GroupManageMessageView messageView;
     private GroupInfoView infoView;
-    private GroupMemberManageView manageView;
+    private GroupManageView manageView;
     private long timeStamp = 0;
 
     public GroupManagerPresenter(GroupManageMessageView view){
@@ -38,11 +38,11 @@ public class GroupManagerPresenter {
         infoView = view;
     }
 
-    public GroupManagerPresenter(GroupMemberManageView view){
+    public GroupManagerPresenter(GroupManageView view){
         this(null, null, view);
     }
 
-    public GroupManagerPresenter(GroupManageMessageView view1, GroupInfoView view2, GroupMemberManageView view3){
+    public GroupManagerPresenter(GroupManageMessageView view1, GroupInfoView view2, GroupManageView view3){
         messageView = view1;
         infoView = view2;
         manageView = view3;

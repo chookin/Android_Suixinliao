@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.ui.customview;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -11,8 +10,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,7 +19,6 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 /**
  * 聊天界面输入控件

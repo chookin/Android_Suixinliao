@@ -1,7 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,7 +31,6 @@ import com.tencent.qcloud.timchat.model.FriendshipConversation;
 import com.tencent.qcloud.timchat.model.GroupManageConversation;
 import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.NomalConversation;
-import com.tencent.qcloud.timchat.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -127,7 +125,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             return;
         }
         if (message.getConversation().getType() == TIMConversationType.System){
-            LogUtils.d(TAG, "onMemberJoin system message");
+            Log.d(TAG, "onMemberJoin system message");
             updateSystemConversation();
             return;
         }
