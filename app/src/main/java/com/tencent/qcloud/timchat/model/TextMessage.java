@@ -1,6 +1,14 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +20,9 @@ import com.tencent.TIMTextElem;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 文本消息数据
@@ -40,7 +51,38 @@ public class TextMessage extends Message {
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
-        tv.setText(getSummary());
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+        for (int i = 0; i<message.getElementCount(); ++i){
+            switch (message.getElement(i).getType()){
+                case Face:
+                    TIMFaceElem faceElem = (TIMFaceElem) message.getElement(i);
+                    int startIndex = stringBuilder.length();
+                    try{
+                        AssetManager am = context.getAssets();
+                        InputStream is = am.open(String.format("emoticon/%d.gif", faceElem.getIndex()));
+                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        Matrix matrix = new Matrix();
+                        int width = bitmap.getWidth();
+                        int height = bitmap.getHeight();
+                        matrix.postScale(2, 2);
+                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                                width, height, matrix, true);
+                        ImageSpan span = new ImageSpan(context, resizedBitmap, ImageSpan.ALIGN_BASELINE);
+                        stringBuilder.append(String.valueOf(faceElem.getIndex()));
+                        stringBuilder.setSpan(span, startIndex, startIndex + getNumLength(faceElem.getIndex()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        is.close();
+                    }catch (IOException e){
+
+                    }
+                    break;
+                case Text:
+                    TIMTextElem textElem = (TIMTextElem) message.getElement(i);
+                    stringBuilder.append(textElem.getText());
+                    break;
+            }
+
+        }
+        tv.setText(stringBuilder);
         getBubbleView(viewHolder).removeAllViews();
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
@@ -66,6 +108,10 @@ public class TextMessage extends Message {
 
         }
         return result.toString();
+    }
+
+    private int getNumLength(int n){
+        return String.valueOf(n).length();
     }
 
 
