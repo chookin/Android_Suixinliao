@@ -3,11 +3,16 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +28,8 @@ import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +83,7 @@ public class SettingFragment extends Fragment implements FriendInfoView{
             nickName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditActivity.navToEdit(SettingFragment.this, getResources().getString(R.string.setting_nick_name_change),name.getText().toString(), REQ_CHANGE_NICK, new EditActivity.EditInterface() {
+                    EditActivity.navToEdit(SettingFragment.this, getResources().getString(R.string.setting_nick_name_change), name.getText().toString(), REQ_CHANGE_NICK, new EditActivity.EditInterface() {
                         @Override
                         public void onEdit(String text, TIMCallBack callBack) {
                             FriendshipManagerPresenter.setMyNick(text, callBack);
@@ -113,6 +120,18 @@ public class SettingFragment extends Fragment implements FriendInfoView{
                     });
                 }
             });
+            ImageView imageView = (ImageView) view.findViewById(R.id.emoticon1);
+            try{
+                AssetManager am = getActivity().getAssets();
+                InputStream is = am.open("emoticon/0.gif");
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                imageView.setImageBitmap(bitmap);
+                is.close();
+            }catch (IOException e){
+
+            }
+
+
         }
         return view ;
     }

@@ -5,6 +5,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tencent.TIMElemType;
+import com.tencent.TIMFaceElem;
 import com.tencent.TIMMessage;
 import com.tencent.TIMTextElem;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -38,7 +40,7 @@ public class TextMessage extends Message {
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
-        tv.setText(((TIMTextElem) message.getElement(0)).getText());
+        tv.setText(getSummary());
         getBubbleView(viewHolder).removeAllViews();
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
@@ -49,7 +51,21 @@ public class TextMessage extends Message {
      */
     @Override
     public String getSummary() {
-        return ((TIMTextElem) message.getElement(0)).getText();
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i<message.getElementCount(); ++i){
+            switch (message.getElement(i).getType()){
+                case Face:
+                    TIMFaceElem faceElem = (TIMFaceElem) message.getElement(i);
+                    result.append(faceElem.getIndex());
+                    break;
+                case Text:
+                    TIMTextElem textElem = (TIMTextElem) message.getElement(i);
+                    result.append(textElem.getText());
+                    break;
+            }
+
+        }
+        return result.toString();
     }
 
 

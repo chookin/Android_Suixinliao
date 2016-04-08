@@ -61,6 +61,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
             <ImageButton
+                android:id="@+id/btnEmoticon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
@@ -84,7 +85,7 @@
             android:background="@drawable/btn_send"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/more_panel"
+        android:id="@+id/morePanel"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:orientation="vertical"
@@ -156,6 +157,13 @@
         </RelativeLayout>
 
     </LinearLayout>
+    <View
+        android:id="@+id/emoticonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone"
+        android:background="@color/background_gray1">
 
+    </View>
 
 </LinearLayout>

@@ -27,13 +27,14 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
 
     private static final String TAG = "ChatInput";
 
-    private ImageButton btnAdd, btnSend, btnVoice, btnKeyboard;
+    private ImageButton btnAdd, btnSend, btnVoice, btnKeyboard, btnEmotion;
     private EditText editText;
     private boolean isSendVisible,isHoldVoiceBtn;
     private InputMode inputMode = InputMode.NONE;
     private ChatView chatView;
     private LinearLayout morePanel,textPanel;
     private TextView voicePanel;
+    private View emoticonPanel;
 
 
     public ChatInput(Context context, AttributeSet attrs) {
@@ -50,7 +51,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         btnSend.setOnClickListener(this);
         btnVoice = (ImageButton) findViewById(R.id.btn_voice);
         btnVoice.setOnClickListener(this);
-        morePanel = (LinearLayout) findViewById(R.id.more_panel);
+        btnEmotion = (ImageButton) findViewById(R.id.btnEmoticon);
+        btnEmotion.setOnClickListener(this);
+        morePanel = (LinearLayout) findViewById(R.id.morePanel);
         LinearLayout BtnImage = (LinearLayout) findViewById(R.id.btn_photo);
         BtnImage.setOnClickListener(this);
         LinearLayout BtnPhoto = (LinearLayout) findViewById(R.id.btn_image);
@@ -74,7 +77,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                         updateVoiceView();
                         break;
                 }
-
                 return true;
             }
         });
@@ -83,12 +85,13 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         editText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     updateView(InputMode.TEXT);
                 }
             }
         });
         isSendVisible = editText.getText().length() != 0;
+        emoticonPanel = findViewById(R.id.emoticonPanel);
 
     }
 
@@ -110,6 +113,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 textPanel.setVisibility(GONE);
                 btnVoice.setVisibility(GONE);
                 btnKeyboard.setVisibility(VISIBLE);
+                break;
+            case EMOTICON:
+                emoticonPanel.setVisibility(VISIBLE);
                 break;
 
 
@@ -133,6 +139,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 btnVoice.setVisibility(VISIBLE);
                 btnKeyboard.setVisibility(GONE);
                 break;
+            case EMOTICON:
+                emoticonPanel.setVisibility(GONE);
         }
     }
 
@@ -255,6 +263,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 if (getContext() instanceof FragmentActivity){
                     VideoInputDialog.show(((FragmentActivity) getContext()).getSupportFragmentManager());
                 }
+                break;
+            case R.id.btnEmoticon:
+                updateView(inputMode == InputMode.EMOTICON?InputMode.TEXT:InputMode.EMOTICON);
                 break;
         }
     }
