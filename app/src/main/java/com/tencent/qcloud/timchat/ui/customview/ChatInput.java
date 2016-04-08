@@ -2,23 +2,40 @@ package com.tencent.qcloud.timchat.ui.customview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
+import android.text.style.ImageSpan;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tencent.TIMElem;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 聊天界面输入控件
@@ -29,12 +46,14 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
 
     private ImageButton btnAdd, btnSend, btnVoice, btnKeyboard, btnEmotion;
     private EditText editText;
-    private boolean isSendVisible,isHoldVoiceBtn;
+    private boolean isSendVisible,isHoldVoiceBtn,isEmoticonReady;
     private InputMode inputMode = InputMode.NONE;
     private ChatView chatView;
     private LinearLayout morePanel,textPanel;
     private TextView voicePanel;
-    private View emoticonPanel;
+    private LinearLayout emoticonPanel;
+    private SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+    private List<TIMElem> textMessage = new ArrayList<>();
 
 
     public ChatInput(Context context, AttributeSet attrs) {
@@ -91,7 +110,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
             }
         });
         isSendVisible = editText.getText().length() != 0;
-        emoticonPanel = findViewById(R.id.emoticonPanel);
+        emoticonPanel = (LinearLayout) findViewById(R.id.emoticonPanel);
 
     }
 
@@ -115,10 +134,11 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 btnKeyboard.setVisibility(VISIBLE);
                 break;
             case EMOTICON:
+                if (!isEmoticonReady) {
+                    prepareEmoticon();
+                }
                 emoticonPanel.setVisibility(VISIBLE);
                 break;
-
-
         }
     }
 
@@ -233,6 +253,50 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         }
     }
 
+    private void prepareEmoticon(){
+        if (emoticonPanel == null) return;
+        for (int i = 0; i < 5; ++i){
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1f));
+            for (int j = 0;j < 7; ++j){
+
+                try{
+                    AssetManager am = getContext().getAssets();
+                    final int index = 7*i+j;
+                    InputStream is = am.open(String.format("emoticon/%d.gif", index));
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    Matrix matrix = new Matrix();
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    matrix.postScale(3.5f, 3.5f);
+                    final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                            width, height, matrix, true);
+                    ImageView image = new ImageView(getContext());
+                    image.setImageBitmap(resizedBitmap);
+                    image.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
+                    linearLayout.addView(image);
+                    image.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d(TAG, "click emoticon at " + index);
+                            String content = String.valueOf(index);
+                            SpannableString str = new SpannableString(String.valueOf(index));
+                            ImageSpan span = new ImageSpan(getContext(), resizedBitmap, ImageSpan.ALIGN_BASELINE);
+                            str.setSpan(span, 0, content.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            editText.append(str);
+                        }
+                    });
+                    is.close();
+                }catch (IOException e){
+
+                }
+
+            }
+            emoticonPanel.addView(linearLayout);
+        }
+        isEmoticonReady = true;
+    }
+
     /**
      * Called when a view has been clicked.
      *
@@ -274,8 +338,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     /**
      * 获取输入框文字
      */
-    public String getText(){
-        return editText.getText().toString();
+    public Editable getText(){
+        return editText.getText();
     }
 
     /**

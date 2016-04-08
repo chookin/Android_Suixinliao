@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.TypedValue;
@@ -39,6 +41,33 @@ public class TextMessage extends Message {
         elem.setText(s);
         message.addElement(elem);
     }
+
+    public TextMessage(Editable s){
+        message = new TIMMessage();
+        ImageSpan[] spans = s.getSpans(0, s.length(), ImageSpan.class);
+        int currentIndex = 0;
+        for (ImageSpan span : spans){
+            int startIndex = s.getSpanStart(span);
+            int endIndex = s.getSpanEnd(span);
+            if (currentIndex < startIndex){
+                TIMTextElem textElem = new TIMTextElem();
+                textElem.setText(s.subSequence(currentIndex, startIndex).toString());
+                message.addElement(textElem);
+            }
+            TIMFaceElem faceElem = new TIMFaceElem();
+            faceElem.setIndex(Integer.parseInt(s.subSequence(startIndex, endIndex).toString()));
+            message.addElement(faceElem);
+            currentIndex = endIndex;
+        }
+        if (currentIndex < s.length()){
+            TIMTextElem textElem = new TIMTextElem();
+            textElem.setText(s.subSequence(currentIndex, s.length()).toString());
+            message.addElement(textElem);
+        }
+
+    }
+
+
 
     /**
      * 在聊天界面显示消息

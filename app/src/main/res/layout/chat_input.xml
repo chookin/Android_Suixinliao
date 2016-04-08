@@ -157,13 +157,14 @@
         </RelativeLayout>
 
     </LinearLayout>
-    <View
+    <LinearLayout
         android:id="@+id/emoticonPanel"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:visibility="gone"
+        android:orientation="vertical"
         android:background="@color/background_gray1">
 
-    </View>
+    </LinearLayout>
 
 </LinearLayout>

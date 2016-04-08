@@ -120,17 +120,6 @@ public class SettingFragment extends Fragment implements FriendInfoView{
                     });
                 }
             });
-            ImageView imageView = (ImageView) view.findViewById(R.id.emoticon1);
-            try{
-                AssetManager am = getActivity().getAssets();
-                InputStream is = am.open("emoticon/0.gif");
-                Bitmap bitmap = BitmapFactory.decodeStream(is);
-                imageView.setImageBitmap(bitmap);
-                is.close();
-            }catch (IOException e){
-
-            }
-
 
         }
         return view ;
