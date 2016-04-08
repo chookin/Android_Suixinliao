@@ -23,10 +23,8 @@ import java.util.Map;
  * 分组列表Adapters
  */
 public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
-    private List<TIMFriendGroup> mGroups;
     private Context mContext;
     private boolean selectable;
-    private List<TIMUserProfile> mChooseMembers;
 
     private List<String> groups;
     private Map<String, List<FriendProfile>> mMembers;
@@ -45,14 +43,6 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         this.selectable = selectable;
     }
 
-    public ExpandGroupListAdapter(Context context, List<TIMFriendGroup> groups, List<List<TIMUserProfile>> allgroupMembers, int resource) {
-        mContext = context;
-        mGroups = groups;
-//        mAllGroupMembers = allgroupMembers;
-        mChooseMembers = new ArrayList<TIMUserProfile>();
-        mChooseMembers.clear();
-
-    }
 
 
 
@@ -107,6 +97,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_group, null);
             groupHolder = new GroupHolder();
             groupHolder.groupname = (TextView) convertView.findViewById(R.id.groupName);
+            groupHolder.contentNum = (TextView) convertView.findViewById(R.id.contentNum);
             groupHolder.tag = (ImageView) convertView.findViewById(R.id.groupTag);
             convertView.setTag(groupHolder);
         } else {
@@ -122,6 +113,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         } else {
             groupHolder.groupname.setText(groups.get(groupPosition));
         }
+        groupHolder.contentNum.setText(String.valueOf(mMembers.get(groups.get(groupPosition)).size()) + mContext.getString(R.string.people));
         return convertView;
     }
 
@@ -162,6 +154,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
 
     class GroupHolder {
         public TextView groupname;
+        public TextView contentNum;
         public ImageView tag;
     }
 
@@ -171,9 +164,6 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         public ImageView tag;
     }
 
-    public List<TIMUserProfile> getChooseList() {
-        return mChooseMembers;
-    }
 
 
 }

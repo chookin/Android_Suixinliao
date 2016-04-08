@@ -16,6 +16,7 @@
     <string name="friend_need_confirm">需验证</string>
     <string name="default_group_name">默认分组</string>
     <string name="change_group_error">修改分组失败</string>
+    <string name="people">人</string>
 
     <!-- home activity -->
     <string name="send_success">发送成功</string>

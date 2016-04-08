@@ -52,8 +52,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     private LinearLayout morePanel,textPanel;
     private TextView voicePanel;
     private LinearLayout emoticonPanel;
-    private SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-    private List<TIMElem> textMessage = new ArrayList<>();
 
 
     public ChatInput(Context context, AttributeSet attrs) {
@@ -278,7 +276,6 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                     image.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.d(TAG, "click emoticon at " + index);
                             String content = String.valueOf(index);
                             SpannableString str = new SpannableString(String.valueOf(index));
                             ImageSpan span = new ImageSpan(getContext(), resizedBitmap, ImageSpan.ALIGN_BASELINE);
