@@ -355,7 +355,7 @@ public class FriendshipManagerPresenter {
 
 
     /**
-     * 设置好友备注
+     * 切换好友分组
      *
      * @param identify 好友identify
      * @param src 源分组，为空表示默认分组

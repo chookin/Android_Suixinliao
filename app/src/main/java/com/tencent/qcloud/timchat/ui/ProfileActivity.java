@@ -60,17 +60,17 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
         name.setText(getName(profile));
         LineControllerView id = (LineControllerView) findViewById(R.id.id);
         id.setContent(profile.getIdentifier());
-        LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
+        final LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
         remark.setContent(profile.getRemark());
         remark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditActivity.navToEdit(ProfileActivity.this, getString(R.string.profile_remark_edit), profile.getRemark(), CHANGE_REMARK_CODE, new EditActivity.EditInterface() {
+                EditActivity.navToEdit(ProfileActivity.this, getString(R.string.profile_remark_edit), remark.getContent(), CHANGE_REMARK_CODE, new EditActivity.EditInterface() {
                     @Override
                     public void onEdit(String text, TIMCallBack callBack) {
                         FriendshipManagerPresenter.setRemarkName(profile.getIdentifier(), text, callBack);
                     }
-                });
+                },20);
 
             }
         });
@@ -147,6 +147,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
             if (resultCode == RESULT_OK) {
                 LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
                 remark.setContent(data.getStringExtra(EditActivity.RETURN_EXTRA));
+
             }
         }
 
