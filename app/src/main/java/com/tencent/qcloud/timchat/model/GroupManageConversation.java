@@ -2,8 +2,11 @@ package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupPendencyItem;
+import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.GroupManageMessageActivity;
@@ -13,6 +16,7 @@ import com.tencent.qcloud.timchat.ui.GroupManageMessageActivity;
  */
 public class GroupManageConversation extends Conversation {
 
+    private final String TAG = "GroupManageConversation";
 
     private TIMGroupPendencyItem lastMessage;
 
@@ -46,7 +50,17 @@ public class GroupManageConversation extends Conversation {
      */
     @Override
     public void readAllMessage() {
+        GroupManagerPresenter.readGroupManageMessage(lastMessage.getAddTime(), new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+                Log.i(TAG, "read all message error,code " + i);
+            }
 
+            @Override
+            public void onSuccess() {
+                Log.i(TAG, "read all message succeed");
+            }
+        });
     }
 
     /**
@@ -64,6 +78,7 @@ public class GroupManageConversation extends Conversation {
      */
     @Override
     public void navToDetail(Context context) {
+        readAllMessage();
         Intent intent = new Intent(context, GroupManageMessageActivity.class);
         context.startActivity(intent);
     }

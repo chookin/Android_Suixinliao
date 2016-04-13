@@ -184,6 +184,17 @@ public class GroupManagerPresenter {
 
 
     /**
+     * 将群管理消息标记为已读
+     *
+     * @param timeStamp 最后一条消息的时间戳
+     * @param callBack 回调
+     */
+    public static void readGroupManageMessage(long timeStamp, TIMCallBack callBack){
+        TIMGroupManager.getInstance().reportGroupPendency(timeStamp, callBack);
+    }
+
+
+    /**
      * 创建群
      *
      * @param name 群名称
