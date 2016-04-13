@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.text.SpannableString;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -105,7 +109,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 firstItem = firstVisibleItem;
             }
         });
-
+        registerForContextMenu(listView);
         presenter.getConversation().setReadMessage();
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(presenter.getConversation().getPeer());
@@ -290,6 +294,33 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     @Override
     public void cancelSendVoice() {
 
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                   ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        Message message = messageList.get(info.position);
+        if (message.isSendFail()){
+            menu.add(0, 1, Menu.NONE, getString(R.string.chat_resend));
+        }
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Message message = messageList.get(info.position);
+        switch (item.getItemId()) {
+            case 1:
+                messageList.remove(message);
+                presenter.sendMessage(message.getMessage());
+                break;
+            default:
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
 

@@ -51,6 +51,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="5dp"
                     android:clickable="true"
+                    android:longClickable="true"
                     android:gravity="center"
                     android:background="@drawable/bg_bubble_gray"/>
             </LinearLayout>
@@ -81,6 +82,7 @@
                 android:paddingRight="10dp"
                 android:gravity="center"
                 android:clickable="true"
+                android:longClickable="true"
                 android:layout_toLeftOf="@id/rightAvatar"
                 android:background="@drawable/bg_bubble_blue"/>
             <RelativeLayout

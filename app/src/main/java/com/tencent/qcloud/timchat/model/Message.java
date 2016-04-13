@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageStatus;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
 import com.tencent.qcloud.timchat.utils.TimeUtil;
 
@@ -15,7 +16,7 @@ import com.tencent.qcloud.timchat.utils.TimeUtil;
  */
 public abstract class Message {
 
-    private final String TAG = "Message";
+    protected final String TAG = "Message";
 
     TIMMessage message;
 
@@ -103,13 +104,7 @@ public abstract class Message {
      */
     public abstract String getSummary();
 
-    /**
-     * 响应长按事件
-     *
-     */
-    public void onLongPress(){
-        Log.d(TAG, "on long press");
-    }
+
 
     /**
      * 是否需要显示时间获取
@@ -131,5 +126,16 @@ public abstract class Message {
             return;
         }
         hasTime = this.message.timestamp() - message.timestamp() > 300;
-     }
+    }
+
+
+    /**
+     * 消息是否发送失败
+     *
+     */
+    public boolean isSendFail(){
+        return message.status() == TIMMessageStatus.SendFail;
+    }
+
+
 }

@@ -119,7 +119,7 @@ public class FileUtil {
      * @param uri 文件uri
      */
     public static String getImageFilePath(Context context, Uri uri) {
-        if (uri == null) {
+        if (uri == null || !isMediaDocument(uri)) {
             return null;
         }
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -128,8 +128,8 @@ public class FileUtil {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-
-
+//                final String type = split[0];
+//                if (!type.equals("image")) return null;
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[] {
                         split[1]
@@ -196,6 +196,10 @@ public class FileUtil {
         }
         Log.e(TAG, "ExternalStorage not mounted");
         return false;
+    }
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
 

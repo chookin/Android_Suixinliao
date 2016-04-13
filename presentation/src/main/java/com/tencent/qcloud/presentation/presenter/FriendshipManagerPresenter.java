@@ -266,7 +266,7 @@ public class FriendshipManagerPresenter {
         List<TIMAddFriendRequest> reqList = new ArrayList<>();
         TIMAddFriendRequest req = new TIMAddFriendRequest();
         req.setAddWording(message);
-        req.setIdentifier(id);
+        req.setIdentifier("idnfaoidfad798");
         req.setRemark(remark);
         req.setFriendGroup(group);
         reqList.add(req);
