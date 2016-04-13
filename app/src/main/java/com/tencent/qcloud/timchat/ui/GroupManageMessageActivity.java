@@ -52,7 +52,6 @@ public class GroupManageMessageActivity extends Activity implements GroupManageM
      */
     @Override
     public void onGetGroupManageMessage(List<TIMGroupPendencyItem> message) {
-        Log.d(TAG, "get group manage message " + message.size());
         list.addAll(message);
         adapter.notifyDataSetChanged();
 

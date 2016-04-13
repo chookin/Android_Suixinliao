@@ -65,7 +65,6 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
         mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-//                ProfileActivity.navToProfile(getActivity(), FriendshipEvent.getInstance().getFriends().get(groupPosition).getProfiles().get(childPosition).getIdentifier());
                 friends.get(FriendshipInfo.getInstance().getGroups().get(groupPosition)).get(childPosition).onClick(getActivity());
                 return false;
             }

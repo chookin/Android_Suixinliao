@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -13,6 +14,8 @@ import com.tencent.qcloud.timchat.utils.TimeUtil;
  * 消息数据基类
  */
 public abstract class Message {
+
+    private final String TAG = "Message";
 
     TIMMessage message;
 
@@ -99,6 +102,14 @@ public abstract class Message {
      *
      */
     public abstract String getSummary();
+
+    /**
+     * 响应长按事件
+     *
+     */
+    public void onLongPress(){
+        Log.d(TAG, "on long press");
+    }
 
     /**
      * 是否需要显示时间获取

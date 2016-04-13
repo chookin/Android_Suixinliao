@@ -28,7 +28,7 @@ public class HomeActivity extends FragmentActivity {
     private int mImageViewArray[] = {R.drawable.tab_conversation, R.drawable.tab_contact, R.drawable.tab_setting};
     private String mTextviewArray[] = {"contact", "conversation", "setting"};
     private long flags = 0xff;//IMSDK 全部获取
-
+    private ImageView msgUnread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +64,14 @@ public class HomeActivity extends FragmentActivity {
         View view = layoutInflater.inflate(R.layout.home_tab, null);
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
         icon.setImageResource(mImageViewArray[index]);
-
         TextView title = (TextView) view.findViewById(R.id.title);
-        if (0 == mTitleArray[index]) {
-            title.setVisibility(View.GONE);
-        } else {
-            title.setText(mTitleArray[index]);
-            title.setVisibility(View.VISIBLE);
+        title.setText(mTitleArray[index]);
+        if (index == 0){
+            msgUnread = (ImageView) view.findViewById(R.id.tabUnread);
         }
-
         return view;
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,6 +85,14 @@ public class HomeActivity extends FragmentActivity {
         finish();
         startActivity(intent);
 
+    }
+
+
+    /**
+     * 设置未读tab显示
+     */
+    public void setMsgUnread(boolean noUnread){
+        msgUnread.setVisibility(noUnread?View.GONE:View.VISIBLE);
     }
 
 

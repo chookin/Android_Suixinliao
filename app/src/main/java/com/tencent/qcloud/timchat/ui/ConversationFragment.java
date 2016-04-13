@@ -142,7 +142,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         conversation.setLastMessage(MessageFactory.getMessage(message));
         conversationList.add(conversation);
         Collections.sort(conversationList);
-        adapter.notifyDataSetChanged();
+        reFreshView();
     }
 
     /**
@@ -189,7 +189,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         }
         friendshipConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
-        adapter.notifyDataSetChanged();
+        reFreshView();
     }
 
     /**
@@ -218,7 +218,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         }
         groupManageConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
-        adapter.notifyDataSetChanged();
+        reFreshView();
     }
 
     /**
@@ -229,6 +229,20 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     @Override
     public void onGetGroupManageMessage(List<TIMGroupPendencyItem> message) {
 
+    }
+
+    private long getTotalUnreadNum(){
+        long num = 0;
+        for (Conversation conversation : conversationList){
+            num += conversation.getUnreadNum();
+        }
+        return num;
+    }
+
+
+    private void reFreshView(){
+        adapter.notifyDataSetChanged();
+        ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
     }
 
 

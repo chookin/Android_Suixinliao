@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -89,11 +90,12 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             private int firstItem;
+
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && firstItem == 0) {
                     //如果拉到顶端读取更多消息
-                    presenter.getMessage(messageList.size()>0?messageList.get(0).getMessage():null);
+                    presenter.getMessage(messageList.size() > 0 ? messageList.get(0).getMessage() : null);
 
                 }
             }
@@ -103,6 +105,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 firstItem = firstVisibleItem;
             }
         });
+
         presenter.getConversation().setReadMessage();
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(presenter.getConversation().getPeer());
