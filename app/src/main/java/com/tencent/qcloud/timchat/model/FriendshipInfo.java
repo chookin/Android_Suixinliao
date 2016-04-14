@@ -91,4 +91,34 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
         return friends;
     }
 
+    /**
+     * 判断是否是好友
+     *
+     * @param identify 需判断的identify
+     */
+    public boolean isFriend(String identify){
+        for (String key : friends.keySet()){
+            for (FriendProfile profile : friends.get(key)){
+                if (identify.equals(profile.getIdentify())) return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 获取好友资料
+     *
+     * @param identify 好友id
+     */
+    public FriendProfile getProfile(String identify){
+        for (String key : friends.keySet()){
+            for (FriendProfile profile : friends.get(key)){
+                if (identify.equals(profile.getIdentify())) return profile;
+            }
+        }
+        return null;
+    }
+
+
 }

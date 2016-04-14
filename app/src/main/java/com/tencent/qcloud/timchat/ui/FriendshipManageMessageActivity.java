@@ -2,8 +2,10 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendFutureItem;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
@@ -17,7 +19,7 @@ import java.util.List;
 public class FriendshipManageMessageActivity extends Activity implements FriendshipMessageView {
 
 
-    private final String TAG = "GroupManageMessageActivity";
+    private final String TAG = FriendshipManageMessageActivity.class.getSimpleName();
     private FriendshipManagerPresenter presenter;
     private ListView listView;
     private List<FriendFuture> list= new ArrayList<>();
@@ -57,6 +59,16 @@ public class FriendshipManageMessageActivity extends Activity implements Friends
             for (TIMFriendFutureItem item : message){
                 list.add(new FriendFuture(item));
             }
+            FriendshipManagerPresenter.readFriendshipMessage(message.get(0).getAddTime(), new TIMCallBack() {
+                @Override
+                public void onError(int i, String s) {
+                    Log.e(TAG, "code:" + i + " msg:" + s);
+                }
+
+                @Override
+                public void onSuccess() {
+                }
+            });
         }
         adapter.notifyDataSetChanged();
     }

@@ -63,7 +63,6 @@ public class FriendshipConversation extends Conversation {
      */
     @Override
     public void navToDetail(Context context) {
-        readAllMessage();
         Intent intent = new Intent(context, FriendshipManageMessageActivity.class);
         context.startActivity(intent);
     }

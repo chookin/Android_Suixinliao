@@ -11,6 +11,8 @@ import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.GroupManageMessageActivity;
 
+import java.util.Calendar;
+
 /**
  * 群管理会话
  */
@@ -50,7 +52,8 @@ public class GroupManageConversation extends Conversation {
      */
     @Override
     public void readAllMessage() {
-        GroupManagerPresenter.readGroupManageMessage(lastMessage.getAddTime(), new TIMCallBack() {
+        //不能传入最后一条消息时间，由于消息时间戳的单位是秒
+        GroupManagerPresenter.readGroupManageMessage(Calendar.getInstance().getTimeInMillis(), new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
                 Log.i(TAG, "read all message error,code " + i);

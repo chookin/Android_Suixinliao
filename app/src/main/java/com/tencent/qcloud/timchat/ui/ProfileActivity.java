@@ -17,6 +17,8 @@ import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.FriendProfile;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 
@@ -54,12 +56,12 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
      * @param identify
      */
     public void showProfile(String identify) {
-        final TIMUserProfile profile = FriendshipEvent.getInstance().getProfile(identify);
+        final FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
         if (profile == null) return;
         TextView name = (TextView) findViewById(R.id.name);
-        name.setText(getName(profile));
+        name.setText(profile.getName());
         LineControllerView id = (LineControllerView) findViewById(R.id.id);
-        id.setContent(profile.getIdentifier());
+        id.setContent(profile.getIdentify());
         final LineControllerView remark = (LineControllerView) findViewById(R.id.remark);
         remark.setContent(profile.getRemark());
         remark.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +70,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
                 EditActivity.navToEdit(ProfileActivity.this, getString(R.string.profile_remark_edit), remark.getContent(), CHANGE_REMARK_CODE, new EditActivity.EditInterface() {
                     @Override
                     public void onEdit(String text, TIMCallBack callBack) {
-                        FriendshipManagerPresenter.setRemarkName(profile.getIdentifier(), text, callBack);
+                        FriendshipManagerPresenter.setRemarkName(profile.getIdentify(), text, callBack);
                     }
                 },20);
 
@@ -76,7 +78,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
         });
         LineControllerView category = (LineControllerView) findViewById(R.id.group);
         //一个用户可以在多个分组内，客户端逻辑保证一个人只存在于一个分组
-        category.setContent(categoryStr = profile.getFriendGroups().size() == 0 ? getString(R.string.default_group_name) : profile.getFriendGroups().get(0));
+        category.setContent(categoryStr = profile.getGroupName());
 
     }
 
@@ -102,7 +104,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
                 friendshipManagerPresenter.delFriend(identify);
                 break;
             case R.id.group:
-                final String[] groups = FriendshipEvent.getInstance().getGroupList();
+                final String[] groups = FriendshipInfo.getInstance().getGroupsArray();
                 for (int i = 0; i < groups.length; ++i) {
                     if (groups[i].equals("")) {
                         groups[i] = getString(R.string.default_group_name);
@@ -122,18 +124,6 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
         }
     }
 
-
-
-    /**
-     * 获取名称
-     *
-     * @param profile 返回的用户资料数据
-     */
-    private String getName(TIMUserProfile profile){
-        if (!profile.getRemark().equals("")) return profile.getRemark();
-        if (!profile.getNickName().equals("")) return profile.getNickName();
-        return profile.getIdentifier();
-    }
 
 
     @Override

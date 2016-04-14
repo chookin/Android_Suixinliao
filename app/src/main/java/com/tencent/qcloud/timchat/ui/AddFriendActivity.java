@@ -94,6 +94,9 @@ public class AddFriendActivity extends FragmentActivity implements View.OnClickL
                 Toast.makeText(this, getResources().getString(R.string.add_friend_to_blacklist), Toast.LENGTH_SHORT).show();
                 finish();
                 break;
+            default:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_error), Toast.LENGTH_SHORT).show();
+                break;
         }
 
     }

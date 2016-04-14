@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.AddFriendActivity;
 import com.tencent.qcloud.timchat.ui.ProfileActivity;
@@ -67,7 +68,7 @@ public class FriendProfile implements ProfileSummary {
      */
     @Override
     public void onClick(Context context) {
-        if (FriendshipEvent.getInstance().isFriend(profile.getIdentifier())){
+        if (FriendshipInfo.getInstance().isFriend(profile.getIdentifier())){
             ProfileActivity.navToProfile(context, profile.getIdentifier());
         }else{
             Intent person = new Intent(context,AddFriendActivity.class);
@@ -90,4 +91,25 @@ public class FriendProfile implements ProfileSummary {
     public String getIdentify(){
         return profile.getIdentifier();
     }
+
+
+    /**
+     * 获取用户备注名
+     */
+    public String getRemark(){
+        return profile.getRemark();
+    }
+
+
+    /**
+     * 获取好友分组
+     */
+    public String getGroupName(){
+        if (profile.getFriendGroups().size() == 0){
+            return MyApplication.getContext().getString(R.string.default_group_name);
+        }else{
+            return profile.getFriendGroups().get(0);
+        }
+    }
+
 }

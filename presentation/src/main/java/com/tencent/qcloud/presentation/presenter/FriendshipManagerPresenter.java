@@ -266,7 +266,7 @@ public class FriendshipManagerPresenter {
         List<TIMAddFriendRequest> reqList = new ArrayList<>();
         TIMAddFriendRequest req = new TIMAddFriendRequest();
         req.setAddWording(message);
-        req.setIdentifier("idnfaoidfad798");
+        req.setIdentifier(id);
         req.setRemark(remark);
         req.setFriendGroup(group);
         reqList.add(req);
@@ -351,6 +351,19 @@ public class FriendshipManagerPresenter {
      */
     public static void setRemarkName(String identify, String name, TIMCallBack callBack){
         TIMFriendshipManager.getInstance().getFriendshipProxy().setFriendRemark(identify, name, callBack);
+    }
+
+
+    /**
+     * 好友关系链消息已读上报
+     * 同时把已决未决消息和好友推荐消息已读
+     *
+     * @param timestamp 时间戳
+     * @param callBack 回调
+     */
+    public static void readFriendshipMessage(long timestamp, TIMCallBack callBack){
+        TIMFriendshipManager.getInstance().pendencyReport(timestamp, callBack);
+        TIMFriendshipManager.getInstance().recommendReport(timestamp, callBack);
     }
 
 
