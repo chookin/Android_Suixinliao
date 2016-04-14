@@ -49,8 +49,11 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
                 FriendshipEvent.NotifyCmd cmd = (FriendshipEvent.NotifyCmd) data;
                 switch (cmd.type){
                     case REFRESH:
+                    case DEL:
+                    case ADD:
                         refresh();
                         break;
+
                 }
             }
         }
@@ -74,6 +77,8 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
     }
 
     private void refresh(){
+        groups.clear();
+        friends.clear();
         TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, this);
     }
 
@@ -92,7 +97,7 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
     /**
      * 获取好友列表摘要
      */
-    public Map<String, List<FriendProfile>> getFriendSummaries(){
+    public Map<String, List<FriendProfile>> getFriends(){
         return friends;
     }
 

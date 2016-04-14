@@ -11,11 +11,9 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
-import com.tencent.qcloud.timchat.model.ProfileSummary;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +42,7 @@ public class ChooseFriendActivity extends Activity {
                 finish();
             }
         });
-        final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriendSummaries();
+        final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriends();
         mGroupListView = (ExpandableListView) findViewById(R.id.groupList);
         mGroupListAdapter = new ExpandGroupListAdapter(this, FriendshipInfo.getInstance().getGroups(), friends, true);
         mGroupListView.setAdapter(mGroupListAdapter);

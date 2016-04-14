@@ -17,24 +17,20 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
-import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
-import com.tencent.qcloud.timchat.model.ProfileSummary;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * 联系人界面
  */
-public class ContactFragment extends Fragment implements  View.OnClickListener, Observer {
+public class ContactFragment extends Fragment implements  View.OnClickListener {
 
-
+    private View view;
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private LinearLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn,mPrivateGroupBtn;
@@ -42,35 +38,45 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View contactLayout = inflater.inflate(R.layout.fragment_contact, container, false);
-        mGroupListView = (ExpandableListView) contactLayout.findViewById(R.id.groupList);
-        mNewFriBtn = (LinearLayout) contactLayout.findViewById(R.id.btnNewFriend);
-        mNewFriBtn.setOnClickListener(this);
-        mPublicGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPublicGroup);
-        mPublicGroupBtn.setOnClickListener(this);
-        mChatRoomBtn = (LinearLayout) contactLayout.findViewById(R.id.btnChatroom);
-        mChatRoomBtn.setOnClickListener(this);
-        mPrivateGroupBtn = (LinearLayout) contactLayout.findViewById(R.id.btnPrivateGroup);
-        mPrivateGroupBtn.setOnClickListener(this);
-        TemplateTitle title = (TemplateTitle) contactLayout.findViewById(R.id.contact_antionbar);
-        title.setMoreImgAction(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMoveDialog();
-            }
-        });
-        final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriendSummaries();
-        mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), FriendshipInfo.getInstance().getGroups(), friends);
-        mGroupListView.setAdapter(mGroupListAdapter);
-        mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                friends.get(FriendshipInfo.getInstance().getGroups().get(groupPosition)).get(childPosition).onClick(getActivity());
-                return false;
-            }
-        });
+
+        if (view == null){
+            view = inflater.inflate(R.layout.fragment_contact, container, false);
+            mGroupListView = (ExpandableListView) view.findViewById(R.id.groupList);
+            mNewFriBtn = (LinearLayout) view.findViewById(R.id.btnNewFriend);
+            mNewFriBtn.setOnClickListener(this);
+            mPublicGroupBtn = (LinearLayout) view.findViewById(R.id.btnPublicGroup);
+            mPublicGroupBtn.setOnClickListener(this);
+            mChatRoomBtn = (LinearLayout) view.findViewById(R.id.btnChatroom);
+            mChatRoomBtn.setOnClickListener(this);
+            mPrivateGroupBtn = (LinearLayout) view.findViewById(R.id.btnPrivateGroup);
+            mPrivateGroupBtn.setOnClickListener(this);
+            TemplateTitle title = (TemplateTitle) view.findViewById(R.id.contact_antionbar);
+            title.setMoreImgAction(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMoveDialog();
+                }
+            });
+            final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriends();
+            mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), FriendshipInfo.getInstance().getGroups(), friends);
+            mGroupListView.setAdapter(mGroupListAdapter);
+            mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                    friends.get(FriendshipInfo.getInstance().getGroups().get(groupPosition)).get(childPosition).onClick(getActivity());
+                    return false;
+                }
+            });
+            mGroupListAdapter.notifyDataSetChanged();
+        }
+        return view;
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
         mGroupListAdapter.notifyDataSetChanged();
-        return contactLayout;
     }
 
 
@@ -133,21 +139,6 @@ public class ContactFragment extends Fragment implements  View.OnClickListener, 
         inviteDialog.show();
     }
 
-
-    /**
-     * This method is called if the specified {@code Observable} object's
-     * {@code notifyObservers} method is called (because the {@code Observable}
-     * object has been updated.
-     *
-     * @param observable the {@link Observable} object.
-     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
-     */
-    @Override
-    public void update(Observable observable, Object data) {
-        if (observable instanceof FriendshipEvent){
-            mGroupListAdapter.notifyDataSetChanged();
-        }
-    }
 
     private void showGroups(String type){
         Intent intent = new Intent(getActivity(), GroupListActivity.class);

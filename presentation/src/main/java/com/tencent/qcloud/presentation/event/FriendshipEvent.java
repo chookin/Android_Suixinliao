@@ -63,6 +63,8 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     @Override
     public void OnDelFriends(List<String> list) {
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.DEL, list));
     }
 
     @Override
@@ -71,7 +73,6 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     @Override
     public void OnAddFriendReqs(List<TIMSNSChangeInfo> list) {
-        Log.d(TAG, "on add friend req " + list.size());
         setChanged();
         notifyObservers(new NotifyCmd(NotifyType.ADD_REQ, list));
     }
@@ -116,7 +117,7 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
         ADD_REQ,//请求添加
         READ_MSG,//关系链通知已读
         ADD,//添加好友
-
+        DEL,//删除好友
     }
 
 
