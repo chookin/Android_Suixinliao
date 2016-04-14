@@ -90,6 +90,7 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
         Log.i(TAG, "login succeed");
         GroupEvent.getInstance().init();
         FriendshipEvent.getInstance().init();
+        FriendshipInfo.getInstance();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();

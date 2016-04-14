@@ -22,4 +22,9 @@ public interface ConversationView extends MvpView {
      * @param message 最后一条消息
      */
     void updateMessage(TIMMessage message);
+
+    /**
+     * 更新好友关系链消息
+     */
+    void updateFriendshipMessage();
 }

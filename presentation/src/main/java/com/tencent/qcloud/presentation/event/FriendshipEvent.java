@@ -23,9 +23,6 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     private final String TAG = FriendshipEvent.class.getSimpleName();
 
-    private boolean isInit;
-
-
     private FriendshipEvent(){}
 
     private static FriendshipEvent instance = new FriendshipEvent();
@@ -49,7 +46,8 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     @Override
     public void onSuccess() {
-        isInit = true;
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.REFRESH, null));
     }
 
     @Override
@@ -59,7 +57,8 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     @Override
     public void OnAddFriends(List<TIMUserProfile> list) {
-        Log.d(TAG, "on add friend " + list.size());
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.ADD, list));
     }
 
     @Override
@@ -72,7 +71,9 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     @Override
     public void OnAddFriendReqs(List<TIMSNSChangeInfo> list) {
-
+        Log.d(TAG, "on add friend req " + list.size());
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.ADD_REQ, list));
     }
 
     @Override
@@ -87,9 +88,36 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
     public void OnFriendGroupUpdate(List<TIMFriendGroup> list) {
     }
 
-
-
-    public boolean isInit() {
-        return isInit;
+    /**
+     * 好友关系链消息已读通知
+     */
+    public void OnFriendshipMessageRead(){
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.READ_MSG, null));
     }
+
+
+    /**
+     * 通知上层用的数据
+     */
+    public class NotifyCmd{
+        public final NotifyType type;
+        public final Object data;
+
+        NotifyCmd(NotifyType type, Object data){
+            this.type = type;
+            this.data = data;
+        }
+
+    }
+
+    public enum NotifyType{
+        REFRESH,//刷新数据
+        ADD_REQ,//请求添加
+        READ_MSG,//关系链通知已读
+        ADD,//添加好友
+
+    }
+
+
 }

@@ -110,7 +110,8 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         }
         groupInfoPresenter = new GroupInfoPresenter(this,groupList,true);
         groupInfoPresenter.getGroupDetailInfo();
-        updateSystemConversation();
+        friendshipManagerPresenter.getFriendshipLastMessage();
+        groupManagerPresenter.getGroupManageLastMessage();
     }
 
     /**
@@ -125,8 +126,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
             return;
         }
         if (message.getConversation().getType() == TIMConversationType.System){
-            Log.d(TAG, "onMemberJoin system message");
-            updateSystemConversation();
+            groupManagerPresenter.getGroupManageLastMessage();
             return;
         }
         NomalConversation conversation = new NomalConversation(message.getConversation());
@@ -143,6 +143,14 @@ public class ConversationFragment extends Fragment implements ConversationView,G
         conversationList.add(conversation);
         Collections.sort(conversationList);
         reFreshView();
+    }
+
+    /**
+     * 更新好友关系链消息
+     */
+    @Override
+    public void updateFriendshipMessage() {
+        friendshipManagerPresenter.getFriendshipLastMessage();
     }
 
     /**
@@ -163,13 +171,6 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     }
 
 
-    /**
-     * 更新系统消息
-     */
-    private void updateSystemConversation(){
-        friendshipManagerPresenter.getFriendshipLastMessage();
-        groupManagerPresenter.getGroupManageLastMessage();
-    }
 
 
 
@@ -199,7 +200,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
      */
     @Override
     public void onGetFriendshipMessage(List<TIMFriendFutureItem> message) {
-
+        friendshipManagerPresenter.getFriendshipLastMessage();
     }
 
     /**

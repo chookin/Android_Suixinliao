@@ -18,6 +18,7 @@ import com.tencent.TIMPageDirectionType;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMUserSearchSucc;
 import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
@@ -359,11 +360,30 @@ public class FriendshipManagerPresenter {
      * 同时把已决未决消息和好友推荐消息已读
      *
      * @param timestamp 时间戳
-     * @param callBack 回调
      */
-    public static void readFriendshipMessage(long timestamp, TIMCallBack callBack){
-        TIMFriendshipManager.getInstance().pendencyReport(timestamp, callBack);
-        TIMFriendshipManager.getInstance().recommendReport(timestamp, callBack);
+    public void readFriendshipMessage(long timestamp){
+        TIMFriendshipManager.getInstance().pendencyReport(timestamp, new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+                FriendshipEvent.getInstance().OnFriendshipMessageRead();
+            }
+        });
+        TIMFriendshipManager.getInstance().recommendReport(timestamp, new TIMCallBack() {
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+                FriendshipEvent.getInstance().OnFriendshipMessageRead();
+            }
+        });
     }
 
 

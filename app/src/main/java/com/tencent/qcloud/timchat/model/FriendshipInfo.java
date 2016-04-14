@@ -27,7 +27,7 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
     private FriendshipInfo(){
         groups = new ArrayList<>();
         friends = new HashMap<>();
-        refresh();
+        FriendshipEvent.getInstance().addObserver(this);
     }
 
     public static FriendshipInfo getInstance(){
@@ -45,7 +45,14 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
     @Override
     public void update(Observable observable, Object data) {
         if (observable instanceof FriendshipEvent){
-
+            if (data instanceof FriendshipEvent.NotifyCmd){
+                FriendshipEvent.NotifyCmd cmd = (FriendshipEvent.NotifyCmd) data;
+                switch (cmd.type){
+                    case REFRESH:
+                        refresh();
+                        break;
+                }
+            }
         }
     }
 
@@ -67,9 +74,7 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
     }
 
     private void refresh(){
-        if (FriendshipEvent.getInstance().isInit()){
-            TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, this);
-        }
+        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, this);
     }
 
     /**

@@ -27,6 +27,8 @@ public class ConversationPresenter extends Presenter implements Observer {
     public ConversationPresenter(ConversationView view){
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
+        //注册好友关系链监听
+        FriendshipEvent.getInstance().addObserver(this);
         this.view = view;
     }
 
@@ -36,16 +38,15 @@ public class ConversationPresenter extends Presenter implements Observer {
             TIMMessage msg = (TIMMessage) data;
             view.updateMessage(msg);
         }else if (observable instanceof FriendshipEvent){
-            Log.d(TAG, "friend change");
+            FriendshipEvent.NotifyCmd cmd = (FriendshipEvent.NotifyCmd) data;
+            switch (cmd.type){
+                case ADD_REQ:
+                case READ_MSG:
+                case ADD:
+                    view.updateFriendshipMessage();
+                    break;
+            }
         }
-    }
-
-    /**
-     * 中止页面逻辑
-     */
-    public void stop() {
-        //注销消息监听
-        MessageEvent.getInstance().deleteObserver(this);
     }
 
 

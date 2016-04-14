@@ -59,16 +59,7 @@ public class FriendshipManageMessageActivity extends Activity implements Friends
             for (TIMFriendFutureItem item : message){
                 list.add(new FriendFuture(item));
             }
-            FriendshipManagerPresenter.readFriendshipMessage(message.get(0).getAddTime(), new TIMCallBack() {
-                @Override
-                public void onError(int i, String s) {
-                    Log.e(TAG, "code:" + i + " msg:" + s);
-                }
-
-                @Override
-                public void onSuccess() {
-                }
-            });
+            presenter.readFriendshipMessage(message.get(0).getAddTime());
         }
         adapter.notifyDataSetChanged();
     }
