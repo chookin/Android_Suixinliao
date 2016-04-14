@@ -18,7 +18,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
 
     private final String TAG = "GroupInfo";
 
-    private boolean isInit;
 
     private GroupEvent(){
     }
@@ -43,7 +42,8 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
 
             @Override
             public void onSuccess() {
-                isInit = true;
+                setChanged();
+                notifyObservers(new NotifyCmd(NotifyType.REFRESH, null));
             }
         });
         //设置群资料变更监听
@@ -51,9 +51,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
 
     }
 
-    public boolean isInit() {
-        return isInit;
-    }
 
     @Override
     public void onMemberJoin(String s, List<TIMGroupMemberInfo> list) {
@@ -73,19 +70,41 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
     @Override
     public void onGroupAdd(TIMGroupDetailInfo timGroupDetailInfo) {
         setChanged();
-        notifyObservers(timGroupDetailInfo);
+        notifyObservers(new NotifyCmd(NotifyType.ADD, timGroupDetailInfo));
     }
 
     @Override
     public void onGroupDelete(String s) {
         setChanged();
-        notifyObservers(s);
+        notifyObservers(new NotifyCmd(NotifyType.DEL, s));
     }
 
     @Override
     public void onGroupUpdate(TIMGroupDetailInfo timGroupDetailInfo) {
         setChanged();
-        notifyObservers(timGroupDetailInfo);
+        notifyObservers(new NotifyCmd(NotifyType.UPDATE, timGroupDetailInfo));
+    }
+
+
+    /**
+     * 通知上层用的数据
+     */
+    public class NotifyCmd{
+        public final NotifyType type;
+        public final Object data;
+
+        NotifyCmd(NotifyType type, Object data){
+            this.type = type;
+            this.data = data;
+        }
+
+    }
+
+    public enum NotifyType{
+        REFRESH,//刷新
+        ADD,//添加群
+        DEL,//删除群
+        UPDATE,//更新群信息
     }
 
 

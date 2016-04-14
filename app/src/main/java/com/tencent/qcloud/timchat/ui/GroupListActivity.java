@@ -21,6 +21,8 @@ public class GroupListActivity extends Activity {
     private ListView listView;
     private String type;
     private List<ProfileSummary> list;
+    private final int CREATE_GROUP_CODE = 100;
+    private final int GROUP_INFO_CODE = 200;
 
 
     @Override
@@ -45,7 +47,7 @@ public class GroupListActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(GroupListActivity.this, CreateGroupActivity.class);
                 intent.putExtra("type", type);
-                startActivity(intent);
+                startActivityForResult(intent, CREATE_GROUP_CODE);
             }
         });
 
@@ -62,5 +64,25 @@ public class GroupListActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CREATE_GROUP_CODE) {
+            if (resultCode == RESULT_OK) {
+                refresh();
+            }
+        }else if (requestCode == GROUP_INFO_CODE){
+            if (resultCode == RESULT_OK) {
+                refresh();
+            }
+        }
+
+    }
+
+    private void refresh(){
+        list.clear();
+        list = GroupInfo.getInstance().getGroupListByType(type);
+        adapter.notifyDataSetChanged();
     }
 }

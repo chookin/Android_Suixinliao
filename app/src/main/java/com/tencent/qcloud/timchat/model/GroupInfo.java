@@ -38,9 +38,6 @@ public class GroupInfo implements GroupInfoView,Observer {
         //注册群关系监听
         GroupEvent.getInstance().addObserver(this);
         presenter = new GroupManagerPresenter(this);
-        if (GroupEvent.getInstance().isInit()){
-            presenter.getGroupList();
-        }
     }
 
     private static GroupInfo instance = new GroupInfo();
@@ -72,13 +69,20 @@ public class GroupInfo implements GroupInfoView,Observer {
     @Override
     public void update(Observable observable, Object data) {
         if (observable instanceof GroupEvent){
-            if (data == null){
-                presenter.getGroupList();
-            }else{
-                if (data instanceof TIMGroupDetailInfo){
-                    updateGroup((TIMGroupDetailInfo) data);
-                }else if (data instanceof String){
-                    delGroup((String) data);
+            if (data instanceof GroupEvent.NotifyCmd){
+                GroupEvent.NotifyCmd cmd = (GroupEvent.NotifyCmd) data;
+                switch (cmd.type){
+                    case REFRESH:
+                        presenter.getGroupList();
+                        break;
+                    case ADD:
+                    case UPDATE:
+                        updateGroup((TIMGroupDetailInfo) cmd.data);
+                        break;
+                    case DEL:
+                        delGroup((String) cmd.data);
+                        break;
+
                 }
             }
         }
