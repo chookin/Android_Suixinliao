@@ -13,6 +13,7 @@ import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
+import com.tencent.openqq.protocol.imsdk.im_open_common;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
@@ -189,6 +190,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
                 Toast.makeText(this, getString(R.string.change_group_error),Toast.LENGTH_SHORT).show();
             case TIM_FRIEND_STATUS_SUCC:
                 category.setContent(groupName);
+                FriendshipEvent.getInstance().OnFriendGroupChange();
                 break;
             default:
                 Toast.makeText(this, getString(R.string.change_group_error),Toast.LENGTH_SHORT).show();

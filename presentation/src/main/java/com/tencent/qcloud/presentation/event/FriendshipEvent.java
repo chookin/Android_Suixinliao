@@ -97,6 +97,14 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
         notifyObservers(new NotifyCmd(NotifyType.READ_MSG, null));
     }
 
+    /**
+     * 好友分组变更通知
+     */
+    public void OnFriendGroupChange(){
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.PROFILE_UPDATE, null));
+    }
+
 
     /**
      * 通知上层用的数据
@@ -118,6 +126,7 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
         READ_MSG,//关系链通知已读
         ADD,//添加好友
         DEL,//删除好友
+        PROFILE_UPDATE,//变更好友资料
     }
 
 

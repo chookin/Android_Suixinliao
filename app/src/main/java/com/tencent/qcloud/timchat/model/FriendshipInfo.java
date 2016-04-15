@@ -1,6 +1,8 @@
 package com.tencent.qcloud.timchat.model;
 
 
+import android.util.Log;
+
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
@@ -18,6 +20,8 @@ import java.util.Observer;
  * 好友列表缓存数据结构
  */
 public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriendGroup>> {
+
+    private final String TAG = "FriendshipInfo";
 
     private List<String> groups;
     private Map<String, List<FriendProfile>> friends;
@@ -51,6 +55,8 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
                     case REFRESH:
                     case DEL:
                     case ADD:
+                    case PROFILE_UPDATE:
+                    case ADD_REQ:
                         refresh();
                         break;
 
@@ -61,7 +67,7 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
 
     @Override
     public void onError(int i, String s) {
-
+        Log.e(TAG, "get friendship list error code:" + i + " msg:" + s);
     }
 
     @Override

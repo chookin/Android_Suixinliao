@@ -139,7 +139,7 @@ public class FriendshipManagerPresenter {
 
             @Override
             public void onError(int arg0, String arg1) {
-                Log.i(TAG, "onError code" + arg0 + " msg " + arg1);
+                Log.e(TAG, "onError code" + arg0 + " msg " + arg1);
             }
 
             @Override
@@ -400,6 +400,7 @@ public class FriendshipManagerPresenter {
             TIMFriendshipManager.getInstance().getFriendshipProxy().delFriendsFromFriendGroup(src, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
                 @Override
                 public void onError(int i, String s) {
+                    Log.e(TAG, "changeFriendGroup.del src,code" + i + " msg " + s);
                     friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN, src);
                 }
 
@@ -409,6 +410,7 @@ public class FriendshipManagerPresenter {
                         TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
                             @Override
                             public void onError(int i, String s) {
+                                Log.e(TAG, "changeFriendGroup.add dest,code" + i + " msg " + s);
                                 friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN, null);
                             }
 
@@ -427,6 +429,7 @@ public class FriendshipManagerPresenter {
             TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
                 @Override
                 public void onError(int i, String s) {
+                    Log.e(TAG, "changeFriendGroup.add dest,code" + i + " msg " + s);
                     friendshipManageView.onChangeGroup(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN, null);
                 }
 
