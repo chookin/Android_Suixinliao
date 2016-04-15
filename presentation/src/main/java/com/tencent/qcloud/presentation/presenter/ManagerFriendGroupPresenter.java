@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 群组信息逻辑
  */
-public class ManagerFriendGroupPresenter extends Presenter {
+public class ManagerFriendGroupPresenter {
 
     private ManagerGroupView view;
     private Context mContext;

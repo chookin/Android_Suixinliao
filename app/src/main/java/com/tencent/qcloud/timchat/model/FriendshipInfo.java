@@ -51,6 +51,7 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
         if (observable instanceof FriendshipEvent){
             if (data instanceof FriendshipEvent.NotifyCmd){
                 FriendshipEvent.NotifyCmd cmd = (FriendshipEvent.NotifyCmd) data;
+                Log.d(TAG, "get notify type:" + cmd.type);
                 switch (cmd.type){
                     case REFRESH:
                     case DEL:

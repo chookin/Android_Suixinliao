@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 获取自己分组的数据，
  */
-public class GetFriendGroupsPresenter extends Presenter {
+public class GetFriendGroupsPresenter {
 
 
     private MyFriendGroupInfo view;

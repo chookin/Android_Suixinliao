@@ -19,7 +19,7 @@ import java.util.Observer;
 /**
  * 会话界面逻辑
  */
-public class ConversationPresenter extends Presenter implements Observer {
+public class ConversationPresenter implements Observer {
 
     private static final String TAG = "ConversationPresenter";
     private ConversationView view;

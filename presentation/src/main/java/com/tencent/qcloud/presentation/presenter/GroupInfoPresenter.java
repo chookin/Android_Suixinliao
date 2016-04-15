@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 群信息逻辑
  */
-public class GroupInfoPresenter extends Presenter implements TIMValueCallBack<List<TIMGroupDetailInfo>> {
+public class GroupInfoPresenter implements TIMValueCallBack<List<TIMGroupDetailInfo>> {
 
     private GroupInfoView view;
     private boolean isInGroup;

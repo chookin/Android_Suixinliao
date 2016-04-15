@@ -88,7 +88,7 @@ public class VideoInputDialog extends DialogFragment {
                                         mTimeCount++;
                                         mainHandler.post(updateProgress);
                                         if (mTimeCount == MAX_TIME) {
-                                            mTimeCount = 0;
+                                            recordStop();
                                         }
                                     }
                                 }, 0, 10);
@@ -119,13 +119,13 @@ public class VideoInputDialog extends DialogFragment {
 
     private void recordStop(){
         if (isRecording) {
+            isRecording = false;
             mMediaRecorder.stop();
             releaseMediaRecorder();
             mCamera.lock();
             if (mTimer != null) mTimer.cancel();
             mTimeCount = 0;
             mainHandler.post(updateProgress);
-            isRecording = false;
 
         }
     }

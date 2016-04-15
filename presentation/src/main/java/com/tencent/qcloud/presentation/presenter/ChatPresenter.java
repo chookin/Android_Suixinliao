@@ -19,7 +19,7 @@ import java.util.Observer;
 /**
  * 聊天界面逻辑
  */
-public class ChatPresenter extends Presenter implements Observer {
+public class ChatPresenter implements Observer {
 
     private ChatView view;
     private TIMConversation conversation;

@@ -105,6 +105,8 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
                 UserInfo.getInstance().setId(id);
                 UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
                 navToHome();
+            }else if (resultCode == RESULT_CANCELED){
+                finish();
             }
         }
     }

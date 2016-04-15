@@ -57,22 +57,27 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
 
     @Override
     public void OnAddFriends(List<TIMUserProfile> list) {
+        Log.d(TAG, "OnAddFriends");
         setChanged();
         notifyObservers(new NotifyCmd(NotifyType.ADD, list));
     }
 
     @Override
     public void OnDelFriends(List<String> list) {
+        Log.d(TAG, "OnDelFriends");
         setChanged();
         notifyObservers(new NotifyCmd(NotifyType.DEL, list));
     }
 
     @Override
     public void OnFriendProfileUpdate(List<TIMUserProfile> list) {
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.PROFILE_UPDATE, null));
     }
 
     @Override
     public void OnAddFriendReqs(List<TIMSNSChangeInfo> list) {
+        Log.d(TAG, "OnAddFriendReqs");
         setChanged();
         notifyObservers(new NotifyCmd(NotifyType.ADD_REQ, list));
     }
