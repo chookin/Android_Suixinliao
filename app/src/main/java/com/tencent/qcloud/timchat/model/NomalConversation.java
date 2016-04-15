@@ -26,9 +26,11 @@ public class NomalConversation extends Conversation {
         type = conversation.getType();
         identify = conversation.getPeer();
         if (type == TIMConversationType.Group){
-            name=GroupInfo.getInstance().getGroupName(conversation.getIdentifer());
+            name=GroupInfo.getInstance().getGroupName(identify);
+            if (name.equals("")) name = identify;
         }else{
-            name=conversation.getPeer();
+            FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+            name=profile == null?identify:profile.getName();
         }
     }
 

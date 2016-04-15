@@ -25,6 +25,9 @@ import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.model.FriendProfile;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
+import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.ImageMessage;
 import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.MessageFactory;
@@ -55,6 +58,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private static final int IMAGE_STORE = 200;
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
+    private String identify;
     private RecorderUtil recorder = new RecorderUtil();
 
 
@@ -71,7 +75,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        final String identify = getIntent().getStringExtra("identify");
+        identify = getIntent().getStringExtra("identify");
         final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
         presenter = new ChatPresenter(this, identify, type);
         input = (ChatInput) findViewById(R.id.input_panel);
@@ -111,7 +115,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         });
         registerForContextMenu(listView);
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
-        title.setTitleText(presenter.getConversation().getPeer());
         switch (type) {
             case C2C:
                 title.setMoreImg(R.drawable.btn_person);
@@ -123,6 +126,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                         startActivity(intent);
                     }
                 });
+                FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+                title.setTitleText(profile == null ? identify : profile.getName());
                 break;
             case Group:
                 title.setMoreImg(R.drawable.btn_group);
@@ -134,6 +139,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                         startActivity(intent);
                     }
                 });
+                title.setTitleText(GroupInfo.getInstance().getGroupName(identify));
                 break;
 
         }

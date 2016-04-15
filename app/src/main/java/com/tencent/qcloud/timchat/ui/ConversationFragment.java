@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * 会话列表界面
  */
-public class ConversationFragment extends Fragment implements ConversationView,GroupInfoView,FriendshipMessageView,GroupManageMessageView {
+public class ConversationFragment extends Fragment implements ConversationView,FriendshipMessageView,GroupManageMessageView {
 
     private final String TAG = "ConversationFragment";
 
@@ -50,7 +50,6 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     private ConversationAdapter adapter;
     private ListView listView;
     private ConversationPresenter presenter;
-    private GroupInfoPresenter groupInfoPresenter;
     private FriendshipManagerPresenter friendshipManagerPresenter;
     private GroupManagerPresenter groupManagerPresenter;
     private List<String> groupList;
@@ -79,7 +78,7 @@ public class ConversationFragment extends Fragment implements ConversationView,G
                 }
             });
             friendshipManagerPresenter = new FriendshipManagerPresenter(this);
-            groupManagerPresenter = new GroupManagerPresenter(this, this, null);
+            groupManagerPresenter = new GroupManagerPresenter(this);
             presenter = new ConversationPresenter(this);
             presenter.getConversation();
         }
@@ -108,8 +107,6 @@ public class ConversationFragment extends Fragment implements ConversationView,G
                     break;
             }
         }
-        groupInfoPresenter = new GroupInfoPresenter(this,groupList,true);
-        groupInfoPresenter.getGroupDetailInfo();
         friendshipManagerPresenter.getFriendshipLastMessage();
         groupManagerPresenter.getGroupManageLastMessage();
     }
@@ -152,26 +149,6 @@ public class ConversationFragment extends Fragment implements ConversationView,G
     public void updateFriendshipMessage() {
         friendshipManagerPresenter.getFriendshipLastMessage();
     }
-
-    /**
-     * 显示群资料
-     *
-     * @param groupInfos 群资料信息列表
-     */
-    @Override
-    public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
-        for(Conversation item:conversationList){
-            for (TIMGroupDetailInfo info:groupInfos){
-                if (info.getGroupId().equals(item.getIdentify())){
-                    item.setName(info.getGroupName());
-                }
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-
-
 
 
     /**
