@@ -27,6 +27,11 @@ public class TimeUtil {
         inputTime.setTimeInMillis(timeStamp*1000);
         Date currenTimeZone = inputTime.getTime();
         Calendar calendar = Calendar.getInstance();
+        if (calendar.before(inputTime)){
+            //当前时间在输入时间之前
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy" + MyApplication.getContext().getResources().getString(R.string.time_year)+"MM"+MyApplication.getContext().getResources().getString(R.string.time_month)+"dd"+MyApplication.getContext().getResources().getString(R.string.time_day));
+            return sdf.format(currenTimeZone);
+        }
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -65,6 +70,11 @@ public class TimeUtil {
         inputTime.setTimeInMillis(timeStamp*1000);
         Date currenTimeZone = inputTime.getTime();
         Calendar calendar = Calendar.getInstance();
+        if (calendar.before(inputTime)){
+            //当前时间在输入时间之前
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy" + MyApplication.getContext().getResources().getString(R.string.time_year)+"MM"+MyApplication.getContext().getResources().getString(R.string.time_month)+"dd"+MyApplication.getContext().getResources().getString(R.string.time_day));
+            return sdf.format(currenTimeZone);
+        }
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
