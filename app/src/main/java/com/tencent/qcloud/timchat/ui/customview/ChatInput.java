@@ -355,6 +355,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     }
 
 
+
     public enum InputMode{
         TEXT,
         VOICE,

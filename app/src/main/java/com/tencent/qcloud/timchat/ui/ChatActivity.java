@@ -110,7 +110,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             }
         });
         registerForContextMenu(listView);
-        presenter.getConversation().setReadMessage();
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         title.setTitleText(presenter.getConversation().getPeer());
         switch (type) {
@@ -147,6 +146,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         super.onDestroy();
         presenter.stop();
     }
+
 
     /**
      * 显示消息
@@ -258,6 +258,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         voiceSendingView.setVisibility(View.VISIBLE);
         voiceSendingView.showRecording();
         recorder.startRecording();
+
     }
 
     /**

@@ -19,6 +19,7 @@ public class RecorderUtil {
     private MediaRecorder mRecorder = null;
     private long startTime;
     private long timeInterval;
+    private boolean isRecording;
 
     public RecorderUtil(){
         mFileName = FileUtil.getCacheFilePath("tempAudio");
@@ -29,6 +30,10 @@ public class RecorderUtil {
      */
     public void startRecording() {
         if (mFileName == null) return;
+        if (isRecording){
+            mRecorder.release();
+            mRecorder = null;
+        }
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -37,10 +42,12 @@ public class RecorderUtil {
         startTime = System.currentTimeMillis();
         try {
             mRecorder.prepare();
+            mRecorder.start();
+            isRecording = true;
         } catch (IOException e) {
             Log.e(TAG, "prepare() failed");
         }
-        mRecorder.start();
+
     }
 
 
@@ -55,6 +62,7 @@ public class RecorderUtil {
         }
         mRecorder.release();
         mRecorder = null;
+        isRecording =false;
     }
 
 
