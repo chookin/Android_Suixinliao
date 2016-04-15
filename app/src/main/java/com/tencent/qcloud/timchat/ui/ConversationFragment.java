@@ -220,7 +220,8 @@ public class ConversationFragment extends Fragment implements ConversationView,F
 
     private void reFreshView(){
         adapter.notifyDataSetChanged();
-        ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
+        if (getActivity() instanceof  HomeActivity)
+            ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
     }
 
 
