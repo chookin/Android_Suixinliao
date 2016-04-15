@@ -148,4 +148,18 @@ public class GroupInfo implements GroupInfoView,Observer {
         return "";
     }
 
+    /**
+     * 通过群id查找群名称
+     *
+     * @param identify 群id
+     */
+    public String getGroupName(String identify){
+        for (String key : groups.keySet()){
+            for (GroupProfile item : groups.get(key)){
+                if (item.getIdentify().equals(identify)) return item.getName();
+            }
+        }
+        return "";
+    }
+
 }

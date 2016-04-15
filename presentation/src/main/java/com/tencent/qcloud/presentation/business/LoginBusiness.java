@@ -27,6 +27,7 @@ public class LoginBusiness {
      */
     public static void loginIm(String identify, String userSig, TIMCallBack callBack){
 
+        if (identify == null || userSig == null) return;
         TIMUser user = new TIMUser();
         user.setAccountType(String.valueOf(Constant.ACCOUNT_TYPE));
         user.setAppIdAt3rd(String.valueOf(Constant.SDK_APPID));

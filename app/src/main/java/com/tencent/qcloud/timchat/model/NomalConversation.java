@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.ChatActivity;
 
@@ -24,7 +25,11 @@ public class NomalConversation extends Conversation {
         this.conversation = conversation;
         type = conversation.getType();
         identify = conversation.getPeer();
-        name=conversation.getPeer();
+        if (type == TIMConversationType.Group){
+            name=GroupInfo.getInstance().getGroupName(conversation.getIdentifer());
+        }else{
+            name=conversation.getPeer();
+        }
     }
 
 
