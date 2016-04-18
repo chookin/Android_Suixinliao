@@ -1,15 +1,14 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
-import com.tencent.imsdk.QLog;
-import com.tencent.openqq.protocol.imsdk.im_open_common;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
@@ -19,10 +18,11 @@ import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 
-public class SplashActivity extends Activity implements SplashView,TIMCallBack{
+public class SplashActivity extends FragmentActivity implements SplashView,TIMCallBack{
 
     SplashPresenter presenter;
     private int LOGIN_RESULT_CODE = 100;
@@ -71,8 +71,14 @@ public class SplashActivity extends Activity implements SplashView,TIMCallBack{
         Log.e(TAG, "login error : code " + i + " " + s);
         switch (i) {
             case 6208:
-                //离线状态下被其他终端踢下线，此时可以重新登录也可以做提示用户账号安全
-                navToHome();
+                //离线状态下被其他终端踢下线
+                NotifyDialog dialog = new NotifyDialog();
+                dialog.show(getString(R.string.kick_logout), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        navToHome();
+                    }
+                });
                 break;
             default:
                 Toast.makeText(this,getString(R.string.login_error),Toast.LENGTH_SHORT).show();

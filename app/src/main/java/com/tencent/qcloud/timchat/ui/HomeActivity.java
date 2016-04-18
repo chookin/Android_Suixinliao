@@ -1,5 +1,6 @@
 package com.tencent.qcloud.timchat.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,7 @@ import com.tencent.TIMManager;
 import com.tencent.TIMUserStatusListener;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 /**
@@ -27,7 +29,6 @@ public class HomeActivity extends FragmentActivity {
     private int mTitleArray[] = {R.string.home_conversation_tab, R.string.home_contact_tab, R.string.home_setting_tab};
     private int mImageViewArray[] = {R.drawable.tab_conversation, R.drawable.tab_contact, R.drawable.tab_setting};
     private String mTextviewArray[] = {"contact", "conversation", "setting"};
-    private long flags = 0xff;//IMSDK 全部获取
     private ImageView msgUnread;
 
     @Override
@@ -39,7 +40,13 @@ public class HomeActivity extends FragmentActivity {
         TIMManager.getInstance().setUserStatusListener(new TIMUserStatusListener() {
             @Override
             public void onForceOffline() {
-                logout();
+                NotifyDialog dialog = new NotifyDialog();
+                dialog.show(getString(R.string.kick_logout), HomeActivity.this.getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logout();
+                    }
+                });
             }
         });
     }

@@ -37,7 +37,7 @@ public class ImageMessage extends Message {
     public ImageMessage(String path){
         message = new TIMMessage();
         TIMImageElem elem = new TIMImageElem();
-        elem.setPath(path);
+        elem.setPath(path = " ");
         if (message.addElement(elem) != 0) return;
     }
 
@@ -51,62 +51,62 @@ public class ImageMessage extends Message {
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
         TIMImageElem e = (TIMImageElem) message.getElement(0);
-        switch (message.status()){
-            case Sending:
-
-                ImageView imageView = new ImageView(MyApplication.getContext());
-                imageView.setImageBitmap(getThumb(e.getPath()));
-                getBubbleView(viewHolder).removeAllViews();
-                getBubbleView(viewHolder).addView(imageView);
-                break;
-            case SendSucc:
-                for(TIMImage image : e.getImageList()) {
-                    if (image.getType() == TIMImageType.Thumb){
-                        final String uuid = image.getUuid();
-                        if (FileUtil.isCacheFileExist(uuid)){
-                            showThumb(viewHolder,uuid);
-                        }else{
-                            image.getImage(new TIMValueCallBack<byte[]>() {
-                                @Override
-                                public void onError(int code, String desc) {//获取图片失败
-                                    //错误码code和错误描述desc，可用于定位请求失败原因
-                                    //错误码code含义请参见错误码表
-                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
-                                }
-
-                                @Override
-                                public void onSuccess(byte[] data) {//成功，参数为图片数据
-                                    FileUtil.createFile(data, uuid);
-                                    showThumb(viewHolder,uuid);
-                                }
-                            });
-                        }
-                    }
-                    if (image.getType() == TIMImageType.Original){
-                        final String uuid = image.getUuid();
-                        if (FileUtil.isCacheFileExist(uuid)){
-                            setImageEvent(viewHolder,uuid,context);
-                        }else{
-                            image.getImage(new TIMValueCallBack<byte[]>() {
-                                @Override
-                                public void onError(int code, String desc) {//获取图片失败
-                                    //错误码code和错误描述desc，可用于定位请求失败原因
-                                    //错误码code含义请参见错误码表
-                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
-                                }
-
-                                @Override
-                                public void onSuccess(byte[] data) {//成功，参数为图片数据
-                                    FileUtil.createFile(data, uuid);
-                                    setImageEvent(viewHolder, uuid,context);
-                                }
-                            });
-                        }
-
-                    }
-                }
-                break;
-        }
+//        switch (message.status()){
+//            case Sending:
+//
+//                ImageView imageView = new ImageView(MyApplication.getContext());
+//                imageView.setImageBitmap(getThumb(e.getPath()));
+//                getBubbleView(viewHolder).removeAllViews();
+//                getBubbleView(viewHolder).addView(imageView);
+//                break;
+//            case SendSucc:
+//                for(TIMImage image : e.getImageList()) {
+//                    if (image.getType() == TIMImageType.Thumb){
+//                        final String uuid = image.getUuid();
+//                        if (FileUtil.isCacheFileExist(uuid)){
+//                            showThumb(viewHolder,uuid);
+//                        }else{
+//                            image.getImage(new TIMValueCallBack<byte[]>() {
+//                                @Override
+//                                public void onError(int code, String desc) {//获取图片失败
+//                                    //错误码code和错误描述desc，可用于定位请求失败原因
+//                                    //错误码code含义请参见错误码表
+//                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+//                                }
+//
+//                                @Override
+//                                public void onSuccess(byte[] data) {//成功，参数为图片数据
+//                                    FileUtil.createFile(data, uuid);
+//                                    showThumb(viewHolder,uuid);
+//                                }
+//                            });
+//                        }
+//                    }
+//                    if (image.getType() == TIMImageType.Original){
+//                        final String uuid = image.getUuid();
+//                        if (FileUtil.isCacheFileExist(uuid)){
+//                            setImageEvent(viewHolder,uuid,context);
+//                        }else{
+//                            image.getImage(new TIMValueCallBack<byte[]>() {
+//                                @Override
+//                                public void onError(int code, String desc) {//获取图片失败
+//                                    //错误码code和错误描述desc，可用于定位请求失败原因
+//                                    //错误码code含义请参见错误码表
+//                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+//                                }
+//
+//                                @Override
+//                                public void onSuccess(byte[] data) {//成功，参数为图片数据
+//                                    FileUtil.createFile(data, uuid);
+//                                    setImageEvent(viewHolder, uuid,context);
+//                                }
+//                            });
+//                        }
+//
+//                    }
+//                }
+//                break;
+//        }
         showStatus(viewHolder);
 
 
