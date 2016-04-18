@@ -119,24 +119,23 @@ public class FileUtil {
      * @param uri 文件uri
      */
     public static String getImageFilePath(Context context, Uri uri) {
-        if (uri == null || !isMediaDocument(uri)) {
+        if (uri == null) {
             return null;
         }
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        final boolean isKitKat = Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT;
         if (isKitKat){
+            if (!isMediaDocument(uri)) return null;
             try{
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-//                final String type = split[0];
-//                if (!type.equals("image")) return null;
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[] {
                         split[1]
                 };
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }catch (IllegalArgumentException e){
-                return uri.getPath();
+                return null;
             }
         }else{
             String[] projection = {MediaStore.Images.Media.DATA};
@@ -147,7 +146,7 @@ public class FileUtil {
                 cursor.moveToFirst();
                 return cursor.getString(column_index);
             }
-            return uri.getPath();
+            return null;
         }
     }
 

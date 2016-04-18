@@ -345,7 +345,9 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK) {
-                Message message = new ImageMessage(FileUtil.getImageFilePath(this, data.getData()));
+                String path = FileUtil.getImageFilePath(this, data.getData());
+                if (path == null) return;
+                Message message = new ImageMessage(path);
                 presenter.sendMessage(message.getMessage());
             }
 
