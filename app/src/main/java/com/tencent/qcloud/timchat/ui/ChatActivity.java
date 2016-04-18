@@ -237,12 +237,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     @Override
     public void sendPhoto() {
         Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
-        if (tempFile != null) {
-            fileUri = Uri.fromFile(tempFile);
+        if (intent_photo.resolveActivity(getPackageManager()) != null) {
+            File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
+            if (tempFile != null) {
+                fileUri = Uri.fromFile(tempFile);
+            }
+            intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+            startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
-        intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
     /**
