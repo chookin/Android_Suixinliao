@@ -23,9 +23,13 @@ import com.tencent.TIMTextElem;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.EmoticonUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 文本消息数据
@@ -56,7 +60,11 @@ public class TextMessage extends Message {
                 message.addElement(textElem);
             }
             TIMFaceElem faceElem = new TIMFaceElem();
-            faceElem.setIndex(Integer.parseInt(s.subSequence(startIndex, endIndex).toString()));
+            int index = Integer.parseInt(s.subSequence(startIndex, endIndex).toString());
+            faceElem.setIndex(index);
+            if (index < EmoticonUtil.emoticonData.length){
+                faceElem.setData(EmoticonUtil.emoticonData[index].getBytes(Charset.forName("UTF-8")));
+            }
             message.addElement(faceElem);
             currentIndex = endIndex;
         }
@@ -90,6 +98,7 @@ public class TextMessage extends Message {
                     try{
                         AssetManager am = context.getAssets();
                         InputStream is = am.open(String.format("emoticon/%d.gif", faceElem.getIndex()));
+                        if (is == null) continue;
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
                         Matrix matrix = new Matrix();
                         int width = bitmap.getWidth();
@@ -128,7 +137,10 @@ public class TextMessage extends Message {
             switch (message.getElement(i).getType()){
                 case Face:
                     TIMFaceElem faceElem = (TIMFaceElem) message.getElement(i);
-                    result.append(faceElem.getIndex());
+                    byte[] data = faceElem.getData();
+                    if (data != null){
+                        result.append(new String(data, Charset.forName("UTF-8")));
+                    }
                     break;
                 case Text:
                     TIMTextElem textElem = (TIMTextElem) message.getElement(i);

@@ -58,7 +58,7 @@ public class ConversationPresenter implements Observer {
         //遍历会话列表
         for(long i = 0; i < cnt; ++i) {
             //根据索引获取会话
-            TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
+            final TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
             if (conversation.getType() == TIMConversationType.System) continue;
             list.add(conversation);
             conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
@@ -69,6 +69,9 @@ public class ConversationPresenter implements Observer {
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
+                    if (conversation.getIdentifer().equals("@TGS#2WF74RAE6")){
+                        view.updateMessage(timMessages.get(0));
+                    }
                     view.updateMessage(timMessages.get(0));
                 }
             });
