@@ -52,6 +52,12 @@ public class VideoInputDialog extends DialogFragment {
             mProgressLeft.setProgress(mTimeCount);
         }
     };
+    private Runnable sendVideo = new Runnable() {
+        @Override
+        public void run() {
+            recordStop();
+        }
+    };
 
     public static VideoInputDialog newInstance() {
         VideoInputDialog dialog = new VideoInputDialog();
@@ -88,7 +94,7 @@ public class VideoInputDialog extends DialogFragment {
                                         mTimeCount++;
                                         mainHandler.post(updateProgress);
                                         if (mTimeCount == MAX_TIME) {
-                                            recordStop();
+                                            mainHandler.post(sendVideo);
                                         }
                                     }
                                 }, 0, 10);
