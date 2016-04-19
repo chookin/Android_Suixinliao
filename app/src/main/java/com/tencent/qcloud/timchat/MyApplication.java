@@ -33,13 +33,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        InitBusiness.start(context);
-        TlsBusiness.init(context);
-        String id =  TLSService.getInstance().getLastUserIdentifier();
-        UserInfo.getInstance().setId(id);
-        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(this);
+//        InitBusiness.start(context);
+//        TlsBusiness.init(context);
+//        String id =  TLSService.getInstance().getLastUserIdentifier();
+//        UserInfo.getInstance().setId(id);
+//        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init(this);
     }
 
     public static Context getContext() {

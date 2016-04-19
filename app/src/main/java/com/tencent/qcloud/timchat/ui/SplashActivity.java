@@ -9,9 +9,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
+import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.event.GroupEvent;
@@ -21,6 +23,7 @@ import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
+import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 public class SplashActivity extends FragmentActivity implements SplashView,TIMCallBack{
 
@@ -33,6 +36,11 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
+        InitBusiness.start(MyApplication.getContext());
+        TlsBusiness.init(MyApplication.getContext());
+        String id =  TLSService.getInstance().getLastUserIdentifier();
+        UserInfo.getInstance().setId(id);
+        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
         presenter = new SplashPresenter(this);
         presenter.start();
     }
