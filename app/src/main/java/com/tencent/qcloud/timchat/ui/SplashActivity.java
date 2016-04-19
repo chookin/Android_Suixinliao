@@ -36,8 +36,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        InitBusiness.start(MyApplication.getContext());
-        TlsBusiness.init(MyApplication.getContext());
+        InitBusiness.start(getApplicationContext());
+        TlsBusiness.init(getApplicationContext());
         String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));

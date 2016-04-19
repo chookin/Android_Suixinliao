@@ -275,6 +275,7 @@ public class FriendshipManagerPresenter {
 
             @Override
             public void onError(int arg0, String arg1) {
+                Log.e(TAG, "onError code" + arg0 + " msg " + arg1);
                 friendshipManageView.onAddFriend(TIMFriendStatus.TIM_FRIEND_STATUS_UNKNOWN);
             }
 
