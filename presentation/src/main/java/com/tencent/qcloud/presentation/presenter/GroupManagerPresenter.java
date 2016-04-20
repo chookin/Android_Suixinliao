@@ -149,26 +149,6 @@ public class GroupManagerPresenter {
     }
 
 
-    /**
-     * 获取我的群列表
-     *
-     */
-    public void getGroupList(){
-
-        TIMGroupManager.getInstance().getGroupAssistant().getGroupDetailInfoList(new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
-            @Override
-            public void onError(int i, String s) {
-                Log.i(TAG, "onError code" + i + " msg " + s);
-            }
-
-            @Override
-            public void onSuccess(List<TIMGroupDetailInfo> timGroupDetailInfos) {
-                if (infoView == null) return;
-                infoView.showGroupInfo(timGroupDetailInfos);
-            }
-        });
-
-    }
 
 
     /**

@@ -7,6 +7,7 @@ import com.tencent.TIMFriendGroup;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMFriendshipProxyListener;
 import com.tencent.TIMFriendshipProxyStatus;
+import com.tencent.TIMManager;
 import com.tencent.TIMSNSChangeInfo;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
@@ -19,7 +20,7 @@ import java.util.Observable;
  * 好友关系链数据缓存，维持更新状态，底层IMSDK会维护本地存储
  * 由于IMSDK有内存缓存，所以每次关系链变更时全量同步数据，此处也可以只更新变量数据
  */
-public class FriendshipEvent extends Observable implements TIMCallBack, TIMFriendshipProxyListener {
+public class FriendshipEvent extends Observable implements TIMFriendshipProxyListener {
 
     private final String TAG = FriendshipEvent.class.getSimpleName();
 
@@ -32,23 +33,12 @@ public class FriendshipEvent extends Observable implements TIMCallBack, TIMFrien
     }
 
     public void init(){
-        TIMFriendshipManager.getInstance().getFriendshipProxy().syncWithFlags(0xff, null, this);
-        TIMFriendshipManager.getInstance().getFriendshipProxy().setListener(this);
+        TIMManager.getInstance().enableFriendshipStorage(true);
+        TIMManager.getInstance().setFriendshipProxyListener(this);
+        TIMManager.getInstance().initFriendshipSettings(0xFF,null);
     }
 
 
-
-    @Override
-    public void onError(int i, String s) {
-        Log.e(TAG, "sync friendship error " + s);
-    }
-
-
-    @Override
-    public void onSuccess() {
-        setChanged();
-        notifyObservers(new NotifyCmd(NotifyType.REFRESH, null));
-    }
 
     @Override
     public void OnProxyStatusChange(TIMFriendshipProxyStatus timFriendshipProxyStatus) {

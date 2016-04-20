@@ -161,7 +161,7 @@ public class FriendshipManagerPresenter {
      */
     public void getMyProfile(){
         if (friendInfoView == null) return;
-        TIMFriendshipManager.getInstance().getFriendshipProxy().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
+        TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
             @Override
             public void onError(int i, String s) {
 
@@ -175,26 +175,6 @@ public class FriendshipManagerPresenter {
     }
 
 
-
-    /**
-     * 获取用户的资料，用于非好友
-     *
-     * @param users 用户identify
-     */
-    public void getUserProfile(List<String> users){
-        if (friendInfoView == null) return;
-        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendsProfile(users, new TIMValueCallBack<List<TIMUserProfile>>() {
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                friendInfoView.showUserInfo(timUserProfiles);
-            }
-        });
-    }
 
 
     /**
@@ -210,7 +190,7 @@ public class FriendshipManagerPresenter {
             index = 0;
         }
         if (!isEnd){
-            TIMFriendshipManager.getInstance().getFriendshipProxy().searchUser(key, index++, PAGE_SIZE, new TIMValueCallBack<TIMUserSearchSucc>() {
+            TIMFriendshipManager.getInstance().searchUser(key, index++, PAGE_SIZE, new TIMValueCallBack<TIMUserSearchSucc>() {
 
                 @Override
                 public void onError(int arg0, String arg1) {
@@ -239,7 +219,7 @@ public class FriendshipManagerPresenter {
      */
     public void searchFriendById(String identify){
         if (friendInfoView == null) return;
-        TIMFriendshipManager.getInstance().getFriendshipProxy().searchFriend(identify, new TIMValueCallBack<TIMUserProfile>() {
+        TIMFriendshipManager.getInstance().searchFriend(identify, new TIMValueCallBack<TIMUserProfile>() {
             @Override
             public void onError(int i, String s) {
 
@@ -271,7 +251,7 @@ public class FriendshipManagerPresenter {
         req.setRemark(remark);
         req.setFriendGroup(group);
         reqList.add(req);
-        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
+        TIMFriendshipManager.getInstance().addFriend(reqList, new TIMValueCallBack<List<TIMFriendResult>>() {
 
             @Override
             public void onError(int arg0, String arg1) {
@@ -328,7 +308,7 @@ public class FriendshipManagerPresenter {
      * @param callBack 回调
      */
     public static void setFriendAllowType(TIMFriendAllowType type, TIMCallBack callBack){
-        TIMFriendshipManager.getInstance().getFriendshipProxy().setAllowType(type, callBack);
+        TIMFriendshipManager.getInstance().setAllowType(type, callBack);
     }
 
 
@@ -340,7 +320,7 @@ public class FriendshipManagerPresenter {
      * @param callBack 回调
      */
     public static void setMyNick(String name, TIMCallBack callBack){
-        TIMFriendshipManager.getInstance().getFriendshipProxy().setNickName(name, callBack);
+        TIMFriendshipManager.getInstance().setNickName(name, callBack);
     }
 
 
@@ -352,7 +332,7 @@ public class FriendshipManagerPresenter {
      * @param callBack 回调
      */
     public static void setRemarkName(String identify, String name, TIMCallBack callBack){
-        TIMFriendshipManager.getInstance().getFriendshipProxy().setFriendRemark(identify, name, callBack);
+        TIMFriendshipManager.getInstance().setFriendRemark(identify, name, callBack);
     }
 
 
@@ -398,7 +378,7 @@ public class FriendshipManagerPresenter {
     public void changeFriendGroup(final String identify,final @Nullable String src,final @Nullable String dest){
         if (friendshipManageView == null || src != null && dest != null && src.equals(dest)) return;
         if (src != null){
-            TIMFriendshipManager.getInstance().getFriendshipProxy().delFriendsFromFriendGroup(src, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+            TIMFriendshipManager.getInstance().delFriendsFromFriendGroup(src, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
                 @Override
                 public void onError(int i, String s) {
                     Log.e(TAG, "changeFriendGroup.del src,code" + i + " msg " + s);
@@ -408,7 +388,7 @@ public class FriendshipManagerPresenter {
                 @Override
                 public void onSuccess(List<TIMFriendResult> timFriendResults) {
                     if (dest != null){
-                        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+                        TIMFriendshipManager.getInstance().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
                             @Override
                             public void onError(int i, String s) {
                                 Log.e(TAG, "changeFriendGroup.add dest,code" + i + " msg " + s);
@@ -427,7 +407,7 @@ public class FriendshipManagerPresenter {
             });
         }else{
             if (dest == null) return;
-            TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+            TIMFriendshipManager.getInstance().addFriendsToFriendGroup(dest, Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
                 @Override
                 public void onError(int i, String s) {
                     Log.e(TAG, "changeFriendGroup.add dest,code" + i + " msg " + s);

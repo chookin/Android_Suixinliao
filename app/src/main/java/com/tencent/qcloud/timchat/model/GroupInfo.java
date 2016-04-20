@@ -3,8 +3,12 @@ package com.tencent.qcloud.timchat.model;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tencent.TIMGroupAssistant;
 import com.tencent.TIMGroupDetailInfo;
+import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberRoleType;
+import com.tencent.TIMManager;
+import com.tencent.imcore.GroupManager;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
@@ -23,11 +27,10 @@ import java.util.Observer;
 /**
  * 群数据结构
  */
-public class GroupInfo implements GroupInfoView,Observer {
+public class GroupInfo implements Observer {
 
 
     private Map<String, List<GroupProfile>> groups;
-    private GroupManagerPresenter presenter;
     public static final String publicGroup = "Public", privateGroup = "Private", chatRoom = "ChatRoom";
 
     private GroupInfo(){
@@ -37,7 +40,7 @@ public class GroupInfo implements GroupInfoView,Observer {
         groups.put(chatRoom, new ArrayList<GroupProfile>());
         //注册群关系监听
         GroupEvent.getInstance().addObserver(this);
-        presenter = new GroupManagerPresenter(this);
+        refresh();
     }
 
     private static GroupInfo instance = new GroupInfo();
@@ -46,13 +49,8 @@ public class GroupInfo implements GroupInfoView,Observer {
         return instance;
     }
 
-    /**
-     * 显示群资料
-     *
-     * @param groupInfos 群资料信息列表
-     */
-    @Override
-    public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
+    private void refresh(){
+        List<TIMGroupDetailInfo> groupInfos = TIMGroupAssistant.getInstance().getGroupList();
         for (TIMGroupDetailInfo item : groupInfos){
             groups.get(item.getGroupType()).add(new GroupProfile(item));
         }
@@ -73,7 +71,7 @@ public class GroupInfo implements GroupInfoView,Observer {
                 GroupEvent.NotifyCmd cmd = (GroupEvent.NotifyCmd) data;
                 switch (cmd.type){
                     case REFRESH:
-                        presenter.getGroupList();
+                        refresh();
                         break;
                     case ADD:
                     case UPDATE:

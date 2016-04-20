@@ -30,7 +30,7 @@ public class GetFriendGroupsPresenter {
      */
     public void getFriendGroupList() {
         Log.i(TAG, "getFriendGroupList ");
-        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
+        TIMFriendshipManager.getInstance().getFriendGroups(null, new TIMValueCallBack<List<TIMFriendGroup>>() {
             @Override
             public void onError(int i, String s) {
                 Log.d("", "error" + s);
@@ -65,7 +65,7 @@ public class GetFriendGroupsPresenter {
 
 
     public void getFriendProfile(final String groupname, List<String> users) {
-        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendsProfile(users, new TIMValueCallBack<List<TIMUserProfile>>() {
+        TIMFriendshipManager.getInstance().getFriendsProfile(users, new TIMValueCallBack<List<TIMUserProfile>>() {
             @Override
             public void onError(int i, String s) {
 
@@ -78,10 +78,6 @@ public class GetFriendGroupsPresenter {
         });
     }
 
-    public void addFriendsToFriendGroup(String groupname, String user, TIMValueCallBack<java.util.List<TIMFriendResult>> cb) {
-        List<String> users = new ArrayList<String>();
-        users.add(user);
-        TIMFriendshipManager.getInstance().getFriendshipProxy().addFriendsToFriendGroup(groupname, users, cb);
-    }
+
 
 }

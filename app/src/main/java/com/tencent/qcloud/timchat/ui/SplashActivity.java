@@ -51,6 +51,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
      */
     @Override
     public void navToHome() {
+        FriendshipEvent.getInstance().init();
+        GroupEvent.getInstance().init();
         LoginBusiness.loginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), this);
     }
 
@@ -102,10 +104,10 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     public void onSuccess() {
         Log.i(TAG, "login succeed");
-        GroupEvent.getInstance().init();
-        GroupInfo.getInstance();
-        FriendshipEvent.getInstance().init();
-        FriendshipInfo.getInstance();
+
+//        GroupInfo.getInstance();
+
+//        FriendshipInfo.getInstance();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();

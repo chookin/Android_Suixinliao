@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMFriendshipProxy;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
@@ -19,7 +20,7 @@ import java.util.Observer;
 /**
  * 好友列表缓存数据结构
  */
-public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriendGroup>> {
+public class FriendshipInfo implements Observer {
 
     private final String TAG = "FriendshipInfo";
 
@@ -32,6 +33,7 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
         groups = new ArrayList<>();
         friends = new HashMap<>();
         FriendshipEvent.getInstance().addObserver(this);
+        refresh();
     }
 
     public static FriendshipInfo getInstance(){
@@ -66,13 +68,11 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
         }
     }
 
-    @Override
-    public void onError(int i, String s) {
-        Log.e(TAG, "get friendship list error code:" + i + " msg:" + s);
-    }
 
-    @Override
-    public void onSuccess(List<TIMFriendGroup> timFriendGroups) {
+    private void refresh(){
+        groups.clear();
+        friends.clear();
+        List<TIMFriendGroup> timFriendGroups = TIMFriendshipProxy.getInstance().getFriendByGroups(null);
         for (TIMFriendGroup group : timFriendGroups){
             groups.add(group.getGroupName());
             List<FriendProfile> friendItemList = new ArrayList<>();
@@ -81,12 +81,6 @@ public class FriendshipInfo implements Observer, TIMValueCallBack<List<TIMFriend
             }
             friends.put(group.getGroupName(), friendItemList);
         }
-    }
-
-    private void refresh(){
-        groups.clear();
-        friends.clear();
-        TIMFriendshipManager.getInstance().getFriendshipProxy().getFriendGroups(null, this);
     }
 
     /**

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.TIMFriendGroup;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.ManagerFriendGroupActivity;
@@ -20,7 +19,6 @@ import java.util.List;
 public class GroupListAdapter extends BaseAdapter {
     private Context mContext;
     private List<TIMFriendGroup> mGroupList;
-    private ImageLoader imageLoader = ImageLoader.getInstance();
     private ManagerFriendGroupActivity mManagerGroupActivity;
     public GroupListAdapter(Context context, List<TIMFriendGroup> grouplist,ManagerFriendGroupActivity activity) {
         mContext = context;

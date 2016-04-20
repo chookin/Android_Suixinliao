@@ -33,7 +33,7 @@ public class ManagerFriendGroupPresenter {
         List<String> createGroup = new ArrayList<String>() ;
         createGroup.clear();
         createGroup.add(groupname);
-        TIMFriendshipManager.getInstance().getFriendshipProxy().createFriendGroup(createGroup, users, new TIMValueCallBack<List<TIMFriendResult>>() {
+        TIMFriendshipManager.getInstance().createFriendGroup(createGroup, users, new TIMValueCallBack<List<TIMFriendResult>>() {
             @Override
             public void onError(int i, String s) {
 
@@ -55,7 +55,7 @@ public class ManagerFriendGroupPresenter {
         List<String> deletegroup = new ArrayList<String>();
         deletegroup.clear();
         deletegroup.add(id);
-        TIMFriendshipManager.getInstance().getFriendshipProxy().deleteFriendGroup(deletegroup, new TIMCallBack() {
+        TIMFriendshipManager.getInstance().deleteFriendGroup(deletegroup, new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
 

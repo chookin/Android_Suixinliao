@@ -7,6 +7,7 @@ import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupSettings;
+import com.tencent.TIMManager;
 
 import java.util.List;
 import java.util.Observable;
@@ -30,24 +31,12 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
 
     public void init(){
         //开启IMSDK本地存储
+        TIMManager.getInstance().enableGroupInfoStorage(true);
+        TIMManager.getInstance().setGroupAssistantListener(this);
         TIMGroupSettings settings = new TIMGroupSettings();
-        settings.setIsStorageEnabled(true);
         settings.setGroupInfoOptions(settings.new Options());
         settings.setMemberInfoOptions(settings.new Options());
-        TIMGroupManager.getInstance().getGroupAssistant().initGroupSettings(settings, new TIMCallBack() {
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onSuccess() {
-                setChanged();
-                notifyObservers(new NotifyCmd(NotifyType.REFRESH, null));
-            }
-        });
-        //设置群资料变更监听
-        TIMGroupManager.getInstance().getGroupAssistant().setListener(this);
+        TIMManager.getInstance().initGroupSettings(settings);
 
     }
 
