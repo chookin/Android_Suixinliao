@@ -148,6 +148,12 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     }
 
     @Override
+    protected void onPause(){
+        super.onPause();
+        presenter.readMessages();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.stop();

@@ -35,7 +35,7 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
     public void init(){
         TIMManager.getInstance().enableFriendshipStorage(true);
         TIMManager.getInstance().setFriendshipProxyListener(this);
-        TIMManager.getInstance().initFriendshipSettings(0xFF,null);
+        TIMManager.getInstance().initFriendshipSettings(0xFF, null);
     }
 
 
@@ -74,6 +74,7 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
 
     @Override
     public void OnAddFriendGroups(List<TIMFriendGroup> list) {
+        Log.d(TAG, "OnAddFriendGroups");
     }
 
     @Override

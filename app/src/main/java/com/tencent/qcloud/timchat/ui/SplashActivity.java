@@ -104,10 +104,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     public void onSuccess() {
         Log.i(TAG, "login succeed");
-
-//        GroupInfo.getInstance();
-
-//        FriendshipInfo.getInstance();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();

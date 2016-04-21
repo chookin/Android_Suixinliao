@@ -48,7 +48,6 @@ public class ChatPresenter implements Observer {
     public void stop() {
         //注销消息监听
         MessageEvent.getInstance().deleteObserver(this);
-        conversation.setReadMessage();
     }
 
     /**
@@ -121,6 +120,14 @@ public class ChatPresenter implements Observer {
                 view.showMessage(timMessages);
             }
         });
+    }
+
+    /**
+     * 设置会话为已读
+     *
+     */
+    public void readMessages(){
+        conversation.setReadMessage();
     }
 
 

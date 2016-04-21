@@ -73,6 +73,7 @@ public class FriendshipInfo implements Observer {
         groups.clear();
         friends.clear();
         List<TIMFriendGroup> timFriendGroups = TIMFriendshipProxy.getInstance().getFriendByGroups(null);
+        if (timFriendGroups == null) return;
         for (TIMFriendGroup group : timFriendGroups){
             groups.add(group.getGroupName());
             List<FriendProfile> friendItemList = new ArrayList<>();

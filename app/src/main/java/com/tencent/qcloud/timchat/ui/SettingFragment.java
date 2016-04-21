@@ -88,7 +88,7 @@ public class SettingFragment extends Fragment implements FriendInfoView{
                         public void onEdit(String text, TIMCallBack callBack) {
                             FriendshipManagerPresenter.setMyNick(text, callBack);
                         }
-                    });
+                    },20);
 
                 }
             });

@@ -87,6 +87,12 @@ public class ConversationFragment extends Fragment implements ConversationView,F
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        reFreshView();
+    }
+
 
 
     /**

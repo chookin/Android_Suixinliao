@@ -96,4 +96,5 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
             tvNoResult.setVisibility(View.GONE);
         }
     }
+
 }
