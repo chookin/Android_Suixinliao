@@ -422,4 +422,25 @@ public class FriendshipManagerPresenter {
         }
     }
 
+
+    /**
+     * 删除一个分组
+     *
+     * @param groupName 好友分组名称
+     * @param callBack 回调
+     */
+    public static void delFriendGroup(String groupName, TIMCallBack callBack){
+        TIMFriendshipManager.getInstance().deleteFriendGroup(Collections.singletonList(groupName), callBack);
+    }
+
+    /**
+     * 创建一个新分组
+     *
+     * @param groupName 好友分组名称
+     * @param callBack 回调
+     */
+    public static void createFriendGroup(String groupName, TIMValueCallBack<List<TIMFriendResult>> callBack) {
+        TIMFriendshipManager.getInstance().createFriendGroup(Collections.singletonList(groupName), new ArrayList<String>(), callBack);
+    }
+
 }

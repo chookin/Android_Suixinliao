@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class GroupListAdapter extends BaseAdapter {
     private Context mContext;
-    private List<TIMFriendGroup> mGroupList;
+    private List<String> mGroupList;
     private ManagerFriendGroupActivity mManagerGroupActivity;
-    public GroupListAdapter(Context context, List<TIMFriendGroup> grouplist,ManagerFriendGroupActivity activity) {
+    public GroupListAdapter(Context context, List<String> grouplist,ManagerFriendGroupActivity activity) {
         mContext = context;
         mGroupList = grouplist;
         mManagerGroupActivity = activity;
@@ -62,11 +62,11 @@ public class GroupListAdapter extends BaseAdapter {
             Holder = (ItemHolder) convertView.getTag();
         }
 
-        if(mGroupList.get(groupPosition).getGroupName().equals("")){
+        if(mGroupList.get(groupPosition).equals("")){
             Holder.groupname.setText(mContext.getResources().getString(R.string.default_group_name));
             Holder.delete.setVisibility(View.INVISIBLE);
         }else{
-            Holder.groupname.setText(mGroupList.get(groupPosition).getGroupName());
+            Holder.groupname.setText(mGroupList.get(groupPosition));
             Holder.delete.setVisibility(View.VISIBLE);
         }
 

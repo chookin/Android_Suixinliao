@@ -1,8 +1,10 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -13,42 +15,48 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.TIMFriendGroup;
-import com.tencent.TIMUserProfile;
+import com.tencent.TIMCallBack;
+import com.tencent.TIMFriendResult;
+import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.presentation.event.GroupEvent;
+import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
-import com.tencent.qcloud.presentation.presenter.ManagerFriendGroupPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ManagerGroupView;
-import com.tencent.qcloud.presentation.viewfeatures.MyFriendGroupInfo;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.GroupListAdapter;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
+import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * 查找添加新朋友
+ * 好友分组管理
  */
-public class ManagerFriendGroupActivity extends Activity implements ManagerGroupView, MyFriendGroupInfo,View.OnClickListener {
-    ManagerFriendGroupPresenter mManagerMyGroupPresenter;
+public class ManagerFriendGroupActivity extends FragmentActivity implements ManagerGroupView, View.OnClickListener {
+
+    private final String TAG = ManagerFriendGroupActivity.class.getSimpleName();
+
     GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ListView mMyGroupList;
-    private List<TIMFriendGroup> mMyListTitle;
     private GroupListAdapter mGroupListAdapter;
     private LinearLayout mAddGroup;
+    private List<String> groups = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manager_group);
-        mManagerMyGroupPresenter = new ManagerFriendGroupPresenter(this, getBaseContext());
         mMyGroupList = (ListView) findViewById(R.id.group_list);
         mAddGroup = (LinearLayout) findViewById(R.id.add_group);
         mAddGroup.setOnClickListener(this);
-        mMyListTitle = new ArrayList<TIMFriendGroup>();
-        mGroupListAdapter = new GroupListAdapter(this, mMyListTitle, this);
+        groups.addAll(FriendshipInfo.getInstance().getGroups());
+        mGroupListAdapter = new GroupListAdapter(this, groups, this);
         mMyGroupList.setAdapter(mGroupListAdapter);
-        mGetFriendGroupsPresenter =new GetFriendGroupsPresenter(this);
-        mGetFriendGroupsPresenter.getFriendGroupList();
+
+
     }
 
 
@@ -85,11 +93,25 @@ public class ManagerFriendGroupActivity extends Activity implements ManagerGroup
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String groupname = inputView.getText().toString();
-                if (groupname == null || groupname.equals("")) {
-                    Toast.makeText(ManagerFriendGroupActivity.this, "empty input", Toast.LENGTH_SHORT).show();
+                final String groupname = inputView.getText().toString();
+                if (groupname.equals("")) {
+                    Toast.makeText(ManagerFriendGroupActivity.this, getString(R.string.add_dialog_null), Toast.LENGTH_SHORT).show();
                 } else {
-                    mManagerMyGroupPresenter.createEmptyFriendGroup(groupname);
+                    FriendshipManagerPresenter.createFriendGroup(groupname, new TIMValueCallBack<List<TIMFriendResult>>() {
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.e(TAG, "onError code " + i + " msg " + s);
+                        }
+
+                        @Override
+                        public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                            Toast.makeText(ManagerFriendGroupActivity.this, getString(R.string.add_group_succ), Toast.LENGTH_SHORT).show();
+                            FriendshipEvent.getInstance().OnAddFriendGroups(null);
+                            groups.add(groupname);
+                            mGroupListAdapter.notifyDataSetChanged();
+                            FriendshipEvent.getInstance().OnAddFriendGroups(null);
+                        }
+                    });
                 }
                 addGroupDialog.dismiss();
             }
@@ -106,44 +128,51 @@ public class ManagerFriendGroupActivity extends Activity implements ManagerGroup
     }
 
 
-    private Dialog deleteGroupDialog;
     private void deleteDialog(final int position) {
-        final TIMFriendGroup groupinfo = mMyListTitle.get(position);
-        deleteGroupDialog = new Dialog(this, R.style.dialog);
-        deleteGroupDialog.setContentView(R.layout.dialog_delete_group);
-        TextView btnYes = (TextView) deleteGroupDialog.findViewById(R.id.confirm_btn);
-        TextView btnNo = (TextView) deleteGroupDialog.findViewById(R.id.cancel_btn);
-        TextView deleteGroup = (TextView) deleteGroupDialog.findViewById(R.id.select_delete_group);
-        deleteGroup.setText(groupinfo.getGroupName());
-        btnNo.setOnClickListener(new View.OnClickListener() {
+        NotifyDialog dialog = new NotifyDialog();
+        dialog.show(getString(R.string.delete_dialog_subtitle)+groups.get(position)+getString(R.string.delete_dialog_subtitle_sur), ManagerFriendGroupActivity.this.getSupportFragmentManager(), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                deleteGroupDialog.dismiss();
+            public void onClick(DialogInterface dialog, int which) {
+                FriendshipManagerPresenter.delFriendGroup(groups.get(position), new TIMCallBack() {
+                    @Override
+                    public void onError(int i, String s) {
+                        Log.e(TAG, "onError code " + i + " msg " + s);
+
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(ManagerFriendGroupActivity.this, getString(R.string.delete_group_succ), Toast.LENGTH_SHORT).show();
+                        FriendshipEvent.getInstance().OnDelFriendGroups(Collections.singletonList(groups.get(position)));
+                        groups.remove(position);
+                        mGroupListAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
-
-        btnYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mManagerMyGroupPresenter.deleteFriendGroup(groupinfo.getGroupName());
-                deleteGroupDialog.dismiss();
-            }
-        });
-        deleteGroupDialog.show();
+//        final TIMFriendGroup groupinfo = mMyListTitle.get(position);
+//        deleteGroupDialog = new Dialog(this, R.style.dialog);
+//        deleteGroupDialog.setContentView(R.layout.dialog_delete_group);
+//        TextView btnYes = (TextView) deleteGroupDialog.findViewById(R.id.confirm_btn);
+//        TextView btnNo = (TextView) deleteGroupDialog.findViewById(R.id.cancel_btn);
+//        TextView deleteGroup = (TextView) deleteGroupDialog.findViewById(R.id.select_delete_group);
+//        deleteGroup.setText(groupinfo.getGroupName());
+//        btnNo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                deleteGroupDialog.dismiss();
+//            }
+//        });
+//
+//        btnYes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mManagerMyGroupPresenter.deleteFriendGroup(groupinfo.getGroupName());
+//                deleteGroupDialog.dismiss();
+//            }
+//        });
+//        deleteGroupDialog.show();
     }
 
 
-    @Override
-    public void showMyGroupList(List<TIMFriendGroup> timFriendGroups) {
-        mMyListTitle.clear();
-        for(TIMFriendGroup group : timFriendGroups){
-            mMyListTitle.add(group);
-        }
-        mGroupListAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showGroupMember(String groupname,List<TIMUserProfile> timUserProfiles) {
-
-    }
 }

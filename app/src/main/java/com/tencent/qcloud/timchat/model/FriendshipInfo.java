@@ -60,6 +60,7 @@ public class FriendshipInfo implements Observer {
                     case ADD:
                     case PROFILE_UPDATE:
                     case ADD_REQ:
+                    case GROUP_UPDATE:
                         refresh();
                         break;
 

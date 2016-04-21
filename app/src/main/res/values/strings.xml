@@ -76,8 +76,12 @@
     <string name="add_new_group">添加分组</string>
     <string name="add_dialog_title">添加分组</string>
     <string name="add_dialog_subtitle">请输入新分组的名称</string>
+    <string name="add_dialog_null">分组名称不能为空</string>
     <string name="title_confirm_delete_group">确认删除改分组吗？</string>
-    <string name="delete_dialog_subtitle">删除分组名称</string>
+    <string name="delete_dialog_subtitle">删除分组</string>
+    <string name="delete_dialog_subtitle_sur">,该分组好友将移动到默认分组</string>
+    <string name="delete_group_succ">删除分组成功</string>
+    <string name="add_group_succ">添加分组成功</string>
 
 
     <!-- chat activity -->

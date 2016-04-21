@@ -75,10 +75,15 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
     @Override
     public void OnAddFriendGroups(List<TIMFriendGroup> list) {
         Log.d(TAG, "OnAddFriendGroups");
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.GROUP_UPDATE, list));
     }
 
     @Override
     public void OnDelFriendGroups(List<String> list) {
+        Log.d(TAG, "OnDelFriendGroups");
+        setChanged();
+        notifyObservers(new NotifyCmd(NotifyType.GROUP_UPDATE, list));
     }
 
     @Override
@@ -123,6 +128,7 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
         ADD,//添加好友
         DEL,//删除好友
         PROFILE_UPDATE,//变更好友资料
+        GROUP_UPDATE,//分组变更
     }
 
 

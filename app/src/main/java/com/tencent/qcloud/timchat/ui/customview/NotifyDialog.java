@@ -30,7 +30,13 @@ public class NotifyDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(title)
-                .setPositiveButton(R.string.confirm, listener);
+                .setPositiveButton(R.string.confirm, listener)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                });
         return builder.create();
     }
 }
