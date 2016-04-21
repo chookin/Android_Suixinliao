@@ -7,22 +7,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tencent.TIMGroupDetailInfo;
+import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class GroupListActivity extends Activity {
+public class GroupListActivity extends Activity implements Observer {
 
     private ProfileSummaryAdapter adapter;
     private ListView listView;
     private String type;
     private List<ProfileSummary> list;
     private final int CREATE_GROUP_CODE = 100;
-    private final int GROUP_INFO_CODE = 200;
 
 
     @Override
@@ -50,7 +54,14 @@ public class GroupListActivity extends Activity {
                 startActivityForResult(intent, CREATE_GROUP_CODE);
             }
         });
+        GroupEvent.getInstance().addObserver(this);
 
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        GroupEvent.getInstance().deleteObserver(this);
     }
 
     private void setTitle(){
@@ -72,17 +83,47 @@ public class GroupListActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 refresh();
             }
-        }else if (requestCode == GROUP_INFO_CODE){
-            if (resultCode == RESULT_OK) {
-                refresh();
-            }
         }
-
     }
 
     private void refresh(){
         list.clear();
         list = GroupInfo.getInstance().getGroupListByType(type);
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+        if (observable instanceof GroupEvent){
+            if (data instanceof GroupEvent.NotifyCmd){
+                GroupEvent.NotifyCmd cmd = (GroupEvent.NotifyCmd) data;
+                switch (cmd.type){
+                    case DEL:
+                        delGroup((String) cmd.data);
+                        break;
+
+                }
+            }
+        }
+    }
+
+    private void delGroup(String groupId){
+        Iterator<ProfileSummary> it = list.iterator();
+        while (it.hasNext()){
+            ProfileSummary item = it.next();
+            if (item.getIdentify().equals(groupId)){
+                it.remove();
+                adapter.notifyDataSetChanged();
+                return;
+            }
+        }
     }
 }

@@ -59,8 +59,7 @@
             android:textSize="18sp"
             android:gravity="center"
             android:clickable="true"
-            android:onClick="onClick"
-            android:text="@string/chat_setting_quit"/>
+            android:onClick="onClick"/>
         <TextView
             android:id="@+id/btnChat"
             android:layout_width="0dp"

@@ -88,6 +88,7 @@ public class FriendProfile implements ProfileSummary {
     /**
      * 获取用户ID
      */
+    @Override
     public String getIdentify(){
         return profile.getIdentifier();
     }

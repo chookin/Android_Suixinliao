@@ -60,7 +60,7 @@ public class GroupManagerPresenter {
         TIMGroupManager.getInstance().getGroupPendencyList(param, new TIMValueCallBack<TIMGroupPendencyListGetSucc>() {
             @Override
             public void onError(int i, String s) {
-                Log.i(TAG, "onError code" + i + " msg " + s);
+                Log.e(TAG, "onError code" + i + " msg " + s);
             }
 
             @Override
@@ -86,7 +86,7 @@ public class GroupManagerPresenter {
         TIMGroupManager.getInstance().getGroupPendencyList(param, new TIMValueCallBack<TIMGroupPendencyListGetSucc>() {
             @Override
             public void onError(int i, String s) {
-                Log.i(TAG, "onError code" + i + " msg " + s);
+                Log.e(TAG, "onError code" + i + " msg " + s);
             }
 
             @Override
@@ -116,7 +116,7 @@ public class GroupManagerPresenter {
         TIMGroupManager.getInstance().searchGroup(key, flag, null, 0, 30, new TIMValueCallBack<TIMGroupSearchSucc>() {
             @Override
             public void onError(int i, String s) {
-                Log.i(TAG, "onError code" + i + " msg " + s);
+                Log.e(TAG, "onError code" + i + " msg " + s);
             }
 
             @Override
@@ -137,7 +137,7 @@ public class GroupManagerPresenter {
         TIMGroupManager.getInstance().getGroupPublicInfo(Collections.singletonList(groupId), new TIMValueCallBack<List<TIMGroupDetailInfo>>() {
             @Override
             public void onError(int i, String s) {
-                Log.i(TAG, "onError code" + i + " msg " + s);
+                Log.e(TAG, "onError code" + i + " msg " + s);
             }
 
             @Override
@@ -194,6 +194,28 @@ public class GroupManagerPresenter {
         groupGroupParam.setMembers(memberinfos);
         groupGroupParam.setGroupType(type);
         TIMGroupManager.getInstance().createGroup(groupGroupParam, callBack);
+    }
+
+
+    /**
+     * 退出群
+     *
+     * @param groupId 群组ID
+     * @param callBack 回调
+     */
+    public static void quitGroup(String groupId, TIMCallBack callBack){
+        TIMGroupManager.getInstance().quitGroup(groupId, callBack);
+    }
+
+
+    /**
+     * 解散群
+     *
+     * @param groupId 群组ID
+     * @param callBack 回调
+     */
+    public static void dismissGroup(String groupId, TIMCallBack callBack){
+        TIMGroupManager.getInstance().deleteGroup(groupId, callBack);
     }
 
 

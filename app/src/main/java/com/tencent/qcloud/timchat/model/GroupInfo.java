@@ -160,4 +160,18 @@ public class GroupInfo implements Observer {
         return "";
     }
 
+
+    /**
+     * 通过群id获取群资料
+     *
+     * @param type 群类型
+     * @param identify 群id
+     */
+    public GroupProfile getGroupProfile(String type, String identify){
+        for (GroupProfile item : groups.get(type)){
+            if (item.getIdentify().equals(identify)) return item;
+        }
+        return null;
+    }
+
 }

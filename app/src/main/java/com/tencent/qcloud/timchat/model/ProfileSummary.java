@@ -35,6 +35,12 @@ public interface ProfileSummary {
 
 
     /**
+     * 获取id
+     */
+    String getIdentify();
+
+
+    /**
      * 显示详情等点击事件
      *
      * @param context 上下文

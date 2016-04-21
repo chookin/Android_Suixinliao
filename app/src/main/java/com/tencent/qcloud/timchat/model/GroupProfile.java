@@ -22,6 +22,7 @@ public class GroupProfile implements ProfileSummary {
     /**
      * 获取群ID
      */
+    @Override
     public String getIdentify(){
         return profile.getGroupId();
     }

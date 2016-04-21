@@ -3,17 +3,22 @@ package com.tencent.qcloud.timchat.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
+import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.model.GroupInfo;
+import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 
 import java.util.Collections;
@@ -26,6 +31,7 @@ public class GroupProfileActivity extends Activity implements GroupInfoView, Vie
     private String identify;
     private GroupInfoPresenter groupInfoPresenter;
     private boolean isInGroup;
+    private boolean isGroupOwner;
 
 
     @Override
@@ -70,6 +76,10 @@ public class GroupProfileActivity extends Activity implements GroupInfoView, Vie
                 opt.setContent(getResources().getString(R.string.chat_setting_group_all_reject));
                 break;
         }
+        TextView btnDel = (TextView) findViewById(R.id.btnDel);
+        isGroupOwner = info.getGroupOwner().equals(UserInfo.getInstance().getId());
+        btnDel.setText(isGroupOwner?getString(R.string.chat_setting_dismiss):getString(R.string.chat_setting_quit));
+
     }
 
     /**
@@ -84,6 +94,33 @@ public class GroupProfileActivity extends Activity implements GroupInfoView, Vie
                 ChatActivity.navToChat(this,identify, TIMConversationType.Group);
                 break;
             case R.id.btnDel:
+                if (isGroupOwner){
+                    GroupManagerPresenter.dismissGroup(identify, new TIMCallBack() {
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.i(TAG, "onError code" + i + " msg " + s);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_dismiss_succ),Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }else{
+                    GroupManagerPresenter.quitGroup(identify, new TIMCallBack() {
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.i(TAG, "onError code" + i + " msg " + s);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_quit_succ),Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }
                 break;
             case R.id.controlOutGroup:
                 Intent intent = new Intent(this, ApplyGroupActivity.class);
