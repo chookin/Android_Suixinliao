@@ -124,7 +124,7 @@ public class VideoMessage extends Message {
         if (bitmap == null) return;
         ImageView imageView = new ImageView(MyApplication.getContext());
         imageView.setImageBitmap(bitmap);
-        getBubbleView(viewHolder).removeAllViews();
+        clearView(viewHolder);
         getBubbleView(viewHolder).addView(imageView);
     }
 

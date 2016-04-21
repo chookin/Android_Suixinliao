@@ -56,7 +56,7 @@ public class ImageMessage extends Message {
 
                 ImageView imageView = new ImageView(MyApplication.getContext());
                 imageView.setImageBitmap(getThumb(e.getPath()));
-                getBubbleView(viewHolder).removeAllViews();
+                clearView(viewHolder);
                 getBubbleView(viewHolder).addView(imageView);
                 break;
             case SendSucc:
@@ -171,7 +171,7 @@ public class ImageMessage extends Message {
         Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.getCacheFilePath(filename));
         ImageView imageView = new ImageView(MyApplication.getContext());
         imageView.setImageBitmap(bitmap);
-        getBubbleView(viewHolder).removeAllViews();
+        clearView(viewHolder);
         getBubbleView(viewHolder).addView(imageView);
     }
 

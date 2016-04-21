@@ -78,7 +78,7 @@ public class VoiceMessage extends Message {
             tv.setLayoutParams(lp);
             linearLayout.addView(tv);
         }
-        getBubbleView(viewHolder).removeAllViews();
+        clearView(viewHolder);
         getBubbleView(viewHolder).addView(linearLayout);
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
             @Override

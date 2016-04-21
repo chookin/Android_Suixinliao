@@ -122,7 +122,7 @@ public class TextMessage extends Message {
 
         }
         tv.setText(stringBuilder);
-        getBubbleView(viewHolder).removeAllViews();
+        clearView(viewHolder);
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
     }

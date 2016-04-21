@@ -87,7 +87,8 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     public void showUserInfo(List<TIMUserProfile> users) {
         if (users == null) return;
         for (TIMUserProfile item : users){
-            list.add(new FriendProfile(item));
+            if (needAdd(item.getIdentifier()))
+                list.add(new FriendProfile(item));
         }
         adapter.notifyDataSetChanged();
         if (list.size() == 0){
@@ -95,6 +96,13 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
         }else{
             tvNoResult.setVisibility(View.GONE);
         }
+    }
+
+    private boolean needAdd(String id){
+        for (ProfileSummary item : list){
+            if (item.getIdentify().equals(id)) return false;
+        }
+        return true;
     }
 
 }

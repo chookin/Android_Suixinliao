@@ -94,6 +94,7 @@ public class GroupManageConversation extends Conversation {
         if (lastMessage == null) return "";
         String from = lastMessage.getFromUser();
         String to = lastMessage.getToUser();
+
         boolean isSelf = from.equals(UserInfo.getInstance().getId());
         switch (lastMessage.getPendencyType()){
             case INVITED_BY_OTHER:
@@ -120,9 +121,9 @@ public class GroupManageConversation extends Conversation {
                 if (isSelf){
                     return MyApplication.getContext().getResources().getString(R.string.summary_me)+
                             MyApplication.getContext().getResources().getString(R.string.summary_group_apply)+
-                            lastMessage.getGroupId();
+                            GroupInfo.getInstance().getGroupName(lastMessage.getGroupId());
                 }else{
-                    return from+MyApplication.getContext().getResources().getString(R.string.summary_group_apply)+lastMessage.getGroupId();
+                    return from+MyApplication.getContext().getResources().getString(R.string.summary_group_apply)+GroupInfo.getInstance().getGroupName(lastMessage.getGroupId());
                 }
 
             default:

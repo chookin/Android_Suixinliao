@@ -137,5 +137,14 @@ public abstract class Message {
         return message.status() == TIMMessageStatus.SendFail;
     }
 
+    /**
+     * 清除气泡原有数据
+     *
+     */
+    protected void clearView(ChatAdapter.ViewHolder viewHolder){
+        getBubbleView(viewHolder).removeAllViews();
+        getBubbleView(viewHolder).setOnClickListener(null);
+    }
+
 
 }
