@@ -19,10 +19,8 @@ import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
-import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.presenter.GetFriendGroupsPresenter;
-import com.tencent.qcloud.presentation.viewfeatures.ManagerGroupView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.GroupListAdapter;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
@@ -35,11 +33,10 @@ import java.util.List;
 /**
  * 好友分组管理
  */
-public class ManagerFriendGroupActivity extends FragmentActivity implements ManagerGroupView, View.OnClickListener {
+public class ManagerFriendGroupActivity extends FragmentActivity implements View.OnClickListener {
 
     private final String TAG = ManagerFriendGroupActivity.class.getSimpleName();
 
-    GetFriendGroupsPresenter mGetFriendGroupsPresenter;
     private ListView mMyGroupList;
     private GroupListAdapter mGroupListAdapter;
     private LinearLayout mAddGroup;
@@ -58,13 +55,6 @@ public class ManagerFriendGroupActivity extends FragmentActivity implements Mana
 
 
     }
-
-
-    @Override
-    public void notifyGroupListChange() {
-        mGetFriendGroupsPresenter.getFriendGroupList();
-    }
-
 
 
 
@@ -150,28 +140,7 @@ public class ManagerFriendGroupActivity extends FragmentActivity implements Mana
                 });
             }
         });
-//        final TIMFriendGroup groupinfo = mMyListTitle.get(position);
-//        deleteGroupDialog = new Dialog(this, R.style.dialog);
-//        deleteGroupDialog.setContentView(R.layout.dialog_delete_group);
-//        TextView btnYes = (TextView) deleteGroupDialog.findViewById(R.id.confirm_btn);
-//        TextView btnNo = (TextView) deleteGroupDialog.findViewById(R.id.cancel_btn);
-//        TextView deleteGroup = (TextView) deleteGroupDialog.findViewById(R.id.select_delete_group);
-//        deleteGroup.setText(groupinfo.getGroupName());
-//        btnNo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                deleteGroupDialog.dismiss();
-//            }
-//        });
-//
-//        btnYes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mManagerMyGroupPresenter.deleteFriendGroup(groupinfo.getGroupName());
-//                deleteGroupDialog.dismiss();
-//            }
-//        });
-//        deleteGroupDialog.show();
+
     }
 
 

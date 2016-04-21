@@ -50,13 +50,6 @@ public class GroupListAdapter extends BaseAdapter {
             Holder = new ItemHolder();
             Holder.groupname = (TextView) convertView.findViewById(R.id.groupName);
             Holder.delete = (TextView) convertView.findViewById(R.id.delete_group);
-            Holder.delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mManagerGroupActivity.deleteGroup(groupPosition);
-                    notifyDataSetChanged();
-                }
-            });
             convertView.setTag(Holder);
         } else {
             Holder = (ItemHolder) convertView.getTag();
@@ -69,8 +62,12 @@ public class GroupListAdapter extends BaseAdapter {
             Holder.groupname.setText(mGroupList.get(groupPosition));
             Holder.delete.setVisibility(View.VISIBLE);
         }
-
-
+        Holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mManagerGroupActivity.deleteGroup(groupPosition);
+            }
+        });
         return convertView;
     }
 
