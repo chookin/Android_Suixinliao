@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.tencent.TIMFriendGroup;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.ManagerFriendGroupActivity;
+import com.tencent.qcloud.timchat.ui.ManageFriendGroupActivity;
 
 import java.util.List;
 
@@ -19,8 +18,8 @@ import java.util.List;
 public class GroupListAdapter extends BaseAdapter {
     private Context mContext;
     private List<String> mGroupList;
-    private ManagerFriendGroupActivity mManagerGroupActivity;
-    public GroupListAdapter(Context context, List<String> grouplist,ManagerFriendGroupActivity activity) {
+    private ManageFriendGroupActivity mManagerGroupActivity;
+    public GroupListAdapter(Context context, List<String> grouplist,ManageFriendGroupActivity activity) {
         mContext = context;
         mGroupList = grouplist;
         mManagerGroupActivity = activity;

@@ -50,6 +50,7 @@ public class ImageMessage extends Message {
      */
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+        clearView(viewHolder);
         TIMImageElem e = (TIMImageElem) message.getElement(0);
         switch (message.status()){
             case Sending:

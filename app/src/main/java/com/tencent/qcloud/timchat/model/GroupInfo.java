@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.tencent.TIMGroupAssistant;
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberRoleType;
@@ -50,9 +51,9 @@ public class GroupInfo implements Observer {
     }
 
     private void refresh(){
-        List<TIMGroupDetailInfo> groupInfos = TIMGroupAssistant.getInstance().getGroupList();
-        for (TIMGroupDetailInfo item : groupInfos){
-            groups.get(item.getGroupType()).add(new GroupProfile(item));
+        List<TIMGroupCacheInfo> groupInfos = TIMGroupAssistant.getInstance().getGroups(null);
+        for (TIMGroupCacheInfo item : groupInfos){
+            groups.get(item.getGroupInfo().getGroupType()).add(new GroupProfile(item.getGroupInfo()));
         }
     }
 

@@ -86,6 +86,7 @@ public class TextMessage extends Message {
      */
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+        clearView(viewHolder);
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
@@ -122,7 +123,6 @@ public class TextMessage extends Message {
 
         }
         tv.setText(stringBuilder);
-        clearView(viewHolder);
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
     }

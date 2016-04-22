@@ -64,6 +64,7 @@ public class VideoMessage extends Message {
      */
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+        clearView(viewHolder);
         final TIMVideoElem e = (TIMVideoElem) message.getElement(0);
         switch (message.status()){
             case Sending:
@@ -124,7 +125,6 @@ public class VideoMessage extends Message {
         if (bitmap == null) return;
         ImageView imageView = new ImageView(MyApplication.getContext());
         imageView.setImageBitmap(bitmap);
-        clearView(viewHolder);
         getBubbleView(viewHolder).addView(imageView);
     }
 

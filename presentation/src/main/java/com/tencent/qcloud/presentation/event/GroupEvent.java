@@ -1,10 +1,8 @@
 package com.tencent.qcloud.presentation.event;
 
 
-import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupAssistantListener;
-import com.tencent.TIMGroupDetailInfo;
-import com.tencent.TIMGroupManager;
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupSettings;
 import com.tencent.TIMManager;
@@ -57,10 +55,12 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
     }
 
     @Override
-    public void onGroupAdd(TIMGroupDetailInfo timGroupDetailInfo) {
+    public void onGroupAdd(TIMGroupCacheInfo timGroupCacheInfo) {
         setChanged();
-        notifyObservers(new NotifyCmd(NotifyType.ADD, timGroupDetailInfo));
+        notifyObservers(new NotifyCmd(NotifyType.ADD, timGroupCacheInfo));
     }
+
+
 
     @Override
     public void onGroupDelete(String s) {
@@ -69,10 +69,12 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
     }
 
     @Override
-    public void onGroupUpdate(TIMGroupDetailInfo timGroupDetailInfo) {
+    public void onGroupUpdate(TIMGroupCacheInfo timGroupCacheInfo) {
         setChanged();
-        notifyObservers(new NotifyCmd(NotifyType.UPDATE, timGroupDetailInfo));
+        notifyObservers(new NotifyCmd(NotifyType.UPDATE, timGroupCacheInfo));
     }
+
+
 
 
     /**

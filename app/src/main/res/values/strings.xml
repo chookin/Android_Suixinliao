@@ -82,6 +82,8 @@
     <string name="delete_dialog_subtitle_sur">,该分组好友将移动到默认分组</string>
     <string name="delete_group_succ">删除分组成功</string>
     <string name="add_group_succ">添加分组成功</string>
+    <string name="add_group_error_existed">添加失败，分组已存在</string>
+    <string name="add_group_error_limit">添加失败，分组已存在</string>
 
 
     <!-- chat activity -->

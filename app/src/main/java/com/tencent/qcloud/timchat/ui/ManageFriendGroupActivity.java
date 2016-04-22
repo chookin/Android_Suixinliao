@@ -32,9 +32,9 @@ import java.util.List;
 /**
  * 好友分组管理
  */
-public class ManagerFriendGroupActivity extends FragmentActivity implements View.OnClickListener {
+public class ManageFriendGroupActivity extends FragmentActivity implements View.OnClickListener {
 
-    private final String TAG = ManagerFriendGroupActivity.class.getSimpleName();
+    private final String TAG = ManageFriendGroupActivity.class.getSimpleName();
 
     private ListView mMyGroupList;
     private GroupListAdapter mGroupListAdapter;
@@ -84,17 +84,21 @@ public class ManagerFriendGroupActivity extends FragmentActivity implements View
             public void onClick(View view) {
                 final String groupname = inputView.getText().toString();
                 if (groupname.equals("")) {
-                    Toast.makeText(ManagerFriendGroupActivity.this, getString(R.string.add_dialog_null), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_dialog_null), Toast.LENGTH_SHORT).show();
                 } else {
                     FriendshipManagerPresenter.createFriendGroup(groupname, new TIMValueCallBack<List<TIMFriendResult>>() {
                         @Override
                         public void onError(int i, String s) {
                             Log.e(TAG, "onError code " + i + " msg " + s);
+                            switch (i){
+                                case 32218:
+
+                            }
                         }
 
                         @Override
                         public void onSuccess(List<TIMFriendResult> timFriendResults) {
-                            Toast.makeText(ManagerFriendGroupActivity.this, getString(R.string.add_group_succ), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_succ), Toast.LENGTH_SHORT).show();
                             FriendshipEvent.getInstance().OnAddFriendGroups(null);
                             groups.add(groupname);
                             mGroupListAdapter.notifyDataSetChanged();
@@ -119,7 +123,7 @@ public class ManagerFriendGroupActivity extends FragmentActivity implements View
 
     private void deleteDialog(final int position) {
         NotifyDialog dialog = new NotifyDialog();
-        dialog.show(getString(R.string.delete_dialog_subtitle)+groups.get(position)+getString(R.string.delete_dialog_subtitle_sur), ManagerFriendGroupActivity.this.getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+        dialog.show(getString(R.string.delete_dialog_subtitle)+groups.get(position)+getString(R.string.delete_dialog_subtitle_sur), ManageFriendGroupActivity.this.getSupportFragmentManager(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 FriendshipManagerPresenter.delFriendGroup(groups.get(position), new TIMCallBack() {
@@ -131,7 +135,7 @@ public class ManagerFriendGroupActivity extends FragmentActivity implements View
 
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(ManagerFriendGroupActivity.this, getString(R.string.delete_group_succ), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.delete_group_succ), Toast.LENGTH_SHORT).show();
                         FriendshipEvent.getInstance().OnDelFriendGroups(Collections.singletonList(groups.get(position)));
                         groups.remove(position);
                         mGroupListAdapter.notifyDataSetChanged();

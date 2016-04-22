@@ -119,7 +119,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener {
         managerGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ManagerFriendGroupActivity.class);
+                Intent intent = new Intent(getActivity(), ManageFriendGroupActivity.class);
                 getActivity().startActivity(intent);
                 inviteDialog.dismiss();
             }
