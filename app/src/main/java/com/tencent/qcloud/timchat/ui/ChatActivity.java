@@ -118,16 +118,26 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         switch (type) {
             case C2C:
                 title.setMoreImg(R.drawable.btn_person);
-                title.setMoreImgAction(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
-                        intent.putExtra("identify", identify);
-                        startActivity(intent);
-                    }
-                });
-                FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-                title.setTitleText(profile == null ? identify : profile.getName());
+                if (FriendshipInfo.getInstance().isFriend(identify)){
+                    title.setMoreImgAction(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
+                            intent.putExtra("identify", identify);
+                            startActivity(intent);
+                        }
+                    });
+                    FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+                    title.setTitleText(profile == null ? identify : profile.getName());
+                }else{
+                    title.setMoreImgAction(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            new FriendProfile()
+                        }
+                    });
+                    title.setTitleText(identify);
+                }
                 break;
             case Group:
                 title.setMoreImg(R.drawable.btn_group);

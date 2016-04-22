@@ -2,9 +2,12 @@ package com.tencent.qcloud.timchat;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
-
-
+import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushListener;
+import com.tencent.TIMOfflinePushNotification;
+import com.tencent.qalsdk.sdk.MsfSdkUtils;
 
 
 /**
@@ -18,13 +21,16 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-//        InitBusiness.start(context);
-//        TlsBusiness.init(context);
-//        String id =  TLSService.getInstance().getLastUserIdentifier();
-//        UserInfo.getInstance().setId(id);
-//        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
-//        CrashHandler crashHandler = CrashHandler.getInstance();
-//        crashHandler.init(this);
+        super.onCreate();
+
+        if(MsfSdkUtils.isMainProcess(this)) {
+            TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
+                @Override
+                public void handleNotification(TIMOfflinePushNotification notification) {
+                    notification.doNotify(getApplicationContext(), R.drawable.ic_launcher);
+                }
+            });
+        }
     }
 
     public static Context getContext() {

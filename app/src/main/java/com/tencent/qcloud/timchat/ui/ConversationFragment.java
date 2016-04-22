@@ -156,6 +156,24 @@ public class ConversationFragment extends Fragment implements ConversationView,F
         friendshipManagerPresenter.getFriendshipLastMessage();
     }
 
+    /**
+     * 删除会话
+     *
+     * @param identify
+     */
+    @Override
+    public void removeConversation(String identify) {
+        Iterator<Conversation> iterator = conversationList.iterator();
+        while(iterator.hasNext()){
+            Conversation conversation = iterator.next();
+            if (conversation.getIdentify()!=null&&conversation.getIdentify().equals(identify)){
+                iterator.remove();
+                adapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
 
     /**
      * 获取好友关系链管理系统最后一条消息的回调

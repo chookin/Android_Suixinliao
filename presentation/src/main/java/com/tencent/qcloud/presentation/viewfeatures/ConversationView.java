@@ -27,4 +27,10 @@ public interface ConversationView extends MvpView {
      * 更新好友关系链消息
      */
     void updateFriendshipMessage();
+
+
+    /**
+     * 删除会话
+     */
+    void removeConversation(String identify);
 }

@@ -41,25 +41,34 @@
         <activity android:name=".ui.GroupProfileActivity"
             android:launchMode="singleTask"/>
 
+        <!--  消息收发service -->
         <service
             android:name="com.tencent.qalsdk.service.QalService"
-            android:exported="true"
-            android:permission="com.tencent.msf.service.permission"
-            android:process=":QALSERVICE"/>
-
-        <receiver android:name="com.tencent.qalsdk.QALBroadcastReceiver">
+            android:exported="false"
+            android:process=":QALSERVICE" >
+        </service>
+        <!--  离线消息广播接收器 -->
+        <receiver
+            android:name="com.tencent.qalsdk.QALBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.tencent.qalsdk.broadcast.qal" />
             </intent-filter>
         </receiver>
-        <!-- 【必须】 qal service广播接收,开机启动 -->
+        <!--  系统消息广播接收器 -->
         <receiver
-            android:name="com.tencent.qalsdk.service.QALServiceReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":QALSERVICE">
+            android:name="com.tencent.qalsdk.core.NetConnInfoCenter" android:process=":QALSERVICE">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
 
