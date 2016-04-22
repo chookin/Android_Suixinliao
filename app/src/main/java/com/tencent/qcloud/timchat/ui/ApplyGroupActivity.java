@@ -17,6 +17,7 @@ public class ApplyGroupActivity extends Activity implements TIMCallBack {
 
     private String identify;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

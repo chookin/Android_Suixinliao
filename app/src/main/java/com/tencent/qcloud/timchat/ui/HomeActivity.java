@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMManager;
 import com.tencent.TIMUserStatusListener;
+import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
@@ -44,6 +47,22 @@ public class HomeActivity extends FragmentActivity {
             public void onForceOffline() {
                 NotifyDialog dialog = new NotifyDialog();
                 dialog.show(getString(R.string.kick_logout), HomeActivity.this.getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LoginBusiness.loginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), new TIMCallBack() {
+                            @Override
+                            public void onError(int i, String s) {
+                                Toast.makeText(HomeActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
+                                logout();
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(HomeActivity.this, getString(R.string.login_succ), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         logout();

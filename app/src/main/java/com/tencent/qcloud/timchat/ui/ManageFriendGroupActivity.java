@@ -92,7 +92,15 @@ public class ManageFriendGroupActivity extends FragmentActivity implements View.
                             Log.e(TAG, "onError code " + i + " msg " + s);
                             switch (i){
                                 case 32218:
-                                    Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_succ), Toast.LENGTH_SHORT).show();
+                                    //分组名称已存在
+                                    Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_error_existed), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 32214:
+                                    //分组达到上限
+                                    Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_error_limit), Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_error), Toast.LENGTH_SHORT).show();
                                     break;
 
                             }
@@ -132,7 +140,7 @@ public class ManageFriendGroupActivity extends FragmentActivity implements View.
                     @Override
                     public void onError(int i, String s) {
                         Log.e(TAG, "onError code " + i + " msg " + s);
-
+                        Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.del_group_error), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

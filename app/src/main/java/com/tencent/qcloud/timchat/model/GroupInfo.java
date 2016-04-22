@@ -80,7 +80,7 @@ public class GroupInfo implements Observer {
                         break;
                     case ADD:
                     case UPDATE:
-                        updateGroup((TIMGroupDetailInfo) cmd.data);
+                        updateGroup((TIMGroupCacheInfo) cmd.data);
                         break;
                     case DEL:
                         delGroup((String) cmd.data);
@@ -91,14 +91,14 @@ public class GroupInfo implements Observer {
         }
     }
 
-    private void updateGroup(TIMGroupDetailInfo info){
-        for (GroupProfile item : groups.get(info.getGroupType())){
-            if (item.getIdentify().equals(info.getGroupId())){
-                item.setProfile(info);
+    private void updateGroup(TIMGroupCacheInfo info){
+        for (GroupProfile item : groups.get(info.getGroupInfo().getGroupType())){
+            if (item.getIdentify().equals(info.getGroupInfo().getGroupId())){
+                item.setProfile(info.getGroupInfo());
                 return;
             }
         }
-        groups.get(info.getGroupType()).add(new GroupProfile(info));
+        groups.get(info.getGroupInfo().getGroupType()).add(new GroupProfile(info.getGroupInfo()));
     }
 
     private void delGroup(String id){
