@@ -92,6 +92,8 @@ public class ManageFriendGroupActivity extends FragmentActivity implements View.
                             Log.e(TAG, "onError code " + i + " msg " + s);
                             switch (i){
                                 case 32218:
+                                    Toast.makeText(ManageFriendGroupActivity.this, getString(R.string.add_group_succ), Toast.LENGTH_SHORT).show();
+                                    break;
 
                             }
                         }

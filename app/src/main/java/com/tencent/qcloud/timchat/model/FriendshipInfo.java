@@ -27,7 +27,7 @@ public class FriendshipInfo implements Observer {
     private List<String> groups;
     private Map<String, List<FriendProfile>> friends;
 
-    private static FriendshipInfo instance = new FriendshipInfo();
+    private static FriendshipInfo instance;
 
     private FriendshipInfo(){
         groups = new ArrayList<>();
@@ -36,7 +36,10 @@ public class FriendshipInfo implements Observer {
         refresh();
     }
 
-    public static FriendshipInfo getInstance(){
+    public synchronized static FriendshipInfo getInstance(){
+        if (instance == null){
+            instance = new FriendshipInfo();
+        }
         return instance;
     }
 
@@ -73,6 +76,7 @@ public class FriendshipInfo implements Observer {
     private void refresh(){
         groups.clear();
         friends.clear();
+        Log.d(TAG, "get friendship info id :" + UserInfo.getInstance().getId());
         List<TIMFriendGroup> timFriendGroups = TIMFriendshipProxy.getInstance().getFriendByGroups(null);
         if (timFriendGroups == null) return;
         for (TIMFriendGroup group : timFriendGroups){
@@ -131,6 +135,16 @@ public class FriendshipInfo implements Observer {
             }
         }
         return null;
+    }
+
+    /**
+     * 清除数据
+     */
+    public void clear(){
+        if (instance == null) return;
+        groups.clear();
+        friends.clear();
+        instance = null;
     }
 
 

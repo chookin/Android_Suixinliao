@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.tencent.TIMManager;
 import com.tencent.TIMUserStatusListener;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.FriendshipInfo;
+import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
@@ -88,6 +90,8 @@ public class HomeActivity extends FragmentActivity {
     public void logout(){
         TlsBusiness.logout(UserInfo.getInstance().getId());
         UserInfo.getInstance().setId(null);
+        FriendshipInfo.getInstance().clear();
+        GroupInfo.getInstance().clear();
         Intent intent = new Intent(HomeActivity.this,SplashActivity.class);
         finish();
         startActivity(intent);

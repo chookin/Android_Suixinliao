@@ -44,14 +44,18 @@ public class GroupInfo implements Observer {
         refresh();
     }
 
-    private static GroupInfo instance = new GroupInfo();
+    private static GroupInfo instance;
 
-    public static GroupInfo getInstance(){
+    public synchronized static GroupInfo getInstance(){
+        if (instance == null){
+            instance = new GroupInfo();
+        }
         return instance;
     }
 
     private void refresh(){
         List<TIMGroupCacheInfo> groupInfos = TIMGroupAssistant.getInstance().getGroups(null);
+        if (groupInfos == null) return;
         for (TIMGroupCacheInfo item : groupInfos){
             groups.get(item.getGroupInfo().getGroupType()).add(new GroupProfile(item.getGroupInfo()));
         }
@@ -173,6 +177,15 @@ public class GroupInfo implements Observer {
             if (item.getIdentify().equals(identify)) return item;
         }
         return null;
+    }
+
+    /**
+     * 清除数据
+     */
+    public void clear(){
+        if (instance == null) return;
+        groups.clear();
+        instance = null;
     }
 
 }
