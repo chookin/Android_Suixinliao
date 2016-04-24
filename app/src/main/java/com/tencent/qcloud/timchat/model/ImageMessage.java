@@ -172,7 +172,6 @@ public class ImageMessage extends Message {
         Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.getCacheFilePath(filename));
         ImageView imageView = new ImageView(MyApplication.getContext());
         imageView.setImageBitmap(bitmap);
-        clearView(viewHolder);
         getBubbleView(viewHolder).addView(imageView);
     }
 
