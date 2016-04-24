@@ -78,6 +78,18 @@ public class LineControllerView extends LinearLayout {
         return tvContent.getText().toString();
     }
 
+
+    /**
+     * 设置是否可以跳转
+     *
+     * @param canNav 是否可以跳转
+     */
+    public void setCanNav(boolean canNav){
+        this.canNav = canNav;
+        ImageView navArrow = (ImageView) findViewById(R.id.rightArrow);
+        navArrow.setVisibility(canNav ? VISIBLE : GONE);
+    }
+
     private String getShortenStr(String str){
         if (str == null) return "";
         if (str.length()>23){

@@ -39,7 +39,6 @@
         android:id="@+id/addOpt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:canNav="true"
         app:name="@string/chat_setting_group_add_opt" />
     <LinearLayout
         android:id="@+id/controlInGroup"

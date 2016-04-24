@@ -128,6 +128,9 @@
     <string name="chat_setting_add">申请加群</string>
     <string name="chat_setting_dismiss_succ">解散群成功</string>
     <string name="chat_setting_quit_succ">退出群成功</string>
+    <string name="chat_setting_change_err">修改失败</string>
+    <string name="chat_setting_change_group_name">修改群名称</string>
+    <string name="chat_setting_change_group_intro">修改群介绍</string>
 
 
     <!-- Add newfri activity -->

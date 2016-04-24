@@ -57,7 +57,7 @@ public class GroupInfo implements Observer {
         List<TIMGroupCacheInfo> groupInfos = TIMGroupAssistant.getInstance().getGroups(null);
         if (groupInfos == null) return;
         for (TIMGroupCacheInfo item : groupInfos){
-            groups.get(item.getGroupInfo().getGroupType()).add(new GroupProfile(item.getGroupInfo()));
+            groups.get(item.getGroupInfo().getGroupType()).add(new GroupProfile(item));
         }
     }
 
@@ -94,11 +94,11 @@ public class GroupInfo implements Observer {
     private void updateGroup(TIMGroupCacheInfo info){
         for (GroupProfile item : groups.get(info.getGroupInfo().getGroupType())){
             if (item.getIdentify().equals(info.getGroupInfo().getGroupId())){
-                item.setProfile(info.getGroupInfo());
+                item.setProfile(info);
                 return;
             }
         }
-        groups.get(info.getGroupInfo().getGroupType()).add(new GroupProfile(info.getGroupInfo()));
+        groups.get(info.getGroupInfo().getGroupType()).add(new GroupProfile(info));
     }
 
     private void delGroup(String id){
@@ -126,6 +126,22 @@ public class GroupInfo implements Observer {
             }
         }
         return false;
+    }
+
+    /**
+     * 获取在该群身份
+     *
+     * @param id 群identify
+     */
+    public TIMGroupMemberRoleType getRole(String id){
+        for (String key : groups.keySet()){
+            for (GroupProfile item : groups.get(key)){
+                if (item.getIdentify().equals(id)){
+                    return item.getRole();
+                }
+            }
+        }
+        return TIMGroupMemberRoleType.NotMember;
     }
 
     /**

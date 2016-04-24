@@ -15,5 +15,8 @@ public interface GroupInfoView {
      *
      * @param groupInfos 群资料信息列表
      */
-     void showGroupInfo(List<TIMGroupDetailInfo> groupInfos);
+    void showGroupInfo(List<TIMGroupDetailInfo> groupInfos);
+
+
+
 }

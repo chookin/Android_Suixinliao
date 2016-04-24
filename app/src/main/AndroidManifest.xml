@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -38,16 +40,16 @@
         <activity android:name=".ui.ManageFriendGroupActivity" />
         <activity android:name=".ui.VideoActivity" />
         <activity android:name=".ui.CreateGroupActivity" />
-        <activity android:name=".ui.GroupProfileActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.GroupProfileActivity"
+            android:launchMode="singleTask" />
 
-        <!--  消息收发service -->
+        <!-- 消息收发service -->
         <service
             android:name="com.tencent.qalsdk.service.QalService"
             android:exported="false"
-            android:process=":QALSERVICE" >
-        </service>
-        <!--  离线消息广播接收器 -->
+            android:process=":QALSERVICE"></service>
+        <!-- 离线消息广播接收器 -->
         <receiver
             android:name="com.tencent.qalsdk.QALBroadcastReceiver"
             android:exported="false">
@@ -55,9 +57,10 @@
                 <action android:name="com.tencent.qalsdk.broadcast.qal" />
             </intent-filter>
         </receiver>
-        <!--  系统消息广播接收器 -->
+        <!-- 系统消息广播接收器 -->
         <receiver
-            android:name="com.tencent.qalsdk.core.NetConnInfoCenter" android:process=":QALSERVICE">
+            android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
+            android:process=":QALSERVICE">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -72,14 +75,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.ImageViewActivity"></activity>
-        <activity android:name=".ui.EditActivity"></activity>
-        <activity android:name=".ui.SearchGroupActivity"></activity>
-        <activity android:name=".ui.ApplyGroupActivity"></activity>
-        <activity android:name=".ui.GroupManageMessageActivity"></activity>
-        <activity android:name=".ui.FriendshipManageMessageActivity"></activity>
-        <activity android:name=".ui.GroupListActivity"></activity>
-        <activity android:name=".ui.ChooseFriendActivity"></activity>
+        <activity android:name=".ui.ImageViewActivity" />
+        <activity android:name=".ui.EditActivity" />
+        <activity android:name=".ui.SearchGroupActivity" />
+        <activity android:name=".ui.ApplyGroupActivity" />
+        <activity android:name=".ui.GroupManageMessageActivity" />
+        <activity android:name=".ui.FriendshipManageMessageActivity" />
+        <activity android:name=".ui.GroupListActivity" />
+        <activity android:name=".ui.ChooseFriendActivity" />
+        <activity android:name=".ui.GroupMemberActivity"></activity>
     </application>
 
 </manifest>

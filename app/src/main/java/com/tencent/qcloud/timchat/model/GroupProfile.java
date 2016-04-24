@@ -3,7 +3,10 @@ package com.tencent.qcloud.timchat.model;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tencent.TIMGroupBasicSelfInfo;
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
+import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.GroupProfileActivity;
 
@@ -14,6 +17,12 @@ public class GroupProfile implements ProfileSummary {
 
 
     private TIMGroupDetailInfo profile;
+    private TIMGroupBasicSelfInfo selfInfo;
+
+    public GroupProfile(TIMGroupCacheInfo profile){
+        this.profile = profile.getGroupInfo();
+        selfInfo = profile.getSelfInfo();
+    }
 
     public GroupProfile(TIMGroupDetailInfo profile){
         this.profile = profile;
@@ -27,12 +36,10 @@ public class GroupProfile implements ProfileSummary {
         return profile.getGroupId();
     }
 
-    public TIMGroupDetailInfo getProfile() {
-        return profile;
-    }
 
-    public void setProfile(TIMGroupDetailInfo profile) {
-        this.profile = profile;
+    public void setProfile(TIMGroupCacheInfo profile) {
+        this.profile = profile.getGroupInfo();
+        selfInfo = profile.getSelfInfo();
     }
 
     /**
@@ -65,6 +72,14 @@ public class GroupProfile implements ProfileSummary {
     @Override
     public String getDescription() {
         return null;
+    }
+
+
+    /**
+     * 获取自己身份
+     */
+    public TIMGroupMemberRoleType getRole(){
+        return selfInfo.getRole();
     }
 
     /**
