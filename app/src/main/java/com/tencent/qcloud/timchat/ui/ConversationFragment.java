@@ -74,7 +74,10 @@ public class ConversationFragment extends Fragment implements ConversationView,F
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     conversationList.get(position).navToDetail(getActivity());
-                    adapter.notifyDataSetChanged();
+                    if (conversationList.get(position) instanceof GroupManageConversation){
+                        groupManagerPresenter.getGroupManageLastMessage();
+                    }
+
                 }
             });
             friendshipManagerPresenter = new FriendshipManagerPresenter(this);
