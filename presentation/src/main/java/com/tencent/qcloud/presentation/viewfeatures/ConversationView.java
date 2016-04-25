@@ -1,6 +1,7 @@
 package com.tencent.qcloud.presentation.viewfeatures;
 
 import com.tencent.TIMConversation;
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMMessage;
 
 import java.util.List;
@@ -33,4 +34,9 @@ public interface ConversationView extends MvpView {
      * 删除会话
      */
     void removeConversation(String identify);
+
+    /**
+     * 更新群信息
+     */
+    void updateGroupInfo(TIMGroupCacheInfo info);
 }

@@ -157,6 +157,9 @@
     <string name="summary_disagree">拒绝</string>
     <string name="summary_invite_person">邀请人</string>
     <string name="summary_handle_person">处理人</string>
+    <string name="summary_group_admin_change">管理员变更</string>
+    <string name="summary_group_info_change">群资料变更</string>
+    <string name="summary_group_mem_change">群成员变更</string>
 
     <!-- time -->
     <string name="time_yesterday">昨天</string>

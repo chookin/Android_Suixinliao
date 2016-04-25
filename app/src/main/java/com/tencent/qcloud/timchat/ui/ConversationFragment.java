@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendFutureItem;
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
@@ -171,6 +172,26 @@ public class ConversationFragment extends Fragment implements ConversationView,F
             Conversation conversation = iterator.next();
             if (conversation.getIdentify()!=null&&conversation.getIdentify().equals(identify)){
                 iterator.remove();
+                adapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
+    /**
+     * 更新群信息
+     *
+     * @param info
+     */
+    @Override
+    public void updateGroupInfo(TIMGroupCacheInfo info) {
+        for (Conversation conversation : conversationList){
+            if (conversation.getIdentify()!=null && conversation.getIdentify().equals(info.getGroupInfo().getGroupId())){
+                String name = info.getGroupInfo().getGroupName();
+                if (name.equals("")){
+                    name = info.getGroupInfo().getGroupId();
+                }
+                conversation.setName(name);
                 adapter.notifyDataSetChanged();
                 return;
             }
