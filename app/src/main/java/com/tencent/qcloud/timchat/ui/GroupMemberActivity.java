@@ -1,8 +1,11 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,16 +26,30 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
     ProfileSummaryAdapter adapter;
     List<ProfileSummary> list = new ArrayList<>();
     ListView listView;
+    String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member);
-        String id = getIntent().getStringExtra("id");
+        groupId = getIntent().getStringExtra("id");
         listView = (ListView) findViewById(R.id.list);
         adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
-        TIMGroupManager.getInstance().getGroupMembers(id, this);
+        TIMGroupManager.getInstance().getGroupMembers(groupId, this);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(GroupMemberActivity.this, GroupMemberProfileActivity.class);
+                GroupMemberProfile profile = (GroupMemberProfile) list.get(position);
+                intent.putExtra("id", profile.getIdentify());
+                intent.putExtra("role", profile.getRole());
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("quietTime", profile.getQuietTime());
+                intent.putExtra("name", profile.getNameCard());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

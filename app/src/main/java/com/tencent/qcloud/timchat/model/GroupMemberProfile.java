@@ -3,6 +3,7 @@ package com.tencent.qcloud.timchat.model;
 import android.content.Context;
 
 import com.tencent.TIMGroupMemberInfo;
+import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.qcloud.timchat.R;
 
 /**
@@ -67,5 +68,25 @@ public class GroupMemberProfile implements ProfileSummary {
     @Override
     public void onClick(Context context) {
 
+    }
+
+    /**
+     * 获取身份
+     */
+    public TIMGroupMemberRoleType getRole(){
+        return timGroupMemberInfo.getRole();
+    }
+
+
+    /**
+     * 获取群名片
+     */
+    public String getNameCard(){
+        if (timGroupMemberInfo.getNameCard() == null) return "";
+        return timGroupMemberInfo.getNameCard();
+    }
+
+    public long getQuietTime(){
+        return timGroupMemberInfo.getSilenceSeconds();
     }
 }

@@ -133,6 +133,7 @@
     <string name="chat_setting_change_group_intro">修改群介绍</string>
 
 
+
     <!-- Add newfri activity -->
     <string name="title_new_fri">新朋友</string>
     <string name="newfri_agree">同意</string>
@@ -211,5 +212,22 @@
     <!-- choose activity -->
     <string name="choose_title">选择联系人</string>
     <string name="choose_need_one">至少选择一个联系人</string>
+
+    <!-- group member profile activity -->
+    <string name="group_member_profile">成员资料</string>
+    <string name="group_member_quiet">设置禁言</string>
+    <string name="group_member_manage">设为管理员</string>
+    <string name="group_member_card">群名片</string>
+    <string name="group_member_del">移出本群</string>
+    <string name="group_member_del_err">移出群成员失败</string>
+    <string name="group_member_del_succ">移出群成员成功</string>
+    <string name="group_member_manage_set_err">设置管理员失败</string>
+    <string name="group_member_manage_set_succ">设置管理员成功</string>
+    <string name="group_member_quiet_ing">禁言中</string>
+    <string name="group_member_quiet_ten_min">十分钟</string>
+    <string name="group_member_quiet_one_hour">一小时</string>
+    <string name="group_member_quiet_one_day">一天</string>
+    <string name="group_member_quiet_cancel">取消禁言</string>
+    <string name="group_member_quiet_err">设置禁言失败</string>
 
 </resources>

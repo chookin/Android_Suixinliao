@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -89,6 +90,29 @@ public class LineControllerView extends LinearLayout {
         ImageView navArrow = (ImageView) findViewById(R.id.rightArrow);
         navArrow.setVisibility(canNav ? VISIBLE : GONE);
     }
+
+
+    /**
+     * 设置开关状态
+     *
+     * @param on 开关
+     */
+    public void setSwitch(boolean on){
+        Switch mSwitch = (Switch) findViewById(R.id.btnSwitch);
+        mSwitch.setChecked(on);
+    }
+
+
+    /**
+     * 设置开关监听
+     *
+     * @param listener 监听
+     */
+    public void setCheckListener(CompoundButton.OnCheckedChangeListener listener){
+        Switch mSwitch = (Switch) findViewById(R.id.btnSwitch);
+        mSwitch.setOnCheckedChangeListener(listener);
+    }
+
 
     private String getShortenStr(String str){
         if (str == null) return "";
