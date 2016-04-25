@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.GroupInfo;
+import com.tencent.qcloud.timchat.model.GroupProfile;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
@@ -109,6 +111,9 @@ public class GroupListActivity extends Activity implements Observer {
                     case DEL:
                         delGroup((String) cmd.data);
                         break;
+                    case ADD:
+                        addGroup((TIMGroupCacheInfo) cmd.data);
+                        break;
 
                 }
             }
@@ -125,5 +130,15 @@ public class GroupListActivity extends Activity implements Observer {
                 return;
             }
         }
+    }
+
+
+    private void addGroup(TIMGroupCacheInfo info){
+        if (info!=null && info.getGroupInfo().getGroupType().equals(type)){
+            GroupProfile profile = new GroupProfile(info);
+            list.add(profile);
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }

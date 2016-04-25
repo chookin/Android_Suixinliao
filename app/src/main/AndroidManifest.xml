@@ -48,7 +48,7 @@
         <service
             android:name="com.tencent.qalsdk.service.QalService"
             android:exported="false"
-            android:process=":QALSERVICE"></service>
+            android:process=":QALSERVICE" />
         <!-- 离线消息广播接收器 -->
         <receiver
             android:name="com.tencent.qalsdk.QALBroadcastReceiver"
@@ -83,7 +83,9 @@
         <activity android:name=".ui.FriendshipManageMessageActivity" />
         <activity android:name=".ui.GroupListActivity" />
         <activity android:name=".ui.ChooseFriendActivity" />
-        <activity android:name=".ui.GroupMemberActivity"></activity>
+        <activity android:name=".ui.GroupMemberActivity" />
+        <activity android:name=".ui.customview.DialogActivity"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>

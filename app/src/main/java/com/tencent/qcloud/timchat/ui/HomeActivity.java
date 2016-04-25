@@ -3,8 +3,10 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,10 +18,12 @@ import com.tencent.TIMCallBack;
 import com.tencent.TIMManager;
 import com.tencent.TIMUserStatusListener;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
+import com.tencent.qcloud.timchat.ui.customview.DialogActivity;
 import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
@@ -36,6 +40,7 @@ public class HomeActivity extends FragmentActivity {
     private String mTextviewArray[] = {"contact", "conversation", "setting"};
     private ImageView msgUnread;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,29 +50,9 @@ public class HomeActivity extends FragmentActivity {
         TIMManager.getInstance().setUserStatusListener(new TIMUserStatusListener() {
             @Override
             public void onForceOffline() {
-                NotifyDialog dialog = new NotifyDialog();
-                dialog.show(getString(R.string.kick_logout), HomeActivity.this.getSupportFragmentManager(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LoginBusiness.loginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), new TIMCallBack() {
-                            @Override
-                            public void onError(int i, String s) {
-                                Toast.makeText(HomeActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
-                                logout();
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                Toast.makeText(HomeActivity.this, getString(R.string.login_succ), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        logout();
-                    }
-                });
+                Log.d(TAG, "receive force offline message");
+                Intent intent = new Intent(HomeActivity.this, DialogActivity.class);
+                startActivity(intent);
             }
         });
     }
