@@ -1,7 +1,7 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -16,6 +16,7 @@ import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.GroupInfo;
+import com.tencent.qcloud.timchat.model.GroupMemberProfile;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 
@@ -25,9 +26,8 @@ import java.util.List;
 public class GroupMemberProfileActivity extends FragmentActivity {
 
     private String userIdentify, groupIdentify, userCard;
-    private TIMGroupMemberRoleType type;
     private TIMGroupMemberRoleType currentUserRole;
-    private long quietTime;
+    private GroupMemberProfile profile;
     private String[] quietingOpt;
     private String[] quietOpt;
     private long[] quietTimeOpt = new long[] {600, 3600, 24*3600};
@@ -38,11 +38,12 @@ public class GroupMemberProfileActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member_profile);
-        userIdentify = getIntent().getStringExtra("id");
+        profile = (GroupMemberProfile) getIntent().getSerializableExtra("data");
+        userIdentify = profile.getIdentify();
         groupIdentify = getIntent().getStringExtra("groupId");
-        userCard = getIntent().getStringExtra("name");
-        type = (TIMGroupMemberRoleType) getIntent().getSerializableExtra("role");
-        quietTime = getIntent().getLongExtra("quietTime", 0);
+        userCard = profile.getNameCard();
+
+
         currentUserRole = GroupInfo.getInstance().getRole(groupIdentify);
         quietingOpt = new String[] {getString(R.string.group_member_quiet_cancel)};
         quietOpt = new String[] {getString(R.string.group_member_quiet_ten_min),
@@ -71,8 +72,8 @@ public class GroupMemberProfileActivity extends FragmentActivity {
             }
         });
         final LineControllerView setManager = (LineControllerView) findViewById(R.id.manager);
-        setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != type ? View.VISIBLE : View.GONE);
-        setManager.setSwitch(type == TIMGroupMemberRoleType.Admin);
+        setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != profile.getRole() ? View.VISIBLE : View.GONE);
+        setManager.setSwitch(profile.getRole() == TIMGroupMemberRoleType.Admin);
         setManager.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
@@ -88,6 +89,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                             @Override
                             public void onSuccess() {
                                 Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_succ), Toast.LENGTH_SHORT).show();
+                                profile.setRoleType(isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal);
                             }
                         });
             }
@@ -97,7 +99,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
         setQuiet.setVisibility(canManage()?View.VISIBLE:View.GONE);
         if (canManage()){
-            if (quietTime != 0){
+            if (profile.getQuietTime() != 0){
                 setQuiet.setContent(getString(R.string.group_member_quiet_ing));
             }
             setQuiet.setOnClickListener(new View.OnClickListener() {
@@ -115,11 +117,12 @@ public class GroupMemberProfileActivity extends FragmentActivity {
 
                                         @Override
                                         public void onSuccess() {
-                                            if ((quietTime = getQuietTime(which)) == 0){
+                                            if (getQuietTime(which) == 0){
                                                 setQuiet.setContent("");
                                             }else{
                                                 setQuiet.setContent(getString(R.string.group_member_quiet_ing));
                                             }
+                                            profile.setQuietTime(getQuietTime(which));
                                         }
                                     });
                         }
@@ -128,19 +131,25 @@ public class GroupMemberProfileActivity extends FragmentActivity {
             });
         }
 
-
-
-
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent mIntent = new Intent();
+        mIntent.putExtra("data", profile);
+        setResult(RESULT_OK, mIntent);
+        super.onBackPressed();
+    }
+
+
     private boolean canManage(){
-        if ((currentUserRole == TIMGroupMemberRoleType.Owner && type != TIMGroupMemberRoleType.Owner) ||
-                (currentUserRole == TIMGroupMemberRoleType.Admin && type == TIMGroupMemberRoleType.Normal)) return true;
+        if ((currentUserRole == TIMGroupMemberRoleType.Owner && profile.getRole() != TIMGroupMemberRoleType.Owner) ||
+                (currentUserRole == TIMGroupMemberRoleType.Admin && profile.getRole() == TIMGroupMemberRoleType.Normal)) return true;
         return false;
     }
 
     private String[] getQuietOption(){
-        if (quietTime == 0){
+        if (profile.getQuietTime() == 0){
             return quietOpt;
         }else{
             return quietingOpt;
@@ -148,7 +157,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
     }
 
     private long getQuietTime(int which){
-        if (quietTime == 0){
+        if (profile.getQuietTime() == 0){
             return quietTimeOpt[which];
         }
         return 0;

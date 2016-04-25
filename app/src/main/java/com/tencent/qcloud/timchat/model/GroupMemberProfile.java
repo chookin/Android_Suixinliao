@@ -6,15 +6,23 @@ import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.qcloud.timchat.R;
 
+import java.io.Serializable;
+
 /**
  * 群成员数据
  */
-public class GroupMemberProfile implements ProfileSummary {
+public class GroupMemberProfile implements ProfileSummary,Serializable {
 
-    TIMGroupMemberInfo timGroupMemberInfo;
+    private String name;
+    private String id;
+    private long quietTime;
+    private TIMGroupMemberRoleType roleType;
 
     public GroupMemberProfile(TIMGroupMemberInfo info){
-        timGroupMemberInfo = info;
+        name = info.getNameCard();
+        id = info.getUser();
+        quietTime = info.getSilenceSeconds();
+        roleType = info.getRole();
     }
 
     /**
@@ -38,10 +46,10 @@ public class GroupMemberProfile implements ProfileSummary {
      */
     @Override
     public String getName() {
-        if (timGroupMemberInfo.getNameCard().equals("")){
-            return timGroupMemberInfo.getUser();
+        if (!name.equals("")){
+            return name;
         }
-        return timGroupMemberInfo.getNameCard();
+        return id;
     }
 
     /**
@@ -57,7 +65,7 @@ public class GroupMemberProfile implements ProfileSummary {
      */
     @Override
     public String getIdentify() {
-        return timGroupMemberInfo.getUser();
+        return id;
     }
 
     /**
@@ -74,7 +82,7 @@ public class GroupMemberProfile implements ProfileSummary {
      * 获取身份
      */
     public TIMGroupMemberRoleType getRole(){
-        return timGroupMemberInfo.getRole();
+        return roleType;
     }
 
 
@@ -82,11 +90,27 @@ public class GroupMemberProfile implements ProfileSummary {
      * 获取群名片
      */
     public String getNameCard(){
-        if (timGroupMemberInfo.getNameCard() == null) return "";
-        return timGroupMemberInfo.getNameCard();
+        if (name == null) return "";
+        return name;
     }
 
     public long getQuietTime(){
-        return timGroupMemberInfo.getSilenceSeconds();
+        return quietTime;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setQuietTime(long quietTime) {
+        this.quietTime = quietTime;
+    }
+
+    public void setRoleType(TIMGroupMemberRoleType roleType) {
+        this.roleType = roleType;
     }
 }

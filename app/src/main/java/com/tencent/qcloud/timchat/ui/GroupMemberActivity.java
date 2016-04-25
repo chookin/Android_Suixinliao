@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,6 +28,8 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
     List<ProfileSummary> list = new ArrayList<>();
     ListView listView;
     String groupId;
+    private final int MEM_REQ = 100;
+    private int memIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,12 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                memIndex = position;
                 Intent intent = new Intent(GroupMemberActivity.this, GroupMemberProfileActivity.class);
                 GroupMemberProfile profile = (GroupMemberProfile) list.get(position);
-                intent.putExtra("id", profile.getIdentify());
-                intent.putExtra("role", profile.getRole());
+                intent.putExtra("data", profile);
                 intent.putExtra("groupId", groupId);
-                intent.putExtra("quietTime", profile.getQuietTime());
-                intent.putExtra("name", profile.getNameCard());
-                startActivity(intent);
+                startActivityForResult(intent, MEM_REQ);
             }
         });
     }
@@ -67,6 +68,22 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
         adapter.notifyDataSetChanged();
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (MEM_REQ == requestCode) {
+            if (resultCode == RESULT_OK){
+                GroupMemberProfile profile = (GroupMemberProfile) data.getSerializableExtra("data");
+                if (list.get(memIndex).getIdentify().equals(profile.getIdentify())){
+                    GroupMemberProfile mMemberProfile = (GroupMemberProfile) list.get(memIndex);
+                    mMemberProfile.setRoleType(profile.getRole());
+                    mMemberProfile.setQuietTime(profile.getQuietTime());
+                }
+            }
+        }
+    }
+
+
 
 
 }
