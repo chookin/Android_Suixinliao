@@ -19,6 +19,7 @@ import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.GroupMemberProfile;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +51,14 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                 getString(R.string.group_member_quiet_one_hour),
                 getString(R.string.group_member_quiet_one_day),
         };
+        TemplateTitle title = (TemplateTitle) findViewById(R.id.GroupMemTitle);
+        title.setBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBackResult(false);
+                finish();
+            }
+        });
         TextView tvName = (TextView) findViewById(R.id.name);
         tvName.setText(userIdentify);
         TextView tvKick = (TextView) findViewById(R.id.kick);
@@ -66,6 +75,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                     @Override
                     public void onSuccess(List<TIMGroupMemberResult> timGroupMemberResults) {
                         Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_del_succ), Toast.LENGTH_SHORT).show();
+                        setBackResult(true);
                         finish();
                     }
                 });
@@ -135,9 +145,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        Intent mIntent = new Intent();
-        mIntent.putExtra("data", profile);
-        setResult(RESULT_OK, mIntent);
+        setBackResult(false);
         super.onBackPressed();
     }
 
@@ -161,5 +169,12 @@ public class GroupMemberProfileActivity extends FragmentActivity {
             return quietTimeOpt[which];
         }
         return 0;
+    }
+
+    private void setBackResult(boolean isKick){
+        Intent mIntent = new Intent();
+        mIntent.putExtra("data", profile);
+        mIntent.putExtra("isKick", isKick);
+        setResult(RESULT_OK, mIntent);
     }
 }

@@ -113,10 +113,24 @@ public class TemplateTitle extends RelativeLayout {
 
     /**
      * 设置更多文字内容
-     * @param text
+     * @param text 更多文本
      */
     public void setMoreTextContext(String text){
         tvMore.setText(text);
+    }
+
+
+
+    /**
+     * 设置返回按钮事件
+     *
+     * @param listener 事件监听
+     */
+    public void setBackListener(OnClickListener listener){
+        if (canBack){
+            LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
+            backBtn.setOnClickListener(listener);
+        }
     }
 
 

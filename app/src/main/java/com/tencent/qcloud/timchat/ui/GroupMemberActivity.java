@@ -73,11 +73,17 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (MEM_REQ == requestCode) {
             if (resultCode == RESULT_OK){
-                GroupMemberProfile profile = (GroupMemberProfile) data.getSerializableExtra("data");
-                if (list.get(memIndex).getIdentify().equals(profile.getIdentify())){
-                    GroupMemberProfile mMemberProfile = (GroupMemberProfile) list.get(memIndex);
-                    mMemberProfile.setRoleType(profile.getRole());
-                    mMemberProfile.setQuietTime(profile.getQuietTime());
+                boolean isKick = data.getBooleanExtra("isKick", false);
+                if (isKick){
+                    list.remove(memIndex);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    GroupMemberProfile profile = (GroupMemberProfile) data.getSerializableExtra("data");
+                    if (list.get(memIndex).getIdentify().equals(profile.getIdentify())){
+                        GroupMemberProfile mMemberProfile = (GroupMemberProfile) list.get(memIndex);
+                        mMemberProfile.setRoleType(profile.getRole());
+                        mMemberProfile.setQuietTime(profile.getQuietTime());
+                    }
                 }
             }
         }
