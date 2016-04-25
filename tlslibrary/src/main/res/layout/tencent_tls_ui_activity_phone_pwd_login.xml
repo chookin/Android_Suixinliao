@@ -98,12 +98,12 @@ tools:context="com.tencent.tls.PhonePwdLoginActivity">
 
     </LinearLayout>
 
-    <fragment android:name="com.tencent.tls.fragment.QQWXFragment"
+<!--    <fragment android:name="com.tencent.tls.fragment.QQWXFragment"
         android:id="@+id/qqwxfragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        tools:layout="@layout/tencent_tls_ui_fragment_qqwx" />
+        tools:layout="@layout/tencent_tls_ui_fragment_qqwx" />-->
 
 </RelativeLayout>
 

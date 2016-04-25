@@ -32,7 +32,8 @@ public class PhonePwdLoginActivity extends Activity {
     private AlertDialog dialog;
 
     private TLSService tlsService;
-    private int login_way = Constants.PHONEPWD_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
+    //private int login_way = Constants.PHONEPWD_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
+    private int login_way = Constants.PHONEPWD_LOGIN;
     private String countryCode;
     private String phoneNumber;
 

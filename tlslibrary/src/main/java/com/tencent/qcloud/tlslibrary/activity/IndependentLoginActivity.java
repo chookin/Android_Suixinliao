@@ -19,7 +19,8 @@ public class IndependentLoginActivity extends Activity {
     private final static String TAG = "IndependentLoginActivity";
 
     private TLSService tlsService;
-    private int login_way = Constants.USRPWD_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
+    //private int login_way = Constants.USRPWD_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
+    private int login_way = Constants.USRPWD_LOGIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
