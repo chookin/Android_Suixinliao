@@ -79,20 +79,20 @@ public class GroupListActivity extends Activity implements Observer {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CREATE_GROUP_CODE) {
-            if (resultCode == RESULT_OK) {
-                refresh();
-            }
-        }
-    }
-
-    private void refresh(){
-        list.clear();
-        list = GroupInfo.getInstance().getGroupListByType(type);
-        adapter.notifyDataSetChanged();
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == CREATE_GROUP_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                refresh();
+//            }
+//        }
+//    }
+//
+//    private void refresh(){
+//        list.clear();
+//        list = GroupInfo.getInstance().getGroupListByType(type);
+//        adapter.notifyDataSetChanged();
+//    }
 
     /**
      * This method is called if the specified {@code Observable} object's
@@ -114,7 +114,9 @@ public class GroupListActivity extends Activity implements Observer {
                     case ADD:
                         addGroup((TIMGroupCacheInfo) cmd.data);
                         break;
-
+                    case UPDATE:
+                        updateGroup((TIMGroupCacheInfo) cmd.data);
+                        break;
                 }
             }
         }
@@ -140,5 +142,10 @@ public class GroupListActivity extends Activity implements Observer {
             adapter.notifyDataSetChanged();
         }
 
+    }
+
+    private void updateGroup(TIMGroupCacheInfo info){
+        delGroup(info.getGroupInfo().getGroupId());
+        addGroup(info);
     }
 }

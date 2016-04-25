@@ -57,8 +57,6 @@ public class CreateGroupActivity extends Activity {
                             @Override
                             public void onSuccess(String s) {
                                 Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_succeed), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent();
-                                setResult(RESULT_OK, intent);
                                 finish();
                             }
                         }
