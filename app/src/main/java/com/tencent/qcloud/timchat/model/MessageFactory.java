@@ -25,6 +25,8 @@ public class MessageFactory {
                 return new VoiceMessage(message);
             case Video:
                 return new VideoMessage(message);
+            case GroupTips:
+                return new GroupTipMessage(message);
             default:
                 return null;
         }

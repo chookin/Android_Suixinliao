@@ -4,10 +4,12 @@ import android.util.Log;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 
@@ -29,6 +31,8 @@ public class ConversationPresenter implements Observer {
         MessageEvent.getInstance().addObserver(this);
         //注册好友关系链监听
         FriendshipEvent.getInstance().addObserver(this);
+        //注册群关系监听
+        GroupEvent.getInstance().addObserver(this);
         this.view = view;
     }
 
@@ -46,6 +50,13 @@ public class ConversationPresenter implements Observer {
                     view.updateFriendshipMessage();
                     break;
             }
+        }else if (observable instanceof GroupEvent){
+            GroupEvent.NotifyCmd cmd = (GroupEvent.NotifyCmd) data;
+            switch (cmd.type){
+                case UPDATE:
+                    view.updateGroupInfo((TIMGroupCacheInfo) cmd.data);
+                    break;
+            }
         }
     }
 
@@ -60,6 +71,9 @@ public class ConversationPresenter implements Observer {
             //根据索引获取会话
             final TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
             if (conversation.getType() == TIMConversationType.System) continue;
+            if (conversation.getPeer().equals("@TGS#2P7A4TAEU")){
+                Log.d(TAG, "11");
+            }
             list.add(conversation);
             conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override
@@ -69,7 +83,7 @@ public class ConversationPresenter implements Observer {
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
-                    if (conversation.getIdentifer().equals("@TGS#2WF74RAE6")){
+                    if (conversation.getPeer().equals("@TGS#2P7A4TAEU")){
                         view.updateMessage(timMessages.get(0));
                     }
                     view.updateMessage(timMessages.get(0));
