@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -24,6 +25,7 @@ import com.tencent.qcloud.timchat.utils.FileUtil;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,6 +44,7 @@ public class VideoInputDialog extends DialogFragment {
     private Timer mTimer;
     private final int MAX_TIME = 1500;
     private int mTimeCount;
+    private long time;
     private boolean isRecording = false;
     private String fileName;
     private Handler mainHandler = new Handler(MyApplication.getContext().getMainLooper());
@@ -85,6 +88,7 @@ public class VideoInputDialog extends DialogFragment {
                     case MotionEvent.ACTION_DOWN:
                         if (!isRecording) {
                             if (prepareVideoRecorder()) {
+                                time = Calendar.getInstance().getTimeInMillis();
                                 mMediaRecorder.start();
                                 isRecording = true;
                                 mTimer = new Timer();
@@ -126,7 +130,11 @@ public class VideoInputDialog extends DialogFragment {
     private void recordStop(){
         if (isRecording) {
             isRecording = false;
-            mMediaRecorder.stop();
+            if (!isLongEnough()){
+                Toast.makeText(getContext(), getString(R.string.chat_video_too_short),Toast.LENGTH_SHORT).show();
+            }else{
+                mMediaRecorder.stop();
+            }
             releaseMediaRecorder();
             mCamera.lock();
             if (mTimer != null) mTimer.cancel();
@@ -167,7 +175,9 @@ public class VideoInputDialog extends DialogFragment {
             mMediaRecorder.release(); // release the recorder object
             mMediaRecorder = null;
             mCamera.lock();           // lock camera for later use
-            ((ChatView) getActivity()).sendVideo(fileName);
+            if (isLongEnough()){
+                ((ChatView) getActivity()).sendVideo(fileName);
+            }
             dismiss();
         }
     }
@@ -212,5 +222,10 @@ public class VideoInputDialog extends DialogFragment {
     private File getOutputMediaFile(){
         fileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".mp4";
         return  new File(FileUtil.getCacheFilePath(fileName));
+    }
+
+    private boolean isLongEnough(){
+        return Calendar.getInstance().getTimeInMillis() - time > 3000 &&
+                Calendar.getInstance().getTimeInMillis() - time < 15000;
     }
 }

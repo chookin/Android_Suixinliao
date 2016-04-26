@@ -97,6 +97,7 @@
     <string name="chat_release_send">松开 结束</string>
     <string name="chat_up_finger">手指上滑，取消发送</string>
     <string name="chat_audio_too_short">录音过短，请重试</string>
+    <string name="chat_video_too_short">录制过短，请重试</string>
     <string name="chat_resend">重新发送</string>
 
     <!-- profile activity -->
