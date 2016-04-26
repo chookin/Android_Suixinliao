@@ -16,6 +16,7 @@ import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendFuture;
 import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
+import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 
 import java.util.List;
 

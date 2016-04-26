@@ -1,12 +1,16 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendFutureItem;
+import com.tencent.TIMFutureFriendType;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
 import com.tencent.qcloud.timchat.R;
@@ -24,6 +28,8 @@ public class FriendshipManageMessageActivity extends Activity implements Friends
     private ListView listView;
     private List<FriendFuture> list= new ArrayList<>();
     private FriendManageMessageAdapter adapter;
+    private final int FRIENDSHIP_REQ = 100;
+    private int index;
 
 
     @Override
@@ -33,6 +39,19 @@ public class FriendshipManageMessageActivity extends Activity implements Friends
         listView = (ListView) findViewById(R.id.list);
         adapter = new FriendManageMessageAdapter(this, R.layout.item_two_line, list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (list.get(position).getType() == TIMFutureFriendType.TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE){
+                    index = position;
+                    Intent intent = new Intent(FriendshipManageMessageActivity.this, FriendshipHandleActivity.class);
+                    intent.putExtra("id", list.get(position).getIdentify());
+                    intent.putExtra("word", list.get(position).getMessage());
+                    startActivityForResult(intent, FRIENDSHIP_REQ);
+                }
+
+            }
+        });
         presenter = new FriendshipManagerPresenter(this);
         presenter.getFriendshipMessage();
     }
@@ -62,5 +81,23 @@ public class FriendshipManageMessageActivity extends Activity implements Friends
             presenter.readFriendshipMessage(message.get(0).getAddTime());
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == FRIENDSHIP_REQ){
+            if (resultCode == RESULT_OK){
+                if (index >= 0 && index < list.size()){
+                    boolean isAccept = data.getBooleanExtra("operate", true);
+                    if (isAccept){
+                        list.get(index).setType(TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE);
+                    }else{
+                        list.remove(index);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+
     }
 }

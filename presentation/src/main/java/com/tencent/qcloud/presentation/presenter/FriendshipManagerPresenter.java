@@ -114,6 +114,19 @@ public class FriendshipManagerPresenter {
         TIMFriendshipManager.getInstance().addFriendResponse(response, callBack);
     }
 
+    /**
+     * 拒绝好友请求
+     *
+     * @param identify 同意对方的ID
+     * @param callBack 回调
+     */
+    public static void refuseFriendRequest(String identify, TIMValueCallBack<TIMFriendResult> callBack){
+        TIMFriendAddResponse response = new TIMFriendAddResponse();
+        response.setIdentifier(identify);
+        response.setType(TIMFriendResponseType.Reject);
+        TIMFriendshipManager.getInstance().addFriendResponse(response, callBack);
+    }
+
 
     /**
      * 获取好友关系链消息

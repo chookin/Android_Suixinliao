@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tencent.qcloud.timchat">
+    package="com.tencent.qcloud.timchat" >
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -19,8 +19,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.SplashActivity">
+        android:theme="@style/AppTheme" >
+        <activity android:name=".ui.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,7 +52,7 @@
         <!-- 离线消息广播接收器 -->
         <receiver
             android:name="com.tencent.qalsdk.QALBroadcastReceiver"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.tencent.qalsdk.broadcast.qal" />
             </intent-filter>
@@ -60,7 +60,7 @@
         <!-- 系统消息广播接收器 -->
         <receiver
             android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
-            android:process=":QALSERVICE">
+            android:process=":QALSERVICE" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -87,7 +87,9 @@
         <activity
             android:name=".ui.customview.DialogActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".ui.GroupMemberProfileActivity"></activity>
+        <activity android:name=".ui.GroupMemberProfileActivity" />
+        <activity android:name=".ui.FriendshipHandleActivity" >
+        </activity>
     </application>
 
 </manifest>
