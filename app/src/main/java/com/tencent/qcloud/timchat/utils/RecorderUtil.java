@@ -79,6 +79,13 @@ public class RecorderUtil {
         }
     }
 
+    /**
+     * 获取录音文件地址
+     */
+    public String getFilePath(){
+        return mFileName;
+    }
+
 
     /**
      * 获取录音时长,单位秒

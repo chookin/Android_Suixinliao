@@ -296,7 +296,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         if (recorder.getTimeInterval() < 1) {
             Toast.makeText(this, getResources().getString(R.string.chat_audio_too_short), Toast.LENGTH_SHORT).show();
         } else {
-            Message message = new VoiceMessage(recorder.getTimeInterval(), recorder.getDate());
+            Message message = new VoiceMessage(recorder.getTimeInterval(), recorder.getFilePath());
             presenter.sendMessage(message.getMessage());
         }
     }

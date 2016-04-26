@@ -1,14 +1,9 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
+
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -49,9 +44,8 @@ public class AboutActivity extends FragmentActivity {
                     public void onClick(DialogInterface dialog, final int which) {
                         log.setContent(logNames[which]);
                         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                        editor.putInt("loglvl",which);
+                        editor.putInt("loglvl", which);
                         editor.apply();
-
                     }
                 });
             }
