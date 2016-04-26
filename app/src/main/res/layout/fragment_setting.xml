@@ -67,6 +67,12 @@
         android:layout_height="wrap_content"
         app:name="@string/setting_friend_confirm"
         app:content="@string/setting_friend_need_confirm"
+        app:canNav="true"/>
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:name="@string/setting_about"
         app:isBottom="true"
         app:canNav="true"/>
 

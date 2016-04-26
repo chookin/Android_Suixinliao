@@ -49,6 +49,20 @@ public class VoiceMessage extends Message {
     }
 
     /**
+     * 语音消息构造方法
+     *
+     * @param duration 时长
+     * @param filePath 语音数据地址
+     */
+    public VoiceMessage(long duration,String filePath){
+        message = new TIMMessage();
+        TIMSoundElem elem = new TIMSoundElem();
+        elem.setPath(filePath);
+        elem.setDuration(duration);  //填写语音时长
+        message.addElement(elem);
+    }
+
+    /**
      * 显示消息
      *
      * @param viewHolder 界面样式
