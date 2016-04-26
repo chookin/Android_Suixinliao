@@ -87,6 +87,7 @@ public class TextMessage extends Message {
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
         clearView(viewHolder);
+        boolean hasText = false;
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
@@ -118,9 +119,13 @@ public class TextMessage extends Message {
                 case Text:
                     TIMTextElem textElem = (TIMTextElem) message.getElement(i);
                     stringBuilder.append(textElem.getText());
+                    hasText = true;
                     break;
             }
 
+        }
+        if (!hasText){
+            stringBuilder.append(" ");
         }
         tv.setText(stringBuilder);
         getBubbleView(viewHolder).addView(tv);
