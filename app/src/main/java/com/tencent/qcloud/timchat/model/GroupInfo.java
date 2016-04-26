@@ -92,6 +92,7 @@ public class GroupInfo implements Observer {
     }
 
     private void updateGroup(TIMGroupCacheInfo info){
+        if (groups == null || groups.get(info.getGroupInfo().getGroupType()) == null) return;
         for (GroupProfile item : groups.get(info.getGroupInfo().getGroupType())){
             if (item.getIdentify().equals(info.getGroupInfo().getGroupId())){
                 item.setProfile(info);
