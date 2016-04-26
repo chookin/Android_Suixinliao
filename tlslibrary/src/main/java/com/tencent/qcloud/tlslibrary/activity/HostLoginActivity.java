@@ -27,7 +27,8 @@ public class HostLoginActivity extends Activity {
 
     private TLSService tlsService;
     private SmsContentObserver smsContentObserver = null;
-    private int login_way = Constants.SMS_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
+    //private int login_way = Constants.SMS_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
+    private int login_way = Constants.SMS_LOGIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
