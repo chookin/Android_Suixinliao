@@ -236,5 +236,5 @@
     <string name="group_member_quiet_one_day">一天</string>
     <string name="group_member_quiet_cancel">取消禁言</string>
     <string name="group_member_quiet_err">设置禁言失败</string>
-
+    <string name="group_member_change_card">修改群名片</string>
 </resources>

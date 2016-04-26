@@ -83,6 +83,8 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
                         GroupMemberProfile mMemberProfile = (GroupMemberProfile) list.get(memIndex);
                         mMemberProfile.setRoleType(profile.getRole());
                         mMemberProfile.setQuietTime(profile.getQuietTime());
+                        mMemberProfile.setName(profile.getNameCard());
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }

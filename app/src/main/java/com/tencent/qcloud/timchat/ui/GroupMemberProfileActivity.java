@@ -17,6 +17,7 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.GroupMemberProfile;
+import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
@@ -32,6 +33,8 @@ public class GroupMemberProfileActivity extends FragmentActivity {
     private String[] quietingOpt;
     private String[] quietOpt;
     private long[] quietTimeOpt = new long[] {600, 3600, 24*3600};
+
+    private final int CARD_REQ = 100;
 
 
 
@@ -104,10 +107,8 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                         });
             }
         });
-        LineControllerView nameCard = (LineControllerView) findViewById(R.id.groupCard);
-        nameCard.setContent(userCard);
         final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
-        setQuiet.setVisibility(canManage()?View.VISIBLE:View.GONE);
+        setQuiet.setVisibility(canManage() ? View.VISIBLE : View.GONE);
         if (canManage()){
             if (profile.getQuietTime() != 0){
                 setQuiet.setContent(getString(R.string.group_member_quiet_ing));
@@ -137,6 +138,22 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                                     });
                         }
                     });
+                }
+            });
+        }
+        LineControllerView nameCard = (LineControllerView) findViewById(R.id.groupCard);
+        nameCard.setContent(userCard);
+        if (UserInfo.getInstance().getId().equals(userIdentify)){
+            nameCard.setCanNav(true);
+            nameCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditActivity.navToEdit(GroupMemberProfileActivity.this, getResources().getString(R.string.group_member_change_card), userCard, CARD_REQ, new EditActivity.EditInterface() {
+                        @Override
+                        public void onEdit(String text, TIMCallBack callBack) {
+                            TIMGroupManager.getInstance().modifyGroupMemberInfoSetNameCard(groupIdentify, userIdentify, text, callBack);
+                        }
+                    },20);
                 }
             });
         }
@@ -176,5 +193,17 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         mIntent.putExtra("data", profile);
         mIntent.putExtra("isKick", isKick);
         setResult(RESULT_OK, mIntent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CARD_REQ){
+            if (resultCode == RESULT_OK){
+                LineControllerView nameCard = (LineControllerView) findViewById(R.id.groupCard);
+                nameCard.setContent(data.getStringExtra(EditActivity.RETURN_EXTRA));
+                profile.setName(data.getStringExtra(EditActivity.RETURN_EXTRA));
+            }
+        }
+
     }
 }
