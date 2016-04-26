@@ -160,6 +160,10 @@
     <string name="summary_group_admin_change">管理员变更</string>
     <string name="summary_group_info_change">群资料变更</string>
     <string name="summary_group_mem_change">群成员变更</string>
+    <string name="summary_group_mem_add">加入群</string>
+    <string name="summary_group_mem_quit">退出群</string>
+    <string name="summary_group_mem_kick">被踢出群</string>
+    <string name="summary_group_mem_modify">资料变更</string>
 
     <!-- time -->
     <string name="time_yesterday">昨天</string>

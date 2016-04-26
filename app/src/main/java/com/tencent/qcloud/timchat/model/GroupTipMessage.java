@@ -45,10 +45,17 @@ public class GroupTipMessage extends Message {
             case SetAdmin:
                 return MyApplication.getContext().getString(R.string.summary_group_admin_change);
             case Join:
+                return e.getOpUser() +
+                        MyApplication.getContext().getString(R.string.summary_group_mem_add);
             case Kick:
+                return e.getUserList().get(0) +
+                        MyApplication.getContext().getString(R.string.summary_group_mem_kick);
             case ModifyMemberInfo:
+                return e.getOpUser() +
+                        MyApplication.getContext().getString(R.string.summary_group_mem_modify);
             case Quit:
-                return MyApplication.getContext().getString(R.string.summary_group_mem_change);
+                return e.getOpUser() +
+                        MyApplication.getContext().getString(R.string.summary_group_mem_quit);
             case ModifyGroupInfo:
                 return MyApplication.getContext().getString(R.string.summary_group_info_change);
         }
