@@ -99,4 +99,11 @@ public class NomalConversation extends Conversation {
         if (lastMessage == null) return 0;
         return lastMessage.getMessage().timestamp();
     }
+
+    /**
+     * 获取会话类型
+     */
+    public TIMConversationType getType(){
+        return conversation.getType();
+    }
 }

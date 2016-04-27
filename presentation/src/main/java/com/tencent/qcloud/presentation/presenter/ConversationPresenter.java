@@ -93,4 +93,14 @@ public class ConversationPresenter implements Observer {
         view.initView(list);
     }
 
+    /**
+     * 删除会话
+     *
+     * @param type 会话类型
+     * @param id 会话对象id
+     */
+    public boolean delConversation(TIMConversationType type, String id){
+        return TIMManager.getInstance().deleteConversationAndLocalMsgs(type, id);
+    }
+
 }

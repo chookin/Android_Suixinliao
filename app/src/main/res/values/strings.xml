@@ -33,6 +33,7 @@
     <string name="conversation_system">系统消息</string>
     <string name="conversation_system_friend">新朋友</string>
     <string name="conversation_system_group">群组消息</string>
+    <string name="conversation_del">删除会话</string>
 
     <!-- contact fragment -->
     <string name="home_contact_tab">联系人</string>
