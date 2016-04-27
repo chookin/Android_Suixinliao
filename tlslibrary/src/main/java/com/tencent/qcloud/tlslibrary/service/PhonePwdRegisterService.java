@@ -117,6 +117,7 @@ public class PhonePwdRegisterService {
             intent.putExtra(Constants.EXTRA_PHONEPWD_REG_RST, Constants.PHONEPWD_REGISTER);
             intent.putExtra(Constants.COUNTRY_CODE, txt_countryCode.getText().toString());
             intent.putExtra(Constants.PHONE_NUMBER, txt_phoneNumber.getText().toString());
+            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
             context.startActivity(intent);
             ((Activity)context).finish();
         }
