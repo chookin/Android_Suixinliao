@@ -133,7 +133,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                     title.setMoreImgAction(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            new FriendProfile()
+                            Intent person = new Intent(ChatActivity.this,AddFriendActivity.class);
+                            person.putExtra("id",identify);
+                            person.putExtra("name",identify);
+                            startActivity(person);
                         }
                     });
                     title.setTitleText(identify);
