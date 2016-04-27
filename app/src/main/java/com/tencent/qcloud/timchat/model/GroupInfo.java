@@ -57,7 +57,9 @@ public class GroupInfo implements Observer {
         List<TIMGroupCacheInfo> groupInfos = TIMGroupAssistant.getInstance().getGroups(null);
         if (groupInfos == null) return;
         for (TIMGroupCacheInfo item : groupInfos){
-            groups.get(item.getGroupInfo().getGroupType()).add(new GroupProfile(item));
+            List<GroupProfile> list = groups.get(item.getGroupInfo().getGroupType());
+            if (list == null) continue;
+            list.add(new GroupProfile(item));
         }
     }
 
