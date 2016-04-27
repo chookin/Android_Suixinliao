@@ -4,7 +4,10 @@ package com.tencent.qcloud.timchat.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -75,7 +78,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     conversationList.get(position).navToDetail(getActivity());
-                    if (conversationList.get(position) instanceof GroupManageConversation){
+                    if (conversationList.get(position) instanceof GroupManageConversation) {
                         groupManagerPresenter.getGroupManageLastMessage();
                     }
 
@@ -85,6 +88,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
             groupManagerPresenter = new GroupManagerPresenter(this);
             presenter = new ConversationPresenter(this);
             presenter.getConversation();
+            registerForContextMenu(listView);
         }
         adapter.notifyDataSetChanged();
         return view;
@@ -255,6 +259,36 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     @Override
     public void onGetGroupManageMessage(List<TIMGroupPendencyItem> message) {
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        Conversation conversation = conversationList.get(info.position);
+        if (conversation instanceof NomalConversation){
+            menu.add(0, 1, Menu.NONE, getString(R.string.conversation_del));
+        }
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        NomalConversation conversation = (NomalConversation) conversationList.get(info.position);
+        switch (item.getItemId()) {
+            case 1:
+                if (conversation != null){
+                    if (presenter.delConversation(conversation.getType(), conversation.getIdentify())){
+                        conversationList.remove(conversation);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private long getTotalUnreadNum(){

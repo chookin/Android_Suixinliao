@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
+import com.tencent.qalsdk.QALSDKManager;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
@@ -26,7 +27,7 @@ public class AboutActivity extends FragmentActivity {
         LineControllerView imsdk = (LineControllerView) findViewById(R.id.imsdk);
         imsdk.setContent(TIMManager.getInstance().getVersion());
         LineControllerView qalsdk = (LineControllerView) findViewById(R.id.qalsdk);
-        qalsdk.setContent(TIMManager.getInstance().getVersion());
+        qalsdk.setContent(QALSDKManager.getInstance().getSdkVersion());
         LineControllerView tlssdk = (LineControllerView) findViewById(R.id.tlssdk);
         tlssdk.setContent(TLSHelper.getInstance().getSDKVersion());
         final LineControllerView log = (LineControllerView) findViewById(R.id.logLevel);

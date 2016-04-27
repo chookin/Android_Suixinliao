@@ -10,6 +10,7 @@ import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.GroupManageMessageAdapter;
+import com.tencent.qcloud.timchat.model.GroupFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class GroupManageMessageActivity extends Activity implements GroupManageM
     private final String TAG = "GroupManageMessageActivity";
     private GroupManagerPresenter presenter;
     private ListView listView;
-    private List<TIMGroupPendencyItem> list= new ArrayList<>();
+    private List<GroupFuture> list= new ArrayList<>();
     private GroupManageMessageAdapter adapter;
     private final int PAGE_SIZE = 20;
 
@@ -52,7 +53,11 @@ public class GroupManageMessageActivity extends Activity implements GroupManageM
      */
     @Override
     public void onGetGroupManageMessage(List<TIMGroupPendencyItem> message) {
-        list.addAll(message);
+        List<GroupFuture> futures = new ArrayList<>();
+        for (TIMGroupPendencyItem item : message){
+            futures.add(new GroupFuture(item));
+        }
+        list.addAll(futures);
         adapter.notifyDataSetChanged();
 
     }
