@@ -353,20 +353,28 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                File file = new File(fileUri.getPath());
-                if (file.exists()) {
-                    Message message = new ImageMessage(file.getAbsolutePath());
-                    presenter.sendMessage(message.getMessage());
-                }
+                sendImage(fileUri.getPath());
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK) {
-                String path = FileUtil.getImageFilePath(this, data.getData());
-                if (path == null) return;
+                sendImage(FileUtil.getImageFilePath(this, data.getData()));
+            }
+
+        }
+
+    }
+
+    private void sendImage(String path){
+        File file = new File(path);
+        if (file.exists()){
+            if (file.length() > 1024 * 1024 * 10){
+                Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
+            }else{
                 Message message = new ImageMessage(path);
                 presenter.sendMessage(message.getMessage());
             }
-
+        }else{
+            Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
         }
 
     }
