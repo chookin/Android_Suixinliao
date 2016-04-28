@@ -69,6 +69,9 @@ public class AccountRegisterService {
                 }
 
                 int result = tlsService.TLSStrAccReg(username, password, strAccRegListener);
+                if (result == TLSErrInfo.INPUT_INVALID) {
+                    Util.showToast(AccountRegisterService.this.context, "帐号不合法");
+                }
             }
         });
     }
