@@ -114,7 +114,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (LOGIN_RESULT_CODE == requestCode) {
-            if (resultCode == RESULT_OK){
+            if (0 == TLSService.getInstance().getLastErrno()){
                 String id = TLSService.getInstance().getLastUserIdentifier();
                 UserInfo.getInstance().setId(id);
                 UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
