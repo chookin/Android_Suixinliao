@@ -17,6 +17,7 @@ public class MediaUtil {
     private static final String TAG = "MediaUtil";
 
     private MediaPlayer player;
+    private EventListener eventListener;
 
     private MediaUtil(){
         player = new MediaPlayer();
@@ -32,12 +33,24 @@ public class MediaUtil {
         return player;
     }
 
-    public void setPlayer(MediaPlayer player) {
-        this.player = player;
+
+    public void setEventListener(final EventListener eventListener) {
+        if (player != null){
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    eventListener.onStop();
+                }
+            });
+        }
+        this.eventListener = eventListener;
     }
 
     public void play(FileInputStream inputStream){
         try{
+            if (eventListener != null){
+                eventListener.onStop();
+            }
             player.reset();
             player.setDataSource(inputStream.getFD());
             player.prepare();
@@ -52,5 +65,13 @@ public class MediaUtil {
     public long getDuration(String path){
         player = MediaPlayer.create(MyApplication.getContext(), Uri.parse(path));
         return player.getDuration();
+    }
+
+
+    /**
+     * 播放器事件监听
+     */
+    public interface EventListener{
+        void onStop();
     }
 }
