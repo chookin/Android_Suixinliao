@@ -29,6 +29,8 @@ public class HostLoginActivity extends Activity {
     private SmsContentObserver smsContentObserver = null;
     //private int login_way = Constants.SMS_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
     private int login_way = Constants.SMS_LOGIN;
+    final static int STR_ACCOUNT_LOGIN_REQUEST = 10000;
+    final static int SMS_REG_REQUEST = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class HostLoginActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(HostLoginActivity.this, HostRegisterActivity.class);
-                        startActivityForResult(intent, Constants.SMS_REG_REQUEST_CODE);
+                        startActivityForResult(intent, SMS_REG_REQUEST);
                     }
                 });
 
@@ -115,10 +117,7 @@ public class HostLoginActivity extends Activity {
                         if (Constants.thirdappClassNameFail != null) {
                             intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_FAIL, Constants.thirdappClassNameFail);
                         }
-                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-//                        startActivityForResult(intent, 0);
-                        startActivity(intent);
-                        finish();
+                        startActivityForResult(intent, STR_ACCOUNT_LOGIN_REQUEST);
                     }
                 });
     }
@@ -145,9 +144,21 @@ public class HostLoginActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == com.tencent.connect.common.Constants.REQUEST_API) {
-            if (resultCode == com.tencent.connect.common.Constants.RESULT_LOGIN) {
-                tlsService.onActivityResultForQQLogin(requestCode, requestCode, data);
+        if (STR_ACCOUNT_LOGIN_REQUEST == requestCode) {
+            if (RESULT_OK == resultCode) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        } else if (SMS_REG_REQUEST == requestCode) {
+            if (RESULT_OK == resultCode) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        } else {
+            if (requestCode == com.tencent.connect.common.Constants.REQUEST_API) {
+                if (resultCode == com.tencent.connect.common.Constants.RESULT_LOGIN) {
+                    tlsService.onActivityResultForQQLogin(requestCode, requestCode, data);
+                }
             }
         }
     }

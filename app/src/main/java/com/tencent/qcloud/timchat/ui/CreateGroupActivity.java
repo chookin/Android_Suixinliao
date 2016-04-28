@@ -51,7 +51,11 @@ public class CreateGroupActivity extends Activity {
                         new TIMValueCallBack<String>() {
                             @Override
                             public void onError(int i, String s) {
-                                Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_fail), Toast.LENGTH_SHORT).show();
+                                if (i == 80001){
+                                    Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_fail_because_wording), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_fail), Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override

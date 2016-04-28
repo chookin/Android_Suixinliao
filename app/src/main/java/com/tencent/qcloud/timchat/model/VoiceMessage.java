@@ -1,9 +1,12 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +52,20 @@ public class VoiceMessage extends Message {
     }
 
     /**
+     * 语音消息构造方法
+     *
+     * @param duration 时长
+     * @param filePath 语音数据地址
+     */
+    public VoiceMessage(long duration,String filePath){
+        message = new TIMMessage();
+        TIMSoundElem elem = new TIMSoundElem();
+        elem.setPath(filePath);
+        elem.setDuration(duration);  //填写语音时长
+        message.addElement(elem);
+    }
+
+    /**
      * 显示消息
      *
      * @param viewHolder 界面样式
@@ -60,21 +77,26 @@ public class VoiceMessage extends Message {
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setGravity(Gravity.CENTER);
         ImageView voiceIcon = new ImageView(MyApplication.getContext());
-        voiceIcon.setImageDrawable(message.isSelf() ?
-                MyApplication.getContext().getResources().getDrawable(R.drawable.ic_voice_right) : MyApplication.getContext().getResources().getDrawable(R.drawable.ic_voice_left));
+        voiceIcon.setBackgroundResource(message.isSelf()?R.drawable.right_voice: R.drawable.left_voice);
+        final AnimationDrawable frameAnimatio = (AnimationDrawable) voiceIcon.getBackground();
 
         TextView tv = new TextView(MyApplication.getContext());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
         tv.setText(String.valueOf(((TIMSoundElem) message.getElement(0)).getDuration()) + "’");
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(10, 0, 0, 0);
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, context.getResources().getDisplayMetrics());
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, context.getResources().getDisplayMetrics());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams imageLp = new LinearLayout.LayoutParams(width, height);
         if (message.isSelf()){
             linearLayout.addView(tv);
-            voiceIcon.setLayoutParams(lp);
+            imageLp.setMargins(10, 0, 0, 0);
+            voiceIcon.setLayoutParams(imageLp);
             linearLayout.addView(voiceIcon);
         }else{
+            voiceIcon.setLayoutParams(imageLp);
             linearLayout.addView(voiceIcon);
+            lp.setMargins(10, 0, 0, 0);
             tv.setLayoutParams(lp);
             linearLayout.addView(tv);
         }
@@ -83,7 +105,9 @@ public class VoiceMessage extends Message {
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VoiceMessage.this.playAudio();
+                VoiceMessage.this.playAudio(frameAnimatio);
+
+
             }
         });
         showStatus(viewHolder);
@@ -98,7 +122,7 @@ public class VoiceMessage extends Message {
         return MyApplication.getContext().getString(R.string.summary_voice);
     }
 
-    private void playAudio() {
+    private void playAudio(final AnimationDrawable frameAnimatio) {
         TIMSoundElem elem = (TIMSoundElem) message.getElement(0);
 
         elem.getSound(new TIMValueCallBack<byte[]>() {
@@ -116,6 +140,14 @@ public class VoiceMessage extends Message {
                     fos.close();
                     FileInputStream fis = new FileInputStream(tempAudio);
                     MediaUtil.getInstance().play(fis);
+                    frameAnimatio.start();
+                    MediaUtil.getInstance().setEventListener(new MediaUtil.EventListener() {
+                        @Override
+                        public void onStop() {
+                            frameAnimatio.stop();
+                            frameAnimatio.selectDrawable(0);
+                        }
+                    });
                 }catch (IOException e){
 
                 }

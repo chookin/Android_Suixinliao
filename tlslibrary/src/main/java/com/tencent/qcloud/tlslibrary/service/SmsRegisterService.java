@@ -129,6 +129,7 @@ public class SmsRegisterService {
             intent.putExtra(Constants.EXTRA_SMS_REG, Constants.SMS_REG_SUCCESS);
             intent.putExtra(Constants.COUNTRY_CODE, countryCode);
             intent.putExtra(Constants.PHONE_NUMBER, phoneNumber);
+            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
             context.startActivity(intent);
             ((Activity) context).finish();
         }

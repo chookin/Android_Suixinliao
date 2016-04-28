@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 查找添加新朋友
  */
-public class SearchFriendActivity extends Activity implements FriendInfoView, AdapterView.OnItemClickListener, KeyEvent.Callback {
+public class SearchFriendActivity extends Activity implements FriendInfoView, AdapterView.OnItemClickListener, View.OnKeyListener {
 
     private final static String TAG = "SearchFriendActivity";
 
@@ -52,6 +52,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
                 finish();
             }
         });
+        mSearchInput.setOnKeyListener(this);
     }
 
 
@@ -62,21 +63,27 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() != KeyEvent.ACTION_UP){   // 忽略其它事件
+            return false;
+        }
+
         switch (keyCode) {
             case KeyEvent.KEYCODE_ENTER:
                 list.clear();
                 adapter.notifyDataSetChanged();
-                presenter.searchFriendByName(mSearchInput.getText().toString(),true);
-                presenter.searchFriendById(mSearchInput.getText().toString());
+                String key = mSearchInput.getText().toString();
+                presenter.searchFriendByName(key,true);
+                //给手机号加上86-
+                if (maybePhone(key)){
+                    key = "86-" + key;
+                }
+                presenter.searchFriendById(key);
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);
         }
     }
-
-
-
 
     /**
      * 显示好友信息
@@ -101,6 +108,14 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     private boolean needAdd(String id){
         for (ProfileSummary item : list){
             if (item.getIdentify().equals(id)) return false;
+        }
+        return true;
+    }
+
+    private boolean maybePhone(String str){
+        if (str.length() != 11) return false;
+        for (int i = 0 ; i < str.length() ; ++i){
+            if(!Character.isDigit(str.charAt(i))) return false;
         }
         return true;
     }

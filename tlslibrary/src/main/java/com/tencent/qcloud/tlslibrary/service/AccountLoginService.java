@@ -103,7 +103,7 @@ public class AccountLoginService {
             context.startActivity(intent);
         } else {
             ((Activity) context).setResult(Activity.RESULT_OK, intent);
+            ((Activity) context).finish();
         }
-        ((Activity) context).finish();
     }
 }

@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorGray3" />
+        android:background="@color/background_gray4" />
 
     <TextView
         android:id="@+id/add_group"
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorGray3" />
+        android:background="@color/background_gray4" />
 
     <TextView
         android:id="@+id/manager_group"

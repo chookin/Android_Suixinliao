@@ -3,11 +3,16 @@ package com.tencent.qcloud.timchat.model;
 import android.content.Context;
 import android.view.View;
 
+import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupTipsElem;
 import com.tencent.TIMMessage;
+import com.tencent.TIMUserProfile;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 群tips消息
@@ -45,13 +50,20 @@ public class GroupTipMessage extends Message {
             case SetAdmin:
                 return MyApplication.getContext().getString(R.string.summary_group_admin_change);
             case Join:
-                return e.getOpUser() +
+                StringBuilder names = new StringBuilder();
+                Iterator<Map.Entry<String,TIMGroupMemberInfo>> iterator = e.getChangedGroupMemberInfo().entrySet().iterator();
+                while(iterator.hasNext()){
+                    Map.Entry<String,TIMGroupMemberInfo> item = iterator.next();
+                    names.append(getName(item.getValue()));
+                    names.append(" ");
+                }
+                return names +
                         MyApplication.getContext().getString(R.string.summary_group_mem_add);
             case Kick:
                 return e.getUserList().get(0) +
                         MyApplication.getContext().getString(R.string.summary_group_mem_kick);
             case ModifyMemberInfo:
-                return e.getOpUser() +
+                return e.getChangedUserInfo() +
                         MyApplication.getContext().getString(R.string.summary_group_mem_modify);
             case Quit:
                 return e.getOpUser() +
@@ -60,5 +72,12 @@ public class GroupTipMessage extends Message {
                 return MyApplication.getContext().getString(R.string.summary_group_info_change);
         }
         return "";
+    }
+
+    private String getName(TIMGroupMemberInfo info){
+        if (info.getNameCard().equals("")){
+            return info.getUser();
+        }
+        return info.getNameCard();
     }
 }

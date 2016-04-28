@@ -69,6 +69,9 @@ public class AccountRegisterService {
                 }
 
                 int result = tlsService.TLSStrAccReg(username, password, strAccRegListener);
+                if (result == TLSErrInfo.INPUT_INVALID) {
+                    Util.showToast(AccountRegisterService.this.context, "帐号不合法");
+                }
             }
         });
     }
@@ -81,6 +84,9 @@ public class AccountRegisterService {
             intent.putExtra(Constants.EXTRA_USRPWD_REG, Constants.USRPWD_REG_SUCCESS);
             intent.putExtra(Constants.USERNAME, username);
             intent.putExtra(Constants.PASSWORD, password);
+
+            // 直接把所有任务交给新的登录界面
+            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
             context.startActivity(intent);
             ((Activity) context).finish();
         }

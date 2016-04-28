@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupPendencyGetType;
+import com.tencent.TIMGroupPendencyHandledStatus;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.qcloud.timchat.R;
+import com.tencent.qcloud.timchat.model.GroupFuture;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
 
@@ -21,7 +23,7 @@ import java.util.List;
 /**
  * 群管理消息adapter
  */
-public class GroupManageMessageAdapter extends ArrayAdapter<TIMGroupPendencyItem> {
+public class GroupManageMessageAdapter extends ArrayAdapter<GroupFuture> {
 
 
     private int resourceId;
@@ -36,13 +38,13 @@ public class GroupManageMessageAdapter extends ArrayAdapter<TIMGroupPendencyItem
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public GroupManageMessageAdapter(Context context, int resource, List<TIMGroupPendencyItem> objects) {
+    public GroupManageMessageAdapter(Context context, int resource, List<GroupFuture> objects) {
         super(context, resource, objects);
         resourceId = resource;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView != null){
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
@@ -57,7 +59,7 @@ public class GroupManageMessageAdapter extends ArrayAdapter<TIMGroupPendencyItem
             view.setTag(viewHolder);
         }
         Resources res = getContext().getResources();
-        final TIMGroupPendencyItem data = getItem(position);
+        final TIMGroupPendencyItem data = getItem(position).getFutureItem();
         String from = data.getFromUser(), to = data.getToUser();
         if (data.getPendencyType() == TIMGroupPendencyGetType.APPLY_BY_SELF){
             if (from.equals(UserInfo.getInstance().getId())){
@@ -87,13 +89,16 @@ public class GroupManageMessageAdapter extends ArrayAdapter<TIMGroupPendencyItem
             viewHolder.remark.setText(String.format("%s %s",res.getString(R.string.summary_invite_person),from));
         }
 
-        switch (data.getHandledStatus()){
+        switch (getItem(position).getType()){
             case HANDLED_BY_OTHER:
             case HANDLED_BY_SELF:
                 viewHolder.status.setText(res.getString(R.string.agreed));
+                viewHolder.status.setTextColor(res.getColor(R.color.text_gray1));
+                viewHolder.status.setOnClickListener(null);
                 break;
             case NOT_HANDLED:
                 viewHolder.status.setText(res.getString(R.string.agree));
+                viewHolder.status.setTextColor(res.getColor(R.color.text_blue1));
                 viewHolder.status.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -104,6 +109,7 @@ public class GroupManageMessageAdapter extends ArrayAdapter<TIMGroupPendencyItem
 
                             @Override
                             public void onSuccess() {
+                                getItem(position).setType(TIMGroupPendencyHandledStatus.HANDLED_BY_SELF);
                                 notifyDataSetChanged();
                             }
                         });

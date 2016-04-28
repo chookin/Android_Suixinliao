@@ -64,30 +64,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.setDisplayOrientation(90);
             Camera.Parameters parameters=mCamera.getParameters();
             parameters.set("orientation", "portrait");
-            Camera.Size result = null;
-            double resolution = ((double)w)/h;
-            double diff =0 ;
-            List<Camera.Size> list = parameters.getSupportedPreviewSizes();
-            for (Camera.Size size : list){
-                if (size.width < w || size.height < h){
-
-                    if (result == null){
-                        result = size;
-                        double r = ((double)size.width)/size.height;
-                        diff = Math.abs(r-resolution);
-                    }else{
-                        double r = ((double)size.width)/size.height;
-                        if (Math.abs(r- resolution)<diff){
-                            result = size;
-                            diff = Math.abs(r- resolution);
-                        }
-                    }
-
-                }
-            }
-            Log.d(TAG, "preview resolustion:" + result.width + "*" + result.height);
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-            parameters.setPreviewSize(result.height, result.width);
             mCamera.setParameters(parameters);
             mCamera.startPreview();
 

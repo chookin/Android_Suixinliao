@@ -22,6 +22,9 @@ public class IndependentLoginActivity extends Activity {
     //private int login_way = Constants.USRPWD_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
     private int login_way = Constants.USRPWD_LOGIN;
 
+    final static int STR_ACCOUNT_REG_REQUEST = 10001;
+    final static int SMS_LOGIN_REQUEST = 10002;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +90,7 @@ public class IndependentLoginActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(IndependentLoginActivity.this, IndependentRegisterActivity.class);
-                        startActivityForResult(intent, Constants.USRPWD_REG_REQUEST_CODE);
+                        startActivityForResult(intent, STR_ACCOUNT_REG_REQUEST);
                     }
                 });
 
@@ -109,7 +112,7 @@ public class IndependentLoginActivity extends Activity {
                         if (Constants.thirdappClassNameFail != null) {
                             intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_FAIL, Constants.thirdappClassNameFail);
                         }
-                        startActivityForResult(intent, 0);
+                        startActivityForResult(intent, SMS_LOGIN_REQUEST);
                         finish();
                     }
                 });
@@ -121,6 +124,19 @@ public class IndependentLoginActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == STR_ACCOUNT_REG_REQUEST) {
+            if (RESULT_OK == resultCode) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        } else if (requestCode == SMS_LOGIN_REQUEST) {
+            if (RESULT_OK == resultCode) {
+                // 返回 ok 表示短信登录界面的处理是 ok 并不需要此 Activity 做什么
+                setResult(RESULT_OK);
+                finish();
+            }
+        }
 
         if(requestCode == com.tencent.connect.common.Constants.REQUEST_API) {
             if (resultCode == com.tencent.connect.common.Constants.RESULT_LOGIN) {
@@ -173,7 +189,6 @@ public class IndependentLoginActivity extends Activity {
             ((EditText) findViewById(MResource.getIdByName(getApplication(), "id", "password"))).setText(password);
 
             findViewById(MResource.getIdByName(getApplication(), "id", "btn_login")).performClick();
-
             return;
         }
 

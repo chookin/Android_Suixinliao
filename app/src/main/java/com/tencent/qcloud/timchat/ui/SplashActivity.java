@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -36,7 +37,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        InitBusiness.start(getApplicationContext());
+        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+        InitBusiness.start(getApplicationContext(),pref.getInt("loglvl",0));
         TlsBusiness.init(getApplicationContext());
         String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
