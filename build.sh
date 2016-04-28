@@ -37,4 +37,4 @@ set +x
 ## package end
 
 gradle build
-cp app/build/outputs/apk/*.apk bin
+cp app/build/outputs/apk/app-debug.apk bin/app-debug_${MajorVersion}.${MinorVersion}.${FixVersion}.apk
