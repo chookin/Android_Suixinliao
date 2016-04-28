@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 查找添加新朋友
  */
-public class SearchFriendActivity extends Activity implements FriendInfoView, AdapterView.OnItemClickListener, KeyEvent.Callback {
+public class SearchFriendActivity extends Activity implements FriendInfoView, AdapterView.OnItemClickListener, View.OnKeyListener {
 
     private final static String TAG = "SearchFriendActivity";
 
@@ -52,6 +52,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
                 finish();
             }
         });
+        mSearchInput.setOnKeyListener(this);
     }
 
 
@@ -62,7 +63,11 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() != KeyEvent.ACTION_UP){   // 忽略其它事件
+            return false;
+        }
+
         switch (keyCode) {
             case KeyEvent.KEYCODE_ENTER:
                 list.clear();
@@ -74,9 +79,6 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
                 return super.onKeyUp(keyCode, event);
         }
     }
-
-
-
 
     /**
      * 显示好友信息

@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +21,7 @@ import com.tencent.qcloud.timchat.model.ProfileSummary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchGroupActivity extends Activity implements GroupInfoView, KeyEvent.Callback{
+public class SearchGroupActivity extends Activity implements GroupInfoView, View.OnKeyListener{
 
     private final String TAG = "SearchGroupActivity";
 
@@ -52,20 +53,24 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, KeyE
                 finish();
             }
         });
+
+        searchInput.setOnKeyListener(this);
     }
 
-
-
-
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() != KeyEvent.ACTION_UP){   // 忽略其它事件
+            return false;
+        }
+
         switch (keyCode) {
             case KeyEvent.KEYCODE_ENTER:
-//                groupManagerPresenter.searchGroupByID(searchInput.getText().toString());
+                list.clear();
+                adapter.notifyDataSetChanged();
                 groupManagerPresenter.searchGroupByName(searchInput.getText().toString());
                 return true;
             default:
-                return super.onKeyUp(keyCode, event);
+                return false;
         }
     }
 
