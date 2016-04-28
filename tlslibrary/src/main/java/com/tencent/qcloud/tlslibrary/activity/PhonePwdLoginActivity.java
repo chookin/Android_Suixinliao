@@ -112,12 +112,12 @@ public class PhonePwdLoginActivity extends Activity {
 
         if (requestCode == SMS_REG_REQUEST) {
             if (RESULT_OK == resultCode) {
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, data);
                 finish();
             }
 
         } else if (requestCode == SMS_RESET_REQUEST) {
-            setResult(RESULT_OK);
+            setResult(RESULT_OK, data);
             finish();
         } else {
             if (requestCode == com.tencent.connect.common.Constants.REQUEST_API) {

@@ -123,6 +123,7 @@ public class SmsLoginService {
         @Override
         public void OnSmsLoginSuccess(TLSUserInfo userSigInfo) {
             Util.showToast(context, "短信登录成功");
+            TLSService.getInstance().setLastErrno(0);
             SmsLoginService.this.jumpToSuccActivity();
         }
 
@@ -131,6 +132,7 @@ public class SmsLoginService {
         @Override
         public void OnSmsLoginFail(TLSErrInfo errInfo) { // 短信登录失败
             Util.notOK(context, errInfo);
+            TLSService.getInstance().setLastErrno(-1);
             SmsLoginService.this.jumpToFailActivity();
         }
 

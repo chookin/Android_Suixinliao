@@ -72,6 +72,7 @@ public class PhonePwdLoginService {
         @Override
         public void OnPwdLoginSuccess(TLSUserInfo userInfo) {
             Util.showToast(context, "密码登录成功！");
+            TLSService.getInstance().setLastErrno(0);
             PhonePwdLoginService.this.jumpToSuccActivity();
         }
 
@@ -90,11 +91,13 @@ public class PhonePwdLoginService {
 
         @Override
         public void OnPwdLoginFail(TLSErrInfo errInfo) {
+            TLSService.getInstance().setLastErrno(-1);
             Util.notOK(context, errInfo);
         }
 
         @Override
         public void OnPwdLoginTimeout(TLSErrInfo errInfo) {
+            TLSService.getInstance().setLastErrno(-1);
             Util.notOK(context, errInfo);
         }
     }

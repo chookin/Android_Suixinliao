@@ -63,7 +63,8 @@ public class AccountLoginService {
     class PwdLoginListener implements TLSPwdLoginListener {
         @Override
         public void OnPwdLoginSuccess(TLSUserInfo userInfo) {
-            Util.showToast(context, "密码登录成功!");
+            Util.showToast(context, "登录 OK");
+            TLSService.getInstance().setLastErrno(0);
             AccountLoginService.this.jumpToSuccActivity();
         }
 
@@ -82,11 +83,13 @@ public class AccountLoginService {
 
         @Override
         public void OnPwdLoginFail(TLSErrInfo errInfo) {
+            TLSService.getInstance().setLastErrno(-1);
             Util.notOK(context, errInfo);
         }
 
         @Override
         public void OnPwdLoginTimeout(TLSErrInfo errInfo) {
+            TLSService.getInstance().setLastErrno(-1);
             Util.notOK(context, errInfo);
         }
     }

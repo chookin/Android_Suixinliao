@@ -39,6 +39,7 @@ public class TLSService {
     private PhonePwdLoginService phonePwdLoginService;
     private PhonePwdRegisterService phonePwdRegisterService;
     private ResetPhonePwdService resetPhonePwdService;
+    private static int lastErrno = 0;
 
     private static TLSService tlsService = null;
 
@@ -71,6 +72,14 @@ public class TLSService {
             tlsService = new TLSService();
         }
         return tlsService;
+    }
+
+    public static void setLastErrno(int errno) {
+        lastErrno = errno;
+    }
+
+    public static int getLastErrno() {
+        return lastErrno;
     }
 
     /**
