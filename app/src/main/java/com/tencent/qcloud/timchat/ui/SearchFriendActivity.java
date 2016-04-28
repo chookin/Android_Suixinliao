@@ -72,8 +72,13 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
             case KeyEvent.KEYCODE_ENTER:
                 list.clear();
                 adapter.notifyDataSetChanged();
-                presenter.searchFriendByName(mSearchInput.getText().toString(),true);
-                presenter.searchFriendById(mSearchInput.getText().toString());
+                String key = mSearchInput.getText().toString();
+                presenter.searchFriendByName(key,true);
+                //给手机号加上86-
+                if (maybePhone(key)){
+                    key = "86-" + key;
+                }
+                presenter.searchFriendById(key);
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);
@@ -103,6 +108,14 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     private boolean needAdd(String id){
         for (ProfileSummary item : list){
             if (item.getIdentify().equals(id)) return false;
+        }
+        return true;
+    }
+
+    private boolean maybePhone(String str){
+        if (str.length() != 11) return false;
+        for (int i = 0 ; i < str.length() ; ++i){
+            if(!Character.isDigit(str.charAt(i))) return false;
         }
         return true;
     }
