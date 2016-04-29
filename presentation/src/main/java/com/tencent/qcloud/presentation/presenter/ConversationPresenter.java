@@ -56,6 +56,10 @@ public class ConversationPresenter implements Observer {
                 case UPDATE:
                     view.updateGroupInfo((TIMGroupCacheInfo) cmd.data);
                     break;
+                case DEL:
+                    view.removeConversation((String) cmd.data);
+                    break;
+
             }
         }
     }
