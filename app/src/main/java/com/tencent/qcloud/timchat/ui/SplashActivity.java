@@ -1,8 +1,11 @@
 package com.tencent.qcloud.timchat.ui;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -22,6 +25,7 @@ import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
+import com.tencent.qcloud.timchat.utils.PushUtil;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
@@ -37,14 +41,20 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        InitBusiness.start(getApplicationContext(),pref.getInt("loglvl",0));
-        TlsBusiness.init(getApplicationContext());
-        String id =  TLSService.getInstance().getLastUserIdentifier();
-        UserInfo.getInstance().setId(id);
-        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
-        presenter = new SplashPresenter(this);
-        presenter.start();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
+            Toast.makeText(this, getString(R.string.need_permission),Toast.LENGTH_SHORT).show();
+        }else{
+            SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+            InitBusiness.start(getApplicationContext(),pref.getInt("loglvl",0));
+            TlsBusiness.init(getApplicationContext());
+            String id =  TLSService.getInstance().getLastUserIdentifier();
+            UserInfo.getInstance().setId(id);
+            UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
+            presenter = new SplashPresenter(this);
+            presenter.start();
+        }
+
     }
 
 
@@ -53,6 +63,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
      */
     @Override
     public void navToHome() {
+        //登录之前要初始化群和好友关系链缓存
         FriendshipEvent.getInstance().init();
         GroupEvent.getInstance().init();
         LoginBusiness.loginIm(UserInfo.getInstance().getId(), UserInfo.getInstance().getUserSig(), this);
@@ -106,6 +117,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     public void onSuccess() {
         Log.i(TAG, "login succeed");
+        PushUtil.getInstance();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();

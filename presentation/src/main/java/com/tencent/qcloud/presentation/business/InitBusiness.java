@@ -33,6 +33,8 @@ public class InitBusiness {
     private static void initImsdk(Context context){
         //初始化imsdk
         TIMManager.getInstance().init(context);
+        //禁止服务器自动代替上报已读
+        TIMManager.getInstance().disableAutoReport();
         //注册消息监听器
         TIMManager.getInstance().addMessageListener(MessageEvent.getInstance());
     }

@@ -146,5 +146,13 @@ public abstract class Message {
         getBubbleView(viewHolder).setOnClickListener(null);
     }
 
+    /**
+     * 获取发送者
+     *
+     */
+    public String getSender(){
+        return message.getSender();
+    }
+
 
 }

@@ -1,11 +1,14 @@
 package com.tencent.qcloud.timchat.ui.customview;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.Spannable;
@@ -52,6 +55,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     private LinearLayout morePanel,textPanel;
     private TextView voicePanel;
     private LinearLayout emoticonPanel;
+    private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
 
 
     public ChatInput(Context context, AttributeSet attrs) {
@@ -309,7 +313,10 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 updateView(inputMode == InputMode.MORE?InputMode.TEXT:InputMode.MORE);
                 break;
             case R.id.btn_photo:
-                chatView.sendPhoto();
+                Activity activity = (Activity) getContext();
+                if(activity!=null && requestCamera(activity)){
+                    chatView.sendPhoto();
+                }
                 break;
             case R.id.btn_image:
                 chatView.sendImage();
@@ -322,7 +329,10 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 break;
             case R.id.btn_video:
                 if (getContext() instanceof FragmentActivity){
-                    VideoInputDialog.show(((FragmentActivity) getContext()).getSupportFragmentManager());
+                    FragmentActivity fragmentActivity = (FragmentActivity) getContext();
+                    if (requestCamera(fragmentActivity)){
+                        VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
+                    }
                 }
                 break;
             case R.id.btnEmoticon:
@@ -364,4 +374,21 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         VIDEO,
         NONE,
     }
+
+    private boolean requestCamera(Activity activity){
+        if (afterM()){
+            int hasPermission = activity.checkSelfPermission(Manifest.permission.CAMERA);
+            if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+                activity.requestPermissions(new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean afterM(){
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
 }
