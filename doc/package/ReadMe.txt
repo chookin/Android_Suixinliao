@@ -1,14 +1,17 @@
-
-
-
 1. 由于离线推送通知依赖于特定的service，所以集成的时候必须在AndroidManifest.xml的<application> </application>中添加如下配置[已更新过1.8版本配置的，也麻烦改成如下的内容]：
 
         <!--  消息收发service -->
          <service
             android:name="com.tencent.qalsdk.service.QalService"
+            android:exported="false" 
+            android:process=":QALSERVICE" >  
+        </service> 
+		<!--  消息收发辅助service -->
+        <service  
+            android:name="com.tencent.qalsdk.service.QalAssistService"  
             android:exported="false"
             android:process=":QALSERVICE" >
-        </service>  
+         </service> 
         <!--  离线消息广播接收器 -->
          <receiver
             android:name="com.tencent.qalsdk.QALBroadcastReceiver"
@@ -19,7 +22,7 @@
         </receiver>
         <!--  系统消息广播接收器 -->
         <receiver 
-            android:name="com.tencent.qalsdk.core.NetConnInfoCenter" android:process=":QALSERVICE">
+            android:name="com.tencent.qalsdk.core.NetConnInfoCenter"  android:process=":QALSERVICE">  
  		    <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -32,11 +35,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
-        </receiver> 
+        </receiver>    
 
 
 2. 如果需要离线推送通知，需要在application的onCreate中调用TIMManager中的setOfflinePushListener接口注册离线推送通知回调（具体参数可以参考相应的javadoc）。如下：
-   注意：onCreate() 这里只是初始化离线处理必须的逻辑。app正常启动初始化逻辑建议放在activity中。
+   【【!! 特别注意：onCreate里面的逻辑必须判断当前进程是否是主进程，初始化等相关工作必须只在主进程实现。!!】】
+
 public class MyApplication extends Application {
     @Override
     public void onCreate() {

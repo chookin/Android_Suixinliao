@@ -1,3 +1,32 @@
+
+ImSDK 1.9.0
+
+接口变更（重要）：
+
+1、重要：获取非好友资料 GetFriendsProfile 变更为 GetUsersProfile
+2、配置变更，需要参考 ReadMe.txt 进行配置
+
+功能增加：
+
+1、增加关系链存储和缓存（TIMManager enableFriendshipProxy）
+2、增加关系链同步获取接口和变更回调（需要开启存储）（TIMFriendshipProxy）
+3、增加群资料存储和缓存（TIMManager enableGroupAssistant）
+4、增加群资料同步获取接口和变更回调（需要开启存储）（TIMGroupAssistant）
+5、获取好友资料（包括备注、分组） GetFriendsProfile
+6、设置关系链默认拉取字段（TIMManager initFriendshipSetting）
+7、设置群资料默认拉取字段（TIMManager initGroupSetting）
+8、禁用拉取最近联系人（disableRecentContact）
+9、会话列表增加同步获取最后一条消息
+10、增加创建大群接口（不限制群内人数，适用直播场景）
+11、分优先级发送消息（红包、普通消息、点赞消息）
+12、优化群消息处理性能
+13、指定拉取某些群成员的群资料（如群名片等）
+14、语音消息和文件消息支持传入文件路径（可支持消息重发）
+15、适配6.0动态权限问题
+16、隐藏service后台运行的图标（涉及到AndroidManifest.xml配置变更）
+17、优化被踢时候的回调逻辑（加上user id）
+18、收到离线push后拉起主进程，增加加载持久化存储的账号信息逻辑，push可以带上userid。
+
 ImSDK 1.8.1
 
 1、优化自启动流程（需要修改配置，请参考 ReadMe.txt 进行配置）
