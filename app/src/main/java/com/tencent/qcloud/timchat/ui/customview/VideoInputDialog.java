@@ -201,7 +201,6 @@ public class VideoInputDialog extends DialogFragment {
         mMediaRecorder.setOutputFile(getOutputMediaFile().toString());
         mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
         try {
-//            mMediaRecorder.setVideoSize(480,640);
             mMediaRecorder.setOrientationHint(90);
             mMediaRecorder.prepare();
         } catch (IllegalStateException e) {
@@ -225,7 +224,6 @@ public class VideoInputDialog extends DialogFragment {
     }
 
     private boolean isLongEnough(){
-        return Calendar.getInstance().getTimeInMillis() - time > 3000 &&
-                Calendar.getInstance().getTimeInMillis() - time < 15000;
+        return Calendar.getInstance().getTimeInMillis() - time > 3000;
     }
 }
