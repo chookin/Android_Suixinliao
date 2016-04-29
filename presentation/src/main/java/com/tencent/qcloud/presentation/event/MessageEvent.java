@@ -1,6 +1,7 @@
 package com.tencent.qcloud.presentation.event;
 
 
+import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageListener;
 
@@ -15,7 +16,10 @@ public class MessageEvent extends Observable implements TIMMessageListener {
 
     private static final MessageEvent instance = new MessageEvent();
 
-    private MessageEvent(){}
+    private MessageEvent(){
+        //注册消息监听器
+        TIMManager.getInstance().addMessageListener(this);
+    }
 
     public static MessageEvent getInstance(){
         return instance;

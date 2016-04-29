@@ -151,6 +151,7 @@ public abstract class Message {
      *
      */
     public String getSender(){
+        if (message.getSender() == null) return "";
         return message.getSender();
     }
 

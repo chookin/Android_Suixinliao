@@ -12,7 +12,7 @@ import android.util.Log;
 public class Foreground implements TIMBaseApplication.ActivityLifecycleCallbacks{
 	
 	//单例
-	private static Foreground instance;
+	private static Foreground instance = new Foreground();
 	
 	private static String TAG = Foreground.class.getSimpleName();
 	private final int CHECK_DELAY = 500;
@@ -24,10 +24,7 @@ public class Foreground implements TIMBaseApplication.ActivityLifecycleCallbacks
 	private Runnable check;
 	
 	public static void init(Application app){
-        if (instance == null){
-            instance = new Foreground();
-            app.registerActivityLifecycleCallbacks(instance);
-        }
+		app.registerActivityLifecycleCallbacks(instance);
     }
 
     public static Foreground get(){

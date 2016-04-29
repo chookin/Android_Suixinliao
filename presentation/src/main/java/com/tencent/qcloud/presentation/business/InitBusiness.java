@@ -2,6 +2,7 @@ package com.tencent.qcloud.presentation.business;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
@@ -14,6 +15,8 @@ import com.tencent.qcloud.presentation.event.MessageEvent;
  * 包括imsdk等
  */
 public class InitBusiness {
+
+    private static final String TAG = InitBusiness.class.getSimpleName();
 
     private InitBusiness(){}
 
@@ -35,8 +38,8 @@ public class InitBusiness {
         TIMManager.getInstance().init(context);
         //禁止服务器自动代替上报已读
         TIMManager.getInstance().disableAutoReport();
-        //注册消息监听器
-        TIMManager.getInstance().addMessageListener(MessageEvent.getInstance());
+        Log.d(TAG, "initIMsdk");
+
     }
 
 

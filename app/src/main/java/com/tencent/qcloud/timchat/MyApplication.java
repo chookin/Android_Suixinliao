@@ -8,6 +8,7 @@ import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
+import com.tencent.qcloud.timchat.utils.Foreground;
 
 
 /**
@@ -20,9 +21,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Foreground.init(this);
         context = getApplicationContext();
-        super.onCreate();
-
         if(MsfSdkUtils.isMainProcess(this)) {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override

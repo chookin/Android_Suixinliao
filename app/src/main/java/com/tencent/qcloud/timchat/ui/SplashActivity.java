@@ -13,8 +13,10 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
+import com.tencent.TIMLogLevel;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
+import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -25,6 +27,7 @@ import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
+import com.tencent.qcloud.timchat.utils.Foreground;
 import com.tencent.qcloud.timchat.utils.PushUtil;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
@@ -46,7 +49,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
             Toast.makeText(this, getString(R.string.need_permission),Toast.LENGTH_SHORT).show();
         }else{
             SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-            InitBusiness.start(getApplicationContext(),pref.getInt("loglvl",0));
+            InitBusiness.start(getApplicationContext(),pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal()));
             TlsBusiness.init(getApplicationContext());
             String id =  TLSService.getInstance().getLastUserIdentifier();
             UserInfo.getInstance().setId(id);
@@ -117,7 +120,10 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     public void onSuccess() {
         Log.i(TAG, "login succeed");
+        //初始化程序后台后消息推送
         PushUtil.getInstance();
+        //初始化消息监听
+        MessageEvent.getInstance();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
