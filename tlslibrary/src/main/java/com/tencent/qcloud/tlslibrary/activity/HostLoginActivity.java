@@ -95,7 +95,9 @@ public class HostLoginActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(HostLoginActivity.this, HostRegisterActivity.class);
-                        startActivityForResult(intent, SMS_REG_REQUEST);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -117,7 +119,9 @@ public class HostLoginActivity extends Activity {
                         if (Constants.thirdappClassNameFail != null) {
                             intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_FAIL, Constants.thirdappClassNameFail);
                         }
-                        startActivityForResult(intent, STR_ACCOUNT_LOGIN_REQUEST);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
+                        finish();
                     }
                 });
     }
@@ -146,12 +150,12 @@ public class HostLoginActivity extends Activity {
 
         if (STR_ACCOUNT_LOGIN_REQUEST == requestCode) {
             if (RESULT_OK == resultCode) {
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, data);
                 finish();
             }
         } else if (SMS_REG_REQUEST == requestCode) {
             if (RESULT_OK == resultCode) {
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, data);
                 finish();
             }
         } else {
@@ -218,6 +222,7 @@ public class HostLoginActivity extends Activity {
                 @Override
                 public void OnSmsLoginSuccess(TLSUserInfo tlsUserInfo) {
                     Util.showToast(HostLoginActivity.this, "短信登录成功");
+                    TLSService.getInstance().setLastErrno(0);
                     Intent intent = new Intent();
                     intent.putExtra(Constants.EXTRA_LOGIN_WAY, Constants.SMS_LOGIN);
                     intent.putExtra(Constants.EXTRA_SMS_LOGIN, Constants.SMS_LOGIN_SUCCESS);
@@ -233,11 +238,13 @@ public class HostLoginActivity extends Activity {
 
                 @Override
                 public void OnSmsLoginFail(TLSErrInfo tlsErrInfo) {
+                    TLSService.getInstance().setLastErrno(-1);
                     Util.notOK(HostLoginActivity.this, tlsErrInfo);
                 }
 
                 @Override
                 public void OnSmsLoginTimeout(TLSErrInfo tlsErrInfo) {
+                    TLSService.getInstance().setLastErrno(-1);
                     Util.notOK(HostLoginActivity.this, tlsErrInfo);
                 }
             });

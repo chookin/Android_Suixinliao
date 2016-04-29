@@ -79,16 +79,10 @@ public class AccountRegisterService {
     class StrAccRegListener implements TLSStrAccRegListener {
         @Override
         public void OnStrAccRegSuccess(TLSUserInfo userInfo) {
-            Util.showToast(context, "成功注册了一个字符串账号：\n" + userInfo.identifier);
-            Intent intent = new Intent(context, IndependentLoginActivity.class);
-            intent.putExtra(Constants.EXTRA_USRPWD_REG, Constants.USRPWD_REG_SUCCESS);
-            intent.putExtra(Constants.USERNAME, username);
-            intent.putExtra(Constants.PASSWORD, password);
-
-            // 直接把所有任务交给新的登录界面
-            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-            context.startActivity(intent);
-            ((Activity) context).finish();
+            Util.showToast(context, "成功注册 " + userInfo.identifier);
+            TLSService.getInstance().setLastErrno(0);
+            StrAccountLogin login = new StrAccountLogin(context);
+            login.doStrAccountLogin(username, password);
         }
 
         @Override

@@ -22,8 +22,8 @@ public class IndependentLoginActivity extends Activity {
     //private int login_way = Constants.USRPWD_LOGIN | Constants.QQ_LOGIN | Constants.WX_LOGIN;
     private int login_way = Constants.USRPWD_LOGIN;
 
-    final static int STR_ACCOUNT_REG_REQUEST = 10001;
-    final static int SMS_LOGIN_REQUEST = 10002;
+    final static int STR_ACCOUNT_REG_REQUEST = 20001;
+    final static int SMS_LOGIN_REQUEST = 20002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,9 @@ public class IndependentLoginActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(IndependentLoginActivity.this, IndependentRegisterActivity.class);
-                        startActivityForResult(intent, STR_ACCOUNT_REG_REQUEST);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -112,7 +114,8 @@ public class IndependentLoginActivity extends Activity {
                         if (Constants.thirdappClassNameFail != null) {
                             intent.putExtra(Constants.EXTRA_THIRDAPP_CLASS_NAME_FAIL, Constants.thirdappClassNameFail);
                         }
-                        startActivityForResult(intent, SMS_LOGIN_REQUEST);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                        startActivity(intent);
                         finish();
                     }
                 });
@@ -127,13 +130,13 @@ public class IndependentLoginActivity extends Activity {
 
         if (requestCode == STR_ACCOUNT_REG_REQUEST) {
             if (RESULT_OK == resultCode) {
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, data);
                 finish();
             }
         } else if (requestCode == SMS_LOGIN_REQUEST) {
             if (RESULT_OK == resultCode) {
                 // 返回 ok 表示短信登录界面的处理是 ok 并不需要此 Activity 做什么
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, data);
                 finish();
             }
         }
@@ -156,41 +159,18 @@ public class IndependentLoginActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
         Intent intent = getIntent();
-        if (intent == null)     return;
-
-        // 判断是否是从微信登录界面返回的
-        int wx_login = intent.getIntExtra(Constants.EXTRA_WX_LOGIN, Constants.WX_LOGIN_NON);
-        if (wx_login != Constants.WX_LOGIN_NON) {
-            if (wx_login == Constants.WX_LOGIN_SUCCESS) {
-                Intent data = new Intent();
-                data.putExtra(Constants.EXTRA_LOGIN_WAY, Constants.WX_LOGIN);
-                data.putExtra(Constants.EXTRA_WX_LOGIN, Constants.WX_LOGIN_SUCCESS);
-                data.putExtra(Constants.EXTRA_WX_OPENID, intent.getStringExtra(Constants.EXTRA_WX_OPENID));
-                data.putExtra(Constants.EXTRA_WX_ACCESS_TOKEN, intent.getStringExtra(Constants.EXTRA_WX_ACCESS_TOKEN));
-                if (Constants.thirdappPackageNameSucc != null && Constants.thirdappClassNameSucc != null) {
-                    data.setClassName(Constants.thirdappPackageNameSucc, Constants.thirdappClassNameSucc);
-                    startActivity(data);
-                } else {
-                    setResult(RESULT_OK, data);
-                }
-                finish();
-            }
+        if (intent == null) {
             return;
         }
 
         // 判断是否是从注册界面返回
         String username = intent.getStringExtra(Constants.USERNAME);
         String password = intent.getStringExtra(Constants.PASSWORD);
-
         if (username != null && password != null) {
             ((EditText) findViewById(MResource.getIdByName(getApplication(), "id", "username"))).setText(username);
             ((EditText) findViewById(MResource.getIdByName(getApplication(), "id", "password"))).setText(password);
-
             findViewById(MResource.getIdByName(getApplication(), "id", "btn_login")).performClick();
-            return;
         }
-
     }
 }
