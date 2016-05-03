@@ -14,7 +14,7 @@ import java.util.Observable;
 public class MessageEvent extends Observable implements TIMMessageListener {
 
 
-    private static final MessageEvent instance = new MessageEvent();
+    private volatile static MessageEvent instance;
 
     private MessageEvent(){
         //注册消息监听器
@@ -22,6 +22,13 @@ public class MessageEvent extends Observable implements TIMMessageListener {
     }
 
     public static MessageEvent getInstance(){
+        if (instance == null) {
+            synchronized (MessageEvent.class) {
+                if (instance == null) {
+                    instance = new MessageEvent();
+                }
+            }
+        }
         return instance;
     }
 
@@ -40,5 +47,12 @@ public class MessageEvent extends Observable implements TIMMessageListener {
     public void onNewMessage(TIMMessage message){
         setChanged();
         notifyObservers(message);
+    }
+
+    /**
+     * 清理消息监听
+     */
+    public void clear(){
+        instance = null;
     }
 }
