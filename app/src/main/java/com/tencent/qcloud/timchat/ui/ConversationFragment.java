@@ -35,6 +35,7 @@ import com.tencent.qcloud.timchat.model.FriendshipConversation;
 import com.tencent.qcloud.timchat.model.GroupManageConversation;
 import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.NomalConversation;
+import com.tencent.qcloud.timchat.utils.PushUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,6 +100,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     public void onResume(){
         super.onResume();
         reFreshView();
+        PushUtil.getInstance().reset();
     }
 
 

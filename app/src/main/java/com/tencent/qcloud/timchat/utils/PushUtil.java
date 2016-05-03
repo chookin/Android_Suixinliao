@@ -25,7 +25,7 @@ public class PushUtil implements Observer {
 
     private static int pushNum=0;
 
-    private final static int pushId=1;
+    private final int pushId=1;
 
     private static PushUtil instance = new PushUtil();
 
@@ -70,6 +70,11 @@ public class PushUtil implements Observer {
 
     public static void resetPushNum(){
         pushNum=0;
+    }
+
+    public void reset(){
+        NotificationManager notificationManager = (NotificationManager)MyApplication.getContext().getSystemService(MyApplication.getContext().NOTIFICATION_SERVICE);
+        notificationManager.cancel(pushId);
     }
 
     /**
