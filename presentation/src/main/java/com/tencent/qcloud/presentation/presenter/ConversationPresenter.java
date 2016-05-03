@@ -75,9 +75,6 @@ public class ConversationPresenter implements Observer {
             //根据索引获取会话
             final TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
             if (conversation.getType() == TIMConversationType.System) continue;
-            if (conversation.getPeer().equals("@TGS#2P7A4TAEU")){
-                Log.d(TAG, "11");
-            }
             list.add(conversation);
             conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override
@@ -87,9 +84,6 @@ public class ConversationPresenter implements Observer {
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
-                    if (conversation.getPeer().equals("@TGS#2P7A4TAEU")){
-                        view.updateMessage(timMessages.get(0));
-                    }
                     view.updateMessage(timMessages.get(0));
                 }
             });
