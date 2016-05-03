@@ -368,6 +368,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     }
 
     private void sendImage(String path){
+        if (path == null) return;
         File file = new File(path);
         if (file.exists()){
             if (file.length() > 1024 * 1024 * 10){
