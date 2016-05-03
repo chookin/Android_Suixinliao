@@ -205,9 +205,11 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void showMessage(List<TIMMessage> messages) {
+        int newMsgNum = 0;
         for (int i = 0; i < messages.size(); ++i){
             Message mMessage = MessageFactory.getMessage(messages.get(i));
             if (mMessage == null) continue;
+            ++newMsgNum;
             if (i != messages.size() - 1){
                 mMessage.setHasTime(messages.get(i+1));
                 messageList.add(0, mMessage);
@@ -216,7 +218,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             }
         }
         adapter.notifyDataSetChanged();
-        listView.setSelection(messages.size() - 1);
+        listView.setSelection(newMsgNum);
     }
 
     /**
