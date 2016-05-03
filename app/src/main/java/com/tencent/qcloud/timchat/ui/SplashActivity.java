@@ -37,6 +37,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
     SplashPresenter presenter;
     private int LOGIN_RESULT_CODE = 100;
+    private final int REQUEST_PHONE_PERMISSIONS = 0;
     private static final String TAG = SplashActivity.class.getSimpleName();
 
     @Override
@@ -45,17 +46,9 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
-            Toast.makeText(this, getString(R.string.need_permission),Toast.LENGTH_SHORT).show();
+            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE_PERMISSIONS);
         }else{
-            SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-            InitBusiness.start(getApplicationContext(),pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal()));
-            TlsBusiness.init(getApplicationContext());
-            String id =  TLSService.getInstance().getLastUserIdentifier();
-            UserInfo.getInstance().setId(id);
-            UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
-            presenter = new SplashPresenter(this);
-            presenter.start();
+            init();
         }
 
     }
@@ -141,6 +134,35 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                 finish();
             }
         }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_PERMISSIONS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    init();
+                } else {
+                    Toast.makeText(this, getString(R.string.need_permission),Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+    private void init(){
+        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+        InitBusiness.start(getApplicationContext(),pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal()));
+        TlsBusiness.init(getApplicationContext());
+        String id =  TLSService.getInstance().getLastUserIdentifier();
+        UserInfo.getInstance().setId(id);
+        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
+        presenter = new SplashPresenter(this);
+        presenter.start();
     }
 
 }
