@@ -37,7 +37,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
     private final String TAG = "GroupProfileActivity";
 
-    private String identify;
+    private String identify,type;
     private GroupInfoPresenter groupInfoPresenter;
     private boolean isInGroup;
     private boolean isGroupOwner;
@@ -73,6 +73,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
         TIMGroupDetailInfo info = groupInfos.get(0);
         isGroupOwner = info.getGroupOwner().equals(UserInfo.getInstance().getId());
         roleType = GroupInfo.getInstance().getRole(identify);
+        type = info.getGroupType();
         LineControllerView member = (LineControllerView) findViewById(R.id.member);
         if (isInGroup){
             member.setContent(String.valueOf(info.getMemberNum()));
@@ -162,6 +163,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
             case R.id.member:
                 Intent intentGroupMem = new Intent(this, GroupMemberActivity.class);
                 intentGroupMem.putExtra("id", identify);
+                intentGroupMem.putExtra("type",type);
                 startActivity(intentGroupMem);
                 break;
             case R.id.addOpt:

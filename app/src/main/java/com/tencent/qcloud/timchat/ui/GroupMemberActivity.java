@@ -27,7 +27,7 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
     ProfileSummaryAdapter adapter;
     List<ProfileSummary> list = new ArrayList<>();
     ListView listView;
-    String groupId;
+    String groupId,type;
     private final int MEM_REQ = 100;
     private int memIndex;
 
@@ -36,6 +36,7 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member);
         groupId = getIntent().getStringExtra("id");
+        type = getIntent().getStringExtra("type");
         listView = (ListView) findViewById(R.id.list);
         adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
@@ -48,6 +49,7 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
                 GroupMemberProfile profile = (GroupMemberProfile) list.get(position);
                 intent.putExtra("data", profile);
                 intent.putExtra("groupId", groupId);
+                intent.putExtra("type",type);
                 startActivityForResult(intent, MEM_REQ);
             }
         });

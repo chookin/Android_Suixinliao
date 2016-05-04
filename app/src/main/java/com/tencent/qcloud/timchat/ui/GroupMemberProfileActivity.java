@@ -27,7 +27,7 @@ import java.util.List;
 
 public class GroupMemberProfileActivity extends FragmentActivity {
 
-    private String userIdentify, groupIdentify, userCard;
+    private String userIdentify, groupIdentify, userCard,groupType;
     private TIMGroupMemberRoleType currentUserRole;
     private GroupMemberProfile profile;
     private LineControllerView setManager;
@@ -46,6 +46,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         profile = (GroupMemberProfile) getIntent().getSerializableExtra("data");
         userIdentify = profile.getIdentify();
         groupIdentify = getIntent().getStringExtra("groupId");
+        groupType = getIntent().getStringExtra("type");
         userCard = profile.getNameCard();
 
 
@@ -66,7 +67,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         TextView tvName = (TextView) findViewById(R.id.name);
         tvName.setText(userIdentify);
         TextView tvKick = (TextView) findViewById(R.id.kick);
-        tvKick.setVisibility(canManage()? View.VISIBLE:View.GONE);
+        tvKick.setVisibility(canManage()&&!groupType.equals(GroupInfo.privateGroup)? View.VISIBLE:View.GONE);
         tvKick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,11 +87,11 @@ public class GroupMemberProfileActivity extends FragmentActivity {
             }
         });
         setManager = (LineControllerView) findViewById(R.id.manager);
-        setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != profile.getRole() ? View.VISIBLE : View.GONE);
+        setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != profile.getRole() &&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
         setManager.setSwitch(profile.getRole() == TIMGroupMemberRoleType.Admin);
         setManager.setCheckListener(checkListener);
         final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
-        setQuiet.setVisibility(canManage() ? View.VISIBLE : View.GONE);
+        setQuiet.setVisibility(canManage()&&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
         if (canManage()){
             if (profile.getQuietTime() != 0){
                 setQuiet.setContent(getString(R.string.group_member_quiet_ing));
