@@ -305,6 +305,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
      */
     @Override
     public void onClick(View v) {
+        Activity activity = (Activity) getContext();
         switch (v.getId()) {
             case R.id.btn_send:
                 chatView.sendText();
@@ -313,16 +314,19 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 updateView(inputMode == InputMode.MORE?InputMode.TEXT:InputMode.MORE);
                 break;
             case R.id.btn_photo:
-                Activity activity = (Activity) getContext();
                 if(activity!=null && requestCamera(activity)){
                     chatView.sendPhoto();
                 }
                 break;
             case R.id.btn_image:
-                chatView.sendImage();
+                if(activity!=null && requestStorage(activity)){
+                    chatView.sendImage();
+                }
                 break;
             case R.id.btn_voice:
-                updateView(InputMode.VOICE);
+                if(activity!=null && requestAudio(activity)){
+                    updateView(InputMode.VOICE);
+                }
                 break;
             case R.id.btn_keyboard:
                 updateView(InputMode.TEXT);
@@ -380,6 +384,30 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
             int hasPermission = activity.checkSelfPermission(Manifest.permission.CAMERA);
             if (hasPermission != PackageManager.PERMISSION_GRANTED) {
                 activity.requestPermissions(new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean requestAudio(Activity activity){
+        if (afterM()){
+            int hasPermission = activity.checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+            if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+                activity.requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean requestStorage(Activity activity){
+        if (afterM()){
+            int hasPermission = activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+                activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         REQUEST_CODE_ASK_PERMISSIONS);
                 return false;
             }
