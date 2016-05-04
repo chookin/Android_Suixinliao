@@ -238,6 +238,7 @@
     <string name="group_member_del_err">移出群成员失败</string>
     <string name="group_member_del_succ">移出群成员成功</string>
     <string name="group_member_manage_set_err">设置管理员失败</string>
+    <string name="group_member_manage_set_type_err">该类型群组不能设置管理员</string>
     <string name="group_member_manage_set_succ">设置管理员成功</string>
     <string name="group_member_quiet_ing">禁言中</string>
     <string name="group_member_quiet_ten_min">十分钟</string>

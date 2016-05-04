@@ -30,6 +30,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
     private String userIdentify, groupIdentify, userCard;
     private TIMGroupMemberRoleType currentUserRole;
     private GroupMemberProfile profile;
+    private LineControllerView setManager;
     private String[] quietingOpt;
     private String[] quietOpt;
     private long[] quietTimeOpt = new long[] {600, 3600, 24*3600};
@@ -84,29 +85,10 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                 });
             }
         });
-        final LineControllerView setManager = (LineControllerView) findViewById(R.id.manager);
+        setManager = (LineControllerView) findViewById(R.id.manager);
         setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != profile.getRole() ? View.VISIBLE : View.GONE);
         setManager.setSwitch(profile.getRole() == TIMGroupMemberRoleType.Admin);
-        setManager.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-                TIMGroupManager.getInstance().modifyGroupMemberInfoSetRole(groupIdentify, userIdentify,
-                        isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal,
-                        new TIMCallBack() {
-                            @Override
-                            public void onError(int i, String s) {
-                                Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_err), Toast.LENGTH_SHORT).show();
-                                setManager.setSwitch(!isChecked);
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_succ), Toast.LENGTH_SHORT).show();
-                                profile.setRoleType(isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal);
-                            }
-                        });
-            }
-        });
+        setManager.setCheckListener(checkListener);
         final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
         setQuiet.setVisibility(canManage() ? View.VISIBLE : View.GONE);
         if (canManage()){
@@ -194,6 +176,38 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         mIntent.putExtra("isKick", isKick);
         setResult(RESULT_OK, mIntent);
     }
+
+    private final CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+            TIMGroupManager.getInstance().modifyGroupMemberInfoSetRole(groupIdentify, userIdentify,
+                    isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal,
+                    new TIMCallBack() {
+                        @Override
+                        public void onError(int i, String s) {
+                            switch (i){
+                                case 10004:
+                                    Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_type_err), Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_err), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            //防止循环调用
+                            setManager.setCheckListener(null);
+                            setManager.setSwitch(!isChecked);
+                            setManager.setCheckListener(checkListener);
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_succ), Toast.LENGTH_SHORT).show();
+                            profile.setRoleType(isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal);
+                        }
+                    });
+        }
+    };
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
