@@ -16,7 +16,7 @@ cp -rf gradle* settings.gradle ${PACKAGE_PATH}/samples/sample/
 cp -rf doc/build.gradle ${PACKAGE_PATH}/samples/sample/
 
 mkdir -p ${PACKAGE_PATH}/libs/
-cp -rf sdk/libs/bugly_1.2.8_imsdk_release.jar ${PACKAGE_PATH}/libs/
+cp -rf sdk/libs/bugly_1.3.0_imsdk_release.jar ${PACKAGE_PATH}/libs/
 cp -rf sdk/libs/imsdk.jar ${PACKAGE_PATH}/libs/
 cp -rf sdk/libs/mobilepb.jar ${PACKAGE_PATH}/libs/
 cp -rf sdk/libs/qalsdk.jar ${PACKAGE_PATH}/libs/
