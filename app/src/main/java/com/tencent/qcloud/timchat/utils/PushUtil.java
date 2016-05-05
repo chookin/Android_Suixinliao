@@ -40,9 +40,11 @@ public class PushUtil implements Observer {
 
 
     private void PushNotify(TIMMessage msg){
+        //系统消息，自己发的消息，程序在前台的时候不通知
         if (msg==null||Foreground.get().isForeground()||
                 (msg.getConversation().getType()!=TIMConversationType.Group&&
-                        msg.getConversation().getType()!= TIMConversationType.C2C)) return;
+                        msg.getConversation().getType()!= TIMConversationType.C2C)||
+                msg.isSelf()) return;
         String senderStr,contentStr;
         Message message = MessageFactory.getMessage(msg);
         if (message == null) return;
