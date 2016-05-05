@@ -44,13 +44,13 @@ public class PhonePwdRegisterActivity extends Activity {
                 (Button) findViewById(MResource.getIdByName(getApplication(), "id", "btn_verify"))
         );
 
-        smsContentObserver = new SmsContentObserver(new Handler(),
+/*        smsContentObserver = new SmsContentObserver(new Handler(),
                 this,
                 (EditText) findViewById(MResource.getIdByName(getApplication(), "id", "txt_checkcode")),
                 Constants.PHONEPWD_REGISTER_SENDER);
 
         //注册短信变化监听
-        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContentObserver);
+        this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContentObserver);*/
     }
 
     protected void onDestroy() {
