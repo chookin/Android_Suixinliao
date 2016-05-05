@@ -52,12 +52,12 @@ public class HostLoginActivity extends Activity {
 
         if ((login_way & Constants.SMS_LOGIN) != 0) { // 短信登录
             initSmsService();
-            smsContentObserver = new SmsContentObserver(new Handler(),
+/*            smsContentObserver = new SmsContentObserver(new Handler(),
                     this,
                     (EditText) findViewById(MResource.getIdByName(getApplication(), "id", "checkCode_hostLogin")),
                     Constants.SMS_LOGIN_SENDER);
             //注册短信变化监听
-            this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContentObserver);
+            this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContentObserver);*/
         }
 
         if ((login_way & Constants.QQ_LOGIN) != 0) { // QQ登录
