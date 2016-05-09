@@ -158,7 +158,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
     private void init(){
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        InitBusiness.start(getApplicationContext(),pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal()));
+        int loglvl = pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal());
+        InitBusiness.start(getApplicationContext(),loglvl);
         TlsBusiness.init(getApplicationContext());
         String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
