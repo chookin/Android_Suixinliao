@@ -27,7 +27,7 @@ public class MyApplication extends Application {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override
                 public void handleNotification(TIMOfflinePushNotification notification) {
-                    notification.doNotify(getApplicationContext(), R.drawable.ic_launcher);
+                    notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
                 }
             });
         }
