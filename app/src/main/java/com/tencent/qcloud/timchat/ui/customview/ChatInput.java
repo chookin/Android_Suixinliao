@@ -334,7 +334,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
             case R.id.btn_video:
                 if (getContext() instanceof FragmentActivity){
                     FragmentActivity fragmentActivity = (FragmentActivity) getContext();
-                    if (requestCamera(fragmentActivity)){
+                    if (requestVideo(fragmentActivity)){
                         VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
                     }
                 }
@@ -377,6 +377,26 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         MORE,
         VIDEO,
         NONE,
+    }
+
+    private boolean requestVideo(Activity activity){
+        if (afterM()){
+            final List<String> permissionsList = new ArrayList<>();
+            if ((activity.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.CAMERA);
+            if ((activity.checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.RECORD_AUDIO);
+            if (permissionsList.size() != 0){
+                activity.requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return false;
+            }
+            int hasPermission = activity.checkSelfPermission(Manifest.permission.CAMERA);
+            if (hasPermission != PackageManager.PERMISSION_GRANTED) {
+                activity.requestPermissions(new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean requestCamera(Activity activity){
