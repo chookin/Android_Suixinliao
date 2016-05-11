@@ -45,25 +45,30 @@ public class GroupTipMessage extends Message {
     @Override
     public String getSummary() {
         final TIMGroupTipsElem e = (TIMGroupTipsElem) message.getElement(0);
+        StringBuilder stringBuilder = new StringBuilder();
+        Iterator<Map.Entry<String,TIMGroupMemberInfo>> iterator = e.getChangedGroupMemberInfo().entrySet().iterator();
         switch (e.getTipsType()){
             case CancelAdmin:
             case SetAdmin:
                 return MyApplication.getContext().getString(R.string.summary_group_admin_change);
             case Join:
-                StringBuilder names = new StringBuilder();
-                Iterator<Map.Entry<String,TIMGroupMemberInfo>> iterator = e.getChangedGroupMemberInfo().entrySet().iterator();
                 while(iterator.hasNext()){
                     Map.Entry<String,TIMGroupMemberInfo> item = iterator.next();
-                    names.append(getName(item.getValue()));
-                    names.append(" ");
+                    stringBuilder.append(getName(item.getValue()));
+                    stringBuilder.append(" ");
                 }
-                return names +
+                return stringBuilder +
                         MyApplication.getContext().getString(R.string.summary_group_mem_add);
             case Kick:
                 return e.getUserList().get(0) +
                         MyApplication.getContext().getString(R.string.summary_group_mem_kick);
             case ModifyMemberInfo:
-                return e.getChangedUserInfo() +
+                while(iterator.hasNext()){
+                    Map.Entry<String,TIMGroupMemberInfo> item = iterator.next();
+                    stringBuilder.append(getName(item.getValue()));
+                    stringBuilder.append(" ");
+                }
+                return stringBuilder +
                         MyApplication.getContext().getString(R.string.summary_group_mem_modify);
             case Quit:
                 return e.getOpUser() +
