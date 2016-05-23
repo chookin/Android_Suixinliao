@@ -95,6 +95,7 @@
 
     <!-- chat activity -->
     <string name="chat_image">图片</string>
+    <string name="chat_file">文件</string>
     <string name="chat_photo">拍摄</string>
     <string name="chat_video">小视频</string>
     <string name="chat_press_talk">按住 说话</string>
@@ -153,6 +154,7 @@
     <string name="summary_image">[图片]</string>
     <string name="summary_voice">[语音]</string>
     <string name="summary_video">[小视频]</string>
+    <string name="summary_file">[文件]</string>
     <string name="summary_friend_add">请求添加好友</string>
     <string name="summary_friend_added">我已添加</string>
     <string name="summary_friend_add_me">请求添加</string>

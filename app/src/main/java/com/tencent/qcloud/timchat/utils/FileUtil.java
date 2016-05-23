@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -147,6 +148,33 @@ public class FileUtil {
                 return cursor.getString(column_index);
             }
             return null;
+        }
+    }
+
+
+    /**
+     * 从URI获取文件地址
+     *
+     * @param context 上下文
+     * @param uri 文件uri
+     */
+    public static String getFilePath(Context context, Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+        Cursor cursor = null;
+        try{
+            ContentResolver resolver = context.getContentResolver();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            cursor = resolver.query(uri, projection, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            return cursor.getString(columnIndex);
+        }finally {
+            if (cursor!=null){
+                cursor.close();
+            }
         }
     }
 

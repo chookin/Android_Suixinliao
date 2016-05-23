@@ -55,6 +55,12 @@ public interface ChatView extends MvpView {
      */
     void sendText();
 
+    /**
+     * 发送文件
+     *
+     */
+    void sendFile();
+
 
     /**
      * 开始发送语音消息

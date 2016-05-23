@@ -3,6 +3,7 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +26,7 @@ import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.model.FileMessage;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
@@ -56,6 +58,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private ChatInput input;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
+    private static final int FILE_CODE = 300;
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
@@ -278,6 +281,21 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         input.setText("");
     }
 
+    /**
+     * 发送文件
+     */
+    @Override
+    public void sendFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        if (Build.VERSION.SDK_INT < 19) {
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        } else {
+            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        }
+        startActivityForResult(intent, FILE_CODE);
+    }
+
 
     /**
      * 开始发送语音消息
@@ -365,6 +383,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 sendImage(FileUtil.getImageFilePath(this, data.getData()));
             }
 
+        } else if (requestCode == FILE_CODE) {
+            if (resultCode == RESULT_OK) {
+                sendFile(FileUtil.getFilePath(this, data.getData()));
+            }
         }
 
     }
@@ -377,6 +399,22 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
             }else{
                 Message message = new ImageMessage(path);
+                presenter.sendMessage(message.getMessage());
+            }
+        }else{
+            Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void sendFile(String path){
+        if (path == null) return;
+        File file = new File(path);
+        if (file.exists()){
+            if (file.length() > 1024 * 1024 * 10){
+                Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
+            }else{
+                Message message = new FileMessage(path);
                 presenter.sendMessage(message.getMessage());
             }
         }else{

@@ -81,6 +81,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
         BtnPhoto.setOnClickListener(this);
         LinearLayout btnVideo = (LinearLayout) findViewById(R.id.btn_video);
         btnVideo.setOnClickListener(this);
+        LinearLayout btnFile = (LinearLayout) findViewById(R.id.btn_file);
+        btnFile.setOnClickListener(this);
         setSendBtn();
         btnKeyboard = (ImageButton) findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
@@ -341,6 +343,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 break;
             case R.id.btnEmoticon:
                 updateView(inputMode == InputMode.EMOTICON?InputMode.TEXT:InputMode.EMOTICON);
+                break;
+            case R.id.btn_file:
+                chatView.sendFile();
                 break;
         }
     }
