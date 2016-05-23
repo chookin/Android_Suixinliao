@@ -456,4 +456,25 @@ public class FriendshipManagerPresenter {
         TIMFriendshipManager.getInstance().createFriendGroup(Collections.singletonList(groupName), new ArrayList<String>(), callBack);
     }
 
+    /**
+     * 加入黑名单
+     *
+     * @param identfiy 加黑名单列表
+     * @param callBack 回调
+     */
+    public static void addBlackList(List<String> identfiy, TIMValueCallBack<List<TIMFriendResult>> callBack){
+        TIMFriendshipManager.getInstance().addBlackList(identfiy, callBack);
+    }
+
+
+    /**
+     * 移除黑名单
+     *
+     * @param identfiy 移除黑名单列表
+     * @param callBack 回调
+     */
+    public static void delBlackList(List<String> identfiy, TIMValueCallBack<List<TIMFriendResult>> callBack){
+        TIMFriendshipManager.getInstance().delBlackList(identfiy, callBack);
+    }
+
 }

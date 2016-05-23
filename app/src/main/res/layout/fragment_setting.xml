@@ -69,6 +69,12 @@
         app:content="@string/setting_friend_need_confirm"
         app:canNav="true"/>
     <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/blackList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:name="@string/setting_black_list"
+        app:canNav="true"/>
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

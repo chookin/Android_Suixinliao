@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
 import com.tencent.openqq.protocol.imsdk.im_open_common;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
@@ -23,6 +26,9 @@ import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+
+import java.util.Collections;
+import java.util.List;
 
 public class ProfileActivity extends FragmentActivity implements FriendshipManageView,  View.OnClickListener {
 
@@ -57,7 +63,7 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
      *
      * @param identify
      */
-    public void showProfile(String identify) {
+    public void showProfile(final String identify) {
         final FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
         Log.d(TAG, "show profile isFriend " + (profile!=null));
         if (profile == null) return;
@@ -82,6 +88,28 @@ public class ProfileActivity extends FragmentActivity implements FriendshipManag
         LineControllerView category = (LineControllerView) findViewById(R.id.group);
         //一个用户可以在多个分组内，客户端逻辑保证一个人只存在于一个分组
         category.setContent(categoryStr = profile.getGroupName());
+        LineControllerView black = (LineControllerView) findViewById(R.id.blackList);
+        black.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    FriendshipManagerPresenter.addBlackList(Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+                        @Override
+                        public void onError(int i, String s) {
+                            Log.e(TAG, "add black list error " + s);
+                        }
+
+                        @Override
+                        public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                            if (timFriendResults.get(0).getStatus() == TIMFriendStatus.TIM_FRIEND_STATUS_SUCC){
+                                Toast.makeText(ProfileActivity.this, getString(R.string.profile_black_succ), Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
     }
 

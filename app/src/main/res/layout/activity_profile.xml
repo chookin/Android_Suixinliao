@@ -51,6 +51,12 @@
         app:canNav="true"
         app:name="@string/profile_remark"/>
     <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+        android:id="@+id/blackList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isSwitch="true"
+        app:name="@string/profile_black"/>
+    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
         android:id="@+id/group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

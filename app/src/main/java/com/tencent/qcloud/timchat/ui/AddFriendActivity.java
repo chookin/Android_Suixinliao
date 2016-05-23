@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
+import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
@@ -17,7 +19,9 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -93,6 +97,25 @@ public class AddFriendActivity extends FragmentActivity implements View.OnClickL
             case TIM_ADD_FRIEND_STATUS_IN_OTHER_SIDE_BLACK_LIST:
                 Toast.makeText(this, getResources().getString(R.string.add_friend_to_blacklist), Toast.LENGTH_SHORT).show();
                 finish();
+                break;
+            case TIM_ADD_FRIEND_STATUS_IN_SELF_BLACK_LIST:
+                NotifyDialog dialog = new NotifyDialog();
+                dialog.show(getString(R.string.add_friend_del_black_list), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FriendshipManagerPresenter.delBlackList(Collections.singletonList(id), new TIMValueCallBack<List<TIMFriendResult>>() {
+                            @Override
+                            public void onError(int i, String s) {
+                                Toast.makeText(AddFriendActivity.this, getResources().getString(R.string.add_friend_del_black_err), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                                Toast.makeText(AddFriendActivity.this, getResources().getString(R.string.add_friend_del_black_succ), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
                 break;
             default:
                 Toast.makeText(this, getResources().getString(R.string.add_friend_error), Toast.LENGTH_SHORT).show();
