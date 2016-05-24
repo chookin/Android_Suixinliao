@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageStatus;
 import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
@@ -211,7 +212,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         int newMsgNum = 0;
         for (int i = 0; i < messages.size(); ++i){
             Message mMessage = MessageFactory.getMessage(messages.get(i));
-            if (mMessage == null) continue;
+            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) continue;
             ++newMsgNum;
             if (i != messages.size() - 1){
                 mMessage.setHasTime(messages.get(i+1));
@@ -350,8 +351,12 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                                    ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         Message message = messageList.get(info.position);
+        menu.add(0, 1, Menu.NONE, getString(R.string.chat_del));
         if (message.isSendFail()){
-            menu.add(0, 1, Menu.NONE, getString(R.string.chat_resend));
+            menu.add(0, 2, Menu.NONE, getString(R.string.chat_resend));
+        }
+        if (message instanceof ImageMessage || message instanceof FileMessage){
+            menu.add(0, 3, Menu.NONE, getString(R.string.chat_save));
         }
     }
 
@@ -362,8 +367,16 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         Message message = messageList.get(info.position);
         switch (item.getItemId()) {
             case 1:
+                message.remove();
+                messageList.remove(info.position);
+                adapter.notifyDataSetChanged();
+                break;
+            case 2:
                 messageList.remove(message);
                 presenter.sendMessage(message.getMessage());
+                break;
+            case 3:
+                message.save();
                 break;
             default:
                 break;

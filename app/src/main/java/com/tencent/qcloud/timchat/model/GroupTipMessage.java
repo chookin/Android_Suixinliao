@@ -79,6 +79,14 @@ public class GroupTipMessage extends Message {
         return "";
     }
 
+    /**
+     * 保存消息或消息文件
+     */
+    @Override
+    public void save() {
+
+    }
+
     private String getName(TIMGroupMemberInfo info){
         if (info.getNameCard().equals("")){
             return info.getUser();

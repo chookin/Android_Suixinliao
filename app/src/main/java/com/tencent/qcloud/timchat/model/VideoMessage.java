@@ -117,6 +117,14 @@ public class VideoMessage extends Message {
         return MyApplication.getContext().getString(R.string.summary_video);
     }
 
+    /**
+     * 保存消息或消息文件
+     */
+    @Override
+    public void save() {
+
+    }
+
 
     /**
      * 显示缩略图
