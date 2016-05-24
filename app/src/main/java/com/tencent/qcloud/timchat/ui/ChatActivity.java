@@ -424,9 +424,20 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
     private void showImagePreview(String path){
         if (path == null) return;
-        Intent intent = new Intent(this, ImagePreviewActivity.class);
-        intent.putExtra("path", path);
-        startActivityForResult(intent, IMAGE_PREVIEW);
+//        Intent intent = new Intent(this, ImagePreviewActivity.class);
+//        intent.putExtra("path", path);
+//        startActivityForResult(intent, IMAGE_PREVIEW);
+        File file = new File(path);
+        if (file.exists()){
+            if (file.length() > 1024 * 1024 * 10){
+                Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
+            }else{
+                Message message = new ImageMessage(path);
+                presenter.sendMessage(message.getMessage());
+            }
+        }else{
+            Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendFile(String path){
