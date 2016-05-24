@@ -48,7 +48,8 @@ public class ImageMessage extends Message {
         message = new TIMMessage();
         TIMImageElem elem = new TIMImageElem();
         elem.setPath(path);
-//        elem.setLevel(isOri?0:1);
+        elem.setLevel(isOri?0:1);
+        message.addElement(elem);
     }
 
 
