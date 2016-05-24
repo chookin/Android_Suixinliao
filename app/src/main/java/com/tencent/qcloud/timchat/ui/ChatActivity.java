@@ -60,6 +60,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private static final int FILE_CODE = 300;
+    private static final int IMAGE_PREVIEW = 400;
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
@@ -389,35 +390,43 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                sendImage(fileUri.getPath());
+                showImagePreview(fileUri.getPath());
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK) {
-                sendImage(FileUtil.getImageFilePath(this, data.getData()));
+                showImagePreview(FileUtil.getImageFilePath(this, data.getData()));
             }
 
         } else if (requestCode == FILE_CODE) {
             if (resultCode == RESULT_OK) {
                 sendFile(FileUtil.getFilePath(this, data.getData()));
             }
+        } else if (requestCode == IMAGE_PREVIEW){
+            if (resultCode == RESULT_OK) {
+                boolean isOri = data.getBooleanExtra("isOri",false);
+                String path = data.getStringExtra("path");
+                File file = new File(path);
+                if (file.exists()){
+                    if (file.length() > 1024 * 1024 * 10){
+                        Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Message message = new ImageMessage(path,isOri);
+                        presenter.sendMessage(message.getMessage());
+                    }
+                }else{
+                    Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
+                }
+            }
         }
 
     }
 
-    private void sendImage(String path){
-        if (path == null) return;
-        File file = new File(path);
-        if (file.exists()){
-            if (file.length() > 1024 * 1024 * 10){
-                Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
-            }else{
-                Message message = new ImageMessage(path);
-                presenter.sendMessage(message.getMessage());
-            }
-        }else{
-            Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
-        }
 
+    private void showImagePreview(String path){
+        if (path == null) return;
+        Intent intent = new Intent(this, ImagePreviewActivity.class);
+        intent.putExtra("path", path);
+        startActivityForResult(intent, IMAGE_PREVIEW);
     }
 
     private void sendFile(String path){

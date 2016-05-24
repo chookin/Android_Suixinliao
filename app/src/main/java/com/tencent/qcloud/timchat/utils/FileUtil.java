@@ -147,7 +147,7 @@ public class FileUtil {
                 cursor.moveToFirst();
                 return cursor.getString(column_index);
             }
-            return null;
+            return uri.getPath();
         }
     }
 
