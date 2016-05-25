@@ -76,7 +76,7 @@
     <string name="add_friend_refuse_all">对方拒绝添加任何人为好友</string>
     <string name="add_friend_to_blacklist">我在对方的黑名单中</string>
     <string name="add_friend_error">添加好友失败，请稍后重试</string>
-    <string name="add_friend_del_black_list">添加失败，该用户在你的黑名单中，将该用户从黑名单中移除（你可以在移除成功后重发添加好友请求）</string>
+    <string name="add_friend_del_black_list">添加失败，该用户在你的黑名单中，是否将该用户从黑名单中移除（你需要在移除成功后重发添加好友请求）</string>
     <string name="add_friend_del_black_err">移出黑名单失败</string>
     <string name="add_friend_del_black_succ">移出黑名单成功</string>
 
