@@ -145,7 +145,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                 finish();
             } else if (resultCode == RESULT_CANCELED){
                 finish();
-                return;
             }
         }
     }
