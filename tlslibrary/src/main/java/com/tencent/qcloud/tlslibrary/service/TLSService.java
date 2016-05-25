@@ -39,7 +39,7 @@ public class TLSService {
     private PhonePwdLoginService phonePwdLoginService;
     private PhonePwdRegisterService phonePwdRegisterService;
     private ResetPhonePwdService resetPhonePwdService;
-    private static int lastErrno = 0;
+    private static int lastErrno = -1;
 
     private static TLSService tlsService = null;
 
