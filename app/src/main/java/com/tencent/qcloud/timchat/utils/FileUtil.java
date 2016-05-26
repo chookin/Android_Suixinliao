@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.tencent.qcloud.timchat.MyApplication;
 
@@ -124,7 +125,7 @@ public class FileUtil {
             return null;
         }
         String path = null;
-        final boolean isKitKat = Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT;
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat){
             if (isMediaDocument(uri)){
                 try{
@@ -150,7 +151,7 @@ public class FileUtil {
                 cursor.moveToFirst();
                 return cursor.getString(column_index);
             }
-            path = uri.getPath();
+            path = null;
         }
         return path;
     }
