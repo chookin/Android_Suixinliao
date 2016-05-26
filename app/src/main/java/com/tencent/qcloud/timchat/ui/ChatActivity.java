@@ -394,7 +394,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private void sendImage(String path){
         if (path == null) return;
         File file = new File(path);
-        if (file.exists()){
+        if (file.exists() && file.length() > 0){
             if (file.length() > 1024 * 1024 * 10){
                 Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
             }else{
