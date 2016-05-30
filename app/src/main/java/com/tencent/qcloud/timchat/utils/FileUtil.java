@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.tencent.qcloud.timchat.MyApplication;
 
@@ -123,22 +124,25 @@ public class FileUtil {
         if (uri == null) {
             return null;
         }
-        final boolean isKitKat = Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT;
+        String path = null;
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat){
-            if (!isMediaDocument(uri)) return null;
-            try{
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
-                        split[1]
-                };
-                return getDataColumn(context, contentUri, selection, selectionArgs);
-            }catch (IllegalArgumentException e){
-                return null;
+            if (isMediaDocument(uri)){
+                try{
+                    final String docId = DocumentsContract.getDocumentId(uri);
+                    final String[] split = docId.split(":");
+                    Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    final String selection = "_id=?";
+                    final String[] selectionArgs = new String[] {
+                            split[1]
+                    };
+                    path = getDataColumn(context, contentUri, selection, selectionArgs);
+                }catch (IllegalArgumentException e){
+                    path = null;
+                }
             }
-        }else{
+        }
+        if (path == null){
             String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = ((Activity) context).managedQuery(uri, projection, null, null, null);
             if (cursor != null) {
@@ -147,8 +151,10 @@ public class FileUtil {
                 cursor.moveToFirst();
                 return cursor.getString(column_index);
             }
-            return uri.getPath();
+
+            path = null;
         }
+        return path;
     }
 
 

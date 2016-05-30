@@ -406,7 +406,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 boolean isOri = data.getBooleanExtra("isOri",false);
                 String path = data.getStringExtra("path");
                 File file = new File(path);
-                if (file.exists()){
+                if (file.exists() && file.length() > 0){
                     if (file.length() > 1024 * 1024 * 10){
                         Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
                     }else{
@@ -427,7 +427,6 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         Intent intent = new Intent(this, ImagePreviewActivity.class);
         intent.putExtra("path", path);
         startActivityForResult(intent, IMAGE_PREVIEW);
-
     }
 
     private void sendFile(String path){

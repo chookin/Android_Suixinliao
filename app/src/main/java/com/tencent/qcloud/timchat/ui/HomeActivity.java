@@ -55,6 +55,12 @@ public class HomeActivity extends FragmentActivity {
                 Intent intent = new Intent(HomeActivity.this, DialogActivity.class);
                 startActivity(intent);
             }
+
+            @Override
+            public void onUserSigExpired() {
+                //票据过期，需要重新登录
+                logout();
+            }
         });
     }
 
