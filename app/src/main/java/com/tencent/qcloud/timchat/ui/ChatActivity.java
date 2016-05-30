@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageStatus;
 import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
@@ -59,6 +60,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private static final int FILE_CODE = 300;
+    private static final int IMAGE_PREVIEW = 400;
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
@@ -211,7 +213,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         int newMsgNum = 0;
         for (int i = 0; i < messages.size(); ++i){
             Message mMessage = MessageFactory.getMessage(messages.get(i));
-            if (mMessage == null) continue;
+            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) continue;
             ++newMsgNum;
             if (i != messages.size() - 1){
                 mMessage.setHasTime(messages.get(i+1));
@@ -350,8 +352,12 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                                    ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         Message message = messageList.get(info.position);
+        menu.add(0, 1, Menu.NONE, getString(R.string.chat_del));
         if (message.isSendFail()){
-            menu.add(0, 1, Menu.NONE, getString(R.string.chat_resend));
+            menu.add(0, 2, Menu.NONE, getString(R.string.chat_resend));
+        }
+        if (message instanceof ImageMessage || message instanceof FileMessage){
+            menu.add(0, 3, Menu.NONE, getString(R.string.chat_save));
         }
     }
 
@@ -362,8 +368,16 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         Message message = messageList.get(info.position);
         switch (item.getItemId()) {
             case 1:
+                message.remove();
+                messageList.remove(info.position);
+                adapter.notifyDataSetChanged();
+                break;
+            case 2:
                 messageList.remove(message);
                 presenter.sendMessage(message.getMessage());
+                break;
+            case 3:
+                message.save();
                 break;
             default:
                 break;
@@ -376,35 +390,43 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                sendImage(fileUri.getPath());
+                showImagePreview(fileUri.getPath());
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK) {
-                sendImage(FileUtil.getImageFilePath(this, data.getData()));
+                showImagePreview(FileUtil.getImageFilePath(this, data.getData()));
             }
 
         } else if (requestCode == FILE_CODE) {
             if (resultCode == RESULT_OK) {
                 sendFile(FileUtil.getFilePath(this, data.getData()));
             }
+        } else if (requestCode == IMAGE_PREVIEW){
+            if (resultCode == RESULT_OK) {
+                boolean isOri = data.getBooleanExtra("isOri",false);
+                String path = data.getStringExtra("path");
+                File file = new File(path);
+                if (file.exists() && file.length() > 0){
+                    if (file.length() > 1024 * 1024 * 10){
+                        Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Message message = new ImageMessage(path,isOri);
+                        presenter.sendMessage(message.getMessage());
+                    }
+                }else{
+                    Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
+                }
+            }
         }
 
     }
 
-    private void sendImage(String path){
-        if (path == null) return;
-        File file = new File(path);
-        if (file.exists() && file.length() > 0){
-            if (file.length() > 1024 * 1024 * 10){
-                Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
-            }else{
-                Message message = new ImageMessage(path);
-                presenter.sendMessage(message.getMessage());
-            }
-        }else{
-            Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
-        }
 
+    private void showImagePreview(String path){
+        if (path == null) return;
+        Intent intent = new Intent(this, ImagePreviewActivity.class);
+        intent.putExtra("path", path);
+        startActivityForResult(intent, IMAGE_PREVIEW);
     }
 
     private void sendFile(String path){

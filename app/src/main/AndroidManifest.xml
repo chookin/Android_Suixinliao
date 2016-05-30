@@ -93,6 +93,8 @@
         <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.BlackListActivity" >
         </activity>
+        <activity android:name=".ui.ImagePreviewActivity" >
+        </activity>
     </application>
 
 </manifest>

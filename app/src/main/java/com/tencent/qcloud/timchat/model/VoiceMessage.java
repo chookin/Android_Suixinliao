@@ -122,6 +122,14 @@ public class VoiceMessage extends Message {
         return MyApplication.getContext().getString(R.string.summary_voice);
     }
 
+    /**
+     * 保存消息或消息文件
+     */
+    @Override
+    public void save() {
+
+    }
+
     private void playAudio(final AnimationDrawable frameAnimatio) {
         TIMSoundElem elem = (TIMSoundElem) message.getElement(0);
 

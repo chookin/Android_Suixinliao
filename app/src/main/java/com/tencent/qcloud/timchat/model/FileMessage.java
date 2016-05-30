@@ -1,14 +1,17 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
 import com.tencent.TIMFileElem;
 import com.tencent.TIMMessage;
+import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.utils.FileUtil;
 
 /**
  * 文件消息
@@ -54,5 +57,27 @@ public class FileMessage extends Message {
     @Override
     public String getSummary() {
         return MyApplication.getContext().getString(R.string.summary_file);
+    }
+
+    /**
+     * 保存消息或消息文件
+     */
+    @Override
+    public void save() {
+        if (message == null) return;
+        final TIMFileElem e = (TIMFileElem) message.getElement(0);
+        e.getFile(new TIMValueCallBack<byte[]>() {
+            @Override
+            public void onError(int i, String s) {
+                Log.e(TAG, "getFile failed. code: " + i + " errmsg: " + s);
+            }
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+                FileUtil.createFile(bytes, e.getUuid());
+
+            }
+        });
+
     }
 }

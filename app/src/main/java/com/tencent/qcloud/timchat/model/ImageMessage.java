@@ -35,10 +35,21 @@ public class ImageMessage extends Message {
     }
 
     public ImageMessage(String path){
+        this(path,false);
+    }
+
+    /**
+     * 图片消息构造函数
+     *
+     * @param path 图片路径
+     * @param isOri 是否原图发送
+     */
+    public ImageMessage(String path,boolean isOri){
         message = new TIMMessage();
         TIMImageElem elem = new TIMImageElem();
         elem.setPath(path);
-        if (message.addElement(elem) != 0) return;
+        elem.setLevel(isOri?0:1);
+        message.addElement(elem);
     }
 
 
@@ -119,6 +130,14 @@ public class ImageMessage extends Message {
     @Override
     public String getSummary() {
         return MyApplication.getContext().getString(R.string.summary_image);
+    }
+
+    /**
+     * 保存消息或消息文件
+     */
+    @Override
+    public void save() {
+
     }
 
     /**

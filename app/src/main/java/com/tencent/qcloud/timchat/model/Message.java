@@ -104,6 +104,23 @@ public abstract class Message {
      */
     public abstract String getSummary();
 
+    /**
+     * 保存消息或消息文件
+     *
+     */
+    public abstract void save();
+
+
+    /**
+     * 删除消息
+     *
+     */
+    public void remove(){
+        if (message != null){
+            message.remove();
+        }
+    }
+
 
 
     /**

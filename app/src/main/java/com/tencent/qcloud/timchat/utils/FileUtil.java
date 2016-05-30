@@ -151,6 +151,7 @@ public class FileUtil {
                 cursor.moveToFirst();
                 return cursor.getString(column_index);
             }
+
             path = null;
         }
         return path;

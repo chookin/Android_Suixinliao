@@ -157,6 +157,14 @@ public class TextMessage extends Message {
         return result.toString();
     }
 
+    /**
+     * 保存消息或消息文件
+     */
+    @Override
+    public void save() {
+
+    }
+
     private int getNumLength(int n){
         return String.valueOf(n).length();
     }
