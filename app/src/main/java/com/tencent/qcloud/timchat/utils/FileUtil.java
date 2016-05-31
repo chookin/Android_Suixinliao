@@ -172,11 +172,13 @@ public class FileUtil {
         try{
             ContentResolver resolver = context.getContentResolver();
             String[] projection = {MediaStore.Images.Media.DATA};
-
             cursor = resolver.query(uri, projection, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(projection[0]);
-            return cursor.getString(columnIndex);
+            if (cursor != null){
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(projection[0]);
+                return cursor.getString(columnIndex);
+            }
+            return null;
         }finally {
             if (cursor!=null){
                 cursor.close();

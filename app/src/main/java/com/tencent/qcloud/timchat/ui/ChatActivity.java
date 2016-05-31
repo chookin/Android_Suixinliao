@@ -390,7 +390,9 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                showImagePreview(fileUri.getPath());
+                if (data != null){
+                    showImagePreview(fileUri.getPath());
+                }
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK) {
