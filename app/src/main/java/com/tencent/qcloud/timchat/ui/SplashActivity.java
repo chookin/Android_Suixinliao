@@ -17,6 +17,7 @@ import com.tencent.TIMLogLevel;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.MessageEvent;
+import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -170,8 +171,12 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     private void init(){
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
         int loglvl = pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal());
+        //初始化IMSDK
         InitBusiness.start(getApplicationContext(),loglvl);
+        //初始化TLS
         TlsBusiness.init(getApplicationContext());
+        //设置刷新监听
+        RefreshEvent.getInstance();
         String id =  TLSService.getInstance().getLastUserIdentifier();
         UserInfo.getInstance().setId(id);
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));

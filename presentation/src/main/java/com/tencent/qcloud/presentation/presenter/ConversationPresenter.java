@@ -11,6 +11,7 @@ import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.presentation.event.MessageEvent;
+import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class ConversationPresenter implements Observer {
     public ConversationPresenter(ConversationView view){
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
+        //注册刷新监听
+        RefreshEvent.getInstance().addObserver(this);
         //注册好友关系链监听
         FriendshipEvent.getInstance().addObserver(this);
         //注册群关系监听
@@ -61,6 +64,8 @@ public class ConversationPresenter implements Observer {
                     break;
 
             }
+        }else if (observable instanceof RefreshEvent){
+            view.refresh();
         }
     }
 

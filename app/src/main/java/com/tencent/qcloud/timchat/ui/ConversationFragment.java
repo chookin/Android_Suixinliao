@@ -204,6 +204,14 @@ public class ConversationFragment extends Fragment implements ConversationView,F
         }
     }
 
+    /**
+     * 刷新
+     */
+    @Override
+    public void refresh() {
+        reFreshView();
+    }
+
 
     /**
      * 获取好友关系链管理系统最后一条消息的回调

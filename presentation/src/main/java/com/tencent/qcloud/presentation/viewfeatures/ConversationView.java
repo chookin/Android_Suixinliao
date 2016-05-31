@@ -39,4 +39,10 @@ public interface ConversationView extends MvpView {
      * 更新群信息
      */
     void updateGroupInfo(TIMGroupCacheInfo info);
+
+
+    /**
+     * 刷新
+     */
+    void refresh();
 }
