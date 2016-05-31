@@ -289,7 +289,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     @Override
     public void sendFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("file/*");
+        intent.setType("*/*");
         startActivityForResult(intent, FILE_CODE);
     }
 
