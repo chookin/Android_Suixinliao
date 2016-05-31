@@ -7,6 +7,7 @@ import com.tencent.TIMGroupBasicSelfInfo;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupMemberRoleType;
+import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.GroupProfileActivity;
 
@@ -80,6 +81,14 @@ public class GroupProfile implements ProfileSummary {
      */
     public TIMGroupMemberRoleType getRole(){
         return selfInfo.getRole();
+    }
+
+
+    /**
+     * 获取消息接收状态
+     */
+    public TIMGroupReceiveMessageOpt getMessagOpt(){
+        return selfInfo.getRecvMsgOption();
     }
 
     /**

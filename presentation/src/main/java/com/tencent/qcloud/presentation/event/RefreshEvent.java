@@ -48,5 +48,6 @@ public class RefreshEvent extends Observable implements TIMRefreshListener {
     public void onRefreshConversation(List<TIMConversation> list) {
         setChanged();
         notifyObservers();
+
     }
 }

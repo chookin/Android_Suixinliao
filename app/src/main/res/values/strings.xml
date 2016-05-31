@@ -151,6 +151,9 @@
     <string name="chat_setting_change_err">修改失败</string>
     <string name="chat_setting_change_group_name">修改群名称</string>
     <string name="chat_setting_change_group_intro">修改群介绍</string>
+    <string name="chat_setting_no_rev">不接收消息</string>
+    <string name="chat_setting_rev_notify">接收并提醒消息</string>
+    <string name="chat_setting_rev_not_notify">接收不提醒消息</string>
 
 
     <!-- Add newfri activity -->

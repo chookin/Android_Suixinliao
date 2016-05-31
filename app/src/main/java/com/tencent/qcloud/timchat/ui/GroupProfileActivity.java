@@ -18,12 +18,14 @@ import com.tencent.TIMGroupAddOpt;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberRoleType;
+import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.model.GroupInfo;
+import com.tencent.qcloud.timchat.model.GroupProfile;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
@@ -44,6 +46,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
     private final int REQ_CHANGE_NAME = 100, REQ_CHANGE_INTRO = 200;
     private TIMGroupMemberRoleType roleType = TIMGroupMemberRoleType.NotMember;
     private Map<String, TIMGroupAddOpt> allowTypeContent;
+    private Map<String, TIMGroupReceiveMessageOpt> messageOptContent;
     private LineControllerView name,intro;
 
 
@@ -97,6 +100,27 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
             case TIM_GROUP_ADD_FORBID:
                 opt.setContent(getString(R.string.chat_setting_group_all_reject));
                 break;
+        }
+        LineControllerView msgNotify = (LineControllerView) findViewById(R.id.messageNotify);
+        if (GroupInfo.getInstance().isInGroup(identify)){
+            switch (GroupInfo.getInstance().getMessageOpt(identify)){
+                case NotReceive:
+                    msgNotify.setContent(getString(R.string.chat_setting_no_rev));
+                    break;
+                case ReceiveAndNotify:
+                    msgNotify.setContent(getString(R.string.chat_setting_rev_notify));
+                    break;
+                case ReceiveNotNotify:
+                    msgNotify.setContent(getString(R.string.chat_setting_rev_not_notify));
+                    break;
+            }
+            msgNotify.setOnClickListener(this);
+            messageOptContent = new HashMap<>();
+            messageOptContent.put(getString(R.string.chat_setting_no_rev), TIMGroupReceiveMessageOpt.NotReceive);
+            messageOptContent.put(getString(R.string.chat_setting_rev_not_notify), TIMGroupReceiveMessageOpt.ReceiveNotNotify);
+            messageOptContent.put(getString(R.string.chat_setting_rev_notify), TIMGroupReceiveMessageOpt.ReceiveAndNotify);
+        }else{
+            msgNotify.setVisibility(View.GONE);
         }
         if (isManager()){
             opt.setCanNav(true);
@@ -213,6 +237,27 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
                     }
                 });
+                break;
+            case R.id.messageNotify:
+                final String[] messageOptList = messageOptContent.keySet().toArray(new String[messageOptContent.size()]);
+                new ListPickerDialog().show(messageOptList,getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, final int which) {
+                        TIMGroupManager.getInstance().modifyReceiveMessageOpt(identify, messageOptContent.get(messageOptList[which]), new TIMCallBack() {
+                            @Override
+                            public void onError(int i, String s) {
+                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_change_err),Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                LineControllerView msgNotify = (LineControllerView) findViewById(R.id.messageNotify);
+                                msgNotify.setContent(messageOptList[which]);
+                            }
+                        });
+                    }
+                });
+                break;
         }
     }
 

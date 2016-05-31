@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.tencent.TIMConversationType;
+import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMMessage;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -44,7 +45,8 @@ public class PushUtil implements Observer {
         if (msg==null||Foreground.get().isForeground()||
                 (msg.getConversation().getType()!=TIMConversationType.Group&&
                         msg.getConversation().getType()!= TIMConversationType.C2C)||
-                msg.isSelf()) return;
+                msg.isSelf()||
+                msg.getRecvFlag() == TIMGroupReceiveMessageOpt.ReceiveNotNotify) return;
         String senderStr,contentStr;
         Message message = MessageFactory.getMessage(msg);
         if (message == null) return;

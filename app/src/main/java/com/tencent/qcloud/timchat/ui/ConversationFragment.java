@@ -99,7 +99,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     @Override
     public void onResume(){
         super.onResume();
-        reFreshView();
+        refresh();
         PushUtil.getInstance().reset();
     }
 
@@ -155,7 +155,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
         conversation.setLastMessage(MessageFactory.getMessage(message));
         conversationList.add(conversation);
         Collections.sort(conversationList);
-        reFreshView();
+        refresh();
     }
 
     /**
@@ -209,7 +209,9 @@ public class ConversationFragment extends Fragment implements ConversationView,F
      */
     @Override
     public void refresh() {
-        reFreshView();
+        adapter.notifyDataSetChanged();
+        if (getActivity() instanceof  HomeActivity)
+            ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
     }
 
 
@@ -229,7 +231,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
         }
         friendshipConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
-        reFreshView();
+        refresh();
     }
 
     /**
@@ -258,7 +260,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
         }
         groupManageConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
-        reFreshView();
+        refresh();
     }
 
     /**
@@ -310,11 +312,6 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     }
 
 
-    private void reFreshView(){
-        adapter.notifyDataSetChanged();
-        if (getActivity() instanceof  HomeActivity)
-            ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
-    }
 
 
 }

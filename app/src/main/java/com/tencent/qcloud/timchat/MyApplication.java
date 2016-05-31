@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
@@ -27,7 +28,10 @@ public class MyApplication extends Application {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override
                 public void handleNotification(TIMOfflinePushNotification notification) {
-                    notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
+                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify){
+                        //消息被设置为需要提醒
+                        notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
+                    }
                 }
             });
         }

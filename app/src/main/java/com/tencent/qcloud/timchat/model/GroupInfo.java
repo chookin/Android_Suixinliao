@@ -8,6 +8,7 @@ import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberRoleType;
+import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.imcore.GroupManager;
 import com.tencent.qcloud.presentation.event.GroupEvent;
@@ -145,6 +146,23 @@ public class GroupInfo implements Observer {
             }
         }
         return TIMGroupMemberRoleType.NotMember;
+    }
+
+
+    /**
+     * 获取该群的群消息接收状态
+     *
+     * @param id 群identify
+     */
+    public TIMGroupReceiveMessageOpt getMessageOpt(String id){
+        for (String key : groups.keySet()){
+            for (GroupProfile item : groups.get(key)){
+                if (item.getIdentify().equals(id)){
+                    return item.getMessagOpt();
+                }
+            }
+        }
+        return TIMGroupReceiveMessageOpt.NotReceive;
     }
 
     /**
