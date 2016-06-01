@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.tencent.TIMImage;
 import com.tencent.TIMImageElem;
@@ -35,7 +37,7 @@ public class ImageMessage extends Message {
     }
 
     public ImageMessage(String path){
-        this(path,false);
+        this(path, false);
     }
 
     /**
@@ -137,7 +139,27 @@ public class ImageMessage extends Message {
      */
     @Override
     public void save() {
+        final TIMImageElem e = (TIMImageElem) message.getElement(0);
+        for(TIMImage image : e.getImageList()) {
+            if (image.getType() == TIMImageType.Original) {
+                final String uuid = image.getUuid();
+                image.getImage(new TIMValueCallBack<byte[]>() {
+                    @Override
+                    public void onError(int i, String s) {
+                        Log.e(TAG, "getFile failed. code: " + i + " errmsg: " + s);
+                    }
 
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        if (FileUtil.createFile(bytes, uuid+".jpg", Environment.DIRECTORY_DOWNLOADS)) {
+                            Toast.makeText(MyApplication.getContext(), MyApplication.getContext().getString(R.string.save_succ), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MyApplication.getContext(), MyApplication.getContext().getString(R.string.save_fail), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }
     }
 
     /**

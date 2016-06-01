@@ -1,9 +1,11 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMFileElem;
 import com.tencent.TIMMessage;
@@ -74,8 +76,11 @@ public class FileMessage extends Message {
 
             @Override
             public void onSuccess(byte[] bytes) {
-                FileUtil.createFile(bytes, e.getUuid());
-
+                if (FileUtil.createFile(bytes, e.getFileName(), Environment.DIRECTORY_DOWNLOADS)){
+                    Toast.makeText(MyApplication.getContext(), MyApplication.getContext().getString(R.string.save_succ),Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MyApplication.getContext(), MyApplication.getContext().getString(R.string.save_fail),Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

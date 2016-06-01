@@ -22,6 +22,8 @@
     <string name="kick_logout">你的账号已在其他终端登录,重新登录</string>
     <string name="operate_fail">操作失败</string>
     <string name="need_permission">您需要开启权限,并重启应用</string>
+    <string name="save_succ">保存成功</string>
+    <string name="save_fail">保存失败</string>
 
     <!-- home activity -->
     <string name="send_success">发送成功</string>

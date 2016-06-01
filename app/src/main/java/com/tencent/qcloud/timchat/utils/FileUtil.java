@@ -76,6 +76,7 @@ public class FileUtil {
      */
     public static String createFile(Bitmap bitmap,String filename){
         File f = new File(cacheDir, filename);
+        String path = f.getPath();
         try{
             if (f.createNewFile()){
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -110,8 +111,38 @@ public class FileUtil {
                 fos.close();
             }
         }catch (IOException e){
-            Log.e(TAG,"create bitmap file error" + e);
+            Log.e(TAG,"create file error" + e);
         }
+    }
+
+
+    /**
+     * 将数据存储为文件
+     *
+     * @param data 数据
+     * @param fileName 文件名
+     * @param type 文件类型
+     */
+    public static boolean createFile(byte[] data, String fileName, String type){
+        if (isExternalStorageWritable()){
+            File dir = MyApplication.getContext().getExternalFilesDir(type);
+            if (dir != null){
+                File f = new File(dir, fileName);
+                try{
+                    if (f.createNewFile()){
+                        FileOutputStream fos = new FileOutputStream(f);
+                        fos.write(data);
+                        fos.flush();
+                        fos.close();
+                        return true;
+                    }
+                }catch (IOException e){
+                    Log.e(TAG,"create file error" + e);
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
 
