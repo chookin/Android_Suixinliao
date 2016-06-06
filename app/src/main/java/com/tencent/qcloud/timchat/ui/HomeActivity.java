@@ -59,7 +59,12 @@ public class HomeActivity extends FragmentActivity {
             @Override
             public void onUserSigExpired() {
                 //票据过期，需要重新登录
-                logout();
+                new NotifyDialog().show(getString(R.string.tls_expire), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        logout();
+                    }
+                });
             }
         });
     }
