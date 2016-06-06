@@ -42,7 +42,10 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
 
     @Override
     public void OnProxyStatusChange(TIMFriendshipProxyStatus timFriendshipProxyStatus) {
-
+        if (timFriendshipProxyStatus == TIMFriendshipProxyStatus.TIM_FRIENDSHIP_STATUS_SYNCED){
+            setChanged();
+            notifyObservers(new NotifyCmd(NotifyType.REFRESH, null));
+        }
     }
 
     @Override
