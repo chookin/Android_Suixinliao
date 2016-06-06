@@ -31,6 +31,7 @@ import java.io.IOException;
 public class ImageMessage extends Message {
 
     private static final String TAG = "ImageMessage";
+    private boolean isDownloading;
 
     public ImageMessage(TIMMessage message){
         this.message = message;
@@ -74,7 +75,7 @@ public class ImageMessage extends Message {
                 getBubbleView(viewHolder).addView(imageView);
                 break;
             case SendSucc:
-                for(TIMImage image : e.getImageList()) {
+                for(final TIMImage image : e.getImageList()) {
                     if (image.getType() == TIMImageType.Thumb){
                         final String uuid = image.getUuid();
                         if (FileUtil.isCacheFileExist(uuid)){
@@ -98,25 +99,13 @@ public class ImageMessage extends Message {
                     }
                     if (image.getType() == TIMImageType.Original){
                         final String uuid = image.getUuid();
-                        if (FileUtil.isCacheFileExist(uuid)){
-                            setImageEvent(viewHolder,uuid,context);
-                        }else{
-                            image.getImage(new TIMValueCallBack<byte[]>() {
-                                @Override
-                                public void onError(int code, String desc) {//获取图片失败
-                                    //错误码code和错误描述desc，可用于定位请求失败原因
-                                    //错误码code含义请参见错误码表
-                                    Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
-                                }
-
-                                @Override
-                                public void onSuccess(byte[] data) {//成功，参数为图片数据
-                                    FileUtil.createFile(data, uuid);
-                                    setImageEvent(viewHolder, uuid,context);
-                                }
-                            });
-                        }
-
+//                        setImageEvent(viewHolder, uuid,context);
+                        getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                navToImageview(image, context);
+                            }
+                        });
                     }
                 }
                 break;
@@ -221,9 +210,43 @@ public class ImageMessage extends Message {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ImageViewActivity.class);
-                intent.putExtra("filename",fileName);
+                intent.putExtra("filename", fileName);
                 context.startActivity(intent);
             }
         });
+    }
+
+    private void navToImageview(final TIMImage image, final Context context){
+        if (FileUtil.isCacheFileExist(image.getUuid())){
+            Intent intent = new Intent(context, ImageViewActivity.class);
+            intent.putExtra("filename", image.getUuid());
+            context.startActivity(intent);
+        }else{
+            if (!isDownloading){
+                isDownloading = true;
+                image.getImage(new TIMValueCallBack<byte[]>() {
+                    @Override
+                    public void onError(int code, String desc) {//获取图片失败
+                        //错误码code和错误描述desc，可用于定位请求失败原因
+                        //错误码code含义请参见错误码表
+                        Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                        Toast.makeText(context, MyApplication.getContext().getString(R.string.download_fail), Toast.LENGTH_SHORT).show();
+                        isDownloading = false;
+                    }
+
+                    @Override
+                    public void onSuccess(byte[] data) {//成功，参数为图片数据
+                        Log.i(TAG, "getImage succ. size " + data.length);
+                        isDownloading = false;
+                        FileUtil.createFile(data, image.getUuid());
+                        Intent intent = new Intent(context, ImageViewActivity.class);
+                        intent.putExtra("filename", image.getUuid());
+                        context.startActivity(intent);
+                    }
+                });
+            }else{
+                Toast.makeText(context, MyApplication.getContext().getString(R.string.downloading), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

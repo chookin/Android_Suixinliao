@@ -23,6 +23,8 @@
     <string name="operate_fail">操作失败</string>
     <string name="need_permission">您需要开启权限,并重启应用</string>
     <string name="save_succ">保存成功</string>
+    <string name="download_fail">下载失败</string>
+    <string name="downloading">正在下载，请稍候</string>
     <string name="save_fail">保存失败</string>
     <string name="tls_expire">账号登录已过期，请重新登录</string>
 
