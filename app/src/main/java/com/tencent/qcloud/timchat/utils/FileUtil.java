@@ -76,7 +76,6 @@ public class FileUtil {
      */
     public static String createFile(Bitmap bitmap,String filename){
         File f = new File(cacheDir, filename);
-        String path = f.getPath();
         try{
             if (f.createNewFile()){
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
