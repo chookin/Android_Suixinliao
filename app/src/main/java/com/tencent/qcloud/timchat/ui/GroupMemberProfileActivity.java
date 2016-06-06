@@ -22,6 +22,7 @@ import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
         setQuiet.setVisibility(canManage()&&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
         if (canManage()){
-            if (profile.getQuietTime() != 0){
+            if (isQuiet()){
                 setQuiet.setContent(getString(R.string.group_member_quiet_ing));
             }
             setQuiet.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +117,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                                             }else{
                                                 setQuiet.setContent(getString(R.string.group_member_quiet_ing));
                                             }
-                                            profile.setQuietTime(getQuietTime(which));
+                                            profile.setQuietTime(getQuietTime(which) + Calendar.getInstance().getTimeInMillis()/1000);
                                         }
                                     });
                         }
@@ -157,7 +158,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
     }
 
     private String[] getQuietOption(){
-        if (profile.getQuietTime() == 0){
+        if (!isQuiet()){
             return quietOpt;
         }else{
             return quietingOpt;
@@ -165,7 +166,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
     }
 
     private long getQuietTime(int which){
-        if (profile.getQuietTime() == 0){
+        if (!isQuiet()){
             return quietTimeOpt[which];
         }
         return 0;
@@ -220,5 +221,11 @@ public class GroupMemberProfileActivity extends FragmentActivity {
             }
         }
 
+    }
+
+
+    private boolean isQuiet(){
+        if (profile == null) return false;
+        return profile.getQuietTime() != 0 && profile.getQuietTime() > Calendar.getInstance().getTimeInMillis()/1000;
     }
 }

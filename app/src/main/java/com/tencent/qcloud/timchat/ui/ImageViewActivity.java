@@ -36,11 +36,6 @@ public class ImageViewActivity extends Activity {
         imageView.setImageBitmap(getImage(FileUtil.getCacheFilePath(file)));
     }
 
-    /**
-     * 生成缩略图
-     * 缩略图是将原图等比压缩，压缩后宽、高中较小的一个等于198像素
-     * 详细信息参见文档
-     */
     private Bitmap getImage(String path){
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
