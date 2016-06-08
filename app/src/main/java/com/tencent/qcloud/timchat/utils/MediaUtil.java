@@ -62,6 +62,13 @@ public class MediaUtil {
 
     }
 
+
+    public void stop(){
+        if (player != null && player.isPlaying()){
+            player.stop();
+        }
+    }
+
     public long getDuration(String path){
         player = MediaPlayer.create(MyApplication.getContext(), Uri.parse(path));
         return player.getDuration();

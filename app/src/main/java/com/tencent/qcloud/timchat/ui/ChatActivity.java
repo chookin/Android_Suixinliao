@@ -41,6 +41,7 @@ import com.tencent.qcloud.timchat.ui.customview.ChatInput;
 import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
 import com.tencent.qcloud.timchat.utils.FileUtil;
+import com.tencent.qcloud.timchat.utils.MediaUtil;
 import com.tencent.qcloud.timchat.utils.RecorderUtil;
 
 import java.io.File;
@@ -169,6 +170,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     protected void onPause(){
         super.onPause();
         presenter.readMessages();
+        MediaUtil.getInstance().stop();
     }
 
     @Override
