@@ -67,7 +67,9 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
             case KeyEvent.KEYCODE_ENTER:
                 list.clear();
                 adapter.notifyDataSetChanged();
-                groupManagerPresenter.searchGroupByName(searchInput.getText().toString());
+                String key = searchInput.getText().toString();
+                if (key.equals("")) return true;
+                groupManagerPresenter.searchGroupByName(key);
                 return true;
             default:
                 return false;

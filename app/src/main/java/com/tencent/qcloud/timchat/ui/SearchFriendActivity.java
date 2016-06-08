@@ -73,6 +73,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
                 list.clear();
                 adapter.notifyDataSetChanged();
                 String key = mSearchInput.getText().toString();
+                if (key.equals("")) return true;
                 presenter.searchFriendByName(key,true);
                 //给手机号加上86-
                 if (maybePhone(key)){
