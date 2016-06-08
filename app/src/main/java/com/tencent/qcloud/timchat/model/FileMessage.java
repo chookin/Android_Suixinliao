@@ -76,7 +76,9 @@ public class FileMessage extends Message {
 
             @Override
             public void onSuccess(byte[] bytes) {
-                if (FileUtil.createFile(bytes, e.getFileName(), Environment.DIRECTORY_DOWNLOADS)){
+                String[] str = e.getFileName().split("/");
+                String filename = str[str.length-1];
+                if (FileUtil.createFile(bytes, filename, Environment.DIRECTORY_DOWNLOADS)){
                     Toast.makeText(MyApplication.getContext(), MyApplication.getContext().getString(R.string.save_succ),Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MyApplication.getContext(), MyApplication.getContext().getString(R.string.save_fail),Toast.LENGTH_SHORT).show();
