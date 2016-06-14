@@ -44,7 +44,7 @@ public class RecorderUtil {
             mRecorder.prepare();
             mRecorder.start();
             isRecording = true;
-        } catch (IOException | IllegalStateException e) {
+        } catch (Exception e){
             Log.e(TAG, "prepare() failed");
         }
 
@@ -57,12 +57,17 @@ public class RecorderUtil {
     public void stopRecording() {
         if (mFileName == null) return;
         timeInterval = System.currentTimeMillis() - startTime;
-        if (timeInterval>1000){
-            mRecorder.stop();
+        try{
+            if (timeInterval>1000){
+                mRecorder.stop();
+            }
+            mRecorder.release();
+            mRecorder = null;
+            isRecording =false;
+        }catch (Exception e){
+            Log.e(TAG, "release() failed");
         }
-        mRecorder.release();
-        mRecorder = null;
-        isRecording =false;
+
     }
 
 
