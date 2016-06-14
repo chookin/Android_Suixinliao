@@ -81,7 +81,7 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
                     adapter.notifyDataSetChanged();
                 }else{
                     GroupMemberProfile profile = (GroupMemberProfile) data.getSerializableExtra("data");
-                    if (list.get(memIndex).getIdentify().equals(profile.getIdentify())){
+                    if (memIndex < list.size() && list.get(memIndex).getIdentify().equals(profile.getIdentify())){
                         GroupMemberProfile mMemberProfile = (GroupMemberProfile) list.get(memIndex);
                         mMemberProfile.setRoleType(profile.getRole());
                         mMemberProfile.setQuietTime(profile.getQuietTime());
