@@ -44,7 +44,7 @@ public class RecorderUtil {
             mRecorder.prepare();
             mRecorder.start();
             isRecording = true;
-        } catch (IOException e) {
+        } catch (IOException | IllegalStateException e) {
             Log.e(TAG, "prepare() failed");
         }
 
