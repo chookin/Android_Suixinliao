@@ -4,6 +4,7 @@
 * [源码下载与使用](https://www.qcloud.com/doc/product/269/Android%20Demo%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E4%B8%8E%E4%BD%BF%E7%94%A8)提供了应用下载体验地址，简要介绍了应用的功能和使用方法。<br>
 * [源码导读](https://www.qcloud.com/doc/product/269/Android%20Demo%E6%BA%90%E7%A0%81%E5%AF%BC%E8%AF%BB)介绍了工程的结构和关键模块的设计。<br>
 * [IMSDK文档](https://www.qcloud.com/doc/product/269/1557)详细介绍了随心聊底层使用的腾讯云通讯SDK的接口使用。<br>
+
 ##使用方式
 使用Android Studio打开工程根目录。
 
