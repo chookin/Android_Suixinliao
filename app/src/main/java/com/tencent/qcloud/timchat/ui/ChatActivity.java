@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.text.SpannableString;
@@ -27,6 +28,7 @@ import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ChatAdapter;
+import com.tencent.qcloud.timchat.model.CustomMessage;
 import com.tencent.qcloud.timchat.model.FileMessage;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
@@ -66,6 +68,9 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private VoiceSendingView voiceSendingView;
     private String identify;
     private RecorderUtil recorder = new RecorderUtil();
+    private TIMConversationType type;
+    private String titleStr;
+    private Handler handler = new Handler();
 
 
     public static void navToChat(Context context, String identify, TIMConversationType type){
@@ -82,7 +87,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         setContentView(R.layout.activity_chat);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         identify = getIntent().getStringExtra("identify");
-        final TIMConversationType type = (TIMConversationType) getIntent().getSerializableExtra("type");
+        type = (TIMConversationType) getIntent().getSerializableExtra("type");
         presenter = new ChatPresenter(this, identify, type);
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
@@ -134,7 +139,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                         }
                     });
                     FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-                    title.setTitleText(profile == null ? identify : profile.getName());
+                    title.setTitleText(titleStr = profile == null ? identify : profile.getName());
                 }else{
                     title.setMoreImgAction(new View.OnClickListener() {
                         @Override
@@ -145,7 +150,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                             startActivity(person);
                         }
                     });
-                    title.setTitleText(identify);
+                    title.setTitleText(titleStr = identify);
                 }
                 break;
             case Group:
@@ -192,14 +197,22 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                if (messageList.size()==0){
-                    mMessage.setHasTime(null);
+                if (mMessage instanceof CustomMessage && !message.isSelf()){
+                    TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
+                    title.setTitleText(getString(R.string.chat_typing));
+                    handler.removeCallbacks(resetTitle);
+                    handler.postDelayed(resetTitle,3000);
                 }else{
-                    mMessage.setHasTime(messageList.get(messageList.size()-1).getMessage());
+                    if (messageList.size()==0){
+                        mMessage.setHasTime(null);
+                    }else{
+                        mMessage.setHasTime(messageList.get(messageList.size()-1).getMessage());
+                    }
+                    messageList.add(mMessage);
+                    adapter.notifyDataSetChanged();
+                    listView.setSelection(adapter.getCount()-1);
                 }
-                messageList.add(mMessage);
-                adapter.notifyDataSetChanged();
-                listView.setSelection(adapter.getCount()-1);
+
             }
         }
 
@@ -343,6 +356,17 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
     }
 
+    /**
+     * 正在发送
+     */
+    @Override
+    public void sending() {
+        if (type == TIMConversationType.C2C){
+            Message message = new CustomMessage(CustomMessage.Type.TYPING);
+            presenter.sendOnlineMessage(message.getMessage());
+        }
+    }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -442,7 +466,16 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
     }
 
-
+    /**
+     * 将标题设置为对象名称
+     */
+    private Runnable resetTitle = new Runnable() {
+        @Override
+        public void run() {
+            TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
+            title.setTitleText(titleStr);
+        }
+    };
 
 
 

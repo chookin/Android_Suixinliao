@@ -29,6 +29,8 @@ public class MessageFactory {
                 return new GroupTipMessage(message);
             case File:
                 return new FileMessage(message);
+            case Custom:
+//                return new CustomMessage(message);
             default:
                 return null;
         }

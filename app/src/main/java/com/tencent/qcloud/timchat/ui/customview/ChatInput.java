@@ -224,6 +224,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         isSendVisible = s!=null&&s.length()>0;
         setSendBtn();
+        chatView.sending();
     }
 
     /**

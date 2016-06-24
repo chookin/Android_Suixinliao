@@ -58,7 +58,7 @@ public class ChatPresenter implements Observer {
     }
 
     /**
-     * 中止页面逻辑
+     * 发送消息
      *
      * @param message 发送的消息
      */
@@ -80,6 +80,26 @@ public class ChatPresenter implements Observer {
         });
         //message对象为发送中状态
         MessageEvent.getInstance().onNewMessage(message);
+    }
+
+
+    /**
+     * 发送在线消息
+     *
+     * @param message 发送的消息
+     */
+    public void sendOnlineMessage(final TIMMessage message){
+        conversation.sendOnlineMessage(message, new TIMValueCallBack<TIMMessage>() {
+            @Override
+            public void onError(int i, String s) {
+                view.onSendMessageFail(i, s);
+            }
+
+            @Override
+            public void onSuccess(TIMMessage message) {
+
+            }
+        });
     }
 
 

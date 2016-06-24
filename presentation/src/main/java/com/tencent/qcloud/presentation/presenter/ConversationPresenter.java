@@ -57,6 +57,7 @@ public class ConversationPresenter implements Observer {
             GroupEvent.NotifyCmd cmd = (GroupEvent.NotifyCmd) data;
             switch (cmd.type){
                 case UPDATE:
+                case ADD:
                     view.updateGroupInfo((TIMGroupCacheInfo) cmd.data);
                     break;
                 case DEL:
