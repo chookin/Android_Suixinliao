@@ -90,5 +90,11 @@ public interface ChatView extends MvpView {
      */
     void cancelSendVoice();
 
+    /**
+     * 正在发送
+     *
+     */
+    void sending();
+
 
 }

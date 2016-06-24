@@ -31,8 +31,10 @@ import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ConversationAdapter;
 import com.tencent.qcloud.timchat.model.Conversation;
+import com.tencent.qcloud.timchat.model.CustomMessage;
 import com.tencent.qcloud.timchat.model.FriendshipConversation;
 import com.tencent.qcloud.timchat.model.GroupManageConversation;
+import com.tencent.qcloud.timchat.model.Message;
 import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.NomalConversation;
 import com.tencent.qcloud.timchat.utils.PushUtil;
@@ -142,6 +144,7 @@ public class ConversationFragment extends Fragment implements ConversationView,F
             groupManagerPresenter.getGroupManageLastMessage();
             return;
         }
+        if (MessageFactory.getMessage(message) instanceof CustomMessage) return;
         NomalConversation conversation = new NomalConversation(message.getConversation());
         Iterator<Conversation> iterator =conversationList.iterator();
         while (iterator.hasNext()){

@@ -121,6 +121,7 @@
     <string name="chat_image_preview_send">发送</string>
     <string name="chat_image_preview_load_err">图片加载失败</string>
     <string name="chat_image_preview_ori">原图发送</string>
+    <string name="chat_typing">对方正在输入…</string>
 
     <!-- profile activity -->
     <string name="profile_detail">详细资料</string>
