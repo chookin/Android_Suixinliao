@@ -30,7 +30,7 @@ public class MessageFactory {
             case File:
                 return new FileMessage(message);
             case Custom:
-//                return new CustomMessage(message);
+                return new CustomMessage(message);
             default:
                 return null;
         }

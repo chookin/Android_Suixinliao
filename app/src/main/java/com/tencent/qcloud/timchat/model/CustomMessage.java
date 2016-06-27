@@ -67,29 +67,23 @@ public class CustomMessage extends Message {
     }
 
     private void parse(byte[] data){
-//        try{
-//            JsonReader reader = new JsonReader(new InputStreamReader(new ByteArrayInputStream(data),"UTF-8"));
-//            reader.beginObject();
-//            while(reader.hasNext()){
-//                String keyName = reader.nextName();
-//                if("userAction".equals(keyName)){
-//                    int action = reader.nextInt();
-//                    switch (action){
-//                        case TYPE_TYPING:
-//                            type = Type.TYPING;
-//                            if (reader.hasNext()&&reader.nextName().equals("actionParam")){
-//                                this.data = reader.nextString();
-//                            }
-//                            break;
-//
-//                    }
-//                }
-//            }
-//            reader.endObject();
-//            reader.close();
-//        }catch (IOException e){
-//            Log.e(TAG, "parse json error");
-//        }
+        try{
+            String str = new String(data, "UTF-8");
+            JSONObject jsonObj = new JSONObject(str);
+            int action = jsonObj.getInt("userAction");
+            switch (action){
+                case TYPE_TYPING:
+                    type = Type.TYPING;
+                    this.data = jsonObj.getString("actionParam");
+                    if (this.data.equals("EIMAMSG_InputStatus_End")){
+                        type = Type.INVALID;
+                    }
+                    break;
+            }
+
+        }catch (IOException | JSONException e){
+            Log.e(TAG, "parse json error");
+        }
     }
 
     /**
@@ -121,5 +115,6 @@ public class CustomMessage extends Message {
 
     public enum Type{
         TYPING,
+        INVALID,
     }
 }

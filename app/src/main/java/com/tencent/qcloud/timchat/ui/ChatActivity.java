@@ -197,7 +197,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                if (mMessage instanceof CustomMessage && !message.isSelf()){
+                if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING){
                     TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
                     title.setTitleText(getString(R.string.chat_typing));
                     handler.removeCallbacks(resetTitle);
