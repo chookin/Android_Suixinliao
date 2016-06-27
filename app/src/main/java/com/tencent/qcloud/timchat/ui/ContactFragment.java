@@ -20,7 +20,7 @@ import com.tencent.qcloud.timchat.adapters.ExpandGroupListAdapter;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.util.List;
 import java.util.Map;

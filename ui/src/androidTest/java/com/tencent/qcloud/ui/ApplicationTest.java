@@ -1,4 +1,4 @@
-package cn.jx.ui;
+package com.tencent.qcloud.ui;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

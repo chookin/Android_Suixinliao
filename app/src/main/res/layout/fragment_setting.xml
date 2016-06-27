@@ -7,7 +7,7 @@
     android:background="@color/background"
     tools:context="com.tencent.qcloud.timchat.ui.SettingFragment">
 
-    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+    <com.tencent.qcloud.ui.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleText="@string/home_setting_tab" />

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.tencent.qcloud.timchat.ui.ProfileActivity">
 
-    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+    <com.tencent.qcloud.ui.TemplateTitle
         android:id="@+id/profile_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

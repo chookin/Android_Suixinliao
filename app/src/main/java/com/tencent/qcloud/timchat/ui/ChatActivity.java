@@ -3,13 +3,10 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.text.SpannableString;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,11 +37,11 @@ import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
 import com.tencent.qcloud.timchat.ui.customview.ChatInput;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
 import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
 import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 import com.tencent.qcloud.timchat.utils.RecorderUtil;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.io.File;
 

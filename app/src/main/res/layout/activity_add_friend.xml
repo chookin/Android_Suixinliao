@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.tencent.qcloud.timchat.ui.ChatActivity">
 
-    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+    <com.tencent.qcloud.ui.TemplateTitle
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:canBack="true"

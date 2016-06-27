@@ -6,17 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.io.File;
 import java.io.IOException;

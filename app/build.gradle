@@ -49,7 +49,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':presentation')
-    compile project(':ui')
     compile 'com.android.support:support-v4:23+'
-
+    compile project(':ui')
 }

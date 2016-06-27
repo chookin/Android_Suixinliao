@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+    <com.tencent.qcloud.ui.TemplateTitle
         android:id="@+id/create_group_actionbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

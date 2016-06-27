@@ -1,4 +1,4 @@
-package cn.jx.ui;
+package com.tencent.qcloud.ui;
 
 import org.junit.Test;
 
