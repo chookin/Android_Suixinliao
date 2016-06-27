@@ -19,7 +19,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.tencent.qcloud.timchat.ui.customview.CircleImageView
+        <com.tencent.qcloud.ui.CircleImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"

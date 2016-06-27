@@ -23,7 +23,7 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendProfile;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.ui.LineControllerView;
-import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+import com.tencent.qcloud.ui.ListPickerDialog;
 
 import java.util.Collections;
 import java.util.List;

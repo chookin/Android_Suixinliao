@@ -16,8 +16,8 @@ import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.ui.LineControllerView;
-import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
-import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
+import com.tencent.qcloud.ui.ListPickerDialog;
+import com.tencent.qcloud.ui.NotifyDialog;
 
 import java.util.Collections;
 import java.util.List;

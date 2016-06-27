@@ -21,6 +21,7 @@ import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.utils.FileUtil;
+import com.tencent.qcloud.ui.CameraPreview;
 
 import java.io.File;
 import java.io.IOException;

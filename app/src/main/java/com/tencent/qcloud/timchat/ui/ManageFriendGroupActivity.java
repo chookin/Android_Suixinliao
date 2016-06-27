@@ -23,7 +23,7 @@ import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.GroupListAdapter;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
-import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
+import com.tencent.qcloud.ui.NotifyDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;

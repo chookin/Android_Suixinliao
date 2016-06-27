@@ -16,7 +16,7 @@ import com.tencent.TIMGroupPendencyItem;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.GroupFuture;
 import com.tencent.qcloud.timchat.model.UserInfo;
-import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
+import com.tencent.qcloud.ui.CircleImageView;
 
 import java.util.List;
 

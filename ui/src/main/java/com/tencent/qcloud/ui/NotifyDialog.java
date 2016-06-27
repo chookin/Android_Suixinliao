@@ -1,4 +1,4 @@
-package com.tencent.qcloud.timchat.ui.customview;
+package com.tencent.qcloud.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
-import com.tencent.qcloud.timchat.R;
 
 /**
  * 提示对话框

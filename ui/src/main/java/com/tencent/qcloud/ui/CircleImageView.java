@@ -1,4 +1,4 @@
-package com.tencent.qcloud.timchat.ui.customview;
+package com.tencent.qcloud.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
