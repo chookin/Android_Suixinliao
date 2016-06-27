@@ -1,4 +1,4 @@
-package com.tencent.qcloud.timchat.ui.customview;
+package com.tencent.qcloud.ui;
 
 import android.Manifest;
 import android.app.Activity;
@@ -33,7 +33,6 @@ import android.widget.TextView;
 
 import com.tencent.TIMElem;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
-import com.tencent.qcloud.timchat.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -309,45 +308,44 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
     @Override
     public void onClick(View v) {
         Activity activity = (Activity) getContext();
-        switch (v.getId()) {
-            case R.id.btn_send:
-                chatView.sendText();
-                break;
-            case R.id.btn_add:
-                updateView(inputMode == InputMode.MORE?InputMode.TEXT:InputMode.MORE);
-                break;
-            case R.id.btn_photo:
-                if(activity!=null && requestCamera(activity)){
-                    chatView.sendPhoto();
+        int id = v.getId();
+        if (id == R.id.btn_send){
+            chatView.sendText();
+        }
+        if (id == R.id.btn_add){
+            updateView(inputMode == InputMode.MORE ? InputMode.TEXT : InputMode.MORE);
+        }
+        if (id == R.id.btn_photo){
+            if(activity!=null && requestCamera(activity)){
+                chatView.sendPhoto();
+            }
+        }
+        if (id == R.id.btn_image){
+            if(activity!=null && requestStorage(activity)){
+                chatView.sendImage();
+            }
+        }
+        if (id == R.id.btn_voice){
+            if(activity!=null && requestAudio(activity)){
+                updateView(InputMode.VOICE);
+            }
+        }
+        if (id == R.id.btn_keyboard){
+            updateView(InputMode.TEXT);
+        }
+        if (id == R.id.btn_video){
+            if (getContext() instanceof FragmentActivity){
+                FragmentActivity fragmentActivity = (FragmentActivity) getContext();
+                if (requestVideo(fragmentActivity)){
+                    VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
                 }
-                break;
-            case R.id.btn_image:
-                if(activity!=null && requestStorage(activity)){
-                    chatView.sendImage();
-                }
-                break;
-            case R.id.btn_voice:
-                if(activity!=null && requestAudio(activity)){
-                    updateView(InputMode.VOICE);
-                }
-                break;
-            case R.id.btn_keyboard:
-                updateView(InputMode.TEXT);
-                break;
-            case R.id.btn_video:
-                if (getContext() instanceof FragmentActivity){
-                    FragmentActivity fragmentActivity = (FragmentActivity) getContext();
-                    if (requestVideo(fragmentActivity)){
-                        VideoInputDialog.show(fragmentActivity.getSupportFragmentManager());
-                    }
-                }
-                break;
-            case R.id.btnEmoticon:
-                updateView(inputMode == InputMode.EMOTICON?InputMode.TEXT:InputMode.EMOTICON);
-                break;
-            case R.id.btn_file:
-                chatView.sendFile();
-                break;
+            }
+        }
+        if (id == R.id.btnEmoticon){
+            updateView(inputMode == InputMode.EMOTICON?InputMode.TEXT:InputMode.EMOTICON);
+        }
+        if (id == R.id.btn_file){
+            chatView.sendFile();
         }
     }
 

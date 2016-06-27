@@ -36,7 +36,7 @@ import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
-import com.tencent.qcloud.timchat.ui.customview.ChatInput;
+import com.tencent.qcloud.ui.ChatInput;
 import com.tencent.qcloud.ui.VoiceSendingView;
 import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
