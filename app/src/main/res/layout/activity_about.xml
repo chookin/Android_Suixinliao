@@ -13,23 +13,23 @@
         app:titleText="@string/about_title" />
 
 
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/imsdk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:name="@string/about_imsdk" />
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/qalsdk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:name="@string/about_qalsdk" />
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/tlssdk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:name="@string/about_tlssdk" />
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/logLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

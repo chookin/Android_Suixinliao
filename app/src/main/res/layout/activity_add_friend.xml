@@ -36,7 +36,7 @@
             android:textColor="@color/text_gray1"
             android:textSize="16sp" />
     </LinearLayout>
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:textSize="18sp"
             android:textCursorDrawable="@color/black" />
     </LinearLayout>
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

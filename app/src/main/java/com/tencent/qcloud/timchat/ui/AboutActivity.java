@@ -11,7 +11,7 @@ import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
 import com.tencent.qalsdk.QALSDKManager;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
+import com.tencent.qcloud.ui.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 
 

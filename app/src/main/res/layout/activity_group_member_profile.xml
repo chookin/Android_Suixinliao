@@ -44,19 +44,19 @@
         android:layout_marginBottom="20dp"
         android:background="@color/line" />
 
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:name="@string/group_member_manage"
         app:isSwitch="true" />
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/setQuiet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:name="@string/group_member_quiet"
         app:canNav="true"/>
-    <com.tencent.qcloud.timchat.ui.customview.LineControllerView
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/groupCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

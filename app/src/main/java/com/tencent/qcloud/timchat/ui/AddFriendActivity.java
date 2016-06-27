@@ -1,6 +1,5 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -12,12 +11,11 @@ import android.widget.Toast;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMValueCallBack;
-import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
-import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
+import com.tencent.qcloud.ui.LineControllerView;
 import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
 import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
 
