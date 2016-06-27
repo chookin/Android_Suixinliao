@@ -27,7 +27,7 @@
         android:layout_below="@id/chat_title">
 
     </ListView>
-    <com.tencent.qcloud.timchat.ui.customview.VoiceSendingView
+    <com.tencent.qcloud.ui.VoiceSendingView
         android:id="@+id/voice_sending"
         android:layout_width="130dp"
         android:layout_height="130dp"

@@ -1,4 +1,4 @@
-package com.tencent.qcloud.timchat.ui.customview;
+package com.tencent.qcloud.ui;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.tencent.qcloud.timchat.R;
 
 /**
  * 发送语音提示控件

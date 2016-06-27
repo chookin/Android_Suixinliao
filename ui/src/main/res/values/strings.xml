@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UI</string>
+    <string name="chat_up_finger">手指上滑，取消发送</string>
 </resources>
