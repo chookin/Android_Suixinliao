@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
@@ -133,8 +134,10 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         MessageEvent.getInstance();
         String deviceMan = android.os.Build.MANUFACTURER;
         //注册小米推送
-        if (shouldMiInit()){
+        if (deviceMan.equals("xiaomi") && shouldMiInit()){
             MiPushClient.registerPush(getApplicationContext(), "2882303761517480335", "5411748055335");
+        }else if (deviceMan.equals("huawei")){
+            PushManager.requestToken(getApplicationContext());
         }
         Log.d(TAG, "imsdk env " + TIMManager.getInstance().getEnv());
         Intent intent = new Intent(this, HomeActivity.class);
