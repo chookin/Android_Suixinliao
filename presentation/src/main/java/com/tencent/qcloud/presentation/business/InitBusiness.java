@@ -25,8 +25,10 @@ public class InitBusiness {
     }
 
     public static void start(Context context, int logLevel){
+
         TIMManager.getInstance().setLogLevel(TIMLogLevel.values()[logLevel]);
         initImsdk(context);
+        TIMManager.getInstance().setEnv(1);
     }
 
 

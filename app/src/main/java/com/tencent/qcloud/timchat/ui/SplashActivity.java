@@ -1,6 +1,8 @@
 package com.tencent.qcloud.timchat.ui;
 
 import android.Manifest;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
+import com.tencent.TIMManager;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.MessageEvent;
@@ -29,6 +32,9 @@ import com.tencent.qcloud.timchat.utils.PushUtil;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,11 +126,17 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
      */
     @Override
     public void onSuccess() {
-        Log.i(TAG, "login succeed");
+
         //初始化程序后台后消息推送
         PushUtil.getInstance();
         //初始化消息监听
         MessageEvent.getInstance();
+        String deviceMan = android.os.Build.MANUFACTURER;
+        //注册小米推送
+        if (shouldMiInit()){
+            MiPushClient.registerPush(getApplicationContext(), "2882303761517480335", "5411748055335");
+        }
+        Log.d(TAG, "imsdk env " + TIMManager.getInstance().getEnv());
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
@@ -178,6 +190,22 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
         presenter = new SplashPresenter(this);
         presenter.start();
+    }
+
+    /**
+     * 判断小米推送是否已经初始化
+     */
+    private boolean shouldMiInit() {
+        ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
+        String mainProcessName = getPackageName();
+        int myPid = android.os.Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
