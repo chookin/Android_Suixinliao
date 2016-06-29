@@ -3,11 +3,14 @@ package com.tencent.qcloud.timchat.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushToken;
+import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.ui.HomeActivity;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
@@ -60,6 +63,10 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
 
         Log.e(TAG, "regId: " + mRegId + " | topic: " + mTopic + " | alias: " + mAlias
                 + " | account: " + mAccount + " | starttime: " + mStartTime + " | endtime: " + mEndTime);
+        Intent i = new Intent();
+        i.setClassName("com.tencent.qcloud.timchat", "com.tencent.qcloud.timchat.ui.SplashActivity");
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 
     @Override
