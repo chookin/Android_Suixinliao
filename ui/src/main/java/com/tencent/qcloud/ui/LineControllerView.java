@@ -44,7 +44,7 @@ public class LineControllerView extends LinearLayout {
         TextView tvName = (TextView) findViewById(R.id.name);
         tvName.setText(name);
         TextView tvContent = (TextView) findViewById(R.id.content);
-        tvContent.setText(getShortenStr(content));
+        tvContent.setText(content);
         View bottomLine = findViewById(R.id.bottomLine);
         bottomLine.setVisibility(isBottom ? VISIBLE : GONE);
         ImageView navArrow = (ImageView) findViewById(R.id.rightArrow);
@@ -65,7 +65,7 @@ public class LineControllerView extends LinearLayout {
     public void setContent(String content){
         this.content = content;
         TextView tvContent = (TextView) findViewById(R.id.content);
-        tvContent.setText(getShortenStr(content));
+        tvContent.setText(content);
     }
 
 
@@ -113,11 +113,4 @@ public class LineControllerView extends LinearLayout {
     }
 
 
-    private String getShortenStr(String str){
-        if (str == null) return "";
-        if (str.length()>23){
-            return str.substring(0,23)+"...";
-        }
-        return str;
-    }
 }
