@@ -87,8 +87,8 @@ public class TLSService {
      * @param context: 关联的activity
      * */
     public void initTlsSdk(Context context) {
-        QALSDKManager.getInstance().init(context.getApplicationContext(), (int)TLSConfiguration.SDK_APPID);
-        QALSDKManager.getInstance().setEnv(0);     // 0: sso正式环境 1: sso测试环境, 即beta环境
+//        QALSDKManager.getInstance().init(context.getApplicationContext(), (int)TLSConfiguration.SDK_APPID);
+//        QALSDKManager.getInstance().setEnv(0);     // 0: sso正式环境 1: sso测试环境, 即beta环境
 
 //        TIMManager.getInstance().init(context.getApplicationContext());
 //        TIMManager.getInstance().setEnv(1);

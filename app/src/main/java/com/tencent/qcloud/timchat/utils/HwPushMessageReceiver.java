@@ -20,16 +20,6 @@ public class HwPushMessageReceiver extends PushEventReceiver{
 
     private long mBussId = 1;
 
-    /*
-     * 显示Push消息
-     */
-    public void showPushMessage(String msg) {
-
-        Intent intent = new Intent();
-        intent.setAction("push_msg");
-        intent.putExtra("msg", msg);
-
-    }
 
 
 
@@ -38,8 +28,6 @@ public class HwPushMessageReceiver extends PushEventReceiver{
         String belongId = extras.getString("belongId");
         String content = "获取token和belongId成功，token = " + token + ",belongId = " + belongId;
         Log.e(TAG, content);
-        showPushMessage(content);
-
         TIMOfflinePushToken param = new TIMOfflinePushToken();
         param.setToken(token);
         param.setBussid(mBussId);
@@ -52,13 +40,13 @@ public class HwPushMessageReceiver extends PushEventReceiver{
         try {
             String content = "收到一条Push消息： " + new String(msg, "UTF-8");
             Log.e(TAG, content);
-            showPushMessage(content);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
+    @Override
     public void onEvent(Context context, Event event, Bundle extras) {
         if (Event.NOTIFICATION_OPENED.equals(event) || Event.NOTIFICATION_CLICK_BTN.equals(event)) {
             int notifyId = extras.getInt(BOUND_KEY.pushNotifyId, 0);
@@ -68,7 +56,6 @@ public class HwPushMessageReceiver extends PushEventReceiver{
             }
             String content = "收到通知附加消息： " + extras.getString(BOUND_KEY.pushMsgKey);
             Log.e(TAG, content);
-            showPushMessage(content);
         } else if (Event.PLUGINRSP.equals(event)) {
             final int TYPE_LBS = 1;
             final int TYPE_TAG = 2;
@@ -81,7 +68,6 @@ public class HwPushMessageReceiver extends PushEventReceiver{
                 message = "TAG report result :";
             }
             Log.e(TAG, message + isSuccess);
-            showPushMessage(message + isSuccess);
         }
         super.onEvent(context, event, extras);
     }
