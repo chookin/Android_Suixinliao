@@ -39,7 +39,7 @@ public class MessageNotifySettingActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (settings != null) {
                     settings.setEnabled(isChecked);
-                    TIMManager.getInstance().configOfflinePushSettings(settings);
+                    TIMManager.getInstance().initOfflinePushSettings(settings);
                 }
             }
         });
@@ -49,7 +49,7 @@ public class MessageNotifySettingActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (settings != null){
                     settings.setC2cMsgRemindSound(isChecked ? notifyMusic : null);
-                    TIMManager.getInstance().configOfflinePushSettings(settings);
+                    TIMManager.getInstance().initOfflinePushSettings(settings);
                 }
             }
         });
@@ -59,7 +59,7 @@ public class MessageNotifySettingActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (settings != null){
                     settings.setGroupMsgRemindSound(isChecked?notifyMusic:null);
-                    TIMManager.getInstance().configOfflinePushSettings(settings);
+                    TIMManager.getInstance().initOfflinePushSettings(settings);
                 }
             }
         });
