@@ -9,8 +9,6 @@ import android.util.Log;
 
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushToken;
-import com.tencent.qcloud.timchat.MyApplication;
-import com.tencent.qcloud.timchat.ui.HomeActivity;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;

@@ -255,7 +255,19 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      * @param desc 返回描述
      */
     @Override
-    public void onSendMessageFail(int code, String desc) {
+    public void onSendMessageFail(int code, String desc, TIMMessage message) {
+        long id = message.getMsgUniqueId();
+        for (Message msg : messageList){
+            if (msg.getMessage().getMsgUniqueId() == id){
+                switch (code){
+                    case 80001:
+                        //发送内容包含敏感词
+                        msg.setDesc(getString(R.string.chat_content_bad));
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        }
 
     }
 
