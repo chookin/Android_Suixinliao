@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,21 +21,19 @@ import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.presentation.event.FriendshipEvent;
-import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.model.UserInfo;
-import com.tencent.qcloud.ui.NotifyDialog;
 import com.tencent.qcloud.timchat.utils.PushUtil;
 import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
-import com.xiaomi.channel.commonutils.logger.LoggerInterface;
-import com.xiaomi.mipush.sdk.Logger;
+import com.tencent.qcloud.ui.NotifyDialog;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.ArrayList;
@@ -50,6 +49,9 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        clearNotification();
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         final List<String> permissionsList = new ArrayList<>();
@@ -211,4 +213,13 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         return false;
     }
 
+    /**
+     * 清楚所有通知栏通知
+     */
+    private void clearNotification(){
+        NotificationManager notificationManager = (NotificationManager) this
+                .getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+
+    }
 }
