@@ -31,37 +31,35 @@ public class MessageNotifySettingActivity extends Activity {
             @Override
             public void onSuccess(TIMOfflinePushSettings timOfflinePushSettings) {
                 settings = timOfflinePushSettings;
+                LineControllerView messagePush = (LineControllerView) findViewById(R.id.messagePush);
+                messagePush.setSwitch(settings.isEnabled());
+                messagePush.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        settings.setEnabled(isChecked);
+                        TIMManager.getInstance().configOfflinePushSettings(settings);
+                    }
+                });
+                LineControllerView c2cMusic = (LineControllerView) findViewById(R.id.c2cMusic);
+                c2cMusic.setSwitch(settings.getC2cMsgRemindSound() != null);
+                c2cMusic.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        settings.setC2cMsgRemindSound(isChecked ? notifyMusic : null);
+                        TIMManager.getInstance().configOfflinePushSettings(settings);
+                    }
+                });
+                LineControllerView groupMusic = (LineControllerView) findViewById(R.id.groupMusic);
+                groupMusic.setSwitch(settings.getGroupMsgRemindSound() != null);
+                groupMusic.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        settings.setGroupMsgRemindSound(isChecked ? notifyMusic : null);
+                        TIMManager.getInstance().configOfflinePushSettings(settings);
+                    }
+                });
             }
         });
-        LineControllerView messagePush = (LineControllerView) findViewById(R.id.messagePush);
-        messagePush.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (settings != null) {
-                    settings.setEnabled(isChecked);
-                    TIMManager.getInstance().initOfflinePushSettings(settings);
-                }
-            }
-        });
-        LineControllerView c2cMusic = (LineControllerView) findViewById(R.id.c2cMusic);
-        c2cMusic.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (settings != null){
-                    settings.setC2cMsgRemindSound(isChecked ? notifyMusic : null);
-                    TIMManager.getInstance().initOfflinePushSettings(settings);
-                }
-            }
-        });
-        LineControllerView groupMusic = (LineControllerView) findViewById(R.id.groupMusic);
-        groupMusic.setCheckListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (settings != null){
-                    settings.setGroupMsgRemindSound(isChecked?notifyMusic:null);
-                    TIMManager.getInstance().initOfflinePushSettings(settings);
-                }
-            }
-        });
+
     }
 }
