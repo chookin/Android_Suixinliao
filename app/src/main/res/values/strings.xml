@@ -57,6 +57,7 @@
     <string name="setting_logout_fail">退出登录失败，请稍后重试</string>
     <string name="setting_friend_confirm">好友申请</string>
     <string name="setting_black_list">黑名单</string>
+    <string name="setting_message_notify">消息提醒</string>
     <string name="setting_about">关于</string>
     <string name="setting_friend_need_confirm">需验证</string>
     <string name="setting_nick_name_change">修改昵称</string>
@@ -284,4 +285,11 @@
     <string name="about_qalsdk">QAL版本</string>
     <string name="about_tlssdk">TLS版本</string>
     <string name="about_log">日志等级</string>
+
+    <!-- message notify activity -->
+    <string name="message_notify_title">消息提醒</string>
+    <string name="message_notify_push">离线消息推送</string>
+    <string name="message_notify_c2c_music">自定义C2C消息推送声音</string>
+    <string name="message_notify_group_music">自定义群消息推送声音</string>
+
 </resources>

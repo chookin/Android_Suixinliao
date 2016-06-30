@@ -70,6 +70,12 @@
         app:content="@string/setting_friend_need_confirm"
         app:canNav="true"/>
     <com.tencent.qcloud.ui.LineControllerView
+        android:id="@+id/messageNotify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:name="@string/setting_message_notify"
+        app:canNav="true"/>
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/blackList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
