@@ -135,7 +135,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         //初始化消息监听
         MessageEvent.getInstance();
         String deviceMan = android.os.Build.MANUFACTURER;
-        //注册小米推送
+        //注册小米和华为推送
         if (deviceMan.equals("Xiaomi") && shouldMiInit()){
             MiPushClient.registerPush(getApplicationContext(), "2882303761517480335", "5411748055335");
         }else if (deviceMan.equals("HUAWEI")){
