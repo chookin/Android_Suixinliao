@@ -26,6 +26,7 @@ import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.ui.LineControllerView;
 import com.tencent.qcloud.ui.ListPickerDialog;
 
+import java.security.acl.Group;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -152,6 +153,9 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                         @Override
                         public void onError(int i, String s) {
                             Log.i(TAG, "onError code" + i + " msg " + s);
+                            if (i == 10004 && type.equals(GroupInfo.privateGroup)){
+                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_quit_fail_private),Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
