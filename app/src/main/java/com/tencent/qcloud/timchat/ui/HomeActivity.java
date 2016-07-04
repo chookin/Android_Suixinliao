@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMManager;
 import com.tencent.TIMUserStatusListener;
@@ -62,6 +63,7 @@ public class HomeActivity extends FragmentActivity {
                 });
             }
         });
+        Toast.makeText(this, getString(TIMManager.getInstance().getEnv() == 0 ? R.string.env_normal : R.string.env_test), Toast.LENGTH_SHORT).show();
     }
 
     private void initView() {

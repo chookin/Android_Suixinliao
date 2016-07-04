@@ -30,6 +30,12 @@
         android:layout_height="wrap_content"
         app:name="@string/about_tlssdk" />
     <com.tencent.qcloud.ui.LineControllerView
+        android:id="@+id/env"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:canNav="true"
+        app:name="@string/about_env" />
+    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/logLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
