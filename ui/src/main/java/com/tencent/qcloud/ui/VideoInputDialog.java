@@ -127,9 +127,7 @@ public class VideoInputDialog extends DialogFragment {
     private void recordStop(){
         if (isRecording) {
             isRecording = false;
-            if (!isLongEnough()){
-                Toast.makeText(getContext(), getString(R.string.chat_video_too_short),Toast.LENGTH_SHORT).show();
-            }else{
+            if (isLongEnough()){
                 mMediaRecorder.stop();
             }
             releaseMediaRecorder();
@@ -174,6 +172,8 @@ public class VideoInputDialog extends DialogFragment {
             mCamera.lock();           // lock camera for later use
             if (isLongEnough()){
                 ((ChatView) getActivity()).sendVideo(fileName);
+            }else{
+                Toast.makeText(getContext(), getString(R.string.chat_video_too_short),Toast.LENGTH_SHORT).show();
             }
             dismiss();
         }
