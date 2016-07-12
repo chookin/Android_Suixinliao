@@ -38,6 +38,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
     private String identify,type;
     private GroupInfoPresenter groupInfoPresenter;
+    private TIMGroupDetailInfo info;
     private boolean isInGroup;
     private boolean isGroupOwner;
     private final int REQ_CHANGE_NAME = 100, REQ_CHANGE_INTRO = 200;
@@ -70,7 +71,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
      */
     @Override
     public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
-        TIMGroupDetailInfo info = groupInfos.get(0);
+        info = groupInfos.get(0);
         isGroupOwner = info.getGroupOwner().equals(UserInfo.getInstance().getId());
         roleType = GroupInfo.getInstance().getRole(identify);
         type = info.getGroupType();
@@ -214,7 +215,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                 name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditActivity.navToEdit(GroupProfileActivity.this, getString(R.string.chat_setting_change_group_name), name.getContent(), REQ_CHANGE_NAME, new EditActivity.EditInterface() {
+                        EditActivity.navToEdit(GroupProfileActivity.this, getString(R.string.chat_setting_change_group_name), info.getGroupName(), REQ_CHANGE_NAME, new EditActivity.EditInterface() {
                             @Override
                             public void onEdit(final String text, TIMCallBack callBack) {
                                 TIMGroupManager.getInstance().modifyGroupName(identify, text, callBack);
