@@ -239,6 +239,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     }
 
     /**
+     * 清除所有消息，等待刷新
+     */
+    @Override
+    public void clearAllMessage() {
+        messageList.clear();
+    }
+
+    /**
      * 发送消息成功
      *
      * @param message 返回的消息
