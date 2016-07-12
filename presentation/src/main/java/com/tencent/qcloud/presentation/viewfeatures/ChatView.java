@@ -20,6 +20,11 @@ public interface ChatView extends MvpView {
     void showMessage(List<TIMMessage> messages);
 
     /**
+     * 清除所有消息(离线恢复),并等待刷新
+     */
+    void clearAllMessage();
+
+    /**
      * 发送消息成功
      *
      * @param message 返回的消息
