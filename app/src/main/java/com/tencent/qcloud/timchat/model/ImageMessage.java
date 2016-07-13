@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
 import com.tencent.TIMImage;
 import com.tencent.TIMImageElem;
 import com.tencent.TIMImageType;
@@ -224,21 +225,19 @@ public class ImageMessage extends Message {
         }else{
             if (!isDownloading){
                 isDownloading = true;
-                image.getImage(new TIMValueCallBack<byte[]>() {
+                image.getImage(FileUtil.getCacheFilePath(image.getUuid()), new TIMCallBack() {
                     @Override
-                    public void onError(int code, String desc) {//获取图片失败
+                    public void onError(int i, String s) {
                         //错误码code和错误描述desc，可用于定位请求失败原因
                         //错误码code含义请参见错误码表
-                        Log.e(TAG, "getImage failed. code: " + code + " errmsg: " + desc);
+                        Log.e(TAG, "getImage failed. code: " + i + " errmsg: " + s);
                         Toast.makeText(context, MyApplication.getContext().getString(R.string.download_fail), Toast.LENGTH_SHORT).show();
                         isDownloading = false;
                     }
 
                     @Override
-                    public void onSuccess(byte[] data) {//成功，参数为图片数据
-                        Log.i(TAG, "getImage succ. size " + data.length);
+                    public void onSuccess() {
                         isDownloading = false;
-                        FileUtil.createFile(data, image.getUuid());
                         Intent intent = new Intent(context, ImageViewActivity.class);
                         intent.putExtra("filename", image.getUuid());
                         context.startActivity(intent);
