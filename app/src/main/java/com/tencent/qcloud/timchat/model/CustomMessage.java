@@ -67,6 +67,7 @@ public class CustomMessage extends Message {
     }
 
     private void parse(byte[] data){
+        type = Type.INVALID;
         try{
             String str = new String(data, "UTF-8");
             JSONObject jsonObj = new JSONObject(str);
@@ -83,6 +84,7 @@ public class CustomMessage extends Message {
 
         }catch (IOException | JSONException e){
             Log.e(TAG, "parse json error");
+
         }
     }
 

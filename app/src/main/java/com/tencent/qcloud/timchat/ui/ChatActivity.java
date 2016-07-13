@@ -226,6 +226,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         for (int i = 0; i < messages.size(); ++i){
             Message mMessage = MessageFactory.getMessage(messages.get(i));
             if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) continue;
+            if (mMessage instanceof CustomMessage && (((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING ||
+                    ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID)) continue;
             ++newMsgNum;
             if (i != messages.size() - 1){
                 mMessage.setHasTime(messages.get(i+1));
