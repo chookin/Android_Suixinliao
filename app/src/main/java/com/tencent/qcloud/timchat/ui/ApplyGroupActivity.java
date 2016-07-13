@@ -2,6 +2,7 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,7 +38,10 @@ public class ApplyGroupActivity extends Activity implements TIMCallBack {
 
     @Override
     public void onError(int i, String s) {
-
+        if (i == 10013){
+            //已经是群成员
+            Toast.makeText(this, getString(R.string.group_member_already), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -275,6 +275,7 @@
     <string name="group_member_quiet_cancel">取消禁言</string>
     <string name="group_member_quiet_err">设置禁言失败</string>
     <string name="group_member_change_card">修改群名片</string>
+    <string name="group_member_already">已经是群成员</string>
 
     <!-- friendship handle activity -->
     <string name="friendship_handle_title">申请详情</string>

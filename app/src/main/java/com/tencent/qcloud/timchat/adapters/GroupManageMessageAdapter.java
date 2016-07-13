@@ -2,12 +2,14 @@ package com.tencent.qcloud.timchat.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupPendencyGetType;
@@ -105,6 +107,10 @@ public class GroupManageMessageAdapter extends ArrayAdapter<GroupFuture> {
                         data.accept(null, new TIMCallBack() {
                             @Override
                             public void onError(int i, String s) {
+                                if (i == 10013){
+                                    //已经是群成员
+                                    Toast.makeText(getContext(), getContext().getString(R.string.group_member_already), Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
