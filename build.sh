@@ -10,7 +10,7 @@ PACKAGE_NAME=IM_Android_SDK_${MajorVersion}.${MinorVersion}.${FixVersion}
 PACKAGE_PATH=bin/${PACKAGE_NAME}
 
 mkdir -p ${PACKAGE_PATH}/samples/sample/
-cp -rf app presentation sdk tlslibrary ${PACKAGE_PATH}/samples/sample/
+cp -rf app presentation sdk tlslibrary ui ${PACKAGE_PATH}/samples/sample/
 cp -rf gradle* settings.gradle ${PACKAGE_PATH}/samples/sample/
 
 cp -rf doc/build.gradle ${PACKAGE_PATH}/samples/sample/
