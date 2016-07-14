@@ -3,7 +3,6 @@ package com.tencent.qcloud.timchat.utils;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -18,7 +17,7 @@ import com.tencent.TIMOfflinePushToken;
 public class HwPushMessageReceiver extends PushEventReceiver{
     private final String TAG = "HwPushMessageReceiver";
 
-    private long mBussId = 1;
+    private long mBussId = 73;
 
 
 
