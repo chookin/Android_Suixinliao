@@ -1,6 +1,5 @@
 package com.tencent.qcloud.timchat.ui;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
-import com.tencent.TIMFriendAllowType;
 import com.tencent.TIMGroupAddOpt;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
@@ -23,13 +21,12 @@ import com.tencent.qcloud.presentation.presenter.GroupInfoPresenter;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.model.GroupInfo;
-import com.tencent.qcloud.timchat.model.GroupProfile;
 import com.tencent.qcloud.timchat.model.UserInfo;
-import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
-import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+import com.tencent.qcloud.ui.LineControllerView;
+import com.tencent.qcloud.ui.ListPickerDialog;
 
+import java.security.acl.Group;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +38,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
     private String identify,type;
     private GroupInfoPresenter groupInfoPresenter;
+    private TIMGroupDetailInfo info;
     private boolean isInGroup;
     private boolean isGroupOwner;
     private final int REQ_CHANGE_NAME = 100, REQ_CHANGE_INTRO = 200;
@@ -73,7 +71,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
      */
     @Override
     public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
-        TIMGroupDetailInfo info = groupInfos.get(0);
+        info = groupInfos.get(0);
         isGroupOwner = info.getGroupOwner().equals(UserInfo.getInstance().getId());
         roleType = GroupInfo.getInstance().getRole(identify);
         type = info.getGroupType();
@@ -156,6 +154,9 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                         @Override
                         public void onError(int i, String s) {
                             Log.i(TAG, "onError code" + i + " msg " + s);
+                            if (i == 10004 && type.equals(GroupInfo.privateGroup)){
+                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_quit_fail_private),Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
@@ -214,7 +215,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                 name.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditActivity.navToEdit(GroupProfileActivity.this, getString(R.string.chat_setting_change_group_name), name.getContent(), REQ_CHANGE_NAME, new EditActivity.EditInterface() {
+                        EditActivity.navToEdit(GroupProfileActivity.this, getString(R.string.chat_setting_change_group_name), info.getGroupName(), REQ_CHANGE_NAME, new EditActivity.EditInterface() {
                             @Override
                             public void onEdit(final String text, TIMCallBack callBack) {
                                 TIMGroupManager.getInstance().modifyGroupName(identify, text, callBack);

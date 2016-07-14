@@ -6,17 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +48,7 @@ public class ImagePreviewActivity extends Activity {
         if (path.equals("")) return;
         File file = new File(path);
         if (file.exists()&&file.length()>0){
+            isOri.setText(getString(R.string.chat_image_preview_ori) + "(" + getFileSize(file.length()) + ")");
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, options);
@@ -97,6 +95,18 @@ public class ImagePreviewActivity extends Activity {
         }else{
             finish();
         }
+    }
+
+    private String getFileSize(long size){
+        StringBuilder strSize = new StringBuilder();
+        if (size < 1024){
+            strSize.append(size).append("B");
+        }else if (size < 1024*1024){
+            strSize.append(size/1024).append("K");
+        }else{
+            strSize.append(size/1024/1024).append("M");
+        }
+        return strSize.toString();
     }
 
 

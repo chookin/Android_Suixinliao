@@ -20,6 +20,11 @@ public interface ChatView extends MvpView {
     void showMessage(List<TIMMessage> messages);
 
     /**
+     * 清除所有消息(离线恢复),并等待刷新
+     */
+    void clearAllMessage();
+
+    /**
      * 发送消息成功
      *
      * @param message 返回的消息
@@ -31,8 +36,9 @@ public interface ChatView extends MvpView {
      *
      * @param code 返回码
      * @param desc 返回描述
+     * @param message 发送的消息
      */
-    void onSendMessageFail(int code, String desc);
+    void onSendMessageFail(int code, String desc, TIMMessage message);
 
 
     /**

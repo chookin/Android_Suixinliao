@@ -27,6 +27,9 @@
     <string name="downloading">正在下载，请稍候</string>
     <string name="save_fail">保存失败</string>
     <string name="tls_expire">账号登录已过期，请重新登录</string>
+    <string name="env_normal">当前连接正式环境</string>
+    <string name="env_test">当前连接测试环境</string>
+    <string name="file_not_found">未找到文件，请稍后重试</string>
 
     <!-- home activity -->
     <string name="send_success">发送成功</string>
@@ -57,6 +60,7 @@
     <string name="setting_logout_fail">退出登录失败，请稍后重试</string>
     <string name="setting_friend_confirm">好友申请</string>
     <string name="setting_black_list">黑名单</string>
+    <string name="setting_message_notify">消息提醒</string>
     <string name="setting_about">关于</string>
     <string name="setting_friend_need_confirm">需验证</string>
     <string name="setting_nick_name_change">修改昵称</string>
@@ -122,6 +126,7 @@
     <string name="chat_image_preview_load_err">图片加载失败</string>
     <string name="chat_image_preview_ori">原图发送</string>
     <string name="chat_typing">对方正在输入…</string>
+    <string name="chat_content_bad">内容含有敏感词</string>
 
     <!-- profile activity -->
     <string name="profile_detail">详细资料</string>
@@ -154,6 +159,7 @@
     <string name="chat_setting_add">申请加群</string>
     <string name="chat_setting_dismiss_succ">解散群成功</string>
     <string name="chat_setting_quit_succ">退出群成功</string>
+    <string name="chat_setting_quit_fail_private">讨论组不能解散</string>
     <string name="chat_setting_change_err">修改失败</string>
     <string name="chat_setting_change_group_name">修改群名称</string>
     <string name="chat_setting_change_group_intro">修改群介绍</string>
@@ -270,6 +276,7 @@
     <string name="group_member_quiet_cancel">取消禁言</string>
     <string name="group_member_quiet_err">设置禁言失败</string>
     <string name="group_member_change_card">修改群名片</string>
+    <string name="group_member_already">已经是群成员</string>
 
     <!-- friendship handle activity -->
     <string name="friendship_handle_title">申请详情</string>
@@ -282,5 +289,16 @@
     <string name="about_imsdk">IMSDK版本</string>
     <string name="about_qalsdk">QAL版本</string>
     <string name="about_tlssdk">TLS版本</string>
+    <string name="about_env">网络环境</string>
     <string name="about_log">日志等级</string>
+    <string name="about_env_normal">正式环境</string>
+    <string name="about_env_test">测试环境</string>
+    <string name="about_set_effect">设置成功，杀进程重启后生效</string>
+
+    <!-- message notify activity -->
+    <string name="message_notify_title">消息提醒</string>
+    <string name="message_notify_push">离线消息推送</string>
+    <string name="message_notify_c2c_music">自定义C2C消息推送声音</string>
+    <string name="message_notify_group_music">自定义群消息推送声音</string>
+
 </resources>

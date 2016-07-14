@@ -3,13 +3,10 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.text.SpannableString;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,12 +36,12 @@ import com.tencent.qcloud.timchat.model.MessageFactory;
 import com.tencent.qcloud.timchat.model.TextMessage;
 import com.tencent.qcloud.timchat.model.VideoMessage;
 import com.tencent.qcloud.timchat.model.VoiceMessage;
-import com.tencent.qcloud.timchat.ui.customview.ChatInput;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
-import com.tencent.qcloud.timchat.ui.customview.VoiceSendingView;
+import com.tencent.qcloud.ui.ChatInput;
+import com.tencent.qcloud.ui.VoiceSendingView;
 import com.tencent.qcloud.timchat.utils.FileUtil;
 import com.tencent.qcloud.timchat.utils.MediaUtil;
 import com.tencent.qcloud.timchat.utils.RecorderUtil;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.io.File;
 
@@ -197,7 +194,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                if (mMessage instanceof CustomMessage && !message.isSelf()){
+                if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING){
                     TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
                     title.setTitleText(getString(R.string.chat_typing));
                     handler.removeCallbacks(resetTitle);
@@ -229,6 +226,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         for (int i = 0; i < messages.size(); ++i){
             Message mMessage = MessageFactory.getMessage(messages.get(i));
             if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) continue;
+            if (mMessage instanceof CustomMessage && (((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING ||
+                    ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID)) continue;
             ++newMsgNum;
             if (i != messages.size() - 1){
                 mMessage.setHasTime(messages.get(i+1));
@@ -239,6 +238,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         }
         adapter.notifyDataSetChanged();
         listView.setSelection(newMsgNum);
+    }
+
+    /**
+     * 清除所有消息，等待刷新
+     */
+    @Override
+    public void clearAllMessage() {
+        messageList.clear();
     }
 
     /**
@@ -258,7 +265,19 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      * @param desc 返回描述
      */
     @Override
-    public void onSendMessageFail(int code, String desc) {
+    public void onSendMessageFail(int code, String desc, TIMMessage message) {
+        long id = message.getMsgUniqueId();
+        for (Message msg : messageList){
+            if (msg.getMessage().getMsgUniqueId() == id){
+                switch (code){
+                    case 80001:
+                        //发送内容包含敏感词
+                        msg.setDesc(getString(R.string.chat_content_bad));
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+        }
 
     }
 

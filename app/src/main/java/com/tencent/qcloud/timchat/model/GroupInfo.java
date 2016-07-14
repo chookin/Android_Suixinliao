@@ -12,6 +12,7 @@ import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.imcore.GroupManager;
 import com.tencent.qcloud.presentation.event.GroupEvent;
+import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.timchat.MyApplication;
@@ -42,6 +43,7 @@ public class GroupInfo implements Observer {
         groups.put(chatRoom, new ArrayList<GroupProfile>());
         //注册群关系监听
         GroupEvent.getInstance().addObserver(this);
+        RefreshEvent.getInstance().addObserver(this);
         refresh();
     }
 
@@ -91,6 +93,8 @@ public class GroupInfo implements Observer {
 
                 }
             }
+        }else if (observable instanceof RefreshEvent){
+            refresh();
         }
     }
 

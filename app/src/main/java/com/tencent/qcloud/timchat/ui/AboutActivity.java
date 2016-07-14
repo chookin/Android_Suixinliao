@@ -6,13 +6,14 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
 import com.tencent.qalsdk.QALSDKManager;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
-import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
+import com.tencent.qcloud.ui.LineControllerView;
+import com.tencent.qcloud.ui.ListPickerDialog;
 
 
 import tencent.tls.platform.TLSHelper;
@@ -30,6 +31,22 @@ public class AboutActivity extends FragmentActivity {
         qalsdk.setContent(QALSDKManager.getInstance().getSdkVersion());
         LineControllerView tlssdk = (LineControllerView) findViewById(R.id.tlssdk);
         tlssdk.setContent(TLSHelper.getInstance().getSDKVersion());
+        final LineControllerView env = (LineControllerView) findViewById(R.id.env);
+        env.setContent(getString(TIMManager.getInstance().getEnv() == 0 ? R.string.about_env_normal : R.string.about_env_test));
+        final String[] envs = new String[]{getString(R.string.about_env_normal),getString(R.string.about_env_test)};
+        env.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ListPickerDialog().show(envs, getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, final int which) {
+                        env.setContent(envs[which]);
+                        TIMManager.getInstance().setEnv(which);
+                        Toast.makeText(AboutActivity.this, getString(R.string.about_set_effect), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
         final LineControllerView log = (LineControllerView) findViewById(R.id.logLevel);
         final TIMLogLevel[] logLevels = TIMLogLevel.values();
         final String[] logNames = new String[logLevels.length];
@@ -47,6 +64,7 @@ public class AboutActivity extends FragmentActivity {
                         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                         editor.putInt("loglvl", which);
                         editor.apply();
+                        Toast.makeText(AboutActivity.this, getString(R.string.about_set_effect), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

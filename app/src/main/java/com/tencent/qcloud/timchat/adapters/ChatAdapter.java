@@ -55,6 +55,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             viewHolder.sending = (ProgressBar) view.findViewById(R.id.sending);
             viewHolder.error = (ImageView) view.findViewById(R.id.sendError);
             viewHolder.sender = (TextView) view.findViewById(R.id.sender);
+            viewHolder.rightDesc = (TextView) view.findViewById(R.id.rightDesc);
             viewHolder.systemMessage = (TextView) view.findViewById(R.id.systemMessage);
             view.setTag(viewHolder);
         }
@@ -73,5 +74,6 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         public ImageView error;
         public TextView sender;
         public TextView systemMessage;
+        public TextView rightDesc;
     }
 }

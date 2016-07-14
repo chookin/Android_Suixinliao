@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.tencent.qcloud.timchat.ui.ChatActivity">
-    <com.tencent.qcloud.timchat.ui.customview.TemplateTitle
+    <com.tencent.qcloud.ui.TemplateTitle
         android:id="@+id/chat_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:canBack="true" />
-    <com.tencent.qcloud.timchat.ui.customview.ChatInput
+    <com.tencent.qcloud.ui.ChatInput
         android:id="@+id/input_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:layout_below="@id/chat_title">
 
     </ListView>
-    <com.tencent.qcloud.timchat.ui.customview.VoiceSendingView
+    <com.tencent.qcloud.ui.VoiceSendingView
         android:id="@+id/voice_sending"
         android:layout_width="130dp"
         android:layout_height="130dp"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
@@ -21,6 +22,11 @@ public abstract class Message {
     TIMMessage message;
 
     private boolean hasTime;
+
+    /**
+     * 消息描述信息
+     */
+    private String desc;
 
 
     public TIMMessage getMessage() {
@@ -44,6 +50,7 @@ public abstract class Message {
     public RelativeLayout getBubbleView(ChatAdapter.ViewHolder viewHolder){
         viewHolder.systemMessage.setVisibility(hasTime?View.VISIBLE:View.GONE);
         viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
+        showDesc(viewHolder);
         if (message.isSelf()){
             viewHolder.leftPanel.setVisibility(View.GONE);
             viewHolder.rightPanel.setVisibility(View.VISIBLE);
@@ -172,5 +179,22 @@ public abstract class Message {
         return message.getSender();
     }
 
+    public String getDesc() {
+        return desc;
+    }
 
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+
+    private void showDesc(ChatAdapter.ViewHolder viewHolder){
+
+        if (desc == null || desc.equals("")){
+            viewHolder.rightDesc.setVisibility(View.GONE);
+        }else{
+            viewHolder.rightDesc.setVisibility(View.VISIBLE);
+            viewHolder.rightDesc.setText(desc);
+        }
+    }
 }

@@ -1,10 +1,11 @@
-package com.tencent.qcloud.timchat.ui.customview;
+package com.tencent.qcloud.ui;
 
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -18,9 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
-import com.tencent.qcloud.timchat.MyApplication;
-import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.utils.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +34,6 @@ import java.util.TimerTask;
 public class VideoInputDialog extends DialogFragment {
 
     private static final String TAG = "VideoInputDialog";
-
     private Camera mCamera;
     private CameraPreview mPreview;
     private ProgressBar mProgressRight,mProgressLeft;
@@ -47,7 +44,7 @@ public class VideoInputDialog extends DialogFragment {
     private long time;
     private boolean isRecording = false;
     private String fileName;
-    private Handler mainHandler = new Handler(MyApplication.getContext().getMainLooper());
+    private Handler mainHandler = new Handler(Looper.getMainLooper());
     private Runnable updateProgress = new Runnable() {
         @Override
         public void run() {
@@ -130,9 +127,7 @@ public class VideoInputDialog extends DialogFragment {
     private void recordStop(){
         if (isRecording) {
             isRecording = false;
-            if (!isLongEnough()){
-                Toast.makeText(getContext(), getString(R.string.chat_video_too_short),Toast.LENGTH_SHORT).show();
-            }else{
+            if (isLongEnough()){
                 mMediaRecorder.stop();
             }
             releaseMediaRecorder();
@@ -177,6 +172,8 @@ public class VideoInputDialog extends DialogFragment {
             mCamera.lock();           // lock camera for later use
             if (isLongEnough()){
                 ((ChatView) getActivity()).sendVideo(fileName);
+            }else{
+                Toast.makeText(getContext(), getString(R.string.chat_video_too_short),Toast.LENGTH_SHORT).show();
             }
             dismiss();
         }
@@ -220,7 +217,7 @@ public class VideoInputDialog extends DialogFragment {
     /** Create a File for saving an image or video */
     private File getOutputMediaFile(){
         fileName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".mp4";
-        return  new File(FileUtil.getCacheFilePath(fileName));
+        return  new File(getContext().getExternalCacheDir().getAbsolutePath() + "/" + fileName);
     }
 
     private boolean isLongEnough(){

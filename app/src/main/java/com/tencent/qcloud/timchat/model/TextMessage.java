@@ -125,7 +125,7 @@ public class TextMessage extends Message {
 
         }
         if (!hasText){
-            stringBuilder.append(" ");
+            stringBuilder.insert(0," ");
         }
         tv.setText(stringBuilder);
         getBubbleView(viewHolder).addView(tv);

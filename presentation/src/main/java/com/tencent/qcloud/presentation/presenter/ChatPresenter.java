@@ -9,6 +9,7 @@ import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.MessageEvent;
+import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 
 import java.util.Collections;
@@ -38,6 +39,7 @@ public class ChatPresenter implements Observer {
     public void start() {
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
+        RefreshEvent.getInstance().addObserver(this);
         getMessage(null);
     }
 
@@ -48,6 +50,7 @@ public class ChatPresenter implements Observer {
     public void stop() {
         //注销消息监听
         MessageEvent.getInstance().deleteObserver(this);
+        RefreshEvent.getInstance().deleteObserver(this);
     }
 
     /**
@@ -68,7 +71,7 @@ public class ChatPresenter implements Observer {
             public void onError(int code, String desc) {//发送消息失败
                 //错误码code和错误描述desc，可用于定位请求失败原因
                 //错误码code含义请参见错误码表
-                view.onSendMessageFail(code, desc);
+                view.onSendMessageFail(code, desc, message);
             }
 
             @Override
@@ -92,7 +95,7 @@ public class ChatPresenter implements Observer {
         conversation.sendOnlineMessage(message, new TIMValueCallBack<TIMMessage>() {
             @Override
             public void onError(int i, String s) {
-                view.onSendMessageFail(i, s);
+                view.onSendMessageFail(i, s, message);
             }
 
             @Override
@@ -121,6 +124,9 @@ public class ChatPresenter implements Observer {
                 //当前聊天界面已读上报，用于多终端登录时未读消息数同步
                 readMessages();
             }
+        }else if (observable instanceof RefreshEvent){
+            view.clearAllMessage();
+            getMessage(null);
         }
     }
 

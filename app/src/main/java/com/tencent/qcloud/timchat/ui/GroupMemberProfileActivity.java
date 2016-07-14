@@ -18,9 +18,9 @@ import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.GroupMemberProfile;
 import com.tencent.qcloud.timchat.model.UserInfo;
-import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
-import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
+import com.tencent.qcloud.ui.LineControllerView;
+import com.tencent.qcloud.ui.ListPickerDialog;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.util.Calendar;
 import java.util.Collections;

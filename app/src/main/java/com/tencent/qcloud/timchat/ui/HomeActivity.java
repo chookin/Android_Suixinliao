@@ -3,7 +3,6 @@ package com.tencent.qcloud.timchat.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
@@ -14,18 +13,15 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.TIMCallBack;
 import com.tencent.TIMManager;
 import com.tencent.TIMUserStatusListener;
-import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.MessageEvent;
-import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.FriendshipInfo;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.UserInfo;
 import com.tencent.qcloud.timchat.ui.customview.DialogActivity;
-import com.tencent.qcloud.timchat.ui.customview.NotifyDialog;
+import com.tencent.qcloud.ui.NotifyDialog;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 
 /**
@@ -67,6 +63,7 @@ public class HomeActivity extends FragmentActivity {
                 });
             }
         });
+        Toast.makeText(this, getString(TIMManager.getInstance().getEnv() == 0 ? R.string.env_normal : R.string.env_test), Toast.LENGTH_SHORT).show();
     }
 
     private void initView() {

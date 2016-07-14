@@ -8,14 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tencent.TIMGroupCacheInfo;
-import com.tencent.TIMGroupDetailInfo;
 import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
 import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.GroupProfile;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
-import com.tencent.qcloud.timchat.ui.customview.TemplateTitle;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.util.Iterator;
 import java.util.List;

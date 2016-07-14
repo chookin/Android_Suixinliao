@@ -3,16 +3,11 @@ package com.tencent.qcloud.timchat.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,13 +18,9 @@ import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.FriendInfoView;
 import com.tencent.qcloud.timchat.R;
-import com.tencent.qcloud.timchat.model.UserInfo;
-import com.tencent.qcloud.timchat.ui.customview.LineControllerView;
-import com.tencent.qcloud.timchat.ui.customview.ListPickerDialog;
-import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
+import com.tencent.qcloud.ui.LineControllerView;
+import com.tencent.qcloud.ui.ListPickerDialog;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +109,14 @@ public class SettingFragment extends Fragment implements FriendInfoView{
                             });
                         }
                     });
+                }
+            });
+            LineControllerView messageNotify = (LineControllerView) view.findViewById(R.id.messageNotify);
+            messageNotify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), MessageNotifySettingActivity.class);
+                    startActivity(intent);
                 }
             });
             LineControllerView blackList = (LineControllerView) view.findViewById(R.id.blackList);

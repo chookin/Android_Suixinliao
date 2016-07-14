@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.model.Conversation;
-import com.tencent.qcloud.timchat.ui.customview.CircleImageView;
+import com.tencent.qcloud.ui.CircleImageView;
 import com.tencent.qcloud.timchat.utils.TimeUtil;
 
 import java.util.List;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.utils.FileUtil;
@@ -33,7 +34,10 @@ public class ImageViewActivity extends Activity {
         });
         String file = getIntent().getStringExtra("filename");
         ImageView imageView = (ImageView) findViewById(R.id.image);
-        imageView.setImageBitmap(getImage(FileUtil.getCacheFilePath(file)));
+        Bitmap bitmap = getImage(FileUtil.getCacheFilePath(file));
+        if (bitmap != null){
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     private Bitmap getImage(String path){
@@ -62,6 +66,10 @@ public class ImageViewActivity extends Activity {
             options.inJustDecodeBounds = false;
             Matrix mat = new Matrix();
             Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+            if (bitmap == null) {
+                Toast.makeText(this, getString(R.string.file_not_found), Toast.LENGTH_SHORT).show();
+                return null;
+            }
             ExifInterface ei =  new ExifInterface(path);
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             switch(orientation) {
