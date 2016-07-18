@@ -156,7 +156,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                 UserInfo.getInstance().setId(id);
                 UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
                 navToHome();
-                finish();
             } else if (resultCode == RESULT_CANCELED){
                 finish();
             }
