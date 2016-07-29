@@ -3,6 +3,7 @@ package com.tencent.qcloud.presentation.viewfeatures;
 import com.tencent.TIMConversation;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageDraft;
 
 import java.util.List;
 
@@ -45,4 +46,10 @@ public interface ConversationView extends MvpView {
      * 刷新
      */
     void refresh();
+
+
+    /**
+     * 更新草稿
+     */
+    void updateDraft(TIMConversation conversation);
 }

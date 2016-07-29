@@ -217,6 +217,30 @@ public class ConversationFragment extends Fragment implements ConversationView,F
             ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
     }
 
+    /**
+     * 更新草稿
+     *
+     * @param conversation
+     */
+    @Override
+    public void updateDraft(TIMConversation conversation) {
+//        if (conversation.getType() == TIMConversationType.C2C || conversation.getType() == TIMConversationType.Group){
+//            NomalConversation nomalConversation = new NomalConversation(conversation);
+//            Iterator<Conversation> iterator =conversationList.iterator();
+//            while (iterator.hasNext()){
+//                Conversation c = iterator.next();
+//                if (conversation.equals(c)){
+//                    nomalConversation = (NomalConversation) c;
+//                    iterator.remove();
+//                    break;
+//                }
+//            }
+//            conversationList.add(nomalConversation);
+//            Collections.sort(conversationList);
+//            refresh();
+//        }
+    }
+
 
     /**
      * 获取好友关系链管理系统最后一条消息的回调

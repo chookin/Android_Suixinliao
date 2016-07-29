@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
+import com.tencent.qcloud.timchat.MyApplication;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.ui.ChatActivity;
 
@@ -15,6 +16,7 @@ public class NomalConversation extends Conversation {
 
 
     private TIMConversation conversation;
+
 
 
     //最后一条消息
@@ -66,8 +68,17 @@ public class NomalConversation extends Conversation {
      */
     @Override
     public String getLastMessageSummary(){
-        if (lastMessage == null) return "";
-        return lastMessage.getSummary();
+        if (conversation.hasDraft()){
+            TextMessage textMessage = new TextMessage(conversation.getDraft());
+            if (lastMessage == null || lastMessage.getMessage().timestamp() < conversation.getDraft().getTimestamp()){
+                return MyApplication.getContext().getString(R.string.conversation_draft) + textMessage.getSummary();
+            }else{
+                return lastMessage.getSummary();
+            }
+        }else{
+            if (lastMessage == null) return "";
+            return lastMessage.getSummary();
+        }
     }
 
 
@@ -96,6 +107,13 @@ public class NomalConversation extends Conversation {
      */
     @Override
     public long getLastMessageTime() {
+        if (conversation.hasDraft()){
+            if (lastMessage == null || lastMessage.getMessage().timestamp() < conversation.getDraft().getTimestamp()){
+                return conversation.getDraft().getTimestamp();
+            }else{
+                return lastMessage.getMessage().timestamp();
+            }
+        }
         if (lastMessage == null) return 0;
         return lastMessage.getMessage().timestamp();
     }

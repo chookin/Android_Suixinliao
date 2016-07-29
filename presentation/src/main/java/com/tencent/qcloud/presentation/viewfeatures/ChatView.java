@@ -1,6 +1,7 @@
 package com.tencent.qcloud.presentation.viewfeatures;
 
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageDraft;
 
 import java.util.List;
 
@@ -101,6 +102,12 @@ public interface ChatView extends MvpView {
      *
      */
     void sending();
+
+    /**
+     * 显示草稿
+     *
+     */
+    void showDraft(TIMMessageDraft draft);
 
 
 }
