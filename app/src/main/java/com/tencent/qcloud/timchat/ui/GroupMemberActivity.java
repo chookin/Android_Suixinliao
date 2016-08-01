@@ -9,15 +9,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.TIMGetGroupMemInfoFlag;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
+import com.tencent.TIMGroupMemberResult;
+import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.tencent.qcloud.timchat.R;
 import com.tencent.qcloud.timchat.adapters.ProfileSummaryAdapter;
+import com.tencent.qcloud.timchat.model.GroupInfo;
 import com.tencent.qcloud.timchat.model.GroupMemberProfile;
 import com.tencent.qcloud.timchat.model.ProfileSummary;
+import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +33,17 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
     ProfileSummaryAdapter adapter;
     List<ProfileSummary> list = new ArrayList<>();
     ListView listView;
+    TemplateTitle title;
     String groupId,type;
     private final int MEM_REQ = 100;
+    private final int CHOOSE_MEM_CODE = 200;
     private int memIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member);
+        title = (TemplateTitle) findViewById(R.id.group_mem_title);
         groupId = getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
         listView = (ListView) findViewById(R.id.list);
@@ -53,6 +62,16 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
                 startActivityForResult(intent, MEM_REQ);
             }
         });
+        if (type.equals(GroupInfo.privateGroup)){
+            title.setMoreImg(R.drawable.ic_add);
+            title.setMoreImgAction(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(GroupMemberActivity.this, ChooseFriendActivity.class);
+                    startActivityForResult(intent, CHOOSE_MEM_CODE);
+                }
+            });
+        }
     }
 
     @Override
@@ -89,6 +108,22 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
                         adapter.notifyDataSetChanged();
                     }
                 }
+            }
+        }else if (CHOOSE_MEM_CODE == requestCode){
+            if (resultCode == RESULT_OK){
+                GroupManagerPresenter.inviteGroup(groupId, data.getStringArrayListExtra("select"),
+                        new TIMValueCallBack<List<TIMGroupMemberResult>>() {
+                            @Override
+                            public void onError(int i, String s) {
+                                Toast.makeText(GroupMemberActivity.this, getString(R.string.chat_setting_invite_error), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onSuccess(List<TIMGroupMemberResult> timGroupMemberResults) {
+                                TIMGroupManager.getInstance().getGroupMembers(groupId, GroupMemberActivity.this);
+                            }
+                        });
+
             }
         }
     }

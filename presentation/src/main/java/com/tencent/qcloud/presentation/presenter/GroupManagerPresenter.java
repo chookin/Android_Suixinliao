@@ -6,6 +6,7 @@ import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
+import com.tencent.TIMGroupMemberResult;
 import com.tencent.TIMGroupPendencyGetParam;
 import com.tencent.TIMGroupPendencyListGetSucc;
 import com.tencent.TIMGroupSearchSucc;
@@ -216,6 +217,18 @@ public class GroupManagerPresenter {
      */
     public static void dismissGroup(String groupId, TIMCallBack callBack){
         TIMGroupManager.getInstance().deleteGroup(groupId, callBack);
+    }
+
+
+    /**
+     * 邀请入群
+     *
+     * @param groupId 群组ID
+     * @param members 邀请的好友
+     * @param callBack 回调
+     */
+    public static void inviteGroup(String groupId, List<String> members, TIMValueCallBack<List<TIMGroupMemberResult>> callBack){
+        TIMGroupManager.getInstance().inviteGroupMember(groupId, members, callBack);
     }
 
 

@@ -168,6 +168,7 @@
     <string name="chat_setting_no_rev">不接收消息</string>
     <string name="chat_setting_rev_notify">接收并提醒消息</string>
     <string name="chat_setting_rev_not_notify">接收不提醒消息</string>
+    <string name="chat_setting_invite_error">邀请群成员失败</string>
 
 
     <!-- Add newfri activity -->
