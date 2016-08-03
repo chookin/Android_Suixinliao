@@ -48,8 +48,6 @@ public interface ConversationView extends MvpView {
     void refresh();
 
 
-    /**
-     * 更新草稿
-     */
-    void updateDraft(TIMConversation conversation);
+
+
 }

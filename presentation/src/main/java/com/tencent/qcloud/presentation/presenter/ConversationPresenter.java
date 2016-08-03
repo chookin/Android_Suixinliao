@@ -93,9 +93,7 @@ public class ConversationPresenter implements Observer {
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
-                    if (!conversation.hasDraft() || conversation.getDraft().getTimestamp() < timMessages.get(0).timestamp()){
-                        view.updateMessage(timMessages.get(0));
-                    }
+                    view.updateMessage(timMessages.get(0));
 
                 }
             });

@@ -212,34 +212,12 @@ public class ConversationFragment extends Fragment implements ConversationView,F
      */
     @Override
     public void refresh() {
+        Collections.sort(conversationList);
         adapter.notifyDataSetChanged();
         if (getActivity() instanceof  HomeActivity)
             ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
     }
 
-    /**
-     * 更新草稿
-     *
-     * @param conversation
-     */
-    @Override
-    public void updateDraft(TIMConversation conversation) {
-//        if (conversation.getType() == TIMConversationType.C2C || conversation.getType() == TIMConversationType.Group){
-//            NomalConversation nomalConversation = new NomalConversation(conversation);
-//            Iterator<Conversation> iterator =conversationList.iterator();
-//            while (iterator.hasNext()){
-//                Conversation c = iterator.next();
-//                if (conversation.equals(c)){
-//                    nomalConversation = (NomalConversation) c;
-//                    iterator.remove();
-//                    break;
-//                }
-//            }
-//            conversationList.add(nomalConversation);
-//            Collections.sort(conversationList);
-//            refresh();
-//        }
-    }
 
 
     /**
