@@ -1,6 +1,7 @@
 package com.tencent.qcloud.timchat.model;
 
 import android.content.Context;
+import android.content.Entity;
 import android.content.Intent;
 
 import com.tencent.TIMGroupAssistant;
@@ -57,6 +58,9 @@ public class GroupInfo implements Observer {
     }
 
     private void refresh(){
+        for (String key : groups.keySet()){
+            groups.get(key).clear();
+        }
         List<TIMGroupCacheInfo> groupInfos = TIMGroupAssistant.getInstance().getGroups(null);
         if (groupInfos == null) return;
         for (TIMGroupCacheInfo item : groupInfos){
@@ -176,8 +180,11 @@ public class GroupInfo implements Observer {
      */
     public List<ProfileSummary> getGroupListByType(String type){
         List<ProfileSummary> result = new ArrayList<>();
-        result.addAll(groups.get(type));
-        return result;
+        if (groups != null && groups.get(type) != null){
+            result.addAll(groups.get(type));
+            return result;
+        }
+        return null;
     }
 
 
