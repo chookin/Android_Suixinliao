@@ -23,5 +23,6 @@ public class TlsBusiness {
 
     public static void logout(String id){
         TLSService.getInstance().clearUserInfo(id);
+
     }
 }

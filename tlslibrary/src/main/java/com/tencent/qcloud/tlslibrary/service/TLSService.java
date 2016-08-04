@@ -193,6 +193,7 @@ public class TLSService {
 
     public void clearUserInfo(String identifier) {
         loginHelper.clearUserInfo(identifier);
+        lastErrno = -1;
     }
 
     public boolean needLogin(String identifier) {
