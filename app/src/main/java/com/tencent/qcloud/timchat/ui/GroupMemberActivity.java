@@ -68,6 +68,11 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(GroupMemberActivity.this, ChooseFriendActivity.class);
+                    ArrayList<String> selected = new ArrayList<>();
+                    for (ProfileSummary profile : list){
+                        selected.add(profile.getIdentify());
+                    }
+                    intent.putStringArrayListExtra("selected",selected);
                     startActivityForResult(intent, CHOOSE_MEM_CODE);
                 }
             });
