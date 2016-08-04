@@ -3,6 +3,7 @@ package com.tencent.qcloud.tlslibrary.service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,7 +64,7 @@ public class AccountLoginService {
     class PwdLoginListener implements TLSPwdLoginListener {
         @Override
         public void OnPwdLoginSuccess(TLSUserInfo userInfo) {
-            Util.showToast(context, "登录 OK");
+            Util.showToast(context, "登录成功");
             TLSService.getInstance().setLastErrno(0);
             AccountLoginService.this.jumpToSuccActivity();
         }
@@ -95,6 +96,7 @@ public class AccountLoginService {
     }
 
     void jumpToSuccActivity() {
+        Log.d(TAG, "jumpToSuccActivity");
         String thirdappPackageNameSucc = Constants.thirdappPackageNameSucc;
         String thirdappClassNameSucc = Constants.thirdappClassNameSucc;
 
@@ -105,6 +107,7 @@ public class AccountLoginService {
             intent.setClassName(thirdappPackageNameSucc, thirdappClassNameSucc);
             context.startActivity(intent);
         } else {
+            Log.d(TAG, "finish current activity");
             ((Activity) context).setResult(Activity.RESULT_OK, intent);
             ((Activity) context).finish();
         }
