@@ -200,7 +200,6 @@ public class ConversationFragment extends Fragment implements ConversationView,F
                 if (name.equals("")){
                     name = info.getGroupInfo().getGroupId();
                 }
-                conversation.setName(name);
                 adapter.notifyDataSetChanged();
                 return;
             }

@@ -27,13 +27,6 @@ public class NomalConversation extends Conversation {
         this.conversation = conversation;
         type = conversation.getType();
         identify = conversation.getPeer();
-        if (type == TIMConversationType.Group){
-            name=GroupInfo.getInstance().getGroupName(identify);
-            if (name.equals("")) name = identify;
-        }else{
-            FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-            name=profile == null?identify:profile.getName();
-        }
     }
 
 
@@ -79,6 +72,21 @@ public class NomalConversation extends Conversation {
             if (lastMessage == null) return "";
             return lastMessage.getSummary();
         }
+    }
+
+    /**
+     * 获取名称
+     */
+    @Override
+    public String getName() {
+        if (type == TIMConversationType.Group){
+            name=GroupInfo.getInstance().getGroupName(identify);
+            if (name.equals("")) name = identify;
+        }else{
+            FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+            name=profile == null?identify:profile.getName();
+        }
+        return name;
     }
 
 

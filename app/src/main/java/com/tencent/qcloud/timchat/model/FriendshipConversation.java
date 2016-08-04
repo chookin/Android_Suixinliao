@@ -19,7 +19,6 @@ public class FriendshipConversation extends Conversation {
 
     public FriendshipConversation(TIMFriendFutureItem message){
         lastMessage = message;
-        name = MyApplication.getContext().getString(R.string.conversation_system_friend);
     }
 
 
@@ -87,6 +86,15 @@ public class FriendshipConversation extends Conversation {
             default:
                 return "";
         }
+    }
+
+    /**
+     * 获取名称
+     */
+    @Override
+    public String getName() {
+        return MyApplication.getContext().getString(R.string.conversation_system_friend);
+
     }
 
 
