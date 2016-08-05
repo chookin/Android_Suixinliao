@@ -204,11 +204,18 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING){
-                    TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
-                    title.setTitleText(getString(R.string.chat_typing));
-                    handler.removeCallbacks(resetTitle);
-                    handler.postDelayed(resetTitle,3000);
+                if (mMessage instanceof CustomMessage){
+                    CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
+                    switch (messageType){
+                        case TYPING:
+                            TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
+                            title.setTitleText(getString(R.string.chat_typing));
+                            handler.removeCallbacks(resetTitle);
+                            handler.postDelayed(resetTitle,3000);
+                            break;
+                        default:
+                            break;
+                    }
                 }else{
                     if (messageList.size()==0){
                         mMessage.setHasTime(null);
