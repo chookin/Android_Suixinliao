@@ -60,7 +60,9 @@ public class SettingFragment extends Fragment implements FriendInfoView{
                     LoginBusiness.logout(new TIMCallBack() {
                         @Override
                         public void onError(int i, String s) {
-                            Toast.makeText(getActivity(), getResources().getString(R.string.setting_logout_fail), Toast.LENGTH_SHORT).show();
+                            if (getActivity() != null){
+                                Toast.makeText(getActivity(), getResources().getString(R.string.setting_logout_fail), Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
