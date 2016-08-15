@@ -93,7 +93,9 @@ public class ConversationPresenter implements Observer {
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
-                    view.updateMessage(timMessages.get(0));
+                    if (timMessages.size() > 0){
+                        view.updateMessage(timMessages.get(0));
+                    }
 
                 }
             });
