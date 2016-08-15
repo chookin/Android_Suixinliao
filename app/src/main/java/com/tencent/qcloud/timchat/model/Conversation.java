@@ -64,14 +64,11 @@ public abstract class Conversation implements Comparable {
      */
     abstract public String getLastMessageSummary();
 
+    /**
+     * 获取名称
+     */
+    abstract public String getName();
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getIdentify(){
         return identify;

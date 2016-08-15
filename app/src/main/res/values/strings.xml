@@ -18,6 +18,7 @@
     <string name="change_group_error">修改分组失败</string>
     <string name="people">人</string>
     <string name="login_error">登录失败，请稍后重试</string>
+    <string name="login_error_timeout">登录失败，当前无网络</string>
     <string name="login_succ">登录成功</string>
     <string name="kick_logout">你的账号已在其他终端登录,重新登录</string>
     <string name="operate_fail">操作失败</string>
@@ -43,6 +44,7 @@
     <string name="conversation_system_friend">新朋友</string>
     <string name="conversation_system_group">群组消息</string>
     <string name="conversation_del">删除会话</string>
+    <string name="conversation_draft">[草稿]</string>
 
     <!-- contact fragment -->
     <string name="home_contact_tab">联系人</string>
@@ -166,6 +168,7 @@
     <string name="chat_setting_no_rev">不接收消息</string>
     <string name="chat_setting_rev_notify">接收并提醒消息</string>
     <string name="chat_setting_rev_not_notify">接收不提醒消息</string>
+    <string name="chat_setting_invite_error">邀请群成员失败</string>
 
 
     <!-- Add newfri activity -->

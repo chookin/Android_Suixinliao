@@ -116,6 +116,10 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                     }
                 });
                 break;
+            case 6200:
+                Toast.makeText(this,getString(R.string.login_error_timeout),Toast.LENGTH_SHORT).show();
+                navToLogin();
+                break;
             default:
                 Toast.makeText(this,getString(R.string.login_error),Toast.LENGTH_SHORT).show();
                 navToLogin();
@@ -150,13 +154,14 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult code:" + requestCode);
         if (LOGIN_RESULT_CODE == requestCode) {
+            Log.d(TAG, "login error no " + TLSService.getInstance().getLastErrno());
             if (0 == TLSService.getInstance().getLastErrno()){
                 String id = TLSService.getInstance().getLastUserIdentifier();
                 UserInfo.getInstance().setId(id);
                 UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
                 navToHome();
-                finish();
             } else if (resultCode == RESULT_CANCELED){
                 finish();
             }

@@ -27,8 +27,10 @@ public class TimeUtil {
         inputTime.setTimeInMillis(timeStamp*1000);
         Date currenTimeZone = inputTime.getTime();
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
         if (calendar.before(inputTime)){
-            //当前时间在输入时间之前
+            //今天23:59在输入时间之前，解决一些时间误差，把当天时间显示到这里
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy" + MyApplication.getContext().getResources().getString(R.string.time_year)+"MM"+MyApplication.getContext().getResources().getString(R.string.time_month)+"dd"+MyApplication.getContext().getResources().getString(R.string.time_day));
             return sdf.format(currenTimeZone);
         }

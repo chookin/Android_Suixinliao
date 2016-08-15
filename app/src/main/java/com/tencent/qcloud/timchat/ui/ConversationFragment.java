@@ -196,11 +196,6 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     public void updateGroupInfo(TIMGroupCacheInfo info) {
         for (Conversation conversation : conversationList){
             if (conversation.getIdentify()!=null && conversation.getIdentify().equals(info.getGroupInfo().getGroupId())){
-                String name = info.getGroupInfo().getGroupName();
-                if (name.equals("")){
-                    name = info.getGroupInfo().getGroupId();
-                }
-                conversation.setName(name);
                 adapter.notifyDataSetChanged();
                 return;
             }
@@ -212,10 +207,12 @@ public class ConversationFragment extends Fragment implements ConversationView,F
      */
     @Override
     public void refresh() {
+        Collections.sort(conversationList);
         adapter.notifyDataSetChanged();
         if (getActivity() instanceof  HomeActivity)
             ((HomeActivity) getActivity()).setMsgUnread(getTotalUnreadNum() == 0);
     }
+
 
 
     /**

@@ -20,7 +20,9 @@ import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageDraft;
 import com.tencent.TIMMessageStatus;
+import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.presenter.ChatPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.timchat.R;
@@ -171,6 +173,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     @Override
     protected void onPause(){
         super.onPause();
+        //退出聊天界面时输入框有内容，保存草稿
+        if (input.getText().length() > 0){
+            TextMessage message = new TextMessage(input.getText());
+            presenter.saveDraft(message.getMessage());
+        }else{
+            presenter.saveDraft(null);
+        }
+        RefreshEvent.getInstance().onRefresh();
         presenter.readMessages();
         MediaUtil.getInstance().stop();
     }
@@ -194,11 +204,18 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING){
-                    TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
-                    title.setTitleText(getString(R.string.chat_typing));
-                    handler.removeCallbacks(resetTitle);
-                    handler.postDelayed(resetTitle,3000);
+                if (mMessage instanceof CustomMessage){
+                    CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
+                    switch (messageType){
+                        case TYPING:
+                            TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
+                            title.setTitleText(getString(R.string.chat_typing));
+                            handler.removeCallbacks(resetTitle);
+                            handler.postDelayed(resetTitle,3000);
+                            break;
+                        default:
+                            break;
+                    }
                 }else{
                     if (messageList.size()==0){
                         mMessage.setHasTime(null);
@@ -384,6 +401,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             Message message = new CustomMessage(CustomMessage.Type.TYPING);
             presenter.sendOnlineMessage(message.getMessage());
         }
+    }
+
+    /**
+     * 显示草稿
+     */
+    @Override
+    public void showDraft(TIMMessageDraft draft) {
+        input.getText().append(TextMessage.getString(draft.getElems(), this));
     }
 
 

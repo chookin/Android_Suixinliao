@@ -50,8 +50,8 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         groupType = getIntent().getStringExtra("type");
         userCard = profile.getNameCard();
 
-
         currentUserRole = GroupInfo.getInstance().getRole(groupIdentify);
+
         quietingOpt = new String[] {getString(R.string.group_member_quiet_cancel)};
         quietOpt = new String[] {getString(R.string.group_member_quiet_ten_min),
                 getString(R.string.group_member_quiet_one_hour),

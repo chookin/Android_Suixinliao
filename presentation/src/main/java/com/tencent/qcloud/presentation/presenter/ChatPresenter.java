@@ -5,8 +5,10 @@ import android.util.Log;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMElem;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageDraft;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.event.RefreshEvent;
@@ -41,6 +43,9 @@ public class ChatPresenter implements Observer {
         MessageEvent.getInstance().addObserver(this);
         RefreshEvent.getInstance().addObserver(this);
         getMessage(null);
+        if (conversation.hasDraft()){
+            view.showDraft(conversation.getDraft());
+        }
     }
 
 
@@ -156,6 +161,24 @@ public class ChatPresenter implements Observer {
      */
     public void readMessages(){
         conversation.setReadMessage();
+    }
+
+
+    /**
+     * 保存草稿
+     *
+     * @param message 消息数据
+     */
+    public void saveDraft(TIMMessage message){
+        conversation.setDraft(null);
+        if (message != null && message.getElementCount() > 0){
+            TIMMessageDraft draft = new TIMMessageDraft();
+            for (int i = 0; i < message.getElementCount(); ++i){
+                draft.addElem(message.getElement(i));
+            }
+            conversation.setDraft(draft);
+        }
+
     }
 
 
