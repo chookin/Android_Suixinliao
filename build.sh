@@ -22,6 +22,7 @@ cp -rf sdk/libs/mobilepb.jar ${PACKAGE_PATH}/libs/
 cp -rf sdk/libs/qalsdk.jar ${PACKAGE_PATH}/libs/
 cp -rf sdk/libs/tls_sdk.jar ${PACKAGE_PATH}/libs/
 cp -rf sdk/libs/wup-1.0.0-SNAPSHOT.jar ${PACKAGE_PATH}/libs/
+cp -rf sdk/libs/soload.jar ${PACKAGE_PATH}/libs/
 
 cp -rf sdk/src/main/jniLibs/* ${PACKAGE_PATH}/libs/
 
