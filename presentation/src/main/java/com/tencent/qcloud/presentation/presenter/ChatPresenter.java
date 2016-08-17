@@ -26,6 +26,7 @@ public class ChatPresenter implements Observer {
 
     private ChatView view;
     private TIMConversation conversation;
+    private boolean isGetingMessage = false;
     private final int LAST_MESSAGE_NUM = 20;
     private final static String TAG = "ChatPresenter";
 
@@ -142,17 +143,23 @@ public class ChatPresenter implements Observer {
      * @param message 最后一条消息
      */
     public void getMessage(@Nullable TIMMessage message){
-        conversation.getMessage(LAST_MESSAGE_NUM, message, new TIMValueCallBack<List<TIMMessage>>() {
-            @Override
-            public void onError(int i, String s) {
-                Log.e(TAG,"get message error"+s);
-            }
+        if (!isGetingMessage){
+            isGetingMessage = true;
+            conversation.getMessage(LAST_MESSAGE_NUM, message, new TIMValueCallBack<List<TIMMessage>>() {
+                @Override
+                public void onError(int i, String s) {
+                    isGetingMessage = false;
+                    Log.e(TAG,"get message error"+s);
+                }
 
-            @Override
-            public void onSuccess(List<TIMMessage> timMessages) {
-                view.showMessage(timMessages);
-            }
-        });
+                @Override
+                public void onSuccess(List<TIMMessage> timMessages) {
+                    isGetingMessage = false;
+                    view.showMessage(timMessages);
+                }
+            });
+        }
+
     }
 
     /**
