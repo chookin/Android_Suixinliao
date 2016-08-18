@@ -1,4 +1,9 @@
-﻿
+﻿ImSDK 2.2.1
+
+1. 修复C2C漫游消息相关问题
+2. Android版本添加已读回执监听TIMMessageReceiptListener
+
+
 ImSDK 2.2.0
 
 1、接口调用增加无网络错误码，可区分是无网络原因导致失败
