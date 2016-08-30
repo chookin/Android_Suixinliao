@@ -1,4 +1,11 @@
-﻿ImSDK 2.2.1
+ImSDK 2.3
+
+1. 增加带回调的setOfflinePushToken接口
+2. 增加google推送支持（FCM实现）
+3. 增加用户自定义状态的设置、获取与变更通知
+
+
+ImSDK 2.2.1
 
 1. 修复C2C漫游消息相关问题
 2. Android版本添加已读回执监听TIMMessageReceiptListener
