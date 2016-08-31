@@ -24,16 +24,19 @@ import com.tencent.qcloud.ui.TemplateTitle;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * 联系人界面
  */
-public class ContactFragment extends Fragment implements  View.OnClickListener {
+public class ContactFragment extends Fragment implements  View.OnClickListener, Observer {
 
     private View view;
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
     private LinearLayout mNewFriBtn, mPublicGroupBtn, mChatRoomBtn,mPrivateGroupBtn;
+    Map<String, List<FriendProfile>> friends;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +60,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener {
                     showMoveDialog();
                 }
             });
-            final Map<String, List<FriendProfile>> friends = FriendshipInfo.getInstance().getFriends();
+            friends = FriendshipInfo.getInstance().getFriends();
             mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), FriendshipInfo.getInstance().getGroups(), friends);
             mGroupListView.setAdapter(mGroupListAdapter);
             mGroupListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -67,6 +70,7 @@ public class ContactFragment extends Fragment implements  View.OnClickListener {
                     return false;
                 }
             });
+            FriendshipInfo.getInstance().addObserver(this);
             mGroupListAdapter.notifyDataSetChanged();
         }
         return view;
@@ -144,5 +148,20 @@ public class ContactFragment extends Fragment implements  View.OnClickListener {
         Intent intent = new Intent(getActivity(), GroupListActivity.class);
         intent.putExtra("type", type);
         getActivity().startActivity(intent);
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+        if (observable instanceof FriendshipInfo){
+            mGroupListAdapter.notifyDataSetChanged();
+        }
     }
 }
