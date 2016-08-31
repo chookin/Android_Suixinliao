@@ -197,11 +197,13 @@
 
         <!-- firebase -->
         <service android:name="com.tencent.qcloud.timchat.utils.MyFirebaseInstanceIDService" android:exported="true">
+
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
         <!-- firebase -->
+
 
 
         <activity android:name=".ui.ImageViewActivity" />

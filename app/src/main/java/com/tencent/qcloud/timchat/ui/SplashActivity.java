@@ -11,16 +11,20 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushToken;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
@@ -48,9 +52,11 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
     private final int REQUEST_PHONE_PERMISSIONS = 0;
     private static final String TAG = SplashActivity.class.getSimpleName();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         clearNotification();
 
@@ -75,6 +81,17 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        int result = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+//        if(result != ConnectionResult.SUCCESS ){
+////            if(GoogleApiAvailability.getInstance().isUserResolvableError(result)){
+//                GoogleApiAvailability.getInstance().getErrorDialog(this, result, 520).show();
+////            }
+//        }
+    }
 
     /**
      * 跳转到主界面
@@ -150,6 +167,17 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         }else if (deviceMan.equals("HUAWEI")){
             PushManager.requestToken(this);
         }
+
+//        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//        Log.d(TAG, "refreshed token: " + refreshedToken);
+//
+//        if(!TextUtils.isEmpty(refreshedToken)) {
+//            TIMOfflinePushToken param = new TIMOfflinePushToken();
+//            param.setToken(refreshedToken);
+//            param.setBussid(1024);
+//            TIMManager.getInstance().setOfflinePushToken(param);
+//        }
+
         Log.d(TAG, "imsdk env " + TIMManager.getInstance().getEnv());
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
