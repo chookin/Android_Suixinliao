@@ -11,20 +11,16 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
-import com.tencent.TIMOfflinePushToken;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
@@ -79,18 +75,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
             init();
         }
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-//        int result = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-//        if(result != ConnectionResult.SUCCESS ){
-////            if(GoogleApiAvailability.getInstance().isUserResolvableError(result)){
-//                GoogleApiAvailability.getInstance().getErrorDialog(this, result, 520).show();
-////            }
-//        }
     }
 
     /**
