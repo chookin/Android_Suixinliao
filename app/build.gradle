@@ -51,4 +51,7 @@ dependencies {
     compile project(':presentation')
     compile 'com.android.support:support-v4:23+'
     compile project(':ui')
+    compile 'com.google.firebase:firebase-messaging:9.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
