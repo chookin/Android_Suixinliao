@@ -161,7 +161,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         if(!TextUtils.isEmpty(refreshedToken)) {
             TIMOfflinePushToken param = new TIMOfflinePushToken();
             param.setToken(refreshedToken);
-            param.setBussid(1024);
+            param.setBussid(169);
             TIMManager.getInstance().setOfflinePushToken(param);
         }
 
