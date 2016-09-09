@@ -76,25 +76,20 @@ public class ConversationPresenter implements Observer {
 
 
     public void getConversation(){
-        List<TIMConversation> list = new ArrayList<>();
-        //获取会话个数
-        long cnt = TIMManager.getInstance().getConversationCount();
-        Log.d(TAG, "get " + cnt + " conversations");
-        //遍历会话列表
-        for(long i = 0; i < cnt; ++i) {
-            //根据索引获取会话
-            final TIMConversation conversation = TIMManager.getInstance().getConversationByIndex(i);
+        List<TIMConversation> list = TIMManager.getInstance().getConversionList();
+        List<TIMConversation> result = new ArrayList<>();
+        for (TIMConversation conversation : list){
             if (conversation.getType() == TIMConversationType.System) continue;
-            list.add(conversation);
+            result.add(conversation);
             conversation.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override
                 public void onError(int i, String s) {
-                    Log.e(TAG,"get message error"+s);
+                    Log.e(TAG, "get message error" + s);
                 }
 
                 @Override
                 public void onSuccess(List<TIMMessage> timMessages) {
-                    if (timMessages.size() > 0){
+                    if (timMessages.size() > 0) {
                         view.updateMessage(timMessages.get(0));
                     }
 
@@ -102,7 +97,7 @@ public class ConversationPresenter implements Observer {
             });
 
         }
-        view.initView(list);
+        view.initView(result);
     }
 
     /**

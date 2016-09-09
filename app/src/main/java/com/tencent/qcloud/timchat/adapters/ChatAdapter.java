@@ -59,8 +59,10 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             viewHolder.systemMessage = (TextView) view.findViewById(R.id.systemMessage);
             view.setTag(viewHolder);
         }
-        final Message data = getItem(position);
-        data.showMessage(viewHolder, getContext());
+        if (position < getCount()){
+            final Message data = getItem(position);
+            data.showMessage(viewHolder, getContext());
+        }
         return view;
     }
 

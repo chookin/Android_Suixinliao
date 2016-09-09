@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
@@ -48,6 +49,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
     SplashPresenter presenter;
     private int LOGIN_RESULT_CODE = 100;
+    private int GOOGLE_PLAY_RESULT_CODE = 200;
     private final int REQUEST_PHONE_PERMISSIONS = 0;
     private static final String TAG = SplashActivity.class.getSimpleName();
 
@@ -63,7 +65,9 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         setContentView(R.layout.activity_splash);
         final List<String> permissionsList = new ArrayList<>();
         if (ConnectionResult.SUCCESS != GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)){
-            Toast.makeText(this, getString(R.string.google_service_not_available), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, getString(R.string.google_service_not_available), Toast.LENGTH_SHORT).show();
+            GoogleApiAvailability.getInstance().getErrorDialog(this, GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this),
+                    GOOGLE_PLAY_RESULT_CODE).show();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if ((checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.READ_PHONE_STATE);
