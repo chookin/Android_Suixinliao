@@ -459,7 +459,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK && data != null) {
-                showImagePreview(FileUtil.getImageFilePath(this, data.getData()));
+                showImagePreview(FileUtil.getFilePath(this, data.getData()));
             }
 
         } else if (requestCode == FILE_CODE) {

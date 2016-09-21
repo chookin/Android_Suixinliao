@@ -20,7 +20,7 @@ import java.util.Observer;
 /**
  * 好友列表缓存数据结构
  */
-public class FriendshipInfo implements Observer {
+public class FriendshipInfo extends Observable implements Observer {
 
     private final String TAG = "FriendshipInfo";
 
@@ -87,6 +87,8 @@ public class FriendshipInfo implements Observer {
             }
             friends.put(group.getGroupName(), friendItemList);
         }
+        setChanged();
+        notifyObservers();
     }
 
     /**

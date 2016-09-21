@@ -11,14 +11,20 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushToken;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
@@ -43,18 +49,26 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
     SplashPresenter presenter;
     private int LOGIN_RESULT_CODE = 100;
+    private int GOOGLE_PLAY_RESULT_CODE = 200;
     private final int REQUEST_PHONE_PERMISSIONS = 0;
     private static final String TAG = SplashActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         clearNotification();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         final List<String> permissionsList = new ArrayList<>();
+        if (ConnectionResult.SUCCESS != GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)){
+//            Toast.makeText(this, getString(R.string.google_service_not_available), Toast.LENGTH_SHORT).show();
+            GoogleApiAvailability.getInstance().getErrorDialog(this, GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this),
+                    GOOGLE_PLAY_RESULT_CODE).show();
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if ((checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.READ_PHONE_STATE);
             if ((checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -69,7 +83,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         }
 
     }
-
 
     /**
      * 跳转到主界面
@@ -145,6 +158,17 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         }else if (deviceMan.equals("HUAWEI")){
             PushManager.requestToken(this);
         }
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "refreshed token: " + refreshedToken);
+
+        if(!TextUtils.isEmpty(refreshedToken)) {
+            TIMOfflinePushToken param = new TIMOfflinePushToken();
+            param.setToken(refreshedToken);
+            param.setBussid(169);
+            TIMManager.getInstance().setOfflinePushToken(param);
+        }
+
         Log.d(TAG, "imsdk env " + TIMManager.getInstance().getEnv());
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);

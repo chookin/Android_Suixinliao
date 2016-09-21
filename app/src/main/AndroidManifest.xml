@@ -192,8 +192,19 @@
         <!-- PushSDK:Push服务 -->
         <service
             android:name="com.huawei.android.pushagent.PushService"
-            android:process=":HwPushService"></service>
+            android:process=":HwPushService"/>
         <!-- hwpush -->
+
+        <!-- firebase -->
+        <service android:name="com.tencent.qcloud.timchat.utils.MyFirebaseInstanceIDService" android:exported="true">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- firebase -->
+
+
 
         <activity android:name=".ui.ImageViewActivity" />
         <activity android:name=".ui.EditActivity" />

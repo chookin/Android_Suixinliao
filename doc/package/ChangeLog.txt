@@ -1,4 +1,17 @@
-﻿
+ImSDK 2.3
+
+1. 增加带回调的setOfflinePushToken接口
+2. 增加google推送支持（FCM实现）
+3. 拉取消息接口，自动过滤状态为DELETED的消息
+4. 获取会话列表接口，自动过滤消息数为0的会话
+
+
+ImSDK 2.2.1
+
+1. 修复C2C漫游消息相关问题
+2. Android版本添加已读回执监听TIMMessageReceiptListener
+
+
 ImSDK 2.2.0
 
 1、接口调用增加无网络错误码，可区分是无网络原因导致失败

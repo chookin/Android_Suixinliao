@@ -158,7 +158,7 @@ public class FileUtil {
         String path = null;
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat){
-            if (isMediaDocument(uri)){
+            if (!isMediaDocument(uri)){
                 try{
                     final String docId = DocumentsContract.getDocumentId(uri);
                     final String[] split = docId.split(":");
