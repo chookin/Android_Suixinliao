@@ -32,8 +32,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
         TIMManager.getInstance().enableGroupInfoStorage(true);
         TIMManager.getInstance().setGroupAssistantListener(this);
         TIMGroupSettings settings = new TIMGroupSettings();
-        settings.setGroupInfoOptions(settings.new Options());
-        settings.setMemberInfoOptions(settings.new Options());
         TIMManager.getInstance().initGroupSettings(settings);
 
     }
